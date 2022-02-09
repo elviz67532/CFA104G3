@@ -9,7 +9,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="${pageContext.request.contextPath}/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/datetimepicker/jquery.datetimepicker.css" />
+<link type="text/css" href="${pageContext.request.contextPath}/datetimepicker/jquery.datetimepicker.css" />
+<link type="text/css" href="${pageContext.request.contextPath}/css/move/moveCommon.css" />
 <title>委域</title>
 </head>
 <body class="d-flex flex-column h-100">
@@ -41,7 +42,7 @@
 	%>
 
 	<!-- main -->
-	<main class=".flex-column">
+	<main id="outter" class=".flex-column">
 		<div class="bd-content ps-lg-4">
 			<form class="row g-3" method="POST" action="${pageContext.request.contextPath}/move/move.req" name="moveRequest" enctype="multipart/form-data">
 				<input type="hidden" name="action" value="moveRequest">

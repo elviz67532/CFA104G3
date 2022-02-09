@@ -30,7 +30,7 @@
 					<ul class="dropdown-menu dropdown-menu-end"
 						aria-labelledby="navbarDropdownBlog">
 						<li><a class="dropdown-item" href="#">搬家首頁</a></li>
-						<li><a class="dropdown-item" href="${pageContext.request.contextPath}/front_end/move/moveRequest.jsp">申請搬家</a></li>
+						<li><a class="dropdown-item" href="${pageContext.request.contextPath}/front_end/move/addMoveRequest.jsp">申請搬家</a></li>
 					</ul>
 				</li>
 				<!-- 單一nav 活動 -->

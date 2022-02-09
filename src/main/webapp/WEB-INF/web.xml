@@ -25,4 +25,13 @@
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
+
+	<servlet>
+		<servlet-name>MoveRequestServlet</servlet-name>
+		<servlet-class>com.move_request.controller.MoveRequestServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MoveRequestServlet</servlet-name>
+		<url-pattern>/move/move.req</url-pattern>
+	</servlet-mapping>
 </web-app>
