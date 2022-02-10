@@ -11,8 +11,7 @@
 <link type="text/css"
 	href="<%=request.getContextPath()%>/vendors/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-<link type="text/css"
-	href="${pageContext.request.contextPath}/css/move/moveCommon.css" />
+<link type="text/css" href="<%=request.getContextPath()%>/css/front_end/move/moveCommon.css" />
 <title>委域</title>
 </head>
 <body class="d-flex flex-column h-100">
@@ -24,7 +23,7 @@
 	<%
 	List<MoveRequestVO> moveRequestVOs = (List<MoveRequestVO>) request.getAttribute("moveRequestVOList");
 	%>
-	
+
 	<!-- main -->
 	<main id="outter" class=".flex-column">
 		<table class="table">
@@ -36,11 +35,12 @@
 					<th scope="col">Handle</th>
 				</tr>
 			</thead>
-			
+
 			<tbody>
-				<c:forEach var="moveRequestVO" items="${moveRequestVOs}" varStatus="status">
+				<c:forEach var="moveRequestVO" items="${moveRequestVOs}"
+					varStatus="status">
 					<tr>
-<!-- 						TODO 內容調整 -->
+						<!-- 						TODO 內容調整 -->
 						<th scope="row">${status.count}</th>
 						<td>${moveRequestVO.memberId}</td>
 						<td>${moveRequestVO.fromAddress}</td>
@@ -61,7 +61,6 @@
 
 	<!-- Footer -->
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
-	<script
-		src="<%=request.getContextPath()%>/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

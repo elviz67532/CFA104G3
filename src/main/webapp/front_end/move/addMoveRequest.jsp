@@ -3,14 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.move_request.model.*"%>
+<%@ page import="com.move_photo.model.*"%>
 <!doctype html>
 <html lang="zh-TW">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="${pageContext.request.contextPath}/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link type="text/css" href="${pageContext.request.contextPath}/datetimepicker/jquery.datetimepicker.css" />
-<link type="text/css" href="${pageContext.request.contextPath}/css/move/moveCommon.css" />
+<link href="<%=request.getContextPath()%>/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/front_end/move/moveCommon.css" />
+<link><link>
 <title>委域</title>
 </head>
 <body class="d-flex flex-column h-100">
@@ -27,6 +29,7 @@
 	<%
 	Map<String, String> errorMsgs = (Map<String, String>) request.getAttribute("errorMsgs");
 	MoveRequestVO moveRequestVO = (MoveRequestVO) request.getAttribute("moveRequestVO");
+	
 	java.sql.Date moveDate = null;
 	try {
 		java.sql.Timestamp t = moveRequestVO.getMoveDate();
@@ -44,7 +47,7 @@
 	<!-- main -->
 	<main id="outter" class=".flex-column">
 		<div class="bd-content ps-lg-4">
-			<form class="row g-3" method="POST" action="${pageContext.request.contextPath}/move/move.req" name="moveRequest" enctype="multipart/form-data">
+			<form class="row g-3" method="POST" action="<%=request.getContextPath()%>/move/move.req" name="moveRequest" enctype="multipart/form-data">
 				<input type="hidden" name="action" value="moveRequest">
 				<!-- TODO 範圍調整 -->
 				<!-- TODO 模式選擇-> disable -->
@@ -101,6 +104,9 @@
 					<%}%>
 				</div>
 				<div class="col-12">
+				
+<!-- 				TODO CHECK -->
+				
 					<label class="form-label">申請模式:</label><br/>
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" name="requestMode"
@@ -144,8 +150,8 @@
 	</main>
 	
 	<!-- custom -->
-	<script src="${pageContext.request.contextPath}/datetimepicker/jquery.js"></script>
-	<script src="${pageContext.request.contextPath}/datetimepicker/jquery.datetimepicker.full.js"></script>
+	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 	<script>
 		$.datetimepicker.setLocale('zh');
 		$('#moveDate').datetimepicker({
@@ -162,10 +168,10 @@
 			format : 'Y-m-d',
 			value : '${evaDate}'
 		});
-		</script>
+	</script>
 
 	<!-- Footer -->
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
-	<script src="${pageContext.request.contextPath}/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

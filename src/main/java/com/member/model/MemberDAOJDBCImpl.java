@@ -22,6 +22,8 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 	private static final String UPDATE = "update MEMBER set "
 			+ "MEM_EMAIL = ?, MEM_ACCOUNT = ?, MEM_PASSWORD = ?, MEM_NICKNAME = ?, MEM_NAME = ?, MEM_PHONE = ?, MEM_GENDER = ?, MEM_CITY = ?, MEM_CITYAREA = ?, MEM_ADDRESS = ?, MEM_CODE = ?, MEM_AVATAR = ?, MEM_TIME = ?, MEM_STATUS = ? "
 			+ "where MEM_ID = ?";
+	// --------------------------------------------------------------------
+	private static final String LOGIN = "select * from MEMBER where MEM_ACCOUNT = ?and MEM_PASSWORD = ? ";
 
 	@Override
 	public int insert(MemberVO vo) {
@@ -198,5 +200,21 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 		}
 
 		return list;
+	}
+
+	@Override
+	public String login(String account, String password) {
+		try (Connection conn = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+				PreparedStatement pstmt = conn.prepareStatement(LOGIN);) {
+			pstmt.setString(1, account);
+			pstmt.setString(2, password);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				// TODO
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }

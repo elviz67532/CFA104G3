@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.move_photo.model.MovePhotoVO;
 import com.move_request.model.EMoveRequestEvaType;
 import com.move_request.model.MoveRequestService;
 import com.move_request.model.MoveRequestServiceImpl;
@@ -136,7 +137,6 @@ public class MoveRequestServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher("/front_end/move/moveRequestResult.jsp");
 				successView.forward(req, res);
 			} catch (Exception e) {
-				e.printStackTrace();
 				req.setAttribute("exception", e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/addMoveRequest.jsp");
 				failureView.forward(req, res);

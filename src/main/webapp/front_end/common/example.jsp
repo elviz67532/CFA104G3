@@ -3,10 +3,10 @@
 <!doctype html>
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="<%=request.getContextPath()%>/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<title>委域</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="<%=request.getContextPath()%>/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<title>委域</title>
 </head>
 <body class="d-flex flex-column h-100">
 	<!-- nav -->
