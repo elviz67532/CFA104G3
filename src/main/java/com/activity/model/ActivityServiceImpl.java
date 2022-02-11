@@ -3,6 +3,7 @@ package com.activity.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+
 public class ActivityServiceImpl implements ActivityService {
 	private ActivityDAO dao;
 
@@ -47,8 +48,7 @@ public class ActivityServiceImpl implements ActivityService {
 
 	@Override
 	public ActivityVO findByActivityId(Integer activityId) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.selectById(activityId);
 	}
 
 	@Override
