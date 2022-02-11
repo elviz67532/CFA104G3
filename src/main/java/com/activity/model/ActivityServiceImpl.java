@@ -49,7 +49,6 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public ActivityVO findByActivityId(Integer activityId) {
 		return dao.selectById(activityId);
-
 	}
 
 	@Override
