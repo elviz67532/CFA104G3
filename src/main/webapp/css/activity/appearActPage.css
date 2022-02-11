@@ -1,0 +1,37 @@
+/*上層*/
+.actContentDiv1{
+    border: 2px purple solid;
+    text-align: center;
+}
+/*下層表單*/
+.actContentDiv2{
+    border: 2px blue solid;
+}
+
+/**/
+.veryContentDiv{
+    border: 2px greenyellow solid;
+}
+/*==============標題==============*/
+.article-title{
+    display: inline;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 1 100%;
+    flex: 0 1 100%;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333333;
+    line-height: 1.5em;
+    vertical-align: middle;
+}
+
+.actType{
+    color: #FFFFFF;
+    background-color: #47832C;
+    border-radius: 10px;
+}
+.actmemId{
+    color: #FFFFFF;
+    background-color: #808080;
+    border-radius: 10px;
+}

@@ -1,0 +1,139 @@
+/* ===================3.html=================== */
+.middle_right{
+    /* background-color: lightsalmon; */
+}
+fieldset{
+    /* border: none; */
+    width: 400px;
+}
+legend{
+    color: black;
+}
+.formLabel {
+    display: block;
+    color: black;
+    /* text-align: center; */
+    /* font: 1rem 'Fira Sans', sans-serif; */
+}
+
+.actFormInput{
+    width: 98%;
+    border-radius: 30px;
+    /* height: 20px; 擃漲憭芸�����������敶梢*/
+}
+
+.actNumberFormInput{
+    width: 20%;
+    border-radius: 30px;
+}
+
+.actCommentFormInput{
+    width: 98%;
+    height: 100px;
+    border-radius: 10px;
+}
+.actContentFormInput{
+    width: 98%;
+    height: 100px;
+    border-radius: 10px;
+}
+.actFormInput,.formLabel {
+    margin: .2rem 0;
+}
+.actPhoto{
+}
+/*��2.css��tn*/
+/* .form_btn{
+    border: 2px black  solid;
+    font-size: 16px;
+    background-color: lightseagreen;
+    width: 350px;
+    border-radius: 10px;
+} */
+
+/*type*/
+.actSelect{
+    width: 30%;
+    height: 25px;
+    border-radius: 30px;
+}
+
+.actSelect:focus{
+    background-color: lightgreen;
+}
+
+/*input hover*/
+input[type="text"]:focus{
+    background-color: lightgreen;
+}
+input[type="tel"]:focus{
+    background-color: lightgreen;
+}
+input[type="email"]:focus{
+    background-color: lightgreen;
+}
+/* input[type="file"]:focus{
+    background-color: aquamarine;
+} */
+input[type="number"]:focus{
+    background-color: lightgreen;
+}
+input[type="date"]:focus{
+    background-color: lightgreen;
+}
+input[type="time"]:focus{
+    background-color: lightgreen;
+}
+textarea:focus{
+    background-color: lightgreen;
+}
+/*=================������=================*/
+.shape-ex11{
+    margin-top: 10px;
+    width: 150px;
+    height: 40px;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    line-height: 40px;
+    color: #000;
+    background-color: transparent;
+    position: relative;
+    transition: all .3s linear;
+}
+
+.shape-ex11:hover{
+    background-color: lightgreen;
+}
+
+/*video*/
+/* div.video_placeholder{
+    border: 1px solid red;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100vh;
+  
+    position: relative;
+    overflow: hidden;
+  } */
+  /*
+  div.video_placeholder::after{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid blue;
+    background-color: hsla(0, 0%, 0%, .5);
+  }
+  */
+  
+  /* #the_video{
+    border: 1px solid blue;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }   */

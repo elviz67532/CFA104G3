@@ -37,7 +37,16 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MoveRequestServlet</servlet-name>
-		<url-pattern>/move/move.req</url-pattern>
+		<url-pattern>/move/moveRequest.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>MoveOrderServlet</servlet-name>
+		<servlet-class>com.move_order.controller.MoveOrderServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MoveOrderServlet</servlet-name>
+		<url-pattern>/move/moveorder.do</url-pattern>
 	</servlet-mapping>
 
 	<!-- activity -->
@@ -50,8 +59,23 @@
 		<servlet-name>ActaServlet</servlet-name>
 		<url-pattern>/activity/acta.do</url-pattern>
 	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>ActivityServlet</servlet-name>
+		<servlet-class>com.activity.controller.ActivityServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActivityServlet</servlet-name>
+		<url-pattern>/activity/act.do</url-pattern>
+	</servlet-mapping>
+	
 	<!-- product -->
-
+	<servlet>
+		<servlet-name>NewsServlet</servlet-name>
+		<servlet-class>com.news.controller.NewsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NewsServlet</servlet-name>
+		<url-pattern>/news/NewsServlet</url-pattern>
+	</servlet-mapping>
 
 </web-app>

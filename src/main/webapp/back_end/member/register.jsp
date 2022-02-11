@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link
-	href="<%=request.getContextPath()%>/vendors/bootstrap/css/bootstrap.min.css"
+	href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 <title>委域</title>
 </head>
@@ -114,7 +114,7 @@
 	</FORM>
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
 	<script
-		src="<%=request.getContextPath()%>/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+		src="<%=request.getContextPath()%>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 

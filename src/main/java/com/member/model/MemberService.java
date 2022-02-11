@@ -2,6 +2,7 @@ package com.member.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public interface MemberService {
 	MemberVO login(String account, String password);
@@ -19,4 +20,6 @@ public interface MemberService {
 	MemberVO selectById(Integer id);
 
 	List<MemberVO> selectAll();
+	
+	Map<Integer, MemberVO> selectAllToMap();
 }

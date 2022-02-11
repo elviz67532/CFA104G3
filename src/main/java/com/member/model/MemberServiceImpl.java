@@ -1,7 +1,9 @@
 package com.member.model;
 
 import java.sql.Timestamp;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MemberServiceImpl implements MemberService {
 	private MemberDAO dao;
@@ -85,5 +87,15 @@ public class MemberServiceImpl implements MemberService {
 		memberVO.setAccount(account);
 		memberVO.setPassword(password);
 		return memberVO;
+	}
+
+	@Override
+	public Map<Integer, MemberVO> selectAllToMap() {
+		Map<Integer, MemberVO> map = new LinkedHashMap<>();
+		List<MemberVO> selectAll = selectAll();
+		for (MemberVO memberVO : selectAll) {
+			map.put(memberVO.getId(), memberVO);
+		}
+		return map;
 	}
 }
