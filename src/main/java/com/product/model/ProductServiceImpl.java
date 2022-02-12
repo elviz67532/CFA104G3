@@ -68,9 +68,4 @@ public class ProductServiceImpl implements ProductService {
 		return dao.getProductsByType(prodType);
 	}
 	
-	// git 測試
-	
-	// git 測試
-	// git 測試
-	// git 測試
 }
