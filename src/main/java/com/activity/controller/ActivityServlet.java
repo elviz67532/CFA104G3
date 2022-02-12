@@ -40,6 +40,11 @@ public class ActivityServlet extends HttpServlet {
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+				
+/* ========================= 會員id ========================= */
+				int organizerMemberId = 9;
+/* ========================= 狀態 ========================= */
+				int status = 0;
 /* ========================= 活動名稱 ========================= */
 // 正則最後處理
 //String actNameReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{2,20}$";
@@ -98,12 +103,18 @@ public class ActivityServlet extends HttpServlet {
 				java.sql.Timestamp startDate = null;
 				// 活動結束時間
 				java.sql.Timestamp endDate = null;
-
+				
+/* ========================= 建立時間 ========================= */
+				java.sql.Timestamp launchedDate = null;
+				launchedDate = new Timestamp(System.currentTimeMillis());
+				System.out.println(launchedDate);
+				
 /* ========================= 報名開始時間 ========================= */
 				// 測試報名開始時間介於開始、結束時間之間，不得晚於報名截止時間。
-				// 報名開始 > 報名截止 > 活動開始 > 活動結束
+				// 表單建立 > 報名開始 > 報名截止 > 活動開始 > 活動結束
 
 				try {
+					launchedDate = new Timestamp(System.currentTimeMillis());
 					String datetimeLocalApplyStartDate = req.getParameter("applyStartDate");
 					applyStartDate = java.sql.Timestamp.valueOf(datetimeLocalApplyStartDate.replace("T", " "));
 					String datetimeLocalApplyEndDate = req.getParameter("applyEndDate");
@@ -112,7 +123,9 @@ public class ActivityServlet extends HttpServlet {
 					startDate = java.sql.Timestamp.valueOf(datetimeLocalStartDate.replace("T", " "));
 					String datetimeLocalEndDate = req.getParameter("endDate");
 					endDate = java.sql.Timestamp.valueOf(datetimeLocalEndDate.replace("T", " "));
-					if (applyStartDate.after(applyEndDate)) {
+					if (applyStartDate.before(launchedDate)) {
+						errorMsgs.put("applyStartDate", "報名開始時間無法在表單建立時間之前");
+					} else if (applyStartDate.after(applyEndDate)) {
 						errorMsgs.put("applyStartDate", "報名開始時間無法在報名截止時間之後");
 					} else if (applyStartDate.equals(applyEndDate)) {
 						errorMsgs.put("applyStartDate", "報名開始時間無法與報名截止時間相同");
@@ -134,8 +147,9 @@ public class ActivityServlet extends HttpServlet {
 
 /* ========================= 報名截止時間 ========================= */
 				// 測試報名截止時間介於開始、結束時間之間，不得早於報名開始時間。
-				// 報名開始 > 報名截止 > 活動開始 > 活動結束
+				// 表單建立 > 報名開始 > 報名截止 > 活動開始 > 活動結束
 				try {
+					launchedDate = new Timestamp(System.currentTimeMillis());
 					String datetimeLocalApplyStartDate = req.getParameter("applyStartDate");
 					applyStartDate = java.sql.Timestamp.valueOf(datetimeLocalApplyStartDate.replace("T", " "));
 					String datetimeLocalApplyEndDate = req.getParameter("applyEndDate");
@@ -144,7 +158,9 @@ public class ActivityServlet extends HttpServlet {
 					startDate = java.sql.Timestamp.valueOf(datetimeLocalStartDate.replace("T", " "));
 					String datetimeLocalEndDate = req.getParameter("endDate");
 					endDate = java.sql.Timestamp.valueOf(datetimeLocalEndDate.replace("T", " "));
-					if (applyEndDate.after(startDate)) {
+					if (applyEndDate.before(launchedDate)) {
+						errorMsgs.put("applyEndDate", "報名截止時間無法在表單建立時間之前");
+					} else if (applyEndDate.after(startDate)) {
 						errorMsgs.put("applyEndDate", "報名截止時間無法在活動開始時間之後");
 					} else if (applyEndDate.equals(startDate)) {
 						errorMsgs.put("applyEndDate", "報名截止時間無法與活動結束時間相同");
@@ -162,8 +178,9 @@ public class ActivityServlet extends HttpServlet {
 
 /* ========================= 活動開始時間 ========================= */
 
-				// 報名開始 > 報名截止 > 活動開始 > 活動結束
+				// 表單建立 > 報名開始 > 報名截止 > 活動開始 > 活動結束
 				try {
+					launchedDate = new Timestamp(System.currentTimeMillis());
 					String datetimeLocalApplyStartDate = req.getParameter("applyStartDate");
 					applyStartDate = java.sql.Timestamp.valueOf(datetimeLocalApplyStartDate.replace("T", " "));
 					String datetimeLocalApplyEndDate = req.getParameter("applyEndDate");
@@ -172,7 +189,9 @@ public class ActivityServlet extends HttpServlet {
 					startDate = java.sql.Timestamp.valueOf(datetimeLocalStartDate.replace("T", " "));
 					String datetimeLocalEndDate = req.getParameter("endDate");
 					endDate = java.sql.Timestamp.valueOf(datetimeLocalEndDate.replace("T", " "));
-					if (startDate.after(endDate)) {
+					if (startDate.before(launchedDate)) {
+						errorMsgs.put("startDate", "活動開始時間無法在表單建立時間之前");
+					} else if (startDate.after(endDate)) {
 						errorMsgs.put("startDate", "活動開始時間無法在活動結束時間之後");
 					} else if (startDate.equals(endDate)) {
 						errorMsgs.put("startDate", "活動開始時間無法與活動結束時間相同");
@@ -186,6 +205,7 @@ public class ActivityServlet extends HttpServlet {
 
 /* ========================= 活動結束時間 ========================= */
 				try {
+					launchedDate = new Timestamp(System.currentTimeMillis());
 					String datetimeLocalApplyStartDate = req.getParameter("applyStartDate");
 					applyStartDate = java.sql.Timestamp.valueOf(datetimeLocalApplyStartDate.replace("T", " "));
 					String datetimeLocalApplyEndDate = req.getParameter("applyEndDate");
@@ -197,6 +217,8 @@ public class ActivityServlet extends HttpServlet {
 					System.out.println(endDate);
 				} catch (IllegalArgumentException e) {
 					errorMsgs.put("endDate", "請輸入日期與時間");
+				} catch (Exception e1) {
+					e1.printStackTrace();
 				}
 
 /* ========================= 報名人數倒數 ========================= */
@@ -205,10 +227,11 @@ public class ActivityServlet extends HttpServlet {
 				int maxMember = 0;
 				// 活動人數下限
 				int minMember = 0;
+				applyMemberExisting = Integer.valueOf(req.getParameter("maxMember"));
 				try {
-					applyMemberExisting = Integer.valueOf(req.getParameter("maxMember"));
-				} catch (Exception e) {
-					errorMsgs.put("applyMemberExisting","請填數字");
+					applyMemberExisting = Integer.valueOf(req.getParameter("maxMember").trim());
+				} catch (NumberFormatException e) {
+					errorMsgs.put("applyMemberExisting", "報名人數倒數問題");
 				}
 
 /* ========================= 活動人數上限 ========================= */
@@ -238,9 +261,11 @@ public class ActivityServlet extends HttpServlet {
 				System.out.println(minMember);
 
 				ActivityVO actVO = new ActivityVO();
+				actVO.setOrganizerMemberId(organizerMemberId);
 				actVO.setType(type);
 				actVO.setName(name);
 				actVO.setContent(content);
+				actVO.setLaunchedDate(launchedDate);
 				actVO.setApplyStartDate(applyStartDate);
 				actVO.setApplyEndDate(applyEndDate);
 				actVO.setLocation(location);
@@ -250,6 +275,7 @@ public class ActivityServlet extends HttpServlet {
 				actVO.setMinMember(minMember);
 				actVO.setStartDate(startDate);
 				actVO.setEndDate(endDate);
+				actVO.setStatus(status);
 
 				// 如果有錯誤，將使用發送回表單
 				if (!errorMsgs.isEmpty()) {
@@ -261,11 +287,14 @@ public class ActivityServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 				ActivityServiceImpl actSvc = new ActivityServiceImpl();
-				actVO = actSvc.addAct(type, name, content, applyStartDate, applyEndDate, location, cost, maxMember,
-						minMember, startDate, endDate);
-
+				actVO = actSvc.addAct(organizerMemberId, type, name, content, launchedDate, applyStartDate,
+						applyEndDate, location, cost, applyMemberExisting, maxMember, minMember, startDate, endDate,
+						status);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/appearActPage.jsp"); // 新增成功後轉交newAct.jsp
+				// 新增成功後轉交appearActPage.jsp
+				req.setAttribute("actVO", actVO);
+//				RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/appearActPage.jsp"); // 新增成功後轉交newAct.jsp
+				RequestDispatcher successView = req.getRequestDispatcher("/back_end/activity/selectAllActivityPage.jsp"); // 新增成功後轉交newAct.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
