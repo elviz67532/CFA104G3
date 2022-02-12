@@ -30,22 +30,22 @@
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
     <!-- Page Header-->
-<%--     <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/product01.jpg')"> --%>
-<!--         <div class="container position-relative px-4 px-lg-5"> -->
-<!--             <div class="row gx-4 gx-lg-5 justify-content-center"> -->
-<!--                 <div class="col-md-10 col-lg-8 col-xl-7"> -->
-<!--                     <div class="site-heading"> -->
-<!--                         <h1>二手商城</h1> -->
-<!--                         <span class="subheading">愛地球，資源再利用</span> -->
-<!--                     </div> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </div> -->
-<!--     </header> -->
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/product01.jpg')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>二手商城</h1>
+                        <span class="subheading">愛地球，資源再利用</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
    
    	<!-- 主體畫面設計  -->
    
-<!--    jiojio -->
+
    
     <!-- Footer-->
    	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
