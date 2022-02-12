@@ -10,3 +10,4 @@ public class MovePhotoVO implements Serializable {
 	private Integer moveRequestId;
 	private byte[] photo;
 }
+	
