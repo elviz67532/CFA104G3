@@ -10,7 +10,7 @@ public class ProductQuestionServiceImpl implements ProductQuestionService {
 	public ProductQuestionServiceImpl() {
 		dao = new ProductQuestionDAOJDBCImpl();
 	}
-
+//12134567890
 	@Override
 	public ProductQuestionVO insert(Integer PRODQ_ID, Integer PRODQ_MEM_ID, Integer PRODQ_PROD_ID,
 			String PRODQ_PROMCONTENT, String PRODQ_REPCONTENT, Timestamp PRODQ_PROMDATE, Timestamp PRODQ_REPDATE) {
