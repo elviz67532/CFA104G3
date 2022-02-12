@@ -205,6 +205,7 @@ public class MemberServlet extends HttpServlet {
 
 				Timestamp timestamp = new Timestamp(registerDate.getTime());
 
+
 				Integer status = null;
 				try {
 					gender = new Integer(req.getParameter("status").trim());
@@ -216,8 +217,6 @@ public class MemberServlet extends HttpServlet {
 				MemberVO memberVO = new MemberVO();
 				memberVO = new MemberVO();
 
-
-//				memberVO.setId(id);
 
 				memberVO.setEmail(email);
 				memberVO.setAccount(account);
@@ -260,8 +259,6 @@ public class MemberServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/member/update_member_input.jsp");
-
 				failureView.forward(req, res);
 			}
 		}
@@ -292,7 +289,7 @@ public class MemberServlet extends HttpServlet {
 				if (password == null || password.trim().length() == 0) {
 					errorMsgs.add("密碼請勿空白");
 				}
-        
+
 				String nickname = req.getParameter("nickname").trim();
 				if (nickname == null || nickname.trim().length() == 0) {
 					errorMsgs.add("暱稱請勿空白");
@@ -314,10 +311,6 @@ public class MemberServlet extends HttpServlet {
 					gender = new Integer(req.getParameter("gender").trim());
 				} catch (NumberFormatException e) {
 					gender = 0;
-
-					errorMsgs.add("性別");
-				}
-
 
 				String city = req.getParameter("city").trim();
 				if (city == null || city.trim().length() == 0) {
@@ -393,6 +386,7 @@ public class MemberServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
+
 				/*************************** 2.開始新增資料 ***************************************/
 				MemberServiceImpl memberSvc = new MemberServiceImpl();
 				memberVO = memberSvc.insert(email, account, password, nickname, name, phone, gender, city, cityArea,
