@@ -121,6 +121,7 @@ public class MoveRequestServiceImpl implements MoveRequestService {
 	public boolean pay(int requestId) {
 		// TODO 預設為結帳成功
 		// TODO 產生訂單
+		// TODO 
 		return true;
 	}
 }
