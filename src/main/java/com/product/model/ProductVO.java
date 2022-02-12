@@ -16,4 +16,5 @@ public class ProductVO implements Serializable {
 	private Timestamp launchedDate;
 	private String location;
 	private Integer status;
+	// Git test
 }
