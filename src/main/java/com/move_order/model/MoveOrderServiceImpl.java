@@ -91,13 +91,20 @@ public class MoveOrderServiceImpl implements MoveOrderService {
 		vo.setAmountFirst(moveRequestVO.getEvaluatePrice());
 		vo.setDeposit(deposit);
 		vo.setMoveDate(moveRequestVO.getMoveDate());
-
-			//TODO
-//			MemberServiceImpl memSvc = new MemberServiceImpl();
-//			MemberVO memberVO = memSvc.selectbyId();
+//		vo.setAmountTotal(0);
+//		vo.setComment(null);
+//		
+//		Long datetime = System.currentTimeMillis();
+//	    Timestamp orderDate = new Timestamp(datetime);
+//	    vo.setOrderDate(orderDate);
+//	    
+//	    vo.setStatus(0);
+//	    //TODO
+//		MemberDAOJDBCImpl memDao = new MemberDAOJDBCImpl();
+//		MemberVO memberVO = memDao.selectById(moveRequestVO.getMemberId());
 //			
-//			memberVO.getName();
-//			memberVO.getPhone();
+//		vo.setCustomer(memberVO.getName());
+//		vo.setPhone(memberVO.getPhone());
 
 		dao.insert(vo);
 
