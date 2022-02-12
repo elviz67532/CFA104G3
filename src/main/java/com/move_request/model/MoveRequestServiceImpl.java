@@ -36,6 +36,7 @@ public class MoveRequestServiceImpl implements MoveRequestService {
 			EMoveRequestEvaType evaluateType, Timestamp evaDate, List<byte[]> photos) {
 		
 		// TODO 對重複日期做判斷防禦
+		// TODO TRANCTION機制
 		
 		MoveRequestVO vo = new MoveRequestVO();
 		vo.setMemberId(memberId);
@@ -55,8 +56,10 @@ public class MoveRequestServiceImpl implements MoveRequestService {
 		
 		// 插入圖片
 		if (insertOk) {
-			for (byte[] photo : photos) {
-				movePhotoService.insert(id, photo);
+			if (photos != null) { 
+				for (byte[] photo : photos) {
+					movePhotoService.insert(id, photo);
+				}
 			}
 		}
 		

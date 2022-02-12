@@ -1,0 +1,421 @@
+*{
+    margin: auto;
+}
+/* :root{ */
+    /* font-size: 62.5%; 10px */
+    /* --header-height: 60px; 變數 */
+    /* --aside-width: 240px; */
+/* } */
+/* ===================上=================== */
+.header{
+    /* background-color: lightslategray; */
+    /* position: sticky; */
+    display: flex;
+    padding: 10px 0;
+    border: 2px lightcoral solid;
+    /* padding: 6px 10px; */
+    /* background-color: #000; */
+    /* padding: 6px 0;  */
+}
+.header h1{
+    font-family: monospace;
+    font-size: 30px;
+    margin: 10px 50px 0 100px;
+    border: 2px lightcoral solid;
+    text-align: center;
+}
+/* .header .fas .fa-door-open{
+    margin: auto -30px;
+    padding: 0 20px 0 20px;
+    color: rgb(63, 40, 85);
+} */
+/*input  跟 button 跟 search-icon*/
+.header_input{
+    border: 2px gainsboro solid;
+    width: 500px;
+    height: 30px;
+    margin: 10px 20px auto 30px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.header_input_button{
+    /* border: none; */
+    background-color: lightseagreen;
+    width: 35px;
+    height: 36px;
+    margin: 10px 20px auto -55px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.header_input_button .fas .fa-search{
+    /* width: 15px;
+    height: 15px;
+    margin: auto;
+    cursor: pointer; */
+}
+/*============上右==============*/
+/*列表*/
+.header_right{
+    /* border: 2px springgreen solid; */
+    width: 500px;
+    font-size: 25px;
+
+}
+.header_list {
+    width: 500px;
+    font-size: 20px;
+    text-align: right;
+    /* margin-top: 30px; */
+    /* color: ; 槓 | */
+    height: 40px;
+
+} 
+.header_list a{
+    /* border: 2px lightsteelblue solid; */
+    text-decoration: none;
+    font-size: 16px;
+    color: black;
+    transition: 0.3s;
+    padding: 8px 4px;
+    text-align: center;
+    border-radius: 5px 10px 10px 20px;
+
+}
+
+.header_list a:hover{
+    /* background-color: lightseagreen; */
+    font-size: 30px;
+    background-color: lightseagreen;
+    color: white;
+}
+
+/*漢堡*/
+
+
+/* ===================上與中之間=================== */
+.header_to_middle{
+    border: 2px lightsteelblue solid;
+    padding: 5px 0;
+}
+/*透明按鈕停止音樂*/
+.btn_run{
+    background-color: limegreen;
+    border: 2px lightslategray solid;
+    width: 20px;
+    height: 20px;
+}
+/* ===================中=================== */
+/* .middle{ */
+    /* background-color: lightslategray; */
+    /* border: 2px lightseagreen solid; */
+    /* padding: 10px 20px;
+    height: 1000px;
+    position: relative;
+} */
+.middle_blockDivLeft , .middle_blockDivRight{
+    display: inline-block;
+}
+
+
+/* ===================中左大div=================== */
+.middle_blockDivLeft{
+    margin-top: 0;
+    margin-left: 20px;
+    /* border: 2px red solid; */
+    /* background-color: greenyellow; */
+    color: black;
+    /* font-size: 3px; */
+    /* font-family: monospace; */
+    position: absolute;
+    z-index: 3;
+    /* position: relative; */
+    /* height: 800px; */
+    /* width: 220px; */
+}
+
+/* ===================中左=================== */
+.middle_left{
+    border: 2px lightslategray solid;
+    width: 200px;
+    margin-left: 0;
+    border-radius: 10px;
+}
+
+.middle_left ul {
+    /* border: 1px solid #4068ec; */
+    display: block;
+    background-color: #FFFFFF;
+    /* margin-bottom: 10px; */
+    line-height: 20px;
+    padding:  0;
+    border-radius: 10px;
+}
+
+/*icon位置*/
+.middle_left ul li img{
+    margin-left: 15px;
+    margin-right: 5px; 
+    font-size: 20px;
+    width: 25px;
+    height: 25px;  
+}
+.middle_left ul li{
+    text-decoration: none;
+    padding: 5px 0; /*li上下間距*/
+    margin: auto 0 auto 0;
+    text-align: left;
+    /* background-color: lightslategray; */
+    /* margin: 0 10px 0 10px; */
+    /* border-bottom: 1px dotted #e5e5e5; */
+
+    /*===li:marker===*/
+    list-style-type: none;
+}
+
+.middle_left ul :hover{
+    background-color: mediumaquamarine;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.middle_left ul li a{
+    /* border: lime 1px solid; */
+    text-decoration: none;
+    margin: 0 10px 0 10px;
+}
+
+/* ===================中右大div=================== */
+.middle_blockDivRight{
+    margin-left: 20px;
+    /* border: 1px solid orange; */
+    /* height: 1000px; */
+    background-color: white;
+    color: gray;
+    position: absolute;
+    /* right: 10px; */
+    /* bottom: 10px; */
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+}
+
+/* ===================中右=================== */
+.middle_right{
+    border: 2px lightpink solid;
+    width: 70%;
+    height: auto;
+    border-radius: 10px;
+    /* margin: auto 30px auto 220px; */
+}
+.middle_right nav{
+    border: 2px lightsalmon solid;
+    display: inline-block;
+}
+/*=======================頁籤=======================*/
+
+/* 頁籤區塊 */
+div.tab_container div.tab_list_block{
+    padding-left: 20px;
+}
+
+/* 頁籤列表 */
+div.tab_container div.tab_list_block ul.tab_list{
+    list-style: none;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+div.tab_container div.tab_list_block ul.tab_list > li{
+    display: inline-block;
+}
+div.tab_container div.tab_list_block ul.tab_list > li > a{
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-bottom: 1px solid black;
+    padding: 2px 20px;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    color: #ccc;
+    
+    position: relative;
+    top: 1px;
+}
+
+/* 畫出底部黑線 */
+div.tab_container div.tab_list_block ul.tab_list > li > a::after{
+    content: "";
+    position: absolute;
+    width: calc(100% + 2px);
+    height: 1px;
+    background-color: black;
+    bottom:-1px;
+    left: -1px;
+    z-index: 1;
+}
+div.tab_container div.tab_list_block ul.tab_list > li > a.-on{
+    border: 1px solid black;
+    border-bottom: 1px solid white;
+    color: black;
+}
+/* 將底部黑線改成白色 */
+div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
+    background-color: white;
+    width: 100%;
+    left: 0;
+}
+
+
+/* 頁籤內容區塊 */
+div.tab_container div.tab_contents{
+    border: 1px solid black;
+    /*   margin-top: 30px; */
+}
+div.tab_container div.tab_contents div.tab{
+    padding: 10px;
+    display: none;
+}
+div.tab_container div.tab_contents div.tab.-on{
+    display: block;
+}
+/*頁籤超連結*/
+.act_tab_a{
+    text-decoration: none;
+}
+
+/*頁籤測試放圖片*/
+/* .middle_right .tab_container .tab_list_block .tab_list li img{
+    width: 25px;
+    height: 25px; 
+} */
+/*=======================頁籤內容=======================*/
+.wrap{
+    width: 960px;
+    margin: auto;
+    display: flex;
+}
+.item{
+    width: 300px;
+    margin: 10px;
+    border: 1px solid #aaa;
+    position: relative;
+}
+.item img{
+    width: 100%;
+}
+.item .act_tab{ /*Hot的絕對定位*/
+    border: 1px #888 ;
+    border-style: outset;
+    background-color: red;
+    color: #fff;
+    padding: 6px 10px;
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    /* right: -4px; */
+}
+/*=======================msg區域========================*/
+.email{
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 85%;
+    left: 90%;
+    opacity: 0.5; /*透明度50%*/
+}
+.email:hover{ /*滑鼠滑過*/
+    opacity: 1; /*不透明*/
+}
+
+.btn_img{
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 85%;
+    left: 90%;
+}
+/* 透明按鈕停止音樂 */
+.btn_img2{
+    background: none;
+    border: none;
+    width: 20px;
+    height: 20px;
+    position: fixed;
+    top: 90.5%;
+    left: 92%;
+}
+/* ================彈出視窗============== */
+.main .overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: hsla(0, 0%, 0%, .5);
+
+    display: none;
+}
+
+  
+/* 元素 article 置中及基本樣式 */
+.main .overlay > article{
+    background-color: white;
+    width: 90%;
+    max-width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px lightgreen;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/*視窗的內容*/
+.jumpInput,.formLabel {
+    margin: .2rem 0;
+}
+.jumpInput{
+    width: 190px;
+}
+.jumpContentInput{
+    height: 100px;
+}
+.formLabel {
+    display: block;
+    color: black;
+}
+input[type="email"]:focus{
+    background-color: lightgreen;
+}
+textarea:focus{
+    background-color: lightgreen;
+}
+.shape-ex11:hover{
+    background-color: lightgreen;
+}
+/* ===================下=================== */
+.footer{
+    border: 2px greenyellow solid;
+    text-align: center;
+    /* display: flex; */
+    /* background-color: #000; */
+    color: #888;
+    padding: 20px 0;
+}
+
+
+/*=================選單按鈕=================*/
+.shape-ex11{
+    width: 150px;
+    height: 40px;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    line-height: 40px;
+    color: #000;
+    background-color: transparent;
+    position: relative;
+    transition: all .3s linear;
+}

@@ -156,4 +156,16 @@ public class FaqDAOJDBCImpl implements FaqDAO {
 
 		return list;
 	}
+
+	@Override
+	public FaqVO findByPrimaryKey(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<FaqVO> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

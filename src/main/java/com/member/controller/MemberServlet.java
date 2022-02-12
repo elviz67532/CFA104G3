@@ -23,7 +23,7 @@ public class MemberServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
-//TDOO
+
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
@@ -124,19 +124,23 @@ public class MemberServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+
 //				Integer id = new Integer(req.getParameter("id").trim());
 				String email = req.getParameter("email").trim();
 				if (email == null || email.trim().length() == 0) {
 					errorMsgs.add("郵件請勿空白");
 				}
+
 				String account = req.getParameter("account").trim();
 				if (account == null || account.trim().length() == 0) {
 					errorMsgs.add("帳號請勿空白");
 				}
+
 				String password = req.getParameter("password").trim();
 				if (password == null || password.trim().length() == 0) {
 					errorMsgs.add("密碼請勿空白");
 				}
+
 				String nickname = req.getParameter("nickname").trim();
 				if (nickname == null || nickname.trim().length() == 0) {
 					errorMsgs.add("暱稱請勿空白");
@@ -147,6 +151,7 @@ public class MemberServlet extends HttpServlet {
 					errorMsgs.add("姓名: 請勿空白");
 //				} else if (!nameReg.trim().matches(nameReg)) { // 以下練習正則(規)表示式(regular-expression)
 //					errorMsgs.add("姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+
 				}
 				String phone = req.getParameter("phone").trim();
 				if (phone == null || phone.trim().length() == 0) {
@@ -157,6 +162,7 @@ public class MemberServlet extends HttpServlet {
 					gender = new Integer(req.getParameter("gender").trim());
 				} catch (NumberFormatException e) {
 					gender = 0;
+
 					errorMsgs.add("性別");
 				}
 
@@ -175,6 +181,7 @@ public class MemberServlet extends HttpServlet {
 				String code = req.getParameter("code").trim();
 				if (code == null || code.trim().length() == 0) {
 					errorMsgs.add("郵遞區號請勿空白");
+
 				}
 //				byte[] avatar = CommonUtil.getPictureByteArray("/CFA104G3/src/main/webapp/asset/img/avatar.gif");
 				InputStream in = req.getPart("avatar").getInputStream();
@@ -188,6 +195,7 @@ public class MemberServlet extends HttpServlet {
 					errorMsgs.add("請上傳圖片");
 				}
 				Date registerDate = null;
+
 				try {
 					registerDate = java.sql.Date.valueOf(req.getParameter("registerDate").trim());
 				} catch (IllegalArgumentException e) {
@@ -197,7 +205,6 @@ public class MemberServlet extends HttpServlet {
 
 				Timestamp timestamp = new Timestamp(registerDate.getTime());
 
-				
 
 				Integer status = null;
 				try {
@@ -210,7 +217,7 @@ public class MemberServlet extends HttpServlet {
 				MemberVO memberVO = new MemberVO();
 				memberVO = new MemberVO();
 
-//				memberVO.setId(id);
+
 				memberVO.setEmail(email);
 				memberVO.setAccount(account);
 				memberVO.setPassword(password);
@@ -237,6 +244,7 @@ public class MemberServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 *****************************************/
 				MemberServiceImpl memberSvc = new MemberServiceImpl();
+
 				memberVO = memberSvc.update( email, account, password, nickname, name, phone, gender, city, cityArea,
 						address, code, avatar, timestamp, status);
 
@@ -244,12 +252,13 @@ public class MemberServlet extends HttpServlet {
 				req.setAttribute("memberVO", memberVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/back_end/member/listOneMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/member/update_member_input.jsp");
+
 				failureView.forward(req, res);
 			}
 		}
@@ -259,23 +268,28 @@ public class MemberServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
+
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+
 //				Integer id = new Integer(req.getParameter("id").trim());
 				String email = req.getParameter("email").trim();
 				if (email == null || email.trim().length() == 0) {
 					errorMsgs.add("郵件請勿空白");
 				}
+
 				String account = req.getParameter("account").trim();
 				if (account == null || account.trim().length() == 0) {
 					errorMsgs.add("帳號請勿空白");
 				}
+
 				String password = req.getParameter("password").trim();
 				if (password == null || password.trim().length() == 0) {
 					errorMsgs.add("密碼請勿空白");
 				}
+
 				String nickname = req.getParameter("nickname").trim();
 				if (nickname == null || nickname.trim().length() == 0) {
 					errorMsgs.add("暱稱請勿空白");
@@ -286,6 +300,7 @@ public class MemberServlet extends HttpServlet {
 					errorMsgs.add("姓名: 請勿空白");
 				} else if (!name.trim().matches(nameReg)) {
 					errorMsgs.add("姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+
 				}
 				String phone = req.getParameter("phone").trim();
 				if (phone == null || phone.trim().length() == 0) {
@@ -296,8 +311,6 @@ public class MemberServlet extends HttpServlet {
 					gender = new Integer(req.getParameter("gender").trim());
 				} catch (NumberFormatException e) {
 					gender = 0;
-					errorMsgs.add("性別");
-				}
 
 				String city = req.getParameter("city").trim();
 				if (city == null || city.trim().length() == 0) {
@@ -311,6 +324,7 @@ public class MemberServlet extends HttpServlet {
 				if (address == null || address.trim().length() == 0) {
 					errorMsgs.add("地址請勿空白");
 				}
+
 				String code = req.getParameter("code").trim();
 				if (code == null || code.trim().length() == 0) {
 					errorMsgs.add("郵遞區號請勿空白");
@@ -347,6 +361,7 @@ public class MemberServlet extends HttpServlet {
 				memberVO = new MemberVO();
 
 //				memberVO.setId(id);
+
 				memberVO.setEmail(email);
 				memberVO.setAccount(account);
 				memberVO.setPassword(password);
@@ -359,12 +374,14 @@ public class MemberServlet extends HttpServlet {
 				memberVO.setAddress(address);
 				memberVO.setCode(code);
 				memberVO.setAvatar(avatar);
+
 				memberVO.setRegisterDate(registerDate);
 				memberVO.setStatus(status);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的empVO物件,也存入req
+
 					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/member/addMember.jsp");
 					failureView.forward(req, res);
 					return;
