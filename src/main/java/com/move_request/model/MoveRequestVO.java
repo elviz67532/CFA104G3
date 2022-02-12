@@ -23,5 +23,4 @@ public class MoveRequestVO implements Serializable {
 	private Timestamp requestDate;
 	private int status;
 	private Boolean handled;
-	
 }

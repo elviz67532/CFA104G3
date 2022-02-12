@@ -3,6 +3,8 @@ package com.move_order.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.move_request.model.MoveRequestVO;
+
 public interface MoveOrderService {
 
 	MoveOrderVO addMoveOrder(Integer memberId, String customer, String phone, String fromAddress, String toAddress,
@@ -18,5 +20,7 @@ public interface MoveOrderService {
 	MoveOrderVO getOneMoveOrder(Integer id);
 
 	List<MoveOrderVO> getAll();
+
+	boolean getDataFromRequest(MoveRequestVO moveRequestVO, int deposit);
 
 }
