@@ -36,28 +36,30 @@ public class ActivityAttendServlet extends HttpServlet {
 
 				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-					Integer memberId =new Integer(req.getParameter("memberId").trim());
-					if(memberId==null) {
+//參與會員編號					
+					int memberId =Integer.valueOf(req.getParameter("memberId"));
+					if(memberId==0) {
 						errorMsgs.add("參與會員編號請勿空白");
 					}
-
-					Integer activityId = new Integer(req.getParameter("activityId").trim());
-					if(activityId==null) {
+//參與活動編號
+					int activityId = Integer.valueOf(req.getParameter("activityId"));
+					if(activityId==0) {
 						errorMsgs.add("參與活動編號請勿空白");
 					}
+//評論內容(活動結束後)					
 					String comment = req.getParameter("comment").trim();
 					if (comment == null || comment.trim().length() == 0) {
 						errorMsgs.add("評論內容請勿空白");
 					}
-					
+//活動內容備註(報名時)					
 					String note = req.getParameter("note").trim();
 					if (note == null || note.trim().length() == 0) {
 						errorMsgs.add("活動內容備註請勿空白");
 					}
-					
-					Integer status = new Integer(req.getParameter("status").trim());
-					if(status==null) {
-						errorMsgs.add("付款狀態請勿空白");
+//付款狀態					
+					int status = Integer.valueOf(req.getParameter("status"));
+					if(status==-1) {
+						errorMsgs.add("請選擇付款狀態");
 					}
 
 					ActivityAttendVO actaVO = new ActivityAttendVO();
@@ -71,7 +73,7 @@ public class ActivityAttendServlet extends HttpServlet {
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("actaVO", actaVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("	");
+								.getRequestDispatcher("/back_end/activity/addAttend.jsp");
 						failureView.forward(req, res);
 						return;
 					}

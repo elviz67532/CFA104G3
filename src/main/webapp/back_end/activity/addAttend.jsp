@@ -1,74 +1,58 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
---%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
---%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.activity_attend.model.*"%>
---%>
 
-<%ActivityAttendVO actaVO = (ActivityAttendVO) request.getAttribute("actaVO");%>
+<%
+	ActivityAttendVO actaVO = (ActivityAttendVO) request.getAttribute("actaVO");
+	%>
 
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>¬¡°Ê³ø¦W¸ê®Æ·s¼W - addAttend.jsp</title>
-
-<style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-* /
-   table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-*
-/
-</style>
-
-<style>
-table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-}
-
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
-
-th, td {
-	padding: 1px;
-}
-</style>
-
+  <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>å§”åŸŸ</title>
+    <link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet"
+        type="text/css" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+        rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
 </head>
-<body bgcolor='white'>
+<body>
 
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>­û¤u¸ê®Æ·s¼W - addAttend.jsp</h3>
-			</td>
-			<td></td>
-		</tr>
-	</table>
+	  <!-- Navigation-->
+    <!-- nav -->
+	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
-	-
-	<h3>¬¡°Ê³ø¦W¸ê®Æ·s¼W:</h3>
+    <!-- Page Header-->
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/activity01.jpg')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>æ´»å‹•</h1>
+                        <span class="subheading">èˆ‡å¤§å®¶åŒæ¨‚</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-	<%-- ¿ù»~ªí¦C --%>
+
+	<h3>æ´»å‹•å ±åè³‡æ–™æ–°å¢:</h3>
+
+	<%-- éŒ¯èª¤è¡¨åˆ— --%>
 	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+		<font style="color: red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 		<ul>
 			<c:forEach var="message" items="${errorMsgs}">
 				<li style="color: red">${message}</li>
@@ -79,36 +63,58 @@ th, td {
 	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" name="form1">
 		<table>
 			<tr>
-				<td>°Ñ»P·|­û½s¸¹:</td>
+				<td>åƒèˆ‡æœƒå“¡ç·¨è™Ÿ:</td>
 				<td><input type="TEXT" name="memberId" size="45"
 					value="<%=(actaVO == null) ? "7" : actaVO.getMemberId()%>" /></td>
 			</tr>
 			<tr>
-				<td>°Ñ»P¬¡°Ê½s¸¹:</td>
+				<td>åƒèˆ‡æ´»å‹•ç·¨è™Ÿ:</td>
 				<td><input type="TEXT" name="activityId" size="45"
 					value="<%=(actaVO == null) ? "1005" : actaVO.getActivityId()%>" /></td>
 			</tr>
 			<tr>
-				<td>µû½×¤º®e:</td>
+				<td>è©•è«–å…§å®¹:</td>
 				<td><input type="TEXT" name="comment" size="45"
-					value="<%=(actaVO == null)?"¤£¦nª±":actaVO.getComment() %>" /></td>
+					value="<%=(actaVO == null)?"ä¸å¥½ç©":actaVO.getComment() %>" /></td>
 			</tr>
 			<tr>
-				<td>¬¡°Ê¤º®e³Æµù:</td>
+				<td>æ´»å‹•å…§å®¹å‚™è¨»:</td>
 				<td><input type="TEXT" name="note" size="45"
-					value="<%=(actaVO== null)?"¦ò±Ğ®{" : actaVO.getNote()%>" /></td>
+					value="<%=(actaVO== null)?"ä½›æ•™å¾’" : actaVO.getNote()%>" /></td>
 			</tr>
 			<tr>
-				<td>¥I´Úª¬ºA:</td>
-				<td><input type="TEXT" name="status" size="45"
-					value="<%=(actaVO == null) ? "1" : actaVO.getStatus()%>" /></td>
-			</tr>
+<!-- 				<td>ä»˜æ¬¾ç‹€æ…‹:</td> -->
+<!-- 				<td><input type="TEXT" name="status" size="45" -->
+<%-- 					value="<%=(actaVO == null) ? "1" : actaVO.getStatus()%>" /></td> --%>				
+<!-- 				<select name="status"> -->
+<%--    					<option value="<%=(actaVO == null) ? "0" : actaVO.getStatus()%>">æœªä»˜æ¬¾</option> --%>
+<%--    					<option value="<%=(actaVO == null) ? "1" : actaVO.getStatus()%>">å·²ä»˜æ¬¾</option> --%>
+<!-- 				</select>	 -->
+<!-- 			</tr> -->
+
+			<tr>
+		<td>ä»˜æ¬¾ç‹€æ…‹:<font color=red><b>*</b></font></td>
+		<td><select size="1" name="status">
+				<option value="-1">è«‹é¸æ“‡ä»˜æ¬¾ç‹€æ…‹</option>
+				<option value="0" >æœªä»˜æ¬¾</option>
+   				<option value="1">å·²ä»˜æ¬¾</option>
+					
+		</select></td>
+		</tr>
+			
+			
 			
 		</table>
 		<br> 
 		<input type="hidden" name="action" value="insert">
-		 <input	type="submit" value="°e¥X·s¼W">
+		 <input	type="submit" value="é€å‡ºæ–°å¢">
 	</FORM>
-
+ 
+    <!-- Footer-->
+   	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
 </body>
 </html>

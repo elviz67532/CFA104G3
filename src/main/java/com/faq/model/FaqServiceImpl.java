@@ -1,5 +1,7 @@
 package com.faq.model;
 
+import java.util.List;
+
 public class FaqServiceImpl implements FaqService {
 
 	private FaqDAO dao;
