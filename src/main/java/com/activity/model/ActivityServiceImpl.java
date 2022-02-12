@@ -3,14 +3,13 @@ package com.activity.model;
 import java.sql.Timestamp;
 import java.util.List;
 
-
 public class ActivityServiceImpl implements ActivityService {
 	private ActivityDAO dao;
 
 	public ActivityServiceImpl() {
 		dao = new ActivityDAOJDBCImpl();
 	}
-
+//123454564564545664
 	@Override
 	public ActivityVO addAct(Integer type, String name, String content, Timestamp applyStartDate,
 			Timestamp applyEndDate, String location, Integer cost, Integer maxMember,
@@ -48,7 +47,7 @@ public class ActivityServiceImpl implements ActivityService {
 
 	@Override
 	public ActivityVO findByActivityId(Integer activityId) {
-		return dao.selectById(activityId); 
+		return dao.selectById(activityId);
 	}
 
 	@Override
