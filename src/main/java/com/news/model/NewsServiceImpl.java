@@ -1,6 +1,9 @@
 package com.news.model;
 
-public class NewsServiceImpl implements NewsService {
+import java.sql.Timestamp;
+import java.util.List;
+
+public class NewsServiceImpl {
 
 	private NewsDAO dao;
 
