@@ -6,7 +6,7 @@
 <%@	page import="com.product.model.*"%>
 <%
 	ProductServiceImpl productService = new ProductServiceImpl();
-	List<ProductVO> list = productService.getAll();
+	List<ProductVO> list = productService.getProductsByType(2);
 	pageContext.setAttribute("list", list);
 %>
 <jsp:useBean id="photoSvc" scope="page" class="com.product_photo.model.ProductPhotoServiceImpl" />
