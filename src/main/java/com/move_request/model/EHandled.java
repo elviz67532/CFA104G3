@@ -21,15 +21,15 @@ public enum EHandled {
 	}
 
 	public static EHandled parseCode(Boolean handledCode) {
-		EHandled status = null;
+		EHandled handled = null;
 		for (EHandled e : EHandled.values()) {
 			if (e.handledCode == handledCode) {
-				status = e;
+				handled = e;
 			}
 		}
-		if (status == null) {
+		if (handled == null) {
 			throw new IllegalArgumentException("illegal statusCode=" + handledCode);
 		}
-		return status;
+		return handled;
 	}
 }
