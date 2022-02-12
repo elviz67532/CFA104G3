@@ -8,3 +8,14 @@
 		margin: auto;
 	}
 }
+.imgid{
+	max-width:25%;
+	border: solid black 2px;
+}
+
+@media screen and (max-width:768px){
+	.imgid{
+		max-width:100%;
+		border: solid black 2px;
+	}
+}
