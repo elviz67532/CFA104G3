@@ -10,7 +10,7 @@ public interface ActivityService {
 			Timestamp applyStartDate, Timestamp applyEndDate, String location,
 			Integer cost, Integer maxMember,Integer minMember, Timestamp startDate, 
 			Timestamp endDate);
-	
+//1231321
 	//編輯活動
     public ActivityVO updateAct(Timestamp applyEndDate, String location,
     		Integer applyMemberExisting, Integer maxMember,
