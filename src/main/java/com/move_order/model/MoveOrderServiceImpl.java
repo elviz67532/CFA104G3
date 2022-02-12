@@ -82,6 +82,7 @@ public class MoveOrderServiceImpl implements MoveOrderService {
 		return dao.selectAll();
 	}
 	
+	//從迤邐那邊找資料
 	@Override
 	public boolean getDataFromRequest(MoveRequestVO moveRequestVO, int deposit) {
 
