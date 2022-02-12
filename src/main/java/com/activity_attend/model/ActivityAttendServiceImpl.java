@@ -49,7 +49,7 @@ public class ActivityAttendServiceImpl implements ActivityAttendService {
 	}
 
 	@Override
-	public List<ActivityAttendVO> getAll() {//0000000000
+	public List<ActivityAttendVO> getAll() {    //test
 		return dao.selectAll();
 	}
 }
