@@ -9,7 +9,7 @@ public class ActivityServiceImpl implements ActivityService {
 	public ActivityServiceImpl() {
 		dao = new ActivityDAOJDBCImpl();
 	}
-//123454564564545664
+//12313
 	@Override
 	public ActivityVO addAct(Integer type, String name, String content, Timestamp applyStartDate,
 			Timestamp applyEndDate, String location, Integer cost, Integer maxMember,
