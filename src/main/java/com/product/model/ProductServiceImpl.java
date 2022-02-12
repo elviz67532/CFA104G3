@@ -67,4 +67,5 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductVO> getProductsByType(Integer prodType) {
 		return dao.getProductsByType(prodType);
 	}
+	
 }
