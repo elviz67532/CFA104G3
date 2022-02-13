@@ -11,6 +11,12 @@ import java.util.List;
 import core.util.SQLUtil;
 
 public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
+
+	String driver = "com.mysql.cj.jdbc.Driver";
+	String url = "jdbc:mysql://localhost:3306/CFA104G3?serverTimezone=Asia/Taipei";
+	String userid = "root";
+	String passwd = "password";
+
 	private static final String GET_ALL_STMT = "select * from PRODUCT_ORDER order by PRODO_ID";
 	private static final String GET_ONE_STMT = "select * from PRODUCT_ORDER where PRODO_ID = ?";
 	private static final String INSERT_STMT = "insert into PRODUCT_ORDER"
@@ -30,7 +36,7 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 	}
 
 	@Override
-	public int insert(ProductOrderVO vo) {
+	public int insert(ProductOrderVO peroductOrderVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int insertedRow;
@@ -39,17 +45,17 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, vo.getId());
-			pstmt.setInt(2, vo.getProductId());
-			pstmt.setInt(3, vo.getCustomerMemberId());
-			pstmt.setInt(4, vo.getSellerMemberId());
-			pstmt.setString(5, vo.getProductName());
-			pstmt.setString(6, vo.getPhone());
-			pstmt.setString(7, vo.getAddress());
-			pstmt.setTimestamp(8, vo.getDate());
-			pstmt.setInt(9, vo.getAmountOfProduct());
-			pstmt.setInt(10, vo.getStatus());
-			pstmt.setInt(11, vo.getAmountOfPrice());
+			pstmt.setInt(1, peroductOrderVO.getId());
+			pstmt.setInt(2, peroductOrderVO.getProductId());
+			pstmt.setInt(3, peroductOrderVO.getCustomerMemberId());
+			pstmt.setInt(4, peroductOrderVO.getSellerMemberId());
+			pstmt.setString(5, peroductOrderVO.getProductName());
+			pstmt.setString(6, peroductOrderVO.getPhone());
+			pstmt.setString(7, peroductOrderVO.getAddress());
+			pstmt.setTimestamp(8, peroductOrderVO.getDate());
+			pstmt.setInt(9, peroductOrderVO.getAmountOfProduct());
+			pstmt.setInt(10, peroductOrderVO.getStatus());
+			pstmt.setInt(11, peroductOrderVO.getAmountOfPrice());
 
 			insertedRow = pstmt.executeUpdate();
 		} catch (SQLException se) {
@@ -84,7 +90,7 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 	}
 
 	@Override
-	public int update(ProductOrderVO vo) {
+	public int update(ProductOrderVO peroductOrderVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int updateRow;
@@ -93,14 +99,14 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, vo.getProductName());
-			pstmt.setString(2, vo.getPhone());
-			pstmt.setString(3, vo.getAddress());
-			pstmt.setTimestamp(4, vo.getDate());
-			pstmt.setInt(5, vo.getAmountOfProduct());
-			pstmt.setInt(6, vo.getStatus());
-			pstmt.setInt(7, vo.getAmountOfPrice());
-			pstmt.setInt(8, vo.getId());
+			pstmt.setString(1, peroductOrderVO.getProductName());
+			pstmt.setString(2, peroductOrderVO.getPhone());
+			pstmt.setString(3, peroductOrderVO.getAddress());
+			pstmt.setTimestamp(4, peroductOrderVO.getDate());
+			pstmt.setInt(5, peroductOrderVO.getAmountOfProduct());
+			pstmt.setInt(6, peroductOrderVO.getStatus());
+			pstmt.setInt(7, peroductOrderVO.getAmountOfPrice());
+			pstmt.setInt(8, peroductOrderVO.getId());
 
 			updateRow = pstmt.executeUpdate();
 		} catch (SQLException se) {
@@ -114,7 +120,7 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 
 	@Override
 	public ProductOrderVO selectById(Integer id) {
-		ProductOrderVO vo = null;
+		ProductOrderVO peroductOrderVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -128,18 +134,18 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				vo = new ProductOrderVO();
-				vo.setId(rs.getInt("PRODO_ID"));
-				vo.setProductId(rs.getInt("PRODO_PROD_ID"));
-				vo.setCustomerMemberId(rs.getInt("PRODO_MBUY_ID"));
-				vo.setSellerMemberId(rs.getInt("PRODO_MSELL_ID"));
-				vo.setProductName(rs.getString("PRODO_NAME"));
-				vo.setPhone(rs.getString("PRODO_MOBILE"));
-				vo.setAddress(rs.getString("PRODO_ADDRESS"));
-				vo.setDate(rs.getTimestamp("PRODO_DATE"));
-				vo.setAmountOfProduct(rs.getInt("PRODO_AMOUNT"));
-				vo.setStatus(rs.getInt("PRODO_STATUS"));
-				vo.setAmountOfPrice(rs.getInt("PRODO_SUM"));
+				peroductOrderVO = new ProductOrderVO();
+				peroductOrderVO.setId(rs.getInt("PRODO_ID"));
+				peroductOrderVO.setProductId(rs.getInt("PRODO_PROD_ID"));
+				peroductOrderVO.setCustomerMemberId(rs.getInt("PRODO_MBUY_ID"));
+				peroductOrderVO.setSellerMemberId(rs.getInt("PRODO_MSELL_ID"));
+				peroductOrderVO.setProductName(rs.getString("PRODO_NAME"));
+				peroductOrderVO.setPhone(rs.getString("PRODO_MOBILE"));
+				peroductOrderVO.setAddress(rs.getString("PRODO_ADDRESS"));
+				peroductOrderVO.setDate(rs.getTimestamp("PRODO_DATE"));
+				peroductOrderVO.setAmountOfProduct(rs.getInt("PRODO_AMOUNT"));
+				peroductOrderVO.setStatus(rs.getInt("PRODO_STATUS"));
+				peroductOrderVO.setAmountOfPrice(rs.getInt("PRODO_SUM"));
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -147,13 +153,13 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 			SQLUtil.closeResource(con, pstmt, rs);
 		}
 
-		return vo;
+		return peroductOrderVO;
 	}
 
 	@Override
 	public List<ProductOrderVO> selectAll() {
 		List<ProductOrderVO> list = new ArrayList<ProductOrderVO>();
-		ProductOrderVO vo = null;
+		ProductOrderVO peroductOrderVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -165,19 +171,19 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				vo = new ProductOrderVO();
-				vo.setId(rs.getInt("PRODO_ID"));
-				vo.setProductId(rs.getInt("PRODO_PROD_ID"));
-				vo.setCustomerMemberId(rs.getInt("PRODO_MBUY_ID"));
-				vo.setSellerMemberId(rs.getInt("PRODO_MSELL_ID"));
-				vo.setProductName(rs.getString("PRODO_NAME"));
-				vo.setPhone(rs.getString("PRODO_MOBILE"));
-				vo.setAddress(rs.getString("PRODO_ADDRESS"));
-				vo.setDate(rs.getTimestamp("PRODO_DATE"));
-				vo.setAmountOfProduct(rs.getInt("PRODO_AMOUNT"));
-				vo.setStatus(rs.getInt("PRODO_STATUS"));
-				vo.setAmountOfPrice(rs.getInt("PRODO_SUM"));
-				list.add(vo);
+				peroductOrderVO = new ProductOrderVO();
+				peroductOrderVO.setId(rs.getInt("PRODO_ID"));
+				peroductOrderVO.setProductId(rs.getInt("PRODO_PROD_ID"));
+				peroductOrderVO.setCustomerMemberId(rs.getInt("PRODO_MBUY_ID"));
+				peroductOrderVO.setSellerMemberId(rs.getInt("PRODO_MSELL_ID"));
+				peroductOrderVO.setProductName(rs.getString("PRODO_NAME"));
+				peroductOrderVO.setPhone(rs.getString("PRODO_MOBILE"));
+				peroductOrderVO.setAddress(rs.getString("PRODO_ADDRESS"));
+				peroductOrderVO.setDate(rs.getTimestamp("PRODO_DATE"));
+				peroductOrderVO.setAmountOfProduct(rs.getInt("PRODO_AMOUNT"));
+				peroductOrderVO.setStatus(rs.getInt("PRODO_STATUS"));
+				peroductOrderVO.setAmountOfPrice(rs.getInt("PRODO_SUM"));
+				list.add(peroductOrderVO);
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -187,16 +193,17 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 
 		return list;
 	}
-	
+
 	@Override
 	public List<ProductOrderVO> getAll() {
-		// TODO 
+
 		return null;
 	}
 
 	@Override
 	public ProductOrderVO findByPrimaryKey(Integer id) {
-		// TODO 
+
 		return null;
 	}
+
 }
