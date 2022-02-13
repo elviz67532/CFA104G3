@@ -105,5 +105,14 @@
     <url-pattern>/product_photo/DBGifReader2</url-pattern>
   </servlet-mapping>	
 
+  <!-- server manager -->
+  <servlet>
+    <servlet-name>ServerManagerServlet</servlet-name>
+    <servlet-class>com.server_manager.controller.ServerManagerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServerManagerServlet</servlet-name>
+    <url-pattern>/server_manager/ServerManagerServlet</url-pattern>
+  </servlet-mapping>	  
 
 </web-app>
