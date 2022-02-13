@@ -1,12 +1,10 @@
 package core.util;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.net.URLDecoder;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class CommonUtil {
@@ -18,5 +16,14 @@ public class CommonUtil {
 		fis.read(buffer);
 		fis.close();
 		return buffer;
+	}
+	
+	public static String jsonParse(BufferedReader reader) throws IOException {
+		String input = null;
+        StringBuilder requestBody = new StringBuilder();
+        while((input = reader.readLine()) != null) {
+            requestBody.append(URLDecoder.decode(input,"UTF-8"));
+        }
+        return requestBody.toString();
 	}
 }
