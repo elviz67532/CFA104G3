@@ -78,4 +78,32 @@
 		<url-pattern>/news/NewsServlet</url-pattern>
 	</servlet-mapping>
 
+  <servlet>
+    <servlet-name>ProductServlet</servlet-name>
+    <servlet-class>com.product.controller.ProductServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductServlet</servlet-name>
+    <url-pattern>/product/ProductServlet</url-pattern>
+  </servlet-mapping>	
+  
+  <servlet>
+    <servlet-name>ProductPhotoServlet</servlet-name>
+    <servlet-class>com.product_photo.controller.ProductPhotoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductPhotoServlet</servlet-name>
+    <url-pattern>/product_photo/ProductPhotoServlet</url-pattern>
+  </servlet-mapping>	  
+  
+  <servlet>
+    <servlet-name>DBGifReader2</servlet-name>
+    <servlet-class>com.product_photo.controller.DBGifReader2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReader2</servlet-name>
+    <url-pattern>/product_photo/DBGifReader2</url-pattern>
+  </servlet-mapping>	
+
+
 </web-app>
