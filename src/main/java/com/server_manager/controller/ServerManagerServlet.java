@@ -27,14 +27,10 @@ public class ServerManagerServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-
-		if("test".equals(action)) {
-			System.out.println("I entered it.");
-		}
 		
-		if ("loginhandler".equals(action)) { // 管理員登入
+		if ("loginhandler".equals(action)) {
 			
-//			System.out.println("我進來loginhandler");//
+//			System.out.println("我進來loginhandler");
 			List<String> errMsgs = new LinkedList<String>();
 			req.setAttribute("errMsgs", errMsgs);
 
@@ -45,13 +41,13 @@ public class ServerManagerServlet extends HttpServlet {
 				String account = req.getParameter("account");
 				String password = req.getParameter("password");
 				
-				// 用戶登入失敗
+				// 【用戶登入失敗】
 				if(account == null || account.trim().length() == 0) {
 					errMsgs.add("用戶名不可為空，請您輸入");
 				}
 				if(!errMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/server_manager/loginServerManager.jsp");
+							.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
 					failureView.forward(req, res);
 					return;					
 				}
@@ -60,7 +56,7 @@ public class ServerManagerServlet extends HttpServlet {
 				}
 				if(!errMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/server_manager/loginServerManager.jsp");
+							.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
 					failureView.forward(req, res);
 					return;					
 				}	
@@ -68,19 +64,12 @@ public class ServerManagerServlet extends HttpServlet {
 				// 【檢查該帳號 , 密碼是否有效】
 				System.out.println("開始檢查該帳號");
 				if (!allowUser(account, password)) { // 【帳號 , 密碼無效時】
-//				    PrintWriter out = res.getWriter();
-//					out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-//					out.println("<BODY>你的帳號 , 密碼無效!<BR>");
-//					out.println("請按此重新登入 <A HREF=" + req.getContextPath() + "/login.html>重新登入</A>");
-//					out.println("</BODY></HTML>");
 					errMsgs.add("你的帳號 , 密碼無效!");
-					
-					
 				} else { // 【帳號 , 密碼有效時, 才做以下工作】
 					HttpSession session = req.getSession();
+					//【取得session】
 					session.setAttribute("account", account); // *工作1: 才在session內做已經登入過的標識
-//					System.out.println("取得session了");
-					
+					System.out.println("取得session了");
 					try {
 						String location = (String) session.getAttribute("location");
 						if (location != null) { 
@@ -90,8 +79,7 @@ public class ServerManagerServlet extends HttpServlet {
 						}
 					} catch (Exception ignored) {
 					}
-
-					res.sendRedirect(req.getContextPath() + "/back_end/server_manager/login_success.jsp"); // *工作3:
+					res.sendRedirect(req.getContextPath() + "/back_end/server_manager/serverManagerHom.jsp"); // *工作3:
 																					// (-->如無來源網頁:則重導至login_success.jsp)
 				}
 			} catch (IOException e) {
@@ -211,7 +199,10 @@ public class ServerManagerServlet extends HttpServlet {
 	
 	public static void main(String[] args) {
 		String pwd = DBPassword("tomcat");
-		System.out.println(pwd);
+		//System.out.println("password:" + pwd);
+		
+		// 測試時記得加上static
+		//System.out.println("allowuser: " + allowUser("tomcat", DBPassword("tomcat"))); 
 	}
 
 }

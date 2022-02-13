@@ -19,7 +19,8 @@ public class ServerManagerDAOJDBCImpl implements ServerManagerDAO {
 	public static final String DELETE_STMT = "DELETE FROM SERVERMANAGER WHERE SMGR_ID=?";
 	public static final String FIND_BY_PRIMARY_KEY = "SELECT * FROM SERVERMANAGER WHERE SMGR_ID=?";
 	public static final String GET_ALL = "SELECT * FROM SERVERMANAGER";
-
+	public static final String FIND_BY_ACCOUNT = "SELECT SMGR_PASSWORD FROM SERVERMANAGER WHERE SMGR_ACCOUNT=?";
+	
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -173,5 +174,31 @@ public class ServerManagerDAOJDBCImpl implements ServerManagerDAO {
 		}
 
 		return list;
+	}
+
+	@Override
+	public String findByAccount(String smgrAccount) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String password = null;
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(FIND_BY_ACCOUNT);
+			pstmt.setString(1, smgrAccount);
+			rs = pstmt.executeQuery();
+
+			while(rs.next()) {
+				password = rs.getString("SMGR_PASSWORD");
+				System.out.println(password);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();			
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);			
+		}
+		
+		return password;
 	}
 }
