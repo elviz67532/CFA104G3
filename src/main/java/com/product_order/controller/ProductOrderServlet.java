@@ -101,7 +101,8 @@ public class ProductOrderServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/frontProductOrderMain.jsp");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/product/frontProductOrderMain.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -114,7 +115,8 @@ public class ProductOrderServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/frontProductOrderMain.jsp");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/product/frontProductOrderMain.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -127,7 +129,8 @@ public class ProductOrderServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/frontProductOrderMain.jsp");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/product/frontProductOrderMain.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -141,7 +144,8 @@ public class ProductOrderServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/frontProductOrderMain.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front_end/product/frontProductOrderMain.jsp");
 				failureView.forward(req, res);
 			}
 		}

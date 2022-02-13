@@ -24,6 +24,7 @@ public interface ProductOrderDAO extends CoreDao<ProductOrderVO, Integer> {
 
 //	public ProductOrderVO findById(Integer id);
 
+
 	List<ProductOrderVO> getAll();
 
 }
