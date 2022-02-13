@@ -7,4 +7,6 @@ public interface MemberService {
 
 	MemberVO forgetpassword(String email);
 
+	MemberVO updateMember(MemberVO memberVO);
+
 }

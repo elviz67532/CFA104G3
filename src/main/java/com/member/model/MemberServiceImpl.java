@@ -86,4 +86,9 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO getOneMemberByName(String name) {
 		return dao.findByName(name);
 	}
+	@Override
+	public MemberVO updateMember(MemberVO memberVO) {
+		dao.update(memberVO);
+		return memberVO;
+	}
 }
