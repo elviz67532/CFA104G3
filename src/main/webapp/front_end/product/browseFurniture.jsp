@@ -124,10 +124,10 @@
 				  <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
 				    總覽
 				  </a>
-				  <a href="BrowseElec.jsp"  name="prodType" value=4 class="list-group-item list-group-item-action">電器類</a>
+				  <a href="browseElec.jsp"  name="prodType" value=4 class="list-group-item list-group-item-action">電器類</a>
 				  
-				  <a href="BrowseFurniture.jsp" class="list-group-item list-group-item-action">寢具</a>
-				  <a href="BrowseOthers.jsp" class="list-group-item list-group-item-action">其他</a>
+				  <a href="browseFurniture.jsp" class="list-group-item list-group-item-action">寢具</a>
+				  <a href="browseOthers.jsp" class="list-group-item list-group-item-action">其他</a>
 				  <a href="#" class="list-group-item list-group-item-action" tabindex="-1" aria-disabled="true">A disabled link item</a>
 				</FORM>
 			</div>
