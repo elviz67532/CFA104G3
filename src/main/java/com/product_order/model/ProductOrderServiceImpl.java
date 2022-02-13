@@ -3,6 +3,8 @@ package com.product_order.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.product.model.ProductVO;
+
 public class ProductOrderServiceImpl implements ProductOrderService {
 
 	private ProductOrderDAO dao;
@@ -11,59 +13,80 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 		dao = new ProductOrderDAOJDBCImpl();
 	}
 
+	@Override
 	public ProductOrderVO addProductOrder(Integer productId, Integer customerMemberId, Integer sellerMemberId,
 			String productName, String phone, String address, Timestamp date, Integer amountOfProduct, Integer status,
 			Integer amountOfPrice) {
 
-		ProductOrderVO peroductOrderVO = new ProductOrderVO();
+		ProductOrderVO vo = new ProductOrderVO();
 
-		peroductOrderVO.setProductId(productId);
-		peroductOrderVO.setCustomerMemberId(customerMemberId);
-		peroductOrderVO.setSellerMemberId(sellerMemberId);
-		peroductOrderVO.setProductName(productName);
-		peroductOrderVO.setPhone(phone);
-		peroductOrderVO.setAddress(address);
-		peroductOrderVO.setDate(date);
-		peroductOrderVO.setAmountOfProduct(amountOfProduct);
-		peroductOrderVO.setStatus(status);
-		peroductOrderVO.setAmountOfPrice(amountOfPrice);
+		vo.setProductId(productId);
+		vo.setCustomerMemberId(customerMemberId);
+		vo.setSellerMemberId(sellerMemberId);
+		vo.setProductName(productName);
+		vo.setPhone(phone);
+		vo.setAddress(address);
+		vo.setDate(date);
+		vo.setAmountOfProduct(amountOfProduct);
+		vo.setStatus(status);
+		vo.setAmountOfPrice(amountOfPrice);
 
-		dao.insert(peroductOrderVO);
+		dao.insert(vo);
 
-		return peroductOrderVO;
+		return vo;
 	}
 
+	@Override
 	public ProductOrderVO updateProductOrder(Integer id, Integer productId, Integer customerMemberId,
 			Integer sellerMemberId, String productName, String phone, String address, Timestamp date,
 			Integer amountOfProduct, Integer status, Integer amountOfPrice) {
 
-		ProductOrderVO peroductOrderVO = new ProductOrderVO();
+		ProductOrderVO vo = new ProductOrderVO();
 
-		peroductOrderVO.setId(id);
-		peroductOrderVO.setProductId(productId);
-		peroductOrderVO.setCustomerMemberId(customerMemberId);
-		peroductOrderVO.setSellerMemberId(sellerMemberId);
-		peroductOrderVO.setProductName(productName);
-		peroductOrderVO.setPhone(phone);
-		peroductOrderVO.setAddress(address);
-		peroductOrderVO.setDate(date);
-		peroductOrderVO.setAmountOfProduct(amountOfProduct);
-		peroductOrderVO.setStatus(status);
-		peroductOrderVO.setAmountOfPrice(amountOfPrice);
-		dao.update(peroductOrderVO);
+		vo.setId(id);
+		vo.setProductId(productId);
+		vo.setCustomerMemberId(customerMemberId);
+		vo.setSellerMemberId(sellerMemberId);
+		vo.setProductName(productName);
+		vo.setPhone(phone);
+		vo.setAddress(address);
+		vo.setDate(date);
+		vo.setAmountOfProduct(amountOfProduct);
+		vo.setStatus(status);
+		vo.setAmountOfPrice(amountOfPrice);
 
-		return peroductOrderVO;
+		dao.update(vo);
+
+		System.out.println("商品訂單已修改");
+		return vo;
 	}
 
+	@Override
 	public void deleteProductOrder(Integer id) {
 		dao.deleteById(id);
 	}
 
+	@Override
 	public ProductOrderVO getOneProductOrder(Integer id) {
-		return dao.findByPrimaryKey(id);
+		return dao.selectById(id);
 	}
 
+	@Override
 	public List<ProductOrderVO> getAll() {
-		return dao.getAll();
+		return dao.selectAll();
 	}
+
+	
+//	@Override
+//	public boolean getDataFromProduct(ProductVO productVO) {
+//
+//		ProductOrderVO vo = new ProductOrderVO();
+//
+//		vo.setId(ProductVO.getProductId());
+//		vo.setSellerMemberId(ProductVO.getSellerMemberId());
+//
+//		dao.insert(vo);
+//
+//		return true;
+//	}
 }

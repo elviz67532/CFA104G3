@@ -1,5 +1,7 @@
 package com.move_photo.model;
 
+import java.util.List;
+
 public class MovePhotoServiceImpl implements MovePhotoService {
 	private MovePhotoDAO movePhotoDao = new MovePhotoDAOJDBCImpl();
 
@@ -11,5 +13,10 @@ public class MovePhotoServiceImpl implements MovePhotoService {
 		int insert = movePhotoDao.insert(photoVo);
 		boolean ok = insert > 0; 
 		return ok;
+	}
+
+	@Override
+	public List<MovePhotoVO> findAllPhotosByRequestId(int RequestId) {
+		return movePhotoDao.findAllPhotosByRequestId(RequestId);
 	}
 }

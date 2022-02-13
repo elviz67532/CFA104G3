@@ -17,7 +17,9 @@ public class MovePhotoDAOJDBCImpl implements MovePhotoDAO {
 	private static final String INSERT_STMT = "insert into MOVE_PHOTO(MOP_MS_ID, MS_PHOTO) values(?, ?)";
 	private static final String DELETE_STMT = "delete from MOVE_PHOTO where MOP_ID = ?";
 	private static final String UPDATE_STMT = "update MOVE_PHOTO set MOP_MS_ID = ?, MS_PHOTO = ? where MOP_ID = ?";
-
+	//------------------------------------------------
+	private static final String GET_ALL_BY_REQUEST_ID_STMT = "select * from MOVE_PHOTO where MOP_MS_ID = ?";
+	
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -136,6 +138,37 @@ public class MovePhotoDAOJDBCImpl implements MovePhotoDAO {
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				movePhotoVO = new MovePhotoVO();
+				movePhotoVO.setId(rs.getInt("MOP_ID"));
+				movePhotoVO.setMoveRequestId(rs.getInt("MOP_MS_ID"));
+				movePhotoVO.setPhoto(rs.getBytes("MS_PHOTO"));
+				list.add(movePhotoVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+		return list;
+	}
+
+	@Override
+	public List<MovePhotoVO> findAllPhotosByRequestId(int requestId) {
+		List<MovePhotoVO> list = new ArrayList<MovePhotoVO>();
+		MovePhotoVO movePhotoVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(GET_ALL_BY_REQUEST_ID_STMT);
+			
+			pstmt.setInt(1, requestId);
+			
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

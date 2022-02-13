@@ -11,16 +11,17 @@ import java.util.List;
 import core.util.SQLUtil;
 
 public class ActivityDAOJDBCImpl implements ActivityDAO {
-	private static final String GET_ALL_STMT = "select * from ACTIVITY";
-	private static final String GET_ONE_STMT = "select * from ACTIVITY where ACT_ID = ?";
 	private static final String INSERT_STMT = "insert into  ACTIVITY"
 			+ "(ACT_ORGANIZER_MEM_ID, ACT_TYPE, ACT_NAME, ACT_CONTENT, ACT_LAUNCHTIME, ACT_APPLY_STARTTIME, ACT_APPLY_ENDTIME, ACT_LOCATION, ACT_COST, ACT_APPLY_MEM_EXISTING, ACT_MAX_MEM, ACT_MIN_MEM, ACT_STARTTIME, ACT_ENDTIME, ACT_STATUS)"
 			+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String DELETE = "delete from ACTIVITY where ACT_ID = ?";
 	private static final String UPDATE = "update ACTIVITY set "
-			+ "ACT_ORGANIZER_MEM_ID = ?, ACT_TYPE = ?, ACT_NAME = ?, ACT_CONTENT = ?, ACT_LAUNCHTIME = ?, ACT_APPLY_STARTTIME = ?, ACT_APPLY_ENDTIME = ?, ACT_LOCATION = ?, ACT_COST = ?, ACT_APPLY_MEM_EXISTING = ?, ACT_MAX_MEM = ?, ACT_MIN_MEM = ?, ACT_STARTTIME = ?, ACT_ENDTIME = ?, ACT_STATUS = ? "
+			+ "ACT_TYPE = ?, ACT_NAME = ?, ACT_CONTENT = ?, ACT_LAUNCHTIME = ?, ACT_APPLY_ENDTIME = ?, ACT_LOCATION = ?, ACT_APPLY_MEM_EXISTING = ?, ACT_MAX_MEM = ?, ACT_MIN_MEM = ?, ACT_STARTTIME = ?, ACT_ENDTIME = ?, ACT_STATUS = ? "
 			+ "where ACT_ID = ?";
-
+//UPDATE 修改 	ACT_ORGANIZER_MEM_ID = ? , ACT_APPLY_STARTTIME = ?,  ACT_COST = ?,
+	private static final String GET_ONE_STMT = "select * from ACTIVITY where ACT_ID = ?";
+	private static final String GET_ALL_STMT = "select * from ACTIVITY";
+	private static final String DELETE = "delete from ACTIVITY where ACT_ID = ?";
+	
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -33,11 +34,11 @@ public class ActivityDAOJDBCImpl implements ActivityDAO {
 	public int insert(ActivityVO vo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		int insertedRow;
+		int activityId = -1;
 
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
-			pstmt = con.prepareStatement(INSERT_STMT);
+			pstmt = con.prepareStatement(INSERT_STMT , PreparedStatement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, vo.getOrganizerMemberId());
 			pstmt.setInt(2, vo.getType());
@@ -55,14 +56,21 @@ public class ActivityDAOJDBCImpl implements ActivityDAO {
 			pstmt.setTimestamp(14, vo.getEndDate());
 			pstmt.setInt(15, vo.getStatus());
 
-			insertedRow = pstmt.executeUpdate();
+			int insertedRow = pstmt.executeUpdate();
+			//確定PK
+			if(insertedRow > 0) {
+				//找PK
+				ResultSet rs = pstmt.getGeneratedKeys();
+				rs.next();
+				activityId = rs.getInt(1);
+			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			SQLUtil.closeResource(con, pstmt, null);
 		}
 
-		return insertedRow;
+		return activityId;
 	}
 
 	@Override
@@ -91,37 +99,45 @@ public class ActivityDAOJDBCImpl implements ActivityDAO {
 	public int update(ActivityVO vo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		int updateRow;
+		int activityId = -1;
 
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
-			pstmt = con.prepareStatement(UPDATE);
+			//找尋PK
+			pstmt = con.prepareStatement(UPDATE , PreparedStatement.RETURN_GENERATED_KEYS);
 
-			pstmt.setInt(1, vo.getOrganizerMemberId());
-			pstmt.setInt(2, vo.getType());
-			pstmt.setString(3, vo.getName());
-			pstmt.setString(4, vo.getContent());
-			pstmt.setTimestamp(5, vo.getLaunchedDate());
-			pstmt.setTimestamp(6, vo.getApplyStartDate());
-			pstmt.setTimestamp(7, vo.getApplyEndDate());
-			pstmt.setString(8, vo.getLocation());
-			pstmt.setInt(9, vo.getCost());
-			pstmt.setInt(10, vo.getApplyMemberExisting());
-			pstmt.setInt(11, vo.getMaxMember());
-			pstmt.setInt(12, vo.getMinMember());
-			pstmt.setTimestamp(13, vo.getStartDate());
-			pstmt.setTimestamp(14, vo.getEndDate());
-			pstmt.setInt(15, vo.getStatus());
-			pstmt.setInt(16, vo.getActivityId());
+//			pstmt.setInt(1, vo.getOrganizerMemberId());
+//			pstmt.setTimestamp(6, vo.getApplyStartDate());
+//			pstmt.setInt(9, vo.getCost());
+			pstmt.setInt(1, vo.getType());
+			pstmt.setString(2, vo.getName());
+			pstmt.setString(3, vo.getContent());
+			pstmt.setTimestamp(4, vo.getLaunchedDate());
+			pstmt.setTimestamp(5, vo.getApplyEndDate());
+			pstmt.setString(6, vo.getLocation());
+			pstmt.setInt(7, vo.getApplyMemberExisting());
+			pstmt.setInt(8, vo.getMaxMember());
+			pstmt.setInt(9, vo.getMinMember());
+			pstmt.setTimestamp(10, vo.getStartDate());
+			pstmt.setTimestamp(11, vo.getEndDate());
+			pstmt.setInt(12, vo.getStatus());
+			pstmt.setInt(13, vo.getActivityId());
 
-			updateRow = pstmt.executeUpdate();
+			int updateRow = pstmt.executeUpdate();
+			//確定PK
+			if(updateRow > 0) {
+				//找PK
+				ResultSet rs = pstmt.getGeneratedKeys();
+				rs.next();
+				activityId = rs.getInt(1);
+			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			SQLUtil.closeResource(con, pstmt, null);
 		}
 
-		return updateRow;
+		return activityId;
 	}
 
 	@Override
