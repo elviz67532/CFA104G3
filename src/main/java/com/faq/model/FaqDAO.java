@@ -6,8 +6,7 @@ import core.dao.CoreDao;
 
 public interface FaqDAO extends CoreDao<FaqVO, Integer> {
 
-	FaqVO findByPrimaryKey(Integer id);
+	public FaqVO findByPrimaryKey(Integer id);
 
 	List<FaqVO> getAll();
 }
-
