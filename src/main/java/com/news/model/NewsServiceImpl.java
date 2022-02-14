@@ -12,7 +12,7 @@ public class NewsServiceImpl {
 	}
 
 	public NewsVO insert(String content, byte[] image, Timestamp date,
-			Integer type) {
+			Integer type, String title) {
 		NewsVO pojo = new NewsVO();
 
 		
@@ -20,6 +20,7 @@ public class NewsServiceImpl {
 		pojo.setImage(image);
 		pojo.setDate(date);
 		pojo.setType(type);
+		pojo.setTitle(title);
 		dao.insert(pojo);
 
 		return pojo;
@@ -27,7 +28,7 @@ public class NewsServiceImpl {
 	}
 	
 	public NewsVO update(Integer id, String content, byte[] image, Timestamp date,
-			Integer type) {
+			Integer type, String title) {
 		NewsVO pojo = new NewsVO();
 
 		pojo.setId(id);
@@ -35,6 +36,7 @@ public class NewsServiceImpl {
 		pojo.setImage(image);
 		pojo.setDate(date);
 		pojo.setType(type);
+		pojo.setTitle(title);
 		dao.update(pojo);
 
 		return pojo;

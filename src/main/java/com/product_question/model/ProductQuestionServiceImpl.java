@@ -12,40 +12,40 @@ public class ProductQuestionServiceImpl implements ProductQuestionService {
 	}
 //12134567890
 	@Override
-	public ProductQuestionVO insert(Integer PRODQ_ID, Integer PRODQ_MEM_ID, Integer PRODQ_PROD_ID,
-			String PRODQ_PROMCONTENT, String PRODQ_REPCONTENT, Timestamp PRODQ_PROMDATE, Timestamp PRODQ_REPDATE) {
+	public ProductQuestionVO insert(Integer id, Integer memberId, Integer productId,
+			String problem, String reply, Timestamp problemDate, Timestamp replyDate) {
 
-		ProductQuestionVO productQuestionVO = new ProductQuestionVO();
+		ProductQuestionVO vo = new ProductQuestionVO();
 
-		productQuestionVO.setId(PRODQ_ID);
-		productQuestionVO.setMemberId(PRODQ_MEM_ID);
-		productQuestionVO.setProductId(PRODQ_PROD_ID);
-		productQuestionVO.setProblem(PRODQ_PROMCONTENT);
-		productQuestionVO.setReply(PRODQ_REPCONTENT);
-		productQuestionVO.setProblemDate(PRODQ_PROMDATE);
-		productQuestionVO.setReplyDate(PRODQ_REPDATE);
-		dao.insert(productQuestionVO);
+		vo.setId(id);
+		vo.setMemberId(memberId);
+		vo.setProductId(productId);
+		vo.setProblem(problem);
+		vo.setReply(reply);
+		vo.setProblemDate(problemDate);
+		vo.setReplyDate(replyDate);
+		dao.insert(vo);
 
-		return productQuestionVO;
+		return vo;
 
 	}
 
 	@Override
-	public ProductQuestionVO update(Integer PRODQ_ID, Integer PRODQ_MEM_ID, Integer PRODQ_PROD_ID,
-			String PRODQ_PROMCONTENT, String PRODQ_REPCONTENT, Timestamp PRODQ_PROMDATE, Timestamp PRODQ_REPDATE) {
+	public ProductQuestionVO update(Integer id, Integer memberId, Integer productId,
+			String problem, String reply, Timestamp problemDate, Timestamp replyDate) {
 
-		ProductQuestionVO productQuestionVO = new ProductQuestionVO();
+		ProductQuestionVO vo = new ProductQuestionVO();
 
-		productQuestionVO.setId(PRODQ_ID);
-		productQuestionVO.setMemberId(PRODQ_MEM_ID);
-		productQuestionVO.setProductId(PRODQ_PROD_ID);
-		productQuestionVO.setProblem(PRODQ_PROMCONTENT);
-		productQuestionVO.setReply(PRODQ_REPCONTENT);
-		productQuestionVO.setProblemDate(PRODQ_PROMDATE);
-		productQuestionVO.setReplyDate(PRODQ_REPDATE);
-		dao.update(productQuestionVO);
+		vo.setId(id);
+		vo.setMemberId(memberId);
+		vo.setProductId(productId);
+		vo.setProblem(problem);
+		vo.setReply(reply);
+		vo.setProblemDate(problemDate);
+		vo.setReplyDate(replyDate);
+		dao.update(vo);
 
-		return productQuestionVO;
+		return vo;
 
 	}
 

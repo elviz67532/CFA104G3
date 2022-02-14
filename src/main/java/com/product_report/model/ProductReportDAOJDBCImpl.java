@@ -31,7 +31,7 @@ public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 	}
 
 	@Override
-	public int insert(ProductReportVO productReportVO) {
+	public int insert(ProductReportVO vo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int insertedRow;
@@ -40,12 +40,12 @@ public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, productReportVO.getProductId());
-			pstmt.setInt(2, productReportVO.getMemberId());
-			pstmt.setString(3, productReportVO.getContent());
-			pstmt.setTimestamp(4, productReportVO.getDate());
-			pstmt.setBytes(5, productReportVO.getPhoto());
-			pstmt.setInt(6, productReportVO.getStatus());
+			pstmt.setInt(1, vo.getProductId());
+			pstmt.setInt(2, vo.getMemberId());
+			pstmt.setString(3, vo.getContent());
+			pstmt.setTimestamp(4, vo.getDate());
+			pstmt.setBytes(5, vo.getPhoto());
+			pstmt.setInt(6, vo.getStatus());
 
 			insertedRow = pstmt.executeUpdate();
 		} catch (SQLException se) {
@@ -58,7 +58,7 @@ public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 	}
 
 	@Override
-	public int update(ProductReportVO productReportVO) {
+	public int update(ProductReportVO vo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int updateRow;
@@ -67,12 +67,12 @@ public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, productReportVO.getContent());
-			pstmt.setTimestamp(2, productReportVO.getDate());
-			pstmt.setBytes(3, productReportVO.getPhoto());
-			pstmt.setInt(4, productReportVO.getStatus());
-			pstmt.setInt(5, productReportVO.getMemberId());
-			pstmt.setInt(6, productReportVO.getProductId());
+			pstmt.setString(1, vo.getContent());
+			pstmt.setTimestamp(2, vo.getDate());
+			pstmt.setBytes(3, vo.getPhoto());
+			pstmt.setInt(4, vo.getStatus());
+			pstmt.setInt(5, vo.getMemberId());
+			pstmt.setInt(6, vo.getProductId());
 			
 			updateRow = pstmt.executeUpdate();
 		} catch (SQLException se) {
@@ -87,7 +87,7 @@ public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 	@Override
 	public List<ProductReportVO> selectAll() {
 		List<ProductReportVO> list = new ArrayList<ProductReportVO>();
-		ProductReportVO productReportVO = null;
+		ProductReportVO vo = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -99,14 +99,14 @@ public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				productReportVO = new ProductReportVO();
-				productReportVO.setProductId(rs.getInt("PRODRP_PROD_ID"));
-				productReportVO.setMemberId(rs.getInt("PRODRP_MEM_ID"));
-				productReportVO.setContent(rs.getString("PRODRP_CONTENT"));
-				productReportVO.setDate(rs.getTimestamp("PRODRP_DATE"));
-				productReportVO.setPhoto(rs.getBytes("PRODRP_PHOTO"));
-				productReportVO.setStatus(rs.getInt("PRODRP_STATUS"));
-				list.add(productReportVO);
+				vo = new ProductReportVO();
+				vo.setProductId(rs.getInt("PRODRP_PROD_ID"));
+				vo.setMemberId(rs.getInt("PRODRP_MEM_ID"));
+				vo.setContent(rs.getString("PRODRP_CONTENT"));
+				vo.setDate(rs.getTimestamp("PRODRP_DATE"));
+				vo.setPhoto(rs.getBytes("PRODRP_PHOTO"));
+				vo.setStatus(rs.getInt("PRODRP_STATUS"));
+				list.add(vo);
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -119,7 +119,7 @@ public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 
 	@Override
 	public ProductReportVO selectById(DualKey<Integer, Integer> id) {
-		ProductReportVO productReportVO = null;
+		ProductReportVO vo = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -134,13 +134,13 @@ public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				productReportVO = new ProductReportVO();
-				productReportVO.setProductId(rs.getInt("PRODRP_PROD_ID"));
-				productReportVO.setMemberId(rs.getInt("PRODRP_MEM_ID"));
-				productReportVO.setContent(rs.getString("PRODRP_CONTENT"));
-				productReportVO.setDate(rs.getTimestamp("PRODRP_DATE"));
-				productReportVO.setPhoto(rs.getBytes("PRODRP_PHOTO"));
-				productReportVO.setStatus(rs.getInt("PRODRP_STATUS"));
+				vo = new ProductReportVO();
+				vo.setProductId(rs.getInt("PRODRP_PROD_ID"));
+				vo.setMemberId(rs.getInt("PRODRP_MEM_ID"));
+				vo.setContent(rs.getString("PRODRP_CONTENT"));
+				vo.setDate(rs.getTimestamp("PRODRP_DATE"));
+				vo.setPhoto(rs.getBytes("PRODRP_PHOTO"));
+				vo.setStatus(rs.getInt("PRODRP_STATUS"));
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -148,7 +148,7 @@ public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 			SQLUtil.closeResource(con, pstmt, rs);
 		}
 
-		return productReportVO;
+		return vo;
 	}
 
 	@Override

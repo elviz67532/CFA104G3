@@ -11,27 +11,26 @@ public class ProductCollectionServiceImpl implements ProductCollectionService {
 	public ProductCollectionServiceImpl() {
 		dao = new ProductCollectionDAOJDBCImpl();
 	}
+@Override
+	public ProductCollectionVO insert(Integer memberId, Integer productId) {
+		ProductCollectionVO vo = new ProductCollectionVO();
 
-	@Override
-	public ProductCollectionVO Insert(Integer PRODC_MEM_ID, Integer PRODC_PROD_ID) {
-		ProductCollectionVO productCollectionVO = new ProductCollectionVO();
+		vo.setMemberId(memberId);
+		vo.setProductId(productId);
+		dao.insert(vo);
 
-		productCollectionVO.setMemberId(PRODC_MEM_ID);
-		productCollectionVO.setProductId(PRODC_PROD_ID);
-		dao.insert(productCollectionVO);
-
-		return productCollectionVO;
+		return vo;
 
 	}
 
-	@Override
-	public void DeleteById() {
+@Override
+	public void deleteById() {
 		DualKey<Integer, Integer> id = new DualKey<Integer, Integer>(null, null);
 		dao.deleteById(id);
 	}
 
-	@Override
-	public List<ProductCollectionVO> SelectAll() {
+@Override	
+	public List<ProductCollectionVO> selectAll() {
 		return dao.selectAll();
 	}
 }
