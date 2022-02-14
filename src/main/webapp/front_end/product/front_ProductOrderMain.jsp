@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<title>二手商品訂單管理後台</title>
+<title>二手商品訂單首頁</title>
 
 <style>
 table#table-1 {
@@ -35,7 +35,7 @@ h4 {
 
 	<table id="table-1">
 		<tr>
-			<td><h3>二手商品訂單管理後台</h3>
+			<td><h3>二手商品訂單首頁</h3>
 				<h4>委域二手商城</h4></td>
 		</tr>
 	</table>
