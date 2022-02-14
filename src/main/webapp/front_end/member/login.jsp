@@ -2,6 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.member.model.*"%>
+
+<%
+MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -298,7 +304,7 @@ p {
 	</c:if>
 	<div class="grid">
 
-		<form action="MemberServlet.do" method="POST" class="form login">
+		<form action="${pageContext.request.contextPath}/front_end/member/MemberServlet.do" method="POST" class="form login">
 
 			<div class="form__field">
 				<label for="login__username"><svg class="icon">
@@ -325,7 +331,7 @@ p {
 		</form>
 
 		<p class="text--center">
-			<a href="Signup.jsp">會員註冊</a>
+			<a href="register.jsp">會員註冊</a>
 			<svg class="icon">
         <use xlink:href="#icon-arrow-right"></use>
       </svg>

@@ -290,7 +290,7 @@ p {
 
  <div class="grid">
 
-  <form action="MemberServlet.do" method="POST" class="form login">
+  <form action="${pageContext.request.contextPath}/front_end/member/MemberServlet.do" method="POST" class="form login">
 
    <div class="form__field">
     <label for="login__username"><svg class="icon">
