@@ -212,7 +212,7 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 			pstmt = con.prepareStatement(LOGIN);
 
 			pstmt.setString(1, account);
-			pstmt.setString(1, password);
+			pstmt.setString(2, password);
 
 			rs = pstmt.executeQuery();
 
@@ -282,29 +282,9 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+			SQLUtil.closeResource(con, pstmt, rs);
 		}
-		return vo;
+			return vo;
 	}
 	public MemberVO selectById(Integer id) {
 		MemberVO vo = null;
