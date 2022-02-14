@@ -102,7 +102,7 @@ public class ProductOrderServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/product/frontProductOrderMain.jsp");
+							.getRequestDispatcher("/front_end/product/front_ProductOrderMain.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -116,7 +116,7 @@ public class ProductOrderServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/product/frontProductOrderMain.jsp");
+							.getRequestDispatcher("/front_end/product/front_ProductOrderMain.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -130,14 +130,14 @@ public class ProductOrderServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/product/frontProductOrderMain.jsp");
+							.getRequestDispatcher("/front_end/product/front_ProductOrderMain.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("productOrderVO", productOrderVO); // 資料庫取出的empVO物件,存入req
-				String url = "/front_end/product/frontGetProductOrder.jsp";
+				String url = "/front_end/product/front_ProductOrderGetOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -145,7 +145,7 @@ public class ProductOrderServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front_end/product/frontProductOrderMain.jsp");
+						.getRequestDispatcher("/front_end/product/front_ProductOrderMain.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -174,7 +174,7 @@ public class ProductOrderServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/frontGetProductOrder.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/front_ProductOrderGetOne.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -310,14 +310,14 @@ public class ProductOrderServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("productOrderVO", productOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/front_end/product/frontGetProductOrder.jsp";
+				String url = "/front_end/product/front_ProductOrderGetOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/frontGetProductOrder.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/front_ProductOrderGetOne.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -367,7 +367,7 @@ public class ProductOrderServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("productOrderVO", productOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/productOrder.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/listAllproductOrder.jsp");
 					failureView.forward(req, res);
 
 					return; // 程式中斷
@@ -381,14 +381,14 @@ public class ProductOrderServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("productOrderVO", productOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/product/productOrder.jsp";
+				String url = "/back_end/product/listAllproductOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/productOrder.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/listAllproductOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -440,7 +440,7 @@ public class ProductOrderServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("productOrderVO", productOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/productOrder.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/listAllproductOrder.jsp");
 					failureView.forward(req, res);
 
 					return; // 程式中斷
@@ -454,14 +454,14 @@ public class ProductOrderServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("productOrderVO", productOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/product/productOrder.jsp";
+				String url = "/back_end/product/listAllproductOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/productOrder.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/listAllproductOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -513,7 +513,7 @@ public class ProductOrderServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("productOrderVO", productOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/productOrder.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/listAllproductOrder.jsp");
 					failureView.forward(req, res);
 
 					return; // 程式中斷
@@ -527,14 +527,14 @@ public class ProductOrderServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("productOrderVO", productOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/product/productOrder.jsp";
+				String url = "/back_end/product/listAllproductOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/productOrder.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/listAllproductOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -586,7 +586,7 @@ public class ProductOrderServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("productOrderVO", productOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/productOrder.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/listAllproductOrder.jsp");
 					failureView.forward(req, res);
 
 					return; // 程式中斷
@@ -600,14 +600,14 @@ public class ProductOrderServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("productOrderVO", productOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/product/productOrder.jsp";
+				String url = "/back_end/product/listAllproductOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/productOrder.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/listAllproductOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}
