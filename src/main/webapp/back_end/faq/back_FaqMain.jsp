@@ -60,12 +60,13 @@
 						<h3>FAQ查詢:</h3>
 
 						<ul>
-							<li><a href="listAllFaq.jsp">所有FAQ資料</a>
+							<li><a href="listAllFaq.jsp"><input type="submit"
+									value="所有FAQ資料"></a>
 							<li>
 								<FORM METHOD="post" ACTION="faq.do">
 									<b>輸入FAQ編號 (如1):</b> <input type="text" name="id"> <input
 										type="hidden" name="action" value="getOne_For_Display">
-									<input type="submit" value="送出">
+									<input type="submit" value="Search">
 								</FORM>
 							</li>
 
@@ -79,7 +80,8 @@
 						<h3>FAQ管理</h3>
 
 						<ul>
-							<li><a href='addFaq.jsp'>新增FAQ</a>
+							<li><a href='addFaq.jsp'><input type="submit"
+									value="新增FAQ"></a>
 						</ul>
 						<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
 				</div>

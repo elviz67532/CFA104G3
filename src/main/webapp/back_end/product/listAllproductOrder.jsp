@@ -5,6 +5,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.product_order.model.*"%>
 <%@ page import="java.util.*"%>
+<%
+// 傳入參數
+ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+List<ProductOrderVO> list = poSvc.getAll();
+pageContext.setAttribute("list", list);
+
+// 顯示格式
+SimpleDateFormat ymdtmFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy/MM/dd");
+%>
 <!doctype html>
 <html lang="zh-TW">
 <head>
@@ -23,143 +33,143 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
-<title>委域</title>
+<title>委域-Entrust area</title>
 </head>
+<style>
+table {
+	width: 800px;
+	background-color: white;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table, th, td {
+	border: 1px solid #CCCCFF;
+}
+
+th, td {
+	padding: 5px;
+	text-align: center;
+}
+
+.box1 {
+	width: 200px;
+	background-color: black;
+	margin-top: auto;
+	margin-right: 0px;
+}
+
+.box2 {
+	width: 200px;
+	background-color: black;
+	margin-top: auto;
+	margin-right: 0px;
+}
+
+.box3 {
+	width: 200px;
+	background-color: black;
+	margin-top: auto;
+	margin-right: 0px;
+}
+
+.box4 {
+	width: 200px;
+	background-color: black;
+	margin-top: auto;
+	margin-right: 0px;
+}
+</style>
 <body id="page-top">
-
-	<!-- Page Wrapper -->
 	<div id="wrapper">
-
 		<!-- Sidebar -->
 		<jsp:include page="/back_end/common/sidebar.jsp"></jsp:include>
-
-		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
-
-			<!-- Main Content -->
 			<div id="content">
 				<!-- Topbar -->
 				<jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
 				<div class="container-fluid">
-					<!-- 全域錯誤、傳入參數 -->
-					<%
-					// 傳入參數
-					ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
-					List<ProductOrderVO> list = poSvc.getAll();
-					pageContext.setAttribute("list", list);
-
-					// 顯示格式
-					SimpleDateFormat ymdtmFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-					SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy/MM/dd");
-					%>
 
 					<!-- main -->
-					<h1 class="h3 mb-2 text-gray-800">二手商城</h1>
 
-					<!-- DataTales Example -->
-					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">訂單管理</h6>
-						</div>
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
-									<tr>
-										<td>
-											<h3>所有二手商品訂單</h3>
-											<h4></h4>
-										</td>
-									</tr>
-								</table>
+					<h2>二手商品訂單</h2>
+					<table>
+					</table>
 
-								<%-- 錯誤表列 --%>
-								<c:if test="${not empty errorMsgs}">
-									<font style="color: red">請修正以下錯誤:</font>
-									<ul>
-										<c:forEach var="message" items="${errorMsgs}">
-											<li style="color: red">${message}</li>
-										</c:forEach>
-									</ul>
-								</c:if>
+					<%-- 錯誤表列 --%>
+					<c:if test="${not empty errorMsgs}">
+						<font style="color: red">請修正以下錯誤:</font>
+						<ul>
+							<c:forEach var="message" items="${errorMsgs}">
+								<li style="color: red">${message}</li>
+							</c:forEach>
+						</ul>
+					</c:if>
 
-								<table>
-									<tr>
-									<thead>
-										<tr>
-											<th>訂單編號</th>
-											<th>商品編號</th>
-											<th>買家編號</th>
-											<th>賣家編號</th>
-											<th>收件人姓名</th>
-											<th>收件人電話</th>
-											<th>收件人地址</th>
-											<th>訂單成立時間</th>
-											<th>商品數量</th>
-											<th>訂單總金額</th>
-											<th>訂單狀態</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>訂單編號</th>
-											<th>商品編號</th>
-											<th>買家編號</th>
-											<th>賣家編號</th>
-											<th>收件人姓名</th>
-											<th>收件人電話</th>
-											<th>收件人地址</th>
-											<th>訂單成立時間</th>
-											<th>商品數量</th>
-											<th>訂單總金額</th>
-											<th>訂單狀態</th>
-										</tr>
-									</tfoot>
-									</tr>
+					<table>
+						<tr>
+						<thead>
+							<tr>
+								<th class="text-nowrap">訂單編號</th>
+								<th class="text-nowrap">商品編號</th>
+								<th class="text-nowrap">買家編號</th>
+								<th class="text-nowrap">賣家編號</th>
+								<th class="text-nowrap">收件人姓名</th>
+								<th class="text-nowrap">收件人電話</th>
+								<th class="text-nowrap">收件人地址</th>
+								<th class="text-nowrap">訂單成立時間</th>
+								<th class="text-nowrap">商品數量</th>
+								<th class="text-nowrap">訂單總金額</th>
+								<th class="text-nowrap">訂單狀態</th>
+							</tr>
+						</thead>
 
-									<c:forEach var="productOrderVO" items="${list}">
-										<%@ include file="page1.file"%>
+						</tr>
+						<%@ include file="page1.jsp"%>
+						<c:forEach var="productOrderVO" items="${list}"
+							begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
 
-										<tr>
-											<td>${productOrderVO.id}</td>
-											<td>${productOrderVO.productId}</td>
-											<td>${productOrderVO.customerMemberId}</td>
-											<td>${productOrderVO.sellerMemberId}</td>
-											<td>${productOrderVO.productName}</td>
-											<td>${productOrderVO.phone}</td>
-											<td>${productOrderVO.address}</td>
 
-											<td>${productOrderVO.date}</td>
-											<td>${productOrderVO.amountOfProduct}</td>
-											<td>${productOrderVO.amountOfPrice}</td>
-											<td>${productOrderVO.status}</td>
-											<td>
-												<FORM METHOD="post" ACTION="productorder.do">
+							<tr>
+								<td>${productOrderVO.id}</td>
+								<td>${productOrderVO.productId}</td>
+								<td>${productOrderVO.customerMemberId}</td>
+								<td>${productOrderVO.sellerMemberId}</td>
+								<td>${productOrderVO.productName}</td>
+								<td>${productOrderVO.phone}</td>
+								<td>${productOrderVO.address}</td>
 
-													<input type="submit" value="修改"> <input
-														type="hidden" name="empno" value="${ProductVO.id}">
-													<input type="hidden" name="action"
-														value="getOne_For_Update">
-												</FORM>
-											</td>
-											<td>
-												<FORM METHOD="post" ACTION="productorder.do">
-													<input type="submit" value="取消"> <input
-														type="hidden" name="empno" value="${ProductVO.id}">
-													<input type="hidden" name="action" value="delete">
-												</FORM>
-											</td>
-										</tr>
-									</c:forEach>
-								</table>
-							</div>
-						</div>
-					</div>
+								<td>${productOrderVO.date}</td>
+								<td>${productOrderVO.amountOfProduct}</td>
+								<td>${productOrderVO.amountOfPrice}</td>
+								<td>${productOrderVO.status}</td>
+								<td>
+									<FORM METHOD="post" ACTION="productorder.do">
+
+										<input type="submit" value="修改"> <input type="hidden"
+											name="empno" value="${ProductVO.id}"> <input
+											type="hidden" name="action" value="getOne_For_Update">
+									</FORM>
+								</td>
+								<td>
+									<FORM METHOD="post" ACTION="productorder.do">
+										<input type="submit" value="取消"> <input type="hidden"
+											name="empno" value="${ProductVO.id}"> <input
+											type="hidden" name="action" value="delete">
+									</FORM>
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+					<%@ include file="page2.jsp"%>
 				</div>
 			</div>
-			<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
 		</div>
+	</div>
+	</div>
+	<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
+	</div>
 	</div>
 	<!-- End of Page Wrapper -->
 
