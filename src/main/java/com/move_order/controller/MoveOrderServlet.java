@@ -153,35 +153,35 @@ public class MoveOrderServlet extends HttpServlet{
 //			}
 //		}
 		
-//		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
-//
-//			List<String> errorMsgs = new LinkedList<String>();
-//			// Store this set in the request scope, in case we need to
-//			// send the ErrorPage view.
-//			req.setAttribute("errorMsgs", errorMsgs);
-//			
-//			try {
-//				/***************************1.接收請求參數****************************************/
-//				Integer id = Integer.valueOf(req.getParameter("id"));
-//				
-//				/***************************2.開始查詢資料****************************************/
-//				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
-//				MoveOrderVO moveOrderVO = moSvc.getOneMoveOrder(id);
-//								
-//				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-//				req.setAttribute("moveOrderVO", moveOrderVO);         // 資料庫取出的empVO物件,存入req
-//				String url = "/front_end/move/frontGetMoveOrder.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
-//				successView.forward(req, res);
-//
-//				/***************************其他可能的錯誤處理**********************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/front_end/move/frontGetMoveOrder.jsp");
-//				failureView.forward(req, res);
-//			}
-//		}
+		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				/***************************1.接收請求參數****************************************/
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				
+				/***************************2.開始查詢資料****************************************/
+				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
+				MoveOrderVO moveOrderVO = moSvc.getOneMoveOrder(id);
+								
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("moveOrderVO", moveOrderVO);         // 資料庫取出的empVO物件,存入req
+				String url = "/back_end/move/moveOrderGetOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back_end/move/readMoveOrder.jsp");
+				failureView.forward(req, res);
+			}
+		}
 		
 		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 			

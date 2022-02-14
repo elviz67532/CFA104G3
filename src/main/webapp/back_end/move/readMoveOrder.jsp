@@ -84,6 +84,7 @@ th, td {
 							<th class="text-nowrap">最後付款金額</th>
 							<th class="text-nowrap">訂單成立時間</th>
 							<th class="text-nowrap">訂單狀態</th>
+							<th class="text-nowrap">修改訂單</th>
 						</tr>
 						<c:forEach var="moveOrderVO" items="${list}">
 							<tr>
@@ -99,6 +100,13 @@ th, td {
 								<td>${moveOrderVO.amountTotal}</td>
 								<td>${moveOrderVO.orderDate}</td>
 								<td>${moveOrderVO.status}</td>
+								<td>
+			  						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/move/moveorder.do" style="margin-bottom: 0px;">
+			     					<input type="submit" value="修改">
+			     					<input type="hidden" name="id"  value="${moveOrderVO.id}">
+			     					<input type="hidden" name="action"	value="getOne_For_Update">
+			     					</FORM>
+								</td>
 						</c:forEach>
 					</table>
 					<h3>我用很久ㄟ</h3>

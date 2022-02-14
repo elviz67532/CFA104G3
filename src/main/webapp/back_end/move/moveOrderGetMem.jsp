@@ -4,10 +4,11 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.move_order.model.*"%>
 <%
-MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
-List<MoveOrderVO> list = moSvc.getAll();
-pageContext.setAttribute("list", list);
+List<MoveOrderVO> moveOrderVO = (List<MoveOrderVO>) request.getAttribute("moveOrderVO");
 %>
+
+
+
 <!doctype html>
 <html lang="zh-TW">
 <head>
@@ -45,25 +46,7 @@ th, td {
 	text-align: center;
 }
 
-.box1 {
-	width: 200px;
-	background-color: light blue;
-	margin-top: auto;
-	margin-right: 0px;
-}
-.box2 {
-	width: 200px;
-	background-color: light blue;
-	margin-top: auto;
-	margin-right: 0px;
-}
-.box3 {
-	width: 200px;
-	background-color: light blue;
-	margin-top: auto;
-	margin-right: 0px;
-}
-.box4 {
+button {
 	width: 200px;
 	background-color: light blue;
 	margin-top: auto;
@@ -81,25 +64,33 @@ th, td {
 				<div class="container-fluid">
 
 					<!-- main -->
-					<h1>超精美後台畫面</h1>
+					<h1>超精美後台畫面2</h1>
+					<c:if test="${not empty errorMsgs}">
+						<font style="color: red">請修正以下錯誤:</font>
+						<ul>
+							<c:forEach var="message" items="${errorMsgs}">
+								<li style="color: red">${message}</li>
+							</c:forEach>
+						</ul>
+					</c:if>
 					<table>
 
 						<tr>
-							<th class="text-nowrap">訂單編號</th>
-							<th class="text-nowrap">會員編號</th>
-							<th class="text-nowrap">客戶姓名</th>
-							<th class="text-nowrap">客戶電話</th>
-							<th class="text-nowrap">搬家目前地址</th>
-							<th class="text-nowrap">搬家目的地地址</th>
-							<th class="text-nowrap">搬家時間</th>
-							<th class="text-nowrap">估價金額</th>
+							<th>訂單編號</th>
+							<th>會員編號</th>
+							<th>客戶姓名</th>
+							<th>客戶電話</th>
+							<th>搬家目前地址</th>
+							<th>搬家目的地地址</th>
+							<th>搬家時間</th>
+							<th>估價金額</th>
 							<th>訂金</th>
-							<th class="text-nowrap">最後付款金額</th>
-							<th class="text-nowrap">訂單成立時間</th>
+							<th>最後付款金額</th>
+							<th>訂單成立時間</th>
 							<th>評論</th>
-							<th class="text-nowrap">訂單狀態</th>
+							<th>訂單狀態</th>
 						</tr>
-						<c:forEach var="moveOrderVO" items="${list}">
+						<c:forEach var="moveOrderVO" items="${moveOrderVO}">
 							<tr>
 								<td>${moveOrderVO.id}</td>
 								<td>${moveOrderVO.memberId}</td>
@@ -140,13 +131,14 @@ th, td {
 								<td>${moveOrderVO.comment}</td>
 								<td>
 									<FORM METHOD="post" ACTION="moveorder.do">
-										<input type="hidden" name="action" value="updatestatusto1">
-										<input type="hidden" name="id" value="${moveOrderVO.id}">
-										<input type="hidden" name="memberId"
-											value="${moveOrderVO.memberId}"> <input type="hidden"
-											name="customer" value="${moveOrderVO.customer}"> <input
-											type="hidden" name="phone" value="${moveOrderVO.phone}">
-										<input type="hidden" name="fromAddress"
+										<input type="hidden" name="action"
+											value="updatestatusto1bymem"> <input type="hidden"
+											name="id" value="${moveOrderVO.id}"> <input
+											type="hidden" name="memberId" value="${moveOrderVO.memberId}">
+										<input type="hidden" name="customer"
+											value="${moveOrderVO.customer}"> <input type="hidden"
+											name="phone" value="${moveOrderVO.phone}"> <input
+											type="hidden" name="fromAddress"
 											value="${moveOrderVO.fromAddress}"> <input
 											type="hidden" name="toAddress"
 											value="${moveOrderVO.toAddress}"> <input
@@ -160,16 +152,17 @@ th, td {
 										<input type="hidden" name="orderDate"
 											value="${moveOrderVO.orderDate}"> <input
 											type="hidden" name="status" value="${moveOrderVO.status}">
-										<button type="submit" id="foo1" class="box1">不簽訂契約結束訂單</button>
+										<button type="submit">不簽訂契約結束訂單</button>
 									</FORM>
 									<FORM METHOD="post" ACTION="moveorder.do">
-										<input type="hidden" name="action" value="updatestatusto2">
-										<input type="hidden" name="id" value="${moveOrderVO.id}">
-										<input type="hidden" name="memberId"
-											value="${moveOrderVO.memberId}"> <input type="hidden"
-											name="customer" value="${moveOrderVO.customer}"> <input
-											type="hidden" name="phone" value="${moveOrderVO.phone}">
-										<input type="hidden" name="fromAddress"
+										<input type="hidden" name="action"
+											value="updatestatusto2bymem"> <input type="hidden"
+											name="id" value="${moveOrderVO.id}"> <input
+											type="hidden" name="memberId" value="${moveOrderVO.memberId}">
+										<input type="hidden" name="customer"
+											value="${moveOrderVO.customer}"> <input type="hidden"
+											name="phone" value="${moveOrderVO.phone}"> <input
+											type="hidden" name="fromAddress"
 											value="${moveOrderVO.fromAddress}"> <input
 											type="hidden" name="toAddress"
 											value="${moveOrderVO.toAddress}"> <input
@@ -183,16 +176,17 @@ th, td {
 										<input type="hidden" name="orderDate"
 											value="${moveOrderVO.orderDate}"> <input
 											type="hidden" name="status" value="${moveOrderVO.status}">
-										<button type="submit" id="foo2" class="box2">等待運送貨物</button>
+										<button type="submit">等待運送貨物</button>
 									</FORM>
 									<FORM METHOD="post" ACTION="moveorder.do">
-										<input type="hidden" name="action" value="updatestatusto3">
-										<input type="hidden" name="id" value="${moveOrderVO.id}">
-										<input type="hidden" name="memberId"
-											value="${moveOrderVO.memberId}"> <input type="hidden"
-											name="customer" value="${moveOrderVO.customer}"> <input
-											type="hidden" name="phone" value="${moveOrderVO.phone}">
-										<input type="hidden" name="fromAddress"
+										<input type="hidden" name="action"
+											value="updatestatusto3bymem"> <input type="hidden"
+											name="id" value="${moveOrderVO.id}"> <input
+											type="hidden" name="memberId" value="${moveOrderVO.memberId}">
+										<input type="hidden" name="customer"
+											value="${moveOrderVO.customer}"> <input type="hidden"
+											name="phone" value="${moveOrderVO.phone}"> <input
+											type="hidden" name="fromAddress"
 											value="${moveOrderVO.fromAddress}"> <input
 											type="hidden" name="toAddress"
 											value="${moveOrderVO.toAddress}"> <input
@@ -206,16 +200,17 @@ th, td {
 										<input type="hidden" name="orderDate"
 											value="${moveOrderVO.orderDate}"> <input
 											type="hidden" name="status" value="${moveOrderVO.status}">
-										<button type="submit" id="foo3" class="box3">運送中</button>
+										<button type="submit">運送中</button>
 									</FORM>
 									<FORM METHOD="post" ACTION="moveorder.do">
-										<input type="hidden" name="action" value="updatestatusto4">
-										<input type="hidden" name="id" value="${moveOrderVO.id}">
-										<input type="hidden" name="memberId"
-											value="${moveOrderVO.memberId}"> <input type="hidden"
-											name="customer" value="${moveOrderVO.customer}"> <input
-											type="hidden" name="phone" value="${moveOrderVO.phone}">
-										<input type="hidden" name="fromAddress"
+										<input type="hidden" name="action"
+											value="updatestatusto4bymem"> <input type="hidden"
+											name="id" value="${moveOrderVO.id}"> <input
+											type="hidden" name="memberId" value="${moveOrderVO.memberId}">
+										<input type="hidden" name="customer"
+											value="${moveOrderVO.customer}"> <input type="hidden"
+											name="phone" value="${moveOrderVO.phone}"> <input
+											type="hidden" name="fromAddress"
 											value="${moveOrderVO.fromAddress}"> <input
 											type="hidden" name="toAddress"
 											value="${moveOrderVO.toAddress}"> <input
@@ -229,46 +224,12 @@ th, td {
 										<input type="hidden" name="orderDate"
 											value="${moveOrderVO.orderDate}"> <input
 											type="hidden" name="status" value="${moveOrderVO.status}">
-										<button type="submit" id="foo4" class="box4">完成訂單</button>
+										<button type="submit">完成訂單</button>
 									</FORM>
 								</td>
 						</c:forEach>
 					</table>
 					<h3>我用很久ㄟ</h3>
-					<script>
-						function triggerAlert1() {
-							var box1 = document.querySelector('.box1');
-							box1.style.backgroundColor = "black";
-
-						}
-						var ele1 = document.getElementById('foo1');
-						ele1.onclick = triggerAlert1;
-						
-						function triggerAlert2() {
-							var box2 = document.querySelector('.box2');
-							box2.style.backgroundColor = "green";
-
-						}
-						var ele2 = document.getElementById('foo2');
-						ele2.onclick = triggerAlert2;
-						
-						function triggerAlert3() {
-							var box3 = document.querySelector('.box3');
-							box3.style.backgroundColor = "red";
-
-						}
-						var ele3 = document.getElementById('foo3');
-						ele3.onclick = triggerAlert3;
-						
-						function triggerAlert4() {
-							var box4 = document.querySelector('.box4');
-							box4.style.backgroundColor = "blue";
-
-						}
-						var ele4 = document.getElementById('foo4');
-						ele4.onclick = triggerAlert4;
-
-					</script>
 					<!-- end of main -->
 
 				</div>
