@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface ProductCollectionService {
 
-	void DeleteById();
+	void deleteById();
 
-	ProductCollectionVO Insert(Integer PRODC_MEM_ID, Integer PRODC_PROD_ID);
+	ProductCollectionVO insert(Integer memberId, Integer productId);
 
-	List<ProductCollectionVO> SelectAll();
+	List<ProductCollectionVO> selectAll();
 
 }

@@ -91,7 +91,9 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>NewsServlet</servlet-name>
-		<url-pattern>/news/NewsServlet</url-pattern>
+		<url-pattern>/back_end/news/NewsServlet</url-pattern>
 	</servlet-mapping>
-
+	
+	<!-- product -->
+	
 </web-app>
