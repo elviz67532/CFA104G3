@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="BIG5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.product_order.model.*"%>
 
@@ -10,7 +10,7 @@ ProductOrderVO productOrderVO = (ProductOrderVO) request.getAttribute("productOr
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>�G��ӫ~�q��d�ߵ��G</title>
+<title>二手商品訂單查詢結果</title>
 
 <style>
 table#table-1 {
@@ -52,14 +52,14 @@ th, td {
 </head>
 <body bgcolor='white'>
 
-	<h4>�����Ƚm�߱ĥ� Script ���g�k����:</h4>
+	<h4>此頁暫練習採用 Script 的寫法取值:</h4>
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>�q����</h3>
+				<h3>訂單資料</h3>
 				<h4>
 					<a href="productOrderMain.jsp"><img src="images/back1.gif"
-						width="100" height="32" border="0">�^����</a>
+						width="100" height="32" border="0">回首頁</a>
 				</h4>
 			</td>
 		</tr>
@@ -67,17 +67,17 @@ th, td {
 
 	<table>
 		<tr>
-			<th>�q��s��</th>
-			<th>�ӫ~�s��</th>
-			<th>�R�a�s��</th>
-			<th>��a�s��</th>
-			<th>����H�m�W</th>
-			<th>����H�q��</th>
-			<th>����H�a�}</th>
-			<th>�q�榨�߮ɶ�</th>
-			<th>�ӫ~�ƶq</th>
-			<th>�q���`���B</th>
-			<th>�q�檬�A</th>
+			<th>訂單編號</th>
+			<th>商品編號</th>
+			<th>買家編號</th>
+			<th>賣家編號</th>
+			<th>收件人姓名</th>
+			<th>收件人電話</th>
+			<th>收件人地址</th>
+			<th>訂單成立時間</th>
+			<th>商品數量</th>
+			<th>訂單總金額</th>
+			<th>訂單狀態</th>
 		</tr>
 		<tr>
 			<td>${productOrderVO.id}</td>
