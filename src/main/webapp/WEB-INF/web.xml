@@ -76,7 +76,14 @@
 		<servlet-name>ActivityServlet</servlet-name>
 		<url-pattern>/activity/act.do</url-pattern>
 	</servlet-mapping>
-	
+	<servlet>
+		<servlet-name>ActivityPhotoServlet</servlet-name>
+		<servlet-class>com.activity.controller.ActivityPhotoServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActivityPhotoServlet</servlet-name>
+		<url-pattern>/activity/actp.do</url-pattern>
+	</servlet-mapping>
 	<!-- product -->
 	<servlet>
 		<servlet-name>NewsServlet</servlet-name>
