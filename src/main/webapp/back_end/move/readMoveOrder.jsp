@@ -56,17 +56,23 @@ th, td {
 				<div class="container-fluid">
 
 					<!-- main -->
+					<c:if test="${not empty errorMsgs}">
+						<font style="color: red">請修正以下錯誤:</font>
+						<ul>
+							<c:forEach var="message" items="${errorMsgs}">
+								<li style="color: red">${message}</li>
+							</c:forEach>
+						</ul>
+					</c:if>
 					<h1>超精美後台畫面</h1>
 					<FORM METHOD="post" ACTION="moveorder.do">
-						<b>請輸入訂單編號:</b><br> 
-						<input type="text" name="id"> 
-						<input type="hidden" name="action" value="getOne_For_Display"> 
-						<input type="submit" value="送出">
+						<b>請輸入訂單編號:</b><br> <input type="text" name="id"> <input
+							type="hidden" name="action" value="getOne_For_Display"> <input
+							type="submit" value="送出">
 					</FORM>
 					<FORM METHOD="post" ACTION="moveorder.do">
-						<b>請輸入會員編號:</b><br> 
-						<input type="text" name="memberid"> 
-						<input type="hidden" name="action" value="getMem_For_Display"> 
+						<b>請輸入會員編號:</b><br> <input type="text" name="memberid">
+						<input type="hidden" name="action" value="getMem_For_Display">
 						<input type="submit" value="送出">
 					</FORM>
 					<table>
@@ -101,11 +107,13 @@ th, td {
 								<td>${moveOrderVO.orderDate}</td>
 								<td>${moveOrderVO.status}</td>
 								<td>
-			  						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/move/moveorder.do" style="margin-bottom: 0px;">
-			     					<input type="submit" value="修改">
-			     					<input type="hidden" name="id"  value="${moveOrderVO.id}">
-			     					<input type="hidden" name="action"	value="getOne_For_Update">
-			     					</FORM>
+									<FORM METHOD="post"
+										ACTION="<%=request.getContextPath()%>/back_end/move/moveorder.do"
+										style="margin-bottom: 0px;">
+										<input type="submit" value="修改"> 
+										<input type="hidden" name="id" value="${moveOrderVO.id}"> 
+										<input type="hidden" name="action" value="getOne_For_Update">
+									</FORM>
 								</td>
 						</c:forEach>
 					</table>

@@ -3,13 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.move_order.model.*"%>
-
 <%
-MoveOrderVO moveOrderVO = (MoveOrderVO) request.getAttribute("moveOrderVO");
-%>
-<%
-MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
-MoveOrderVO moveOrderVO1 = moSvc.getOneMoveOrder(2);
+List<MoveOrderVO> moveOrderVO = (List<MoveOrderVO>) request.getAttribute("moveOrderVO");
 %>
 
 <!DOCTYPE html>
@@ -37,8 +32,8 @@ MoveOrderVO moveOrderVO1 = moSvc.getOneMoveOrder(2);
 <link
 	href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css"
 	rel="stylesheet" />
-	
-	<style>
+
+<style>
 table {
 	width: 500px;
 	background-color: white;
@@ -54,7 +49,7 @@ td {
 	padding: 5px;
 	text-align: center;
 }
-	</style>
+</style>
 </head>
 
 <body>
@@ -87,75 +82,65 @@ td {
 			</c:forEach>
 		</ul>
 	</c:if>
-<div style="margin-left: 200px; width:1000px; display:flex;" class="haha">
-	<div style="margin-left: 200px; ">
+
 	<h2>搬家訂單</h2>
-	<table>
 
-		<tr>
-			<td>訂單編號:</td>
-			<td><%=moveOrderVO1.getId()%></td>
-		</tr>
-		<tr>
-			<td>客戶姓名:</td>
-			<td><%=moveOrderVO1.getCustomer()%></td>
-		</tr>
-		<tr>
-			<td>客戶電話:</td>
-			<td><%=moveOrderVO1.getPhone()%></td>
-		</tr>
-		<tr>
-			<td>搬家目前地址:</td>
-			<td><%=moveOrderVO1.getFromAddress()%></td>
-		</tr>
-		<tr>
-			<td>搬家目的地地址:</td>
-			<td><%=moveOrderVO1.getToAddress()%></td>
-		</tr>
-		<tr>
-			<td>搬家時間:</td>
-			<td><%=moveOrderVO1.getMoveDate()%></td>
-		</tr>
-		<tr>
-			<td>估價金額:</td>
-			<td><%=moveOrderVO1.getAmountFirst()%></td>
-		</tr>
-		<tr>
-			<td>訂金:</td>
-			<td><%=moveOrderVO1.getDeposit()%></td>
-		</tr>
-		<tr>
-			<td>最終付款金額:</td>
-			<td><%=moveOrderVO1.getAmountTotal()%></td>
-		</tr>
-		<tr>
-			<td>訂單成立時間:</td>
-			<td><%=moveOrderVO1.getOrderDate()%></td>
-		</tr>
-	</table></div>
+		<table>
+			<tr>
+				<th class="text-nowrap">訂單編號:</th>
+				<th class="text-nowrap">客戶姓名:</th>
+				<th class="text-nowrap">客戶電話:</th>
+				<th class="text-nowrap">搬家目前地址:</th>
+				<th class="text-nowrap">搬家目的地地址:</th>
+				<th class="text-nowrap">搬家時間:</th>
+				<th class="text-nowrap">估價金額:</th>
+				<th class="text-nowrap">訂金:</th>
+				<th class="text-nowrap">最終付款金額:</th>
+				<th class="text-nowrap">訂單成立時間:</th>
+			</tr>
+			<c:forEach var="moveOrderVO" items="${moveOrderVO}">
+			<tr>
+				<td>${moveOrderVO.id}</td>
+				<td>${moveOrderVO.customer}</td>
+				<td>${moveOrderVO.phone}</td>
+				<td>${moveOrderVO.fromAddress}</td>
+				<td>${moveOrderVO.toAddress}</td>
+				<td>${moveOrderVO.moveDate}</td>
+				<td>${moveOrderVO.amountFirst}</td>
+				<td>${moveOrderVO.deposit}</td>
+				<td>${moveOrderVO.amountTotal}</td>
+				<td>${moveOrderVO.orderDate}</td>
+				<td>
+					<FORM METHOD="post" ACTION="moveorder.do">
+						<b>給我們一點評論吧>>></b> <input type="hidden" name="action"
+							value="updatecomment"> <input type="hidden" name="id"
+							value="${moveOrderVO.id}"> <input type="hidden"
+							name="memberId" value="${moveOrderVO.memberId}"> <input
+							type="hidden" name="customer" value="${moveOrderVO.customer}">
+						<input type="hidden" name="phone" value="${moveOrderVO.phone}">
+						<input type="hidden" name="fromAddress"
+							value="${moveOrderVO.fromAddress}"> <input type="hidden"
+							name="toAddress" value="${moveOrderVO.toAddress}"> <input
+							type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
+						<input type="hidden" name="amountFirst"
+							value="${moveOrderVO.amountFirst}"> <input type="hidden"
+							name="deposit" value="${moveOrderVO.deposit}"> <input
+							type="hidden" name="amountTotal"
+							value="${moveOrderVO.amountTotal}">
+						<%--<input type="text" name="comment" size="45" class="commentbox" value="<%=moveOrderVO1.getComment()%>">--%>
+						<input type="hidden" name="orderDate"
+							value="${moveOrderVO.orderDate}">
+						<textarea style="height: 300px; width: 500px;" name="comment">${moveOrderVO.comment}</textarea>
+						<input type="hidden" name="status" value="${moveOrderVO.status}">
+						<input type="submit" value="送出">
 
-	<div style="margin: 40px 0 0 100px;" >
-	<FORM METHOD="post" ACTION="moveorder.do">
-		<b>給我們一點評論吧>>></b> 
-		<input type="hidden" name="action" value="updatecomment"> 
-		<input type="hidden" name="id" value="<%=moveOrderVO1.getId()%>"> 
-		<input type="hidden" name="memberId" value="<%=moveOrderVO1.getMemberId()%>"> 
-		<input type="hidden" name="customer" value="<%=moveOrderVO1.getCustomer()%>">
-		<input type="hidden" name="phone" value="<%=moveOrderVO1.getPhone()%>">
-		<input type="hidden" name="fromAddress" value="<%=moveOrderVO1.getFromAddress()%>"> 
-		<input type="hidden" name="toAddress" value="<%=moveOrderVO1.getToAddress()%>"> 
-		<input type="hidden" name="moveDate" value="<%=moveOrderVO1.getMoveDate()%>">
-		<input type="hidden" name="amountFirst" value="<%=moveOrderVO1.getAmountFirst()%>"> 
-		<input type="hidden" name="deposit" value="<%=moveOrderVO1.getDeposit()%>"> 
-		<input type="hidden" name="amountTotal" value="<%=moveOrderVO1.getAmountTotal()%>">
-		<%--<input type="text" name="comment" size="45" class="commentbox" value="<%=moveOrderVO1.getComment()%>">--%> 
-		<input type="hidden" name="orderDate" value="<%=moveOrderVO1.getOrderDate()%>"> 
-		<textarea style="height:300px; width:500px;" name="comment"><%=moveOrderVO1.getComment()%></textarea>
-		<input type="hidden" name="status" value="<%=moveOrderVO1.getStatus()%>"> 
-		<input type="submit" value="送出">
-	</FORM>
-	</div>
-</div>
+					</FORM>
+				</td>
+			</tr>
+			</c:forEach>
+		</table>
+
+
 
 	<!-- Footer-->
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
