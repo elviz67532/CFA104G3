@@ -9,7 +9,7 @@ import com.move_request.model.MoveRequestVO;
 
 public class MoveOrderServiceImpl implements MoveOrderService {
 
-	private MoveOrderDAO dao;
+	private MoveOrderDAOJDBCImpl dao;
 
 	public MoveOrderServiceImpl() {
 		dao = new MoveOrderDAOJDBCImpl();
@@ -76,6 +76,11 @@ public class MoveOrderServiceImpl implements MoveOrderService {
 	public MoveOrderVO getOneMoveOrder(Integer id) {
 		return dao.selectById(id);
 	}
+	
+	@Override
+	public List<MoveOrderVO> getByMemberId(int memberId) {
+		return dao.selectByMemId(memberId);
+	}
 
 	@Override
 	public List<MoveOrderVO> getAll() {
@@ -113,5 +118,10 @@ public class MoveOrderServiceImpl implements MoveOrderService {
 		dao.insert(vo);
 
 		return true;
+	}
+	
+	public static void main(String[] args) {
+		MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
+		System.out.println(moSvc.getByMemberId(6));
 	}
 }
