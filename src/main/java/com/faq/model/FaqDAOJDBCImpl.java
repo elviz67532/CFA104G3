@@ -19,6 +19,7 @@ public class FaqDAOJDBCImpl implements FaqDAO {
 	private static final String DELETE = "delete from FAQ where FAQ_ID = ?";
 	private static final String UPDATE = "update FAQ set " + "FAQ_QUESTION = ?, FAQ_ANSWER = ? " + "where FAQ_ID = ?";
 
+	
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);

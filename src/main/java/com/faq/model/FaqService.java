@@ -12,6 +12,7 @@ public interface FaqService {
 
 	List<FaqVO> getAll();
 
+	
 	FaqVO getOneFaq(Integer id);
 
 }

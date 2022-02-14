@@ -20,6 +20,7 @@ public class FaqServiceImpl implements FaqService {
 
 		dao.insert(vo);
 
+		
 		return vo;
 	}
 
