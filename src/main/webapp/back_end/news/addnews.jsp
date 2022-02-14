@@ -55,7 +55,7 @@ th, td {
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>員工資料新增 - addEmp.jsp</h3>
+				<h3>最新消息新增 - addnews.jsp</h3>
 			</td>
 			<td>
 				<h4>
@@ -85,6 +85,16 @@ th, td {
 			<%-- 			 value="<%= (vo==null)? "" : vo.getId()%>" /></td> --%>
 			<!-- 	</tr> -->
 			<tr>
+				<td>消息分類編號:</td>
+				<td><input type="TEXT" name="type" size="15"
+					value="<%=(vo == null) ? "" : vo.getType()%>" /></td>
+			</tr>
+			<tr>
+				<td>標題:</td>
+				<td><input type="TEXT" name="title" size="45"
+					value="<%=(vo == null) ? "" : vo.getTitle()%>" /></td>
+			</tr>
+			<tr>
 				<td>內容:</td>
 				<td><input type="TEXT" name="content" size="45"
 					value="<%=(vo == null) ? "" : vo.getContent()%>" /></td>
@@ -98,12 +108,6 @@ th, td {
 <!-- 				<td>建立時間:</td> -->
 <!-- 				<td><input name="date" type="TEXT"></td> -->
 <!-- 			</tr> -->
-			<tr>
-				<td>消息分類編號:</td>
-				<td><input type="TEXT" name="type" size="45"
-					value="<%=(vo == null) ? "" : vo.getType()%>" /></td>
-			</tr>
-
 			<jsp:useBean id="newsSvc" scope="page"
 				class="com.news.model.NewsServiceImpl" />
 

@@ -63,17 +63,19 @@ th, td {
 	<table>
 		<tr>
 			<th>最新消息編號</th>
+			<th>消息分類編號</th>
+			<th>標題</th>
 			<th>內容</th>
 			<th>圖片</th>
-			<th>建立時間</th>
-			<th>消息分類編號</th>
+			<th>建立時間</th>						
 		</tr>
 		<tr>
 			<td>${newsVO.id}</td>
+			<td>${newsVO.type}</td>
+			<td>${newsVO.title}</td>
 			<td>${newsVO.content}</td>
 			<td>${newsVO.image}</td>
-			<td>${newsVO.date}</td>
-			<td>${newsVO.type}</td>
+			<td>${newsVO.date}</td>			
 		</tr>
 	</table>
 

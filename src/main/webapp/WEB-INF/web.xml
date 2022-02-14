@@ -68,7 +68,7 @@
 		<url-pattern>/activity/act.do</url-pattern>
 	</servlet-mapping>
 	
-	<!-- product -->
+	<!-- news -->
 	<servlet>
 		<servlet-name>NewsServlet</servlet-name>
 		<servlet-class>com.news.controller.NewsServlet</servlet-class>
@@ -77,5 +77,7 @@
 		<servlet-name>NewsServlet</servlet-name>
 		<url-pattern>/back_end/news/NewsServlet</url-pattern>
 	</servlet-mapping>
-
+	
+	<!-- product -->
+	
 </web-app>
