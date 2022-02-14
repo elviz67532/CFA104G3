@@ -1,24 +1,81 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.move_order.model.*"%>
-
 <%
-MoveOrderVO moveOrderVO = (MoveOrderVO) request.getAttribute("moveOrderVO");
+List<MoveOrderVO> moveOrderVO = (List<MoveOrderVO>) request.getAttribute("moveOrderVO");
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>moveOrderGetOne</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>å§”åŸŸ</title>
+<link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+	crossorigin="anonymous"></script>
+<!-- Google fonts-->
+<link
+	href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+	rel="stylesheet" type="text/css" />
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+	rel="stylesheet" type="text/css" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link
+	href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css"
+	rel="stylesheet" />
 
+<style>
+table {
+	width: 500px;
+	background-color: white;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table, td {
+	border: 1px solid #CCCCFF;
+}
+
+td {
+	padding: 5px;
+	text-align: center;
+}
+</style>
 </head>
-<body>
-	<%=moveOrderVO == null%>
 
-	<%-- ¿ù»~ªí¦C --%>
+<body>
+	<!-- Navigation-->
+	<!-- nav -->
+	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
+
+	<!-- Page Header-->
+	<header class="masthead"
+		style="background-image: url('<%=request.getContextPath()%>/asset/img/move01.jpg')">
+		<div class="container position-relative px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<div class="site-heading">
+						<h1>New Life</h1>
+						<span class="subheading">è¿ æ¥ å…¨ æ–° çš„ äºº ç”Ÿ</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- ä¸»é«”ç•«é¢è¨­è¨ˆ  -->
+	<%-- éŒ¯èª¤è¡¨åˆ— --%>
 	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+		<font style="color: red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 		<ul>
 			<c:forEach var="message" items="${errorMsgs}">
 				<li style="color: red">${message}</li>
@@ -26,60 +83,72 @@ MoveOrderVO moveOrderVO = (MoveOrderVO) request.getAttribute("moveOrderVO");
 		</ul>
 	</c:if>
 
-	<h2>·h®a­q³æ</h2>
-	<table>
+	<h2>æ¬å®¶è¨‚å–®</h2>
 
-		<tr>
-			<td>­q³æ½s¸¹:</td>
-			<td>${moveOrderVO.id}</td>
-		</tr>
-		<tr>
-			<td>«È¤á©m¦W:</td>
-			<td>${moveOrderVO.customer}</td>
-		</tr>
-		<tr>
-			<td>«È¤á¹q¸Ü:</td>
-			<td>${moveOrderVO.phone}</td>
-		</tr>
-		<tr>
-			<td>·h®a¥Ø«e¦a§}:</td>
-			<td>${moveOrderVO.fromAddress}</td>
-		</tr>
-		<tr>
-			<td>·h®a¥Øªº¦a¦a§}:</td>
-			<td>${moveOrderVO.toAddress}</td>
-		</tr>
-		<tr>
-			<td>·h®a®É¶¡:</td>
-			<td>${moveOrderVO.moveDate}</td>
-		</tr>
-		<tr>
-			<td>¦ô»ùª÷ÃB:</td>
-			<td>${moveOrderVO.amountFirst}</td>
-		</tr>
-		<tr>
-			<td>­qª÷:</td>
-			<td>${moveOrderVO.deposit}</td>
-		</tr>
-		<tr>
-			<td>³Ì²×¥I´Úª÷ÃB:</td>
-			<td>${moveOrderVO.amountTotal}</td>
-		</tr>
-		<tr>
-			<td>­q³æ¦¨¥ß®É¶¡:</td>
-			<td>${moveOrderVO.orderDate}</td>
-		</tr>
-		<tr>
-			<td>¦^õX:</td>
-			<td>${moveOrderVO.comment}</td>
-			
-	</table>
+		<table>
+			<tr>
+				<th class="text-nowrap">è¨‚å–®ç·¨è™Ÿ:</th>
+				<th class="text-nowrap">å®¢æˆ¶å§“å:</th>
+				<th class="text-nowrap">å®¢æˆ¶é›»è©±:</th>
+				<th class="text-nowrap">æ¬å®¶ç›®å‰åœ°å€:</th>
+				<th class="text-nowrap">æ¬å®¶ç›®çš„åœ°åœ°å€:</th>
+				<th class="text-nowrap">æ¬å®¶æ™‚é–“:</th>
+				<th class="text-nowrap">ä¼°åƒ¹é‡‘é¡:</th>
+				<th class="text-nowrap">è¨‚é‡‘:</th>
+				<th class="text-nowrap">æœ€çµ‚ä»˜æ¬¾é‡‘é¡:</th>
+				<th class="text-nowrap">è¨‚å–®æˆç«‹æ™‚é–“:</th>
+			</tr>
+			<c:forEach var="moveOrderVO" items="${moveOrderVO}">
+			<tr>
+				<td>${moveOrderVO.id}</td>
+				<td>${moveOrderVO.customer}</td>
+				<td>${moveOrderVO.phone}</td>
+				<td>${moveOrderVO.fromAddress}</td>
+				<td>${moveOrderVO.toAddress}</td>
+				<td>${moveOrderVO.moveDate}</td>
+				<td>${moveOrderVO.amountFirst}</td>
+				<td>${moveOrderVO.deposit}</td>
+				<td>${moveOrderVO.amountTotal}</td>
+				<td>${moveOrderVO.orderDate}</td>
+				<td>
+					<FORM METHOD="post" ACTION="moveorder.do">
+						<b>çµ¦æˆ‘å€‘ä¸€é»è©•è«–å§>>></b> <input type="hidden" name="action"
+							value="updatecomment"> <input type="hidden" name="id"
+							value="${moveOrderVO.id}"> <input type="hidden"
+							name="memberId" value="${moveOrderVO.memberId}"> <input
+							type="hidden" name="customer" value="${moveOrderVO.customer}">
+						<input type="hidden" name="phone" value="${moveOrderVO.phone}">
+						<input type="hidden" name="fromAddress"
+							value="${moveOrderVO.fromAddress}"> <input type="hidden"
+							name="toAddress" value="${moveOrderVO.toAddress}"> <input
+							type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
+						<input type="hidden" name="amountFirst"
+							value="${moveOrderVO.amountFirst}"> <input type="hidden"
+							name="deposit" value="${moveOrderVO.deposit}"> <input
+							type="hidden" name="amountTotal"
+							value="${moveOrderVO.amountTotal}">
+						<%--<input type="text" name="comment" size="45" class="commentbox" value="<%=moveOrderVO1.getComment()%>">--%>
+						<input type="hidden" name="orderDate"
+							value="${moveOrderVO.orderDate}">
+						<textarea style="height: 300px; width: 500px;" name="comment">${moveOrderVO.comment}</textarea>
+						<input type="hidden" name="status" value="${moveOrderVO.status}">
+						<input type="submit" value="é€å‡º">
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/moveorderfrontend/moveorder.do" style="margin-bottom: 0px;">
-		<input type="submit" value="µ¹§Ú­Ì¤@¨Ç¦^õX§a"> 
-		<input type="hidden" name="id" value="${moveOrderVO.id}"> 
-		<input type="hidden" name="action" value="getOne_For_Update">
-	</FORM>
+					</FORM>
+				</td>
+			</tr>
+			</c:forEach>
+		</table>
 
+
+
+	<!-- Footer-->
+	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+	<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
 </body>
+
 </html>
