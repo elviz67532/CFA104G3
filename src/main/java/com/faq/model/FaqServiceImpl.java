@@ -20,7 +20,6 @@ public class FaqServiceImpl implements FaqService {
 
 		dao.insert(vo);
 
-		
 		return vo;
 	}
 
@@ -46,11 +45,11 @@ public class FaqServiceImpl implements FaqService {
 
 	@Override
 	public FaqVO getOneFaq(Integer id) {
-		return dao.findByPrimaryKey(id);
+		return dao.selectById(id);
 	}
 
 	@Override
 	public List<FaqVO> getAll() {
-		return dao.getAll();
+		return dao.selectAll();
 	}
 }

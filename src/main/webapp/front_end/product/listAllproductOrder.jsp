@@ -91,7 +91,7 @@ th, td {
 			<th>訂單狀態</th>
 		</tr>
 		<c:forEach var="productOrderVO" items="${list}">
-			<%@ include file="page1.file"%>
+			<%@ include file="page1.jsp"%>
 
 
 			<tr>
