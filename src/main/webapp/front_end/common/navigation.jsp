@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/index.html">委域</a>
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">委域</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
@@ -10,7 +10,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav md py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="<%=request.getContextPath()%>/about.html">關於我們</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="<%=request.getContextPath()%>/about.jsp">關於我們</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="<%=request.getContextPath()%>/front_end/news/homePage.jsp">最新消息</a></li>
                     <li class="nav-item dropdown">
                     <a class="nav-link px-lg-3 py-3 py-lg-4 dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">服務</a>
@@ -26,7 +26,7 @@
 						<ul class="dropdown-menu dropdown-menu-end"
 							aria-labelledby="navbarDropdownHelp">
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/front_end/faq/homePage.jsp">FAQ</a></li>
-							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/contact.html">聯絡我們</a></li>
+							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/contact.jsp">聯絡我們</a></li>
 						</ul>
 					</li>
                 </ul>

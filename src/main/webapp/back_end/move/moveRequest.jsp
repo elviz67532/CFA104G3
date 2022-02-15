@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <!doctype html>
 <html lang="zh-TW">
 <head>
@@ -12,11 +16,11 @@
 <body id="page-top">
 	<div id="wrapper">
 		<!-- Sidebar -->
-		<script type="text/javascript" src="/CFA104G3/js/back_end/common/sidebar.js"></script>
+		<jsp:include page="/back_end/common/sidebar.jsp"></jsp:include>
 		<div id="content-wrapper" class="d-flex flex-column">
 			<div id="content">
 				<!-- Topbar -->
-				<script type="text/javascript" src="/CFA104G3/js/back_end/common/topbar.js"></script>
+				<jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
 				<div class="container-fluid">
 
 					<!-- TODO 調整時間格式 -->
@@ -32,14 +36,14 @@
 								<input type="hidden" name="action" value="moveManage">
 				
 								<!-- 收貨地址 -->
-								<div class="col-12">
+								<div class="col-6">
 									<label for="fromAddress" class="form-label">收貨地址:</label>
 									<input id="fromAddress" name="fromAddress" type="text" class="form-control" id="fromAddress"
 										disabled>
 								</div>
 									
 								<!-- 送達地址 -->
-								<div class="col-12">
+								<div class="col-6">
 									<label for="toAddress" class="form-label">送達地址:</label>
 									<input id="toAddress" name="toAddress" type="text" class="form-control" id="toAddress"
 										disabled>
@@ -62,32 +66,50 @@
 								<!-- 申請模式 -->
 								<div class="col-12">
 									<label class="form-label">申請模式:</label><br/>
-									<div class="form-check form-check-inline">
-										<input class="form-check-input" type="radio" name="requestMode"
-											id="online" disabled/>
-										<label class="form-check-label" for="online">線上估價</label>
-									</div>
-									<div class="form-check form-check-inline">
-										<input class="form-check-input" type="radio" name="requestMode"
-											id="site" value="site" disabled/>
-										<label class="form-check-label" for="site">現場估價</label>
-									</div>
+									
+									<label id="mode"></label>
+<!-- 									<div class="form-check form-check-inline col-6"> -->
+<!-- 										<input class="form-check-input" type="radio" name="requestMode" -->
+<!-- 											id="online" disabled/> -->
+<!-- 										<label class="form-check-label" for="online">線上估價</label> -->
+<!-- 									</div> -->
+<!-- 									<div class="form-check form-check-inline col-6"> -->
+<!-- 										<input class="form-check-input" type="radio" name="requestMode" -->
+<!-- 											id="site" value="site" disabled/> -->
+<!-- 										<label class="form-check-label" for="site">現場估價</label> -->
+<!-- 									</div> -->
 								</div>
 								
 								<!-- 現場估價日期 -->
-								<div class="col-12">
+								<div id="siteEvaDiv" class="col-12">
 									<label for="evaDate" class="form-label">現場估價日期:</label>
 									<input name="evaDate" type="text" class="form-control" id="evaDate"
 									disabled>
 								</div>
-					
-<!-- 								線上估價照片 -->
-<!-- 								<c:forEach var="photo" items="${photosData}"> -->
-<!-- 									<img alt="photo" class="itemPhoto" -->
-<!-- 									style="max-width: 25%; border: solid black 2px;" -->
-<!-- 									src="data:image/all;base64, ${photo}"> -->
-<!-- 								</c:forEach> -->
-				
+
+								<hr style="border: 1px solid black; width: 100%;" />
+
+								<div class="col-12">
+									<label for="itemPhoto" class="form-label">線上估價照片:</label><br />
+									<div id="photos">
+									</div>
+								</div>
+								
+								<hr>
+	
+<!-- 線上估價模式 -> 填入金額 -> 審核成功	 -->
+<!-- 線上估價模式 -> 填入金額 -> 審核失敗			 -->
+<!-- 現場場估價模式 -> 審核成功 -->
+<!-- 現場估價模式 -> 審核失敗 -->
+<!-- 狀態 -->
+
+
+<!-- 								修改估價 -->
+<!-- 				審核完成 -->
+<!-- 任意狀態皆能變為					審核失敗 -->
+
+
+
 <!-- 								submit -->
 <!-- 								<div class="col-12"> -->
 <!-- 									<button type="submit" class="btn btn-primary mb-3"> -->
@@ -99,7 +121,7 @@
 					</main>
 				</div>
 			</div>
-			<script type="text/javascript" src="/CFA104G3/js/back_end/common/footer.js"></script>
+			<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
 		</div>
 	</div>
 
@@ -109,7 +131,7 @@
 	</a>
 	
 	<!-- Logout Modal-->
-	<script type="text/javascript" src="/CFA104G3/js/back_end/common/logoutModal.js"></script>
+	<jsp:include page="/back_end/common/logoutModal.jsp"></jsp:include>
 	
 	<!-- Bootstrap core JavaScript-->
 	<script src="/CFA104G3/vendor/jquery/jquery.min.js"></script>
@@ -127,17 +149,20 @@
 	        initMoveRequest();
 	    })
 	    function initMoveRequest() {
+	        const value = `${document.cookie}`;
+	        
 	        let requestId = getCookie('requestId');
+	        
 	        $.ajax({
 	            url: "/CFA104G3/move/moveManage.do",
 	            type: "POST",
-	            data: JSON.stringify({'mode':'backManage', 'id':`${requestId}`}),
+	            data: JSON.stringify({'mode':'backManage', 'id':requestId}),
 	            success: function(data){
 	            	console.log('success');
-	        		var jsonObj = JSON.parse(data);
+	        		let jsonObj = JSON.parse(data);
 	        		if(jsonObj.errorCode==='success') {
 		        		let moveRequestVO = jsonObj.body.moveRequestVO;
-		        		let moveRequestPhotoVOs = jsonObj.body.moveRequestPhotoVOs;	        		
+		        		let movePhotoTransVO = jsonObj.body.movePhotoTransVO;	        		
 		        		
 		        		$('#fromAddress').val(moveRequestVO.fromAddress);
 		        		$('#toAddress').val(moveRequestVO.toAddress);
@@ -145,22 +170,36 @@
 		        		$('#moveDate').val(moveRequestVO.moveDate);
 		        		
 		        		if ("0" == moveRequestVO.evaluateType) {
-		        			$('#online').attr('checked', true);
+		        			$('#mode').text('#線上估價');
+// 		        			$('#online').attr('checked', true);
+		        			$('#siteEvaDiv').hide();
+
 		        		} else if ("1" == moveRequestVO.evaluateType) {
-			        		$('#site').attr('checked', true);
-		        		} 
+		        			$('#mode').text('#現場估價');
+// 		        			$('#site').attr('checked', true);
+
+		        		}
 		        		$('#evaDate').val(moveRequestVO.evaluateDate);
+		        		$('#photos').val('');
+		        		
+		        		console.log(movePhotoTransVO);
+		        		$.each(movePhotoTransVO, function(index, moveRequestPhoto) {
+	        			  console.log(moveRequestPhoto);
+	        			  console.log(moveRequestPhoto.moveRequestId);
+	        			  
+	        			  let img = document.createElement("img");
+	        			  img.setAttribute("alt", "photo");
+	        			  img.setAttribute("class", "itemPhoto");
+	        			  img.setAttribute("style", "max-width: 50%; border: solid black 2px;");
+	        			  img.setAttribute("src", 'data:image/all;base64, '+ moveRequestPhoto.photo);
+	        			  $("#photos").append(img);
+
+	        			  console.log(moveRequestPhoto.photo);
+	        			}); 		
 	        		}
         		},
 	    	});
     	};
-// 		$("button[class='viewRequest']").click(function(){/*登入時點*/
-// 	        let self = this;
-// 	        let requestId = self.value;
-			
-// 	        document.cookie = 'id='+requestId+';';
-// 	    	window.location.href='moveRequest.html';
-// 		});
 	</script>
 </body>
 
