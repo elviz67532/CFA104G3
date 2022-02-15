@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,44 +25,9 @@
 </head>
 
 <body>
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="index.html">委域</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav md py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">關於我們</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="front_end/news/homePage.jsp">最新消息</a></li>
-                    <li class="nav-item dropdown">
-                    	<a class="nav-link px-lg-3 py-3 py-lg-4 dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">服務</a>
-                   		<ul class="dropdown-menu dropdown-menu-end"
-							aria-labelledby="navbarDropdownBlog">
-							<li><a class="dropdown-item" href="front_end/move/homePage.jsp">前往搬家</a></li>
-							<li><a class="dropdown-item" href="front_end/product/homePage.jsp">前往二手商城</a></li>
-							<li><a class="dropdown-item" href="front_end/activity/homePage.jsp">前往活動</a></li>
-						</ul>
-                    </li>
-					<li class="nav-item dropdown">
-						<a class="nav-link px-lg-3 py-3 py-lg-4 dropdown-toggle" id="navbarDropdownHelp" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">幫助中心</a>
-						<ul class="dropdown-menu dropdown-menu-end"
-							aria-labelledby="navbarDropdownHelp">
-							<li><a class="dropdown-item" href="front_end/faq/homePage.jsp">FAQ</a></li>
-							<li><a class="dropdown-item" href="contact.html">聯絡我們</a></li>
-						</ul>
-					</li>
-                </ul>
-                <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="front_end/member/register.jsp">註冊</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="front_end/member/login.jsp">登入</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+	<!-- Navigation -->
+	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
+
     <!-- Page Header-->
     <header class="masthead" style="background-image: url('asset/img/bgHome01.jpg')">
         <div class="container position-relative px-4 px-lg-5">
@@ -110,24 +79,11 @@
             </div>
         </div>
     </section>
+    
     <!-- Footer-->
-    <footer class="border-top">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-<!-- 					<ul class="list-inline text-center"> -->
-<!-- 						<li class="list-inline-item"><a href="#!"> <span -->
-<!-- 								class="fa-stack fa-lg"> <i -->
-<!-- 									class="fas fa-circle fa-stack-2x"></i> <i -->
-<!-- 									class="fab fa-github fa-stack-1x fa-inverse"></i> -->
-<!-- 							</span> -->
-<!-- 						</a></li> -->
-<!-- 					</ul> -->
-					<div class="small text-center text-muted fst-italic">Copyright &copy; 委域</div>
-                </div>
-            </div>
-        </div>
-    </footer>
+   	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+
+
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

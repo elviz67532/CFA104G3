@@ -124,4 +124,9 @@ public class MoveRequestServiceImpl implements MoveRequestService {
 		// TODO 
 		return true;
 	}
+
+	@Override
+	public MoveRequestVO getRequest(int requestId) {
+		return moveRequestDAO.selectById(requestId);
+	}
 }

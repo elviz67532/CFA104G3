@@ -25,7 +25,7 @@ public class MoveOrderServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 	
-		if ("getOne_For_Display".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ğ¨D
+		if ("getOne_For_Display".equals(action)) { // ä¾†è‡ªselect_page.jspçš„è«‹æ±‚
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -33,63 +33,63 @@ public class MoveOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 				String str = req.getParameter("id");
 				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("½Ğ¿é¤J­q³æ½s¸¹");
+					errorMsgs.add("è«‹è¼¸å…¥è¨‚å–®ç·¨è™Ÿ");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderbackend/moveMain.jsp");
+							.getRequestDispatcher("/back_end/move/readMoveOrder.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ç¨‹å¼ä¸­æ–·
 				}
 				
 				Integer id = null;
 				try {
 					id = Integer.valueOf(str);
 				} catch (Exception e) {
-					errorMsgs.add("­q³æ½s¸¹®æ¦¡¤£¥¿½T");
+					errorMsgs.add("è¨‚å–®ç·¨è™Ÿæ ¼å¼ä¸æ­£ç¢º");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderbackend/moveMain.jsp");
+							.getRequestDispatcher("/back_end/move/readMoveOrder.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ç¨‹å¼ä¸­æ–·
 				}
 				
-				/***************************2.¶}©l¬d¸ß¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹æŸ¥è©¢è³‡æ–™*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
 				MoveOrderVO moveOrderVO = moSvc.getOneMoveOrder(id);
 				if (moveOrderVO == null) {
-					errorMsgs.add("¬dµL¸ê®Æ");
+					errorMsgs.add("æŸ¥ç„¡è³‡æ–™");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderbackend/moveMain.jsp");
+							.getRequestDispatcher("/back_end/move/readMoveOrder.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ç¨‹å¼ä¸­æ–·
 				}
 				
-				/***************************3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // ¸ê®Æ®w¨ú¥XªºempVOª«¥ó,¦s¤Jreq
-				String url = "/moveorderbackend/moveOrderGetOne.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ¦¨¥\Âà¥æ listOneEmp.jsp
+				/***************************3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«å–å‡ºçš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrderGetOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // æˆåŠŸè½‰äº¤ listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
+				errorMsgs.add("ç„¡æ³•å–å¾—è³‡æ–™:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/moveorderbackend/moveMain.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-		if ("getOne_For_Displayfront".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ğ¨D
+		if ("getOne_For_Displayfront".equals(action)) { // ä¾†è‡ªselect_page.jspçš„è«‹æ±‚
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -97,63 +97,42 @@ public class MoveOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
-				String str = req.getParameter("id");
-				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("½Ğ¿é¤J­q³æ½s¸¹");
-				}
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
+				String str = req.getParameter("memberId");
+				Integer memberId = null;
+				memberId = Integer.valueOf(str);
 				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderfrontend/moveMainFront.jsp");
-					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
-				}
 				
-				Integer id = null;
-				try {
-					id = Integer.valueOf(str);
-				} catch (Exception e) {
-					errorMsgs.add("­q³æ½s¸¹®æ¦¡¤£¥¿½T");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderfrontend/moveMainFront.jsp");
-					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
-				}
-				
-				/***************************2.¶}©l¬d¸ß¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹æŸ¥è©¢è³‡æ–™*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
-				MoveOrderVO moveOrderVO = moSvc.getOneMoveOrder(id);
+				List<MoveOrderVO> moveOrderVO = moSvc.getByMemberId(memberId);
 				if (moveOrderVO == null) {
-					errorMsgs.add("¬dµL¸ê®Æ");
+					errorMsgs.add("æŸ¥ç„¡è³‡æ–™");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderfrontend/moveMainFront.jsp");
+							.getRequestDispatcher("/front_end/move/homePage.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ç¨‹å¼ä¸­æ–·
 				}
 				
-				/***************************3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // ¸ê®Æ®w¨ú¥XªºempVOª«¥ó,¦s¤Jreq
-				String url = "/moveorderfrontend/frontGetMoveOrder.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ¦¨¥\Âà¥æ listOneEmp.jsp
+				/***************************3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«å–å‡ºçš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/front_end/move/frontGetMoveOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // æˆåŠŸè½‰äº¤ listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
+				errorMsgs.add("ç„¡æ³•å–å¾—è³‡æ–™:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/moveorderfrontend/moveMainFront.jsp");
+						.getRequestDispatcher("/front_end/move/homePage.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-		if ("getOne_For_Update".equals(action)) { // ¨Ó¦ÛlistAllEmp.jspªº½Ğ¨D
+		if ("getOne_For_Update".equals(action)) { // ä¾†è‡ªlistAllEmp.jspçš„è«‹æ±‚
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -161,29 +140,29 @@ public class MoveOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ****************************************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸****************************************/
 				Integer id = Integer.valueOf(req.getParameter("id"));
 				
-				/***************************2.¶}©l¬d¸ß¸ê®Æ****************************************/
+				/***************************2.é–‹å§‹æŸ¥è©¢è³‡æ–™****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
 				MoveOrderVO moveOrderVO = moSvc.getOneMoveOrder(id);
 								
-				/***************************3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)************/
-				req.setAttribute("moveOrderVO", moveOrderVO);         // ¸ê®Æ®w¨ú¥XªºempVOª«¥ó,¦s¤Jreq
-				String url = "/moveorderfrontend/moveComment.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// ¦¨¥\Âà¥æ update_emp_input.jsp
+				/***************************3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)************/
+				req.setAttribute("moveOrderVO", moveOrderVO);         // è³‡æ–™åº«å–å‡ºçš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrderGetOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// æˆåŠŸè½‰äº¤ update_emp_input.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z**********************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†**********************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o­n­×§ïªº¸ê®Æ:" + e.getMessage());
+				errorMsgs.add("ç„¡æ³•å–å¾—è¦ä¿®æ”¹çš„è³‡æ–™:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/moveorderfrontend/frontGetMoveOrder.jsp");
+						.getRequestDispatcher("/back_end/move/readMoveOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-		if ("update".equals(action)) { // ¨Ó¦Ûupdate_emp_input.jspªº½Ğ¨D
+		if ("update".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -191,14 +170,14 @@ public class MoveOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 
 				Integer amountTotal = null;
 				try {
 					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
 				} catch (NumberFormatException e) {
 					amountTotal = 0;
-					errorMsgs.add("½Ğ¿é¤Jª÷ÃB");
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
 				}
 				String comment = req.getParameter("comment");
 				Integer id = Integer.valueOf(req.getParameter("id"));
@@ -233,35 +212,35 @@ public class MoveOrderServlet extends HttpServlet{
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderbackend/moveOrderGetOne.jsp");
+							.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 					failureView.forward(req, res);
 
-					return; //µ{¦¡¤¤Â_
+					return; //ç¨‹å¼ä¸­æ–·
 					
 				}
 
-				/***************************2.¶}©l­×§ï¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
 				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
 
-				/***************************3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
-				String url = "/moveorderbackend/moveOrderGetOne.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrderGetOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:"+e.getMessage());
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/moveorderbackend/moveOrderGetOne.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-		if ("updatecomment".equals(action)) { // ¨Ó¦Ûupdate_emp_input.jspªº½Ğ¨D
+		if ("updatecomment".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -269,14 +248,14 @@ public class MoveOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 
 				Integer amountTotal = null;
 				try {
 					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
 				} catch (NumberFormatException e) {
 					amountTotal = 0;
-					errorMsgs.add("½Ğ¿é¤Jª÷ÃB");
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
 				}
 				String comment = req.getParameter("comment");
 				Integer id = Integer.valueOf(req.getParameter("id"));
@@ -311,35 +290,35 @@ public class MoveOrderServlet extends HttpServlet{
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderfrontend/moveComment.jsp");
+							.getRequestDispatcher("/front_end/move/frontGetMoveOrder.jsp");
 					failureView.forward(req, res);
 
-					return; //µ{¦¡¤¤Â_
+					return; //ç¨‹å¼ä¸­æ–·
 					
 				}
 
-				/***************************2.¶}©l­×§ï¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
 				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
 
-				/***************************3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
-				String url = "/moveorderfrontend/frontGetMoveOrder.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/front_end/move/frontGetMoveOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:"+e.getMessage());
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/moveorderfrontend/frontGetMoveOrder.jsp");
+						.getRequestDispatcher("/front_end/move/frontGetMoveOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-		if ("updatestatusto1".equals(action)) { // ¨Ó¦Ûupdate_emp_input.jspªº½Ğ¨D
+		if ("updatestatusto1".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -347,14 +326,14 @@ public class MoveOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 
 				Integer amountTotal = null;
 				try {
 					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
 				} catch (NumberFormatException e) {
 					amountTotal = 0;
-					errorMsgs.add("½Ğ¿é¤Jª÷ÃB");
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
 				}
 				String comment = req.getParameter("comment");
 				Integer id = Integer.valueOf(req.getParameter("id"));
@@ -367,7 +346,7 @@ public class MoveOrderServlet extends HttpServlet{
 				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
 				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
 				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
-				//³]©wª¬ºAÅÜ¬°1
+				//è¨­å®šç‹€æ…‹è®Šç‚º1
 				Integer status = 1;
 				
 
@@ -390,35 +369,35 @@ public class MoveOrderServlet extends HttpServlet{
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderbackend/moveOrder.jsp");
+							.getRequestDispatcher("/back_end/move/moveOrder.jsp");
 					failureView.forward(req, res);
 
-					return; //µ{¦¡¤¤Â_
+					return; //ç¨‹å¼ä¸­æ–·
 					
 				}
 
-				/***************************2.¶}©l­×§ï¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
 				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
 
-				/***************************3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
-				String url = "/moveorderbackend/moveOrder.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:"+e.getMessage());
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/moveorderbackend/moveOrder.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-		if ("updatestatusto2".equals(action)) { // ¨Ó¦Ûupdate_emp_input.jspªº½Ğ¨D
+		if ("updatestatusto2".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -426,14 +405,14 @@ public class MoveOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 
 				Integer amountTotal = null;
 				try {
 					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
 				} catch (NumberFormatException e) {
 					amountTotal = 0;
-					errorMsgs.add("½Ğ¿é¤Jª÷ÃB");
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
 				}
 				String comment = req.getParameter("comment");
 				Integer id = Integer.valueOf(req.getParameter("id"));
@@ -446,7 +425,7 @@ public class MoveOrderServlet extends HttpServlet{
 				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
 				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
 				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
-				//³]©wª¬ºAÅÜ¬°2
+				//è¨­å®šç‹€æ…‹è®Šç‚º2
 				Integer status = 2;
 				
 
@@ -469,35 +448,35 @@ public class MoveOrderServlet extends HttpServlet{
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderbackend/moveOrder.jsp");
+							.getRequestDispatcher("/back_end/move/moveOrder.jsp");
 					failureView.forward(req, res);
 
-					return; //µ{¦¡¤¤Â_
+					return; //ç¨‹å¼ä¸­æ–·
 					
 				}
 
-				/***************************2.¶}©l­×§ï¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
 				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
 
-				/***************************3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
-				String url = "/moveorderbackend/moveOrder.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:"+e.getMessage());
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/moveorderbackend/moveOrder.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-		if ("updatestatusto3".equals(action)) { // ¨Ó¦Ûupdate_emp_input.jspªº½Ğ¨D
+		if ("updatestatusto3".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -505,14 +484,14 @@ public class MoveOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 
 				Integer amountTotal = null;
 				try {
 					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
 				} catch (NumberFormatException e) {
 					amountTotal = 0;
-					errorMsgs.add("½Ğ¿é¤Jª÷ÃB");
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
 				}
 				String comment = req.getParameter("comment");
 				Integer id = Integer.valueOf(req.getParameter("id"));
@@ -525,7 +504,7 @@ public class MoveOrderServlet extends HttpServlet{
 				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
 				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
 				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
-				//³]©wª¬ºAÅÜ¬°3
+				//è¨­å®šç‹€æ…‹è®Šç‚º3
 				Integer status = 3;
 				
 
@@ -548,35 +527,35 @@ public class MoveOrderServlet extends HttpServlet{
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderbackend/moveOrder.jsp");
+							.getRequestDispatcher("/back_end/move/moveOrder.jsp");
 					failureView.forward(req, res);
 
-					return; //µ{¦¡¤¤Â_
+					return; //ç¨‹å¼ä¸­æ–·
 					
 				}
 
-				/***************************2.¶}©l­×§ï¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
 				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
 
-				/***************************3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
-				String url = "/moveorderbackend/moveOrder.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:"+e.getMessage());
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/moveorderbackend/moveOrder.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-		if ("updatestatusto4".equals(action)) { // ¨Ó¦Ûupdate_emp_input.jspªº½Ğ¨D
+		if ("updatestatusto4".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -584,14 +563,14 @@ public class MoveOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 
 				Integer amountTotal = null;
 				try {
 					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
 				} catch (NumberFormatException e) {
 					amountTotal = 0;
-					errorMsgs.add("½Ğ¿é¤Jª÷ÃB");
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
 				}
 				String comment = req.getParameter("comment");
 				Integer id = Integer.valueOf(req.getParameter("id"));
@@ -604,7 +583,7 @@ public class MoveOrderServlet extends HttpServlet{
 				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
 				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
 				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
-				//³]©wª¬ºAÅÜ¬°4
+				//è¨­å®šç‹€æ…‹è®Šç‚º4
 				Integer status = 4;
 				
 
@@ -627,35 +606,35 @@ public class MoveOrderServlet extends HttpServlet{
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderbackend/moveOrder.jsp");
+							.getRequestDispatcher("/back_end/move/moveOrder.jsp");
 					failureView.forward(req, res);
 
-					return; //µ{¦¡¤¤Â_
+					return; //ç¨‹å¼ä¸­æ–·
 					
 				}
 
-				/***************************2.¶}©l­×§ï¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
 				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
 
-				/***************************3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
-				String url = "/moveorderbackend/moveOrder.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:"+e.getMessage());
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/moveorderbackend/moveOrder.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-		if ("updatestatusto1forone".equals(action)) { // ¨Ó¦Ûupdate_emp_input.jspªº½Ğ¨D
+		if ("updatestatusto1forone".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -663,14 +642,14 @@ public class MoveOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 
 				Integer amountTotal = null;
 				try {
 					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
 				} catch (NumberFormatException e) {
 					amountTotal = 0;
-					errorMsgs.add("½Ğ¿é¤Jª÷ÃB");
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
 				}
 				String comment = req.getParameter("comment");
 				Integer id = Integer.valueOf(req.getParameter("id"));
@@ -683,7 +662,7 @@ public class MoveOrderServlet extends HttpServlet{
 				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
 				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
 				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
-				//³]©wª¬ºAÅÜ¬°1
+				//è¨­å®šç‹€æ…‹è®Šç‚º1
 				Integer status = 1;
 				
 
@@ -706,35 +685,35 @@ public class MoveOrderServlet extends HttpServlet{
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderbackend/moveOrderGetOne.jsp");
+							.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 					failureView.forward(req, res);
 
-					return; //µ{¦¡¤¤Â_
+					return; //ç¨‹å¼ä¸­æ–·
 					
 				}
 
-				/***************************2.¶}©l­×§ï¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
 				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
 
-				/***************************3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
-				String url = "/moveorderbackend/moveOrderGetOne.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrderGetOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:"+e.getMessage());
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/moveorderbackend/moveOrderGetOne.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-		if ("updatestatusto2forone".equals(action)) { // ¨Ó¦Ûupdate_emp_input.jspªº½Ğ¨D
+		if ("updatestatusto2forone".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -742,14 +721,14 @@ public class MoveOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 
 				Integer amountTotal = null;
 				try {
 					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
 				} catch (NumberFormatException e) {
 					amountTotal = 0;
-					errorMsgs.add("½Ğ¿é¤Jª÷ÃB");
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
 				}
 				String comment = req.getParameter("comment");
 				Integer id = Integer.valueOf(req.getParameter("id"));
@@ -762,7 +741,7 @@ public class MoveOrderServlet extends HttpServlet{
 				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
 				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
 				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
-				//³]©wª¬ºAÅÜ¬°2
+				//è¨­å®šç‹€æ…‹è®Šç‚º2
 				Integer status = 2;
 				
 
@@ -785,35 +764,35 @@ public class MoveOrderServlet extends HttpServlet{
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderbackend/moveOrderGetOne.jsp");
+							.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 					failureView.forward(req, res);
 
-					return; //µ{¦¡¤¤Â_
+					return; //ç¨‹å¼ä¸­æ–·
 					
 				}
 
-				/***************************2.¶}©l­×§ï¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
 				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
 
-				/***************************3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
-				String url = "/moveorderbackend/moveOrderGetOne.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrderGetOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:"+e.getMessage());
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/moveorderbackend/moveOrderGetOne.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-		if ("updatestatusto3forone".equals(action)) { // ¨Ó¦Ûupdate_emp_input.jspªº½Ğ¨D
+		if ("updatestatusto3forone".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -821,14 +800,14 @@ public class MoveOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 
 				Integer amountTotal = null;
 				try {
 					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
 				} catch (NumberFormatException e) {
 					amountTotal = 0;
-					errorMsgs.add("½Ğ¿é¤Jª÷ÃB");
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
 				}
 				String comment = req.getParameter("comment");
 				Integer id = Integer.valueOf(req.getParameter("id"));
@@ -841,7 +820,7 @@ public class MoveOrderServlet extends HttpServlet{
 				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
 				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
 				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
-				//³]©wª¬ºAÅÜ¬°3
+				//è¨­å®šç‹€æ…‹è®Šç‚º3
 				Integer status = 3;
 				
 
@@ -864,35 +843,35 @@ public class MoveOrderServlet extends HttpServlet{
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderbackend/moveOrderGetOne.jsp");
+							.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 					failureView.forward(req, res);
 
-					return; //µ{¦¡¤¤Â_
+					return; //ç¨‹å¼ä¸­æ–·
 					
 				}
 
-				/***************************2.¶}©l­×§ï¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
 				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
 
-				/***************************3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
-				String url = "/moveorderbackend/moveOrderGetOne.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrderGetOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:"+e.getMessage());
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/moveorderbackend/moveOrderGetOne.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
-		if ("updatestatusto4forone".equals(action)) { // ¨Ó¦Ûupdate_emp_input.jspªº½Ğ¨D
+		if ("updatestatusto4forone".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -900,14 +879,14 @@ public class MoveOrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 
 				Integer amountTotal = null;
 				try {
 					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
 				} catch (NumberFormatException e) {
 					amountTotal = 0;
-					errorMsgs.add("½Ğ¿é¤Jª÷ÃB");
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
 				}
 				String comment = req.getParameter("comment");
 				Integer id = Integer.valueOf(req.getParameter("id"));
@@ -920,7 +899,7 @@ public class MoveOrderServlet extends HttpServlet{
 				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
 				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
 				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
-				//³]©wª¬ºAÅÜ¬°4
+				//è¨­å®šç‹€æ…‹è®Šç‚º4
 				Integer status = 4;
 				
 
@@ -943,30 +922,410 @@ public class MoveOrderServlet extends HttpServlet{
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/moveorderbackend/moveOrderGetOne.jsp");
+							.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 					failureView.forward(req, res);
 
-					return; //µ{¦¡¤¤Â_
+					return; //ç¨‹å¼ä¸­æ–·
 					
 				}
 
-				/***************************2.¶}©l­×§ï¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
 				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
 
-				/***************************3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
-				String url = "/moveorderbackend/moveOrderGetOne.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrderGetOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:"+e.getMessage());
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/moveorderbackend/moveOrderGetOne.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("getMem_For_Display".equals(action)) { // ä¾†è‡ªselect_page.jspçš„è«‹æ±‚
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
+				String str = req.getParameter("memberid");
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("è«‹è¼¸å…¥æœƒå“¡ç·¨è™Ÿ");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/move/readMoveOrder.jsp");
+					failureView.forward(req, res);
+					return;//ç¨‹å¼ä¸­æ–·
+				}
+				
+				Integer memberId = null;
+				try {
+					memberId = Integer.valueOf(str);
+				} catch (Exception e) {
+					errorMsgs.add("æœƒå“¡ç·¨è™Ÿæ ¼å¼ä¸æ­£ç¢º");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/move/readMoveOrder.jsp");
+					failureView.forward(req, res);
+					return;//ç¨‹å¼ä¸­æ–·
+				}
+				
+				/***************************2.é–‹å§‹æŸ¥è©¢è³‡æ–™*****************************************/
+				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
+				List<MoveOrderVO> moveOrderVO = moSvc.getByMemberId(memberId);
+				if (moveOrderVO == null) {
+					errorMsgs.add("æŸ¥ç„¡è³‡æ–™");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/move/readMoveOrder.jsp");
+					failureView.forward(req, res);
+					return;//ç¨‹å¼ä¸­æ–·
+				}
+				
+				/***************************3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«å–å‡ºçš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrderGetMem.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // æˆåŠŸè½‰äº¤ listOneEmp.jsp
+				successView.forward(req, res);
+
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("ç„¡æ³•å–å¾—è³‡æ–™:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("updatestatusto1bymem".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+			try {
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
+
+				Integer amountTotal = null;
+				try {
+					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
+				} catch (NumberFormatException e) {
+					amountTotal = 0;
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
+				}
+				String comment = req.getParameter("comment");
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer memberId = Integer.valueOf(req.getParameter("memberId"));
+				String customer = req.getParameter("customer");
+				String phone = req.getParameter("phone");
+				String fromAddress = req.getParameter("fromAddress");
+				String toAddress = req.getParameter("toAddress");
+				Timestamp moveDate = java.sql.Timestamp.valueOf(req.getParameter("moveDate"));
+				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
+				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
+				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
+				//è¨­å®šç‹€æ…‹è®Šç‚º1
+				Integer status = 1;
+				
+
+				
+				MoveOrderVO moveOrderVO = new MoveOrderVO();
+				moveOrderVO.setId(id);
+				moveOrderVO.setMemberId(memberId);
+				moveOrderVO.setAmountTotal(amountTotal);
+				moveOrderVO.setComment(comment);
+				moveOrderVO.setCustomer(customer);
+				moveOrderVO.setPhone(phone);
+				moveOrderVO.setFromAddress(fromAddress);
+				moveOrderVO.setToAddress(toAddress);
+				moveOrderVO.setMoveDate(moveDate);
+				moveOrderVO.setAmountFirst(amountFirst);
+				moveOrderVO.setDeposit(deposit);
+				moveOrderVO.setOrderDate(orderDate);
+				moveOrderVO.setStatus(status);
+
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+					failureView.forward(req, res);
+
+					return; //ç¨‹å¼ä¸­æ–·
+					
+				}
+
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
+				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
+				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
+
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrderGetMem.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
+				successView.forward(req, res);
+
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("updatestatusto2bymem".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+			try {
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
+
+				Integer amountTotal = null;
+				try {
+					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
+				} catch (NumberFormatException e) {
+					amountTotal = 0;
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
+				}
+				String comment = req.getParameter("comment");
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer memberId = Integer.valueOf(req.getParameter("memberId"));
+				String customer = req.getParameter("customer");
+				String phone = req.getParameter("phone");
+				String fromAddress = req.getParameter("fromAddress");
+				String toAddress = req.getParameter("toAddress");
+				Timestamp moveDate = java.sql.Timestamp.valueOf(req.getParameter("moveDate"));
+				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
+				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
+				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
+				//è¨­å®šç‹€æ…‹è®Šç‚º2
+				Integer status = 2;
+				
+
+				
+				MoveOrderVO moveOrderVO = new MoveOrderVO();
+				moveOrderVO.setId(id);
+				moveOrderVO.setMemberId(memberId);
+				moveOrderVO.setAmountTotal(amountTotal);
+				moveOrderVO.setComment(comment);
+				moveOrderVO.setCustomer(customer);
+				moveOrderVO.setPhone(phone);
+				moveOrderVO.setFromAddress(fromAddress);
+				moveOrderVO.setToAddress(toAddress);
+				moveOrderVO.setMoveDate(moveDate);
+				moveOrderVO.setAmountFirst(amountFirst);
+				moveOrderVO.setDeposit(deposit);
+				moveOrderVO.setOrderDate(orderDate);
+				moveOrderVO.setStatus(status);
+
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+					failureView.forward(req, res);
+
+					return; //ç¨‹å¼ä¸­æ–·
+					
+				}
+
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
+				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
+				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
+
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrderGetMem.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
+				successView.forward(req, res);
+
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("updatestatusto3bymem".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+			try {
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
+
+				Integer amountTotal = null;
+				try {
+					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
+				} catch (NumberFormatException e) {
+					amountTotal = 0;
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
+				}
+				String comment = req.getParameter("comment");
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer memberId = Integer.valueOf(req.getParameter("memberId"));
+				String customer = req.getParameter("customer");
+				String phone = req.getParameter("phone");
+				String fromAddress = req.getParameter("fromAddress");
+				String toAddress = req.getParameter("toAddress");
+				Timestamp moveDate = java.sql.Timestamp.valueOf(req.getParameter("moveDate"));
+				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
+				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
+				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
+				//è¨­å®šç‹€æ…‹è®Šç‚º3
+				Integer status = 3;
+				
+
+				
+				MoveOrderVO moveOrderVO = new MoveOrderVO();
+				moveOrderVO.setId(id);
+				moveOrderVO.setMemberId(memberId);
+				moveOrderVO.setAmountTotal(amountTotal);
+				moveOrderVO.setComment(comment);
+				moveOrderVO.setCustomer(customer);
+				moveOrderVO.setPhone(phone);
+				moveOrderVO.setFromAddress(fromAddress);
+				moveOrderVO.setToAddress(toAddress);
+				moveOrderVO.setMoveDate(moveDate);
+				moveOrderVO.setAmountFirst(amountFirst);
+				moveOrderVO.setDeposit(deposit);
+				moveOrderVO.setOrderDate(orderDate);
+				moveOrderVO.setStatus(status);
+
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+					failureView.forward(req, res);
+
+					return; //ç¨‹å¼ä¸­æ–·
+					
+				}
+
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
+				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
+				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
+
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrderGetMem.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
+				successView.forward(req, res);
+
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("updatestatusto4bymem".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+			try {
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
+
+				Integer amountTotal = null;
+				try {
+					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
+				} catch (NumberFormatException e) {
+					amountTotal = 0;
+					errorMsgs.add("è«‹è¼¸å…¥é‡‘é¡");
+				}
+				String comment = req.getParameter("comment");
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer memberId = Integer.valueOf(req.getParameter("memberId"));
+				String customer = req.getParameter("customer");
+				String phone = req.getParameter("phone");
+				String fromAddress = req.getParameter("fromAddress");
+				String toAddress = req.getParameter("toAddress");
+				Timestamp moveDate = java.sql.Timestamp.valueOf(req.getParameter("moveDate"));
+				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
+				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
+				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
+				//è¨­å®šç‹€æ…‹è®Šç‚º4
+				Integer status = 4;
+				
+
+				
+				MoveOrderVO moveOrderVO = new MoveOrderVO();
+				moveOrderVO.setId(id);
+				moveOrderVO.setMemberId(memberId);
+				moveOrderVO.setAmountTotal(amountTotal);
+				moveOrderVO.setComment(comment);
+				moveOrderVO.setCustomer(customer);
+				moveOrderVO.setPhone(phone);
+				moveOrderVO.setFromAddress(fromAddress);
+				moveOrderVO.setToAddress(toAddress);
+				moveOrderVO.setMoveDate(moveDate);
+				moveOrderVO.setAmountFirst(amountFirst);
+				moveOrderVO.setDeposit(deposit);
+				moveOrderVO.setOrderDate(orderDate);
+				moveOrderVO.setStatus(status);
+
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("moveOrderVO", moveOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+					failureView.forward(req, res);
+
+					return; //ç¨‹å¼ä¸­æ–·
+					
+				}
+
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
+				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
+				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
+
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/move/moveOrderGetMem.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
+				successView.forward(req, res);
+
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
 				failureView.forward(req, res);
 			}
 		}
