@@ -32,8 +32,8 @@ public class ActivityServiceImpl implements ActivityService {
 		vo.setStartDate(startDate);
 		vo.setEndDate(endDate);
 		vo.setStatus(status);
-		dao.insert(vo);
-
+		int activityId = dao.insert(vo);
+		vo.setActivityId(activityId);
 		return vo;
 	}
 

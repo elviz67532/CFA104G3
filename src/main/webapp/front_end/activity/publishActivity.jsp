@@ -17,7 +17,9 @@
 <!-- sweet -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+
 <link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
@@ -29,6 +31,81 @@
     rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
+<style>
+.innerDiv{
+	width: 60%;
+    margin: 0 auto;
+    padding: 60px 20px 0;
+}
+.innerDiv h2{
+	text-align: center;
+}
+.innerDiv h2:hover{
+	color: gray;
+	cursor: grabbing;
+}
+.memId{
+	margin: 0;
+    padding: 0;
+}
+.formLabel {
+    font-size: 14px;
+    font-weight: 600;
+    color: #282828;
+/*     line-height: 1.71; */
+/*     padding-bottom: 10px; */
+    /* text-align: center; */
+    /* font: 1rem 'Fira Sans', sans-serif; */
+}
+.actFormInput{
+	width: 100%;
+    flex: 1;
+    border: 0;
+    padding: 8px 24px;
+    background-color: #f1f1f1;
+    position: relative;
+    font-size: 16px;
+    border-radius: 0;
+}
+.actSelect{
+	width: 100%;
+    flex: 1;
+    border: 0;
+    padding: 0 24px;
+    background-color: #f1f1f1;
+    position: relative;
+    font-size: 16px;
+    border-radius: 0;
+}
+.actPhoto{
+	width: 100%;
+    flex: 1;
+    border: 0;
+    padding: 0 24px;
+    background-color: #f1f1f1;
+    position: relative;
+    font-size: 16px;
+    border-radius: 0;
+}
+.actTimeFormInput{
+	width: 100%;
+    flex: 1;
+    border: 0;
+    padding: 0 24px;
+    background-color: #f1f1f1;
+    position: relative;
+    font-size: 16px;
+    border-radius: 0;
+}
+.btn{
+	width: 100%;
+	color: #fff;
+    padding: 16px 40px;
+    border-radius: 4px;
+    background-color: lightgreen;
+	margin: 8px 0 60px 0;
+}
+</style>
 </head>
 
 <body>
@@ -51,9 +128,9 @@
     </header>
    
    	<!-- 主體畫面設計  -->
-   	<div style="border: 2px green solid; width: 70%; margin: 0 auto;">
-	
-	<h1>刊登活動</h1>
+<div style="border: 2px white groove; width: 70%; margin: 0 auto 60px auto;">
+	<div class="innerDiv">
+	<h2>現在來舉辦活動囉!</h2>
 		<%-- 錯誤表列 --%>
 		<c:if test="${not empty errorMsgs}">
 			<font style="color: red">請修正以下錯誤:</font>
@@ -64,10 +141,11 @@
 			</ul>
 		</c:if>
 		
-		<form action="${pageContext.request.contextPath}/activity/act.do" method="post" name="form1">
+		<form action="${pageContext.request.contextPath}/activity/act.do" enctype="multipart/form-data" method="post" name="form1">
+<!-- 			<p class="memId">會員名稱?</p> -->
 			<label class="formLabel" for="name">活動名稱: <span style="color: red">${errorMsgs.name}</span></label>
 			<input class="actFormInput" autofocus type="text" name="name"
-				value="${param.name}"/><br> 
+				value="<%= (actVO == null) ? "davidking餐聚" : actVO.getName() %>" /><br> 
 			
 			<label class="formLabel"for="type">活動種類: <span style="color: red">${errorMsgs.type}</span></label> 
 			<select class="actSelect" name="type" id="">
@@ -79,18 +157,20 @@
 			</select> 
 			<br>
 			<label class="formLabel" for="location">活動地點: <span style="color: red">${errorMsgs.location}</span></label>
-			<input class="actFormInput" type="text" name="location" value="${param.location}"/><br>
+			<input class="actFormInput" type="text" name="location" value="<%= (actVO == null) ? "303 新竹縣湖口鄉民和街27號" : actVO.getLocation() %>"/><br>
 		 	
 		 	<label class="formLabel" for="actName">活動照片: <span style="color: red">${errorMsgs.photo}</span></label>
-           	<input class="actPhoto" type="file" accept="image/*" value=""><br>
+           	<input class="actPhoto" name="actp" type="file" accept="image/*" value=""><br>
 <!--       	多張 multiple     -->
 			<label class="formLabel" for="content">活動內容: <span style="color: red">${errorMsgs.content}</span></label>
-			<textarea class="actContentFormInput" cols="55" name="content">${param.content}</textarea>
+			<textarea class="actFormInput actContentFormInput" cols="55" name="content">"<%= (actVO == null) ? 
+					"空想食境Fantasy MEALity 為 Manga'Z 所打造出的獨特餐飲體驗，將餐飲結合虛擬實境，用120分鐘的時間帶消費者走入空想王國體驗超乎想像的美食饗宴。" 
+																			: actVO.getContent() %>"</textarea>
 	
 			<label class="formLabel" for="cost">活動費用: <span style="color: red">${errorMsgs.cost}</span></label>
-			<input class="actNumberFormInput" type="number" step="1" min="0"
+			<input class="actFormInput actNumberFormInput" type="number" step="1" min="0"
 				pattern="[0-9]" name="cost" 
-				value="${param.cost}"/><br>
+				value="<%= (actVO == null) ? "2000" : actVO.getCost() %>"/><br>
 	
 			<label class="formLabel" for="applyStartDate">報名開始時間: <span style="color: red">${errorMsgs.applyStartDate}</span></label>
 			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" value="${param.applyStartDate}"/><br>
@@ -104,24 +184,26 @@
 			<label class="formLabel" for="endDate">活動結束時間: <span style="color: red">${errorMsgs.endDate}</span></label>
 			<input class="actTimeFormInput" step="1" type="datetime-local" name="endDate" value="${param.endDate}"/><br> 
 				
-			<label class="formLabel" for="applyMemberExisting">報名人數倒數: <span style="color: red">${errorMsgs.applyMemberExisting}</span></label>
-			<span class="actNumberFormInput" style="font-size: 36px; color: red;">${param.maxMember}</span><br> 
+<%-- 			<label class="formLabel" for="applyMemberExisting">報名人數倒數: <span style="color: red">${errorMsgs.applyMemberExisting}</span></label> --%>
+<%-- 			<span class="actNumberFormInput" style="font-size: 36px; color: red;">${param.maxMember}</span><br>  --%>
 	
 			<label class="formLabel" for="maxMember">活動人數上限: <span style="color: red">${errorMsgs.maxMember}</span></label>
-			<input class="actNumberFormInput" type="number" step="" min="0"
+			<input class="actFormInput actNumberFormInput" type="number" step="" min="0"
 				max="1000" pattern="[0-9]" name="maxMember"
-				value="${param.maxMember}"/><br> 
+				value="<%= (actVO == null) ? "100" : actVO.getMaxMember() %>"/><br> 
 				
 			<label class="formLabel" for="minMember">活動人數下限: <span style="color: red">${errorMsgs.minMember}</span></label>
-			<input class="actNumberFormInput" type="number" step="" min="0"
+			<input class="actFormInput actNumberFormInput" type="number" step="" min="0"
 				max="1000" pattern="[0-9]" name="minMember"
-				value="${param.minMember}"/><br>
-	
-			<input type="hidden" name="action" value="insert"/> 
-			<input type="submit" class="shape-ex11" id="sweetBtn1" value="送出表單"/>
+				value="<%= (actVO == null) ? "20" : actVO.getMinMember() %>"/><br>
+<!-- 			sweetalert 加在insert 就會有沒效果 -->
+			<input type="hidden" name="action" id="sweetBtnInsert" value="insert"/> 
+<!-- 			sweetalert 加在submit 有效果但不能insert -->
+			<input type="submit" class="btn" value="送出表單"/>
 			
 		</form>
 	</div>
+</div>
    
    
     <!-- Footer-->
@@ -131,18 +213,18 @@
     <!-- Core theme JS-->
     <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
     <script>
-    	var btn1 = document.getElementById('sweetBtn1');
-    	btn1.addEventListener('click', function() {
-            swal('幹得漂亮！', '你的活動刊登完成了！', 'success');
-        });
-    	$('#sweetBtn1').click (function (e) {
-   		   e.preventDefault(); //will stop the link href to call the blog page
+    var btn1 = document.getElementById('sweetBtnInsert');
+	btn1.addEventListener('click', function() {
+        swal('幹得漂亮！', '你的活動刊登完成了！', 'success');
+    });
+	$('#sweetBtnInsert').click (function (e) {
+	   e.preventDefault(); //will stop the link href to call the blog page
 
-   		   setTimeout(function () {
-   		       window.location.href = "http://localhost:8081/CFA104G3/back_end/activity/selectAllActivityPage.jsp"; //will redirect to your blog page (an ex: blog.html)
-   		    }, 2000); //will call the function after 2 secs.
+	   setTimeout(function () {
+	       window.location.href = "http://localhost:8081/CFA104G3/front_end/activity/previewActPage.jsp"; //will redirect to your blog page (an ex: blog.html)
+	    }, 1000); //will call the function after 2 secs.
 
-   		});
+	});
     </script>
 </body>
 

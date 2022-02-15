@@ -65,19 +65,15 @@
 					<td>${actVO.startDate} ~ ${actVO.endDate}</td>
 <%-- 					<td >${actVO.content}</td> --%>
 					<td>${actVO.status}</td>
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="margin-bottom: 0px;">
+			     <input type="submit" value="刪除活動">
+			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
+			     <input type="hidden" name="action" value="deleteBack"></FORM>
+			</td>
 				</tr>
 				</c:forEach>
 			</table>
-<!-- 			<td> -->
-<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="margin-bottom: 0px;"> --%>
-<!-- 			     <input type="submit" value="編輯活動"> -->
-<%-- 			     <input type="hidden" name="activity"  value="${actVO.activityId}"> --%>
-<!-- 			     <input type="hidden" name="action"	value="update"></FORM> -->
-<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="margin-bottom: 0px;"> --%>
-<!-- 			     <input type="submit" value="刪除活動"> -->
-<%-- 			     <input type="hidden" name="activity"  value="${actVO.activityId}"> --%>
-<!-- 			     <input type="hidden" name="action" value="delete"></FORM> -->
-<!-- 			</td> -->
 					<!-- end of main -->
 					
 				</div>

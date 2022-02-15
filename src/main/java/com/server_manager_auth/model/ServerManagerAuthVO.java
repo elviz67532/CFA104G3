@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class ServerManagerAuthVO implements Serializable {
-	private Integer smgeFuncId;
+	private Integer smgeAuthId;
 	private Integer smgrId;
 }

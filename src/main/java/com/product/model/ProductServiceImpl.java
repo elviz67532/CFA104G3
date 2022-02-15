@@ -13,7 +13,7 @@ public class ProductServiceImpl implements ProductService {
 		dao = new ProductDAOImpl();
 	}
 
-	public ProductVO addProduct(String prodName, Integer prodMemId, Integer prodType, String prodDesc,
+	public String addProduct(String prodName, Integer prodMemId, Integer prodType, String prodDesc,
 			Integer prodPrice, Timestamp prodUptime, String prodLoc, Integer prodStatus) {
 
 		ProductVO productVO = new ProductVO();
@@ -27,9 +27,9 @@ public class ProductServiceImpl implements ProductService {
 		productVO.setLocation(prodLoc);
 		productVO.setStatus(prodStatus);
 
-		int r = dao.insert(productVO);
+		String key = dao.insert_get_key(productVO);
 
-		return productVO;
+		return key;
 	}
 
 	public ProductVO updateProduct(Integer prodId, String prodName, Integer prodMemId, Integer prodType,

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 	<!-- Sidebar - Brand -->
 	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
@@ -10,11 +12,11 @@
 			委域
 		</div>
 	</a>
-	
 	<!-- 幫助中心管理	 -->
 	<hr class="sidebar-divider">
 	<li class="nav-item">
-		<a class="nav-link" href="#">
+		<a class="nav-link" 
+		   href="/CFA104G3/server_manager_function/ServerManageFunctionServlet?auth=FAQ&auth=Admin">
 			<i class="fas fa-fw fa-table"></i> 
 			<span>FAQ</span>
 		</a>
@@ -24,13 +26,15 @@
 	<hr class="sidebar-divider">
 	<div class="sidebar-heading">活動管理</div>
 		<li class="nav-item">
-		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseActivity" aria-expanded="true" aria-controls="collapseActivity"> 
+		<a class="nav-link collapsed" 
+		   href="#" 
+		   data-toggle="collapse" data-target="#collapseActivity" aria-expanded="true" aria-controls="collapseActivity"> 
 			<i class="fas fa-fw fa-cog"></i> 
 			<span>活動</span>
 		</a>
 		<div id="collapseActivity" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="#">活動管理</a>
+				<a class="collapse-item" href="/CFA104G3/server_manager_function/ServerManageFunctionServlet?auth=Activity&auth=Admin">活動管理</a>
 			</div>
 		</div>
 	</li>
@@ -40,15 +44,17 @@
 	<hr class="sidebar-divider">
 	<div class="sidebar-heading">二手買賣管理</div>
 		<li class="nav-item">
-		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="true" aria-controls="collapseProduct"> 
+		<a class="nav-link collapsed" 
+		   href="#" 
+		   data-toggle="collapse" data-target="#collapseProduct" aria-expanded="true" aria-controls="collapseProduct"> 
 			<i class="fas fa-fw fa-cog"></i> 
 			<span>二手買賣</span>
 		</a>
 		<div id="collapseProduct" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="#">檢舉管理</a>
-				<a class="collapse-item" href="#">商品管理</a>
-				<a class="collapse-item" href="#">訂單管理</a>
+				<a class="collapse-item" href="/CFA104G3/server_manager_function/ServerManageFunctionServlet?auth=DoubleProduct&auth=Admin">檢舉管理</a>
+				<a class="collapse-item" href="/CFA104G3/server_manager_function/ServerManageFunctionServlet?auth=DoubleProduct&auth=Admin">商品管理</a>
+				<a class="collapse-item" href="/CFA104G3/server_manager_function/ServerManageFunctionServlet?auth=DoubleProduct&auth=Admin">訂單管理</a>
 			</div>
 		</div>
 	</li>
@@ -57,7 +63,9 @@
 	<hr class="sidebar-divider">
 	<div class="sidebar-heading">搬家管理</div>
 		<li class="nav-item">
-		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMove" aria-expanded="true" aria-controls="collapseMove"> 
+		<a class="nav-link collapsed" 
+		   href="#" 
+		   data-toggle="collapse" data-target="#collapseMove" aria-expanded="true" aria-controls="collapseMove"> 
 			<i class="fas fa-fw fa-cog"></i> 
 			<span>搬家</span>
 		</a>
@@ -79,7 +87,7 @@
 		</a>
 		<div id="collapseMember" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="#">會員資料</a>
+				<a class="collapse-item" href="/CFA104G3/server_manager_function/ServerManageFunctionServlet?auth=Member&auth=Admin">會員資料</a>
 			</div>
 		</div>
 	</li>
@@ -88,17 +96,18 @@
 	<hr class="sidebar-divider">
 	<div class="sidebar-heading">管理員權限</div>
 	<li class="nav-item">
-		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManager" aria-expanded="true" aria-controls="collapseManager"> 
+		<a class="nav-link collapsed" 
+		   href="/CFA104G3/server_manager_function/ServerManageFunctionServlet?auth=ServerManager&auth=Admin" 
+		   data-toggle="collapse" data-target="#collapseManager" aria-expanded="true" aria-controls="collapseManager"> 
 			<i class="fas fa-fw fa-cog"></i> 
 			<span>管理員</span>
 		</a>
 		<div id="collapseManager" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="#">權限管理</a>
+				<a class="collapse-item" href="/CFA104G3/server_manager_function/ServerManageFunctionServlet?auth=ServerManager&auth=Admin">權限管理</a>
 			</div>
 		</div>
 	</li>
-	
 	<!-- 摺疊 -->
 	<hr class="sidebar-divider d-none d-md-block">
 	<div class="text-center d-none d-md-inline">

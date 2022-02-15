@@ -9,18 +9,6 @@ fieldset{
 legend{
     color: black;
 }
-.formLabel {
-    display: block;
-    color: black;
-    /* text-align: center; */
-    /* font: 1rem 'Fira Sans', sans-serif; */
-}
-
-.actFormInput{
-    width: 98%;
-    border-radius: 30px;
-    /* height: 20px; 擃漲憭芸�����������敶梢*/
-}
 
 .actNumberFormInput{
     width: 20%;
@@ -51,40 +39,43 @@ legend{
     border-radius: 10px;
 } */
 
-/*type*/
-.actSelect{
-    width: 30%;
-    height: 25px;
-    border-radius: 30px;
-}
+
 
 .actSelect:focus{
+	border: 2px solid black;
     background-color: lightgreen;
 }
 
 /*input hover*/
 input[type="text"]:focus{
+	border: 2px solid black;
     background-color: lightgreen;
 }
 input[type="tel"]:focus{
+	border: 2px solid black;
     background-color: lightgreen;
 }
 input[type="email"]:focus{
+	border: 2px solid black;
     background-color: lightgreen;
 }
 /* input[type="file"]:focus{
     background-color: aquamarine;
 } */
 input[type="number"]:focus{
+	border: 2px solid black;
     background-color: lightgreen;
 }
 input[type="date"]:focus{
+	border: 2px solid black;
     background-color: lightgreen;
 }
 input[type="time"]:focus{
+	border: 2px solid black;
     background-color: lightgreen;
 }
 textarea:focus{
+	border: 2px solid black;
     background-color: lightgreen;
 }
 /*=================������=================*/

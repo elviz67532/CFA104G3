@@ -47,6 +47,11 @@
 	  -webkit-line-clamp: 2; /*行數*/
 	  -webkit-box-orient: vertical;
 	  white-space: normal;
+	  cursor: pointer;
+      color: #959ba1;
+      font-size: 18px;
+      margin: 8px 0;  
+
 }
 div.tab_container div.tab_contents{
 /*     border: 1px solid black; */
@@ -64,29 +69,61 @@ div.tab_container div.tab_contents div.tab.-on{
     text-decoration: none;
 }
 .wrap{
-    width: 960px;
-    margin: auto;
-    display: fixed;
+    width: 1260px;
+	margin: auto; 
+/*     display: fixed; */
 }
 .item{
-    width: 100%;
+    width: 30%;
     margin: 10px;
     border: 1px solid #aaa;
     position: relative;
+    display: inline-block;
+}
+.item .div1{
+    padding: 8px 16px;
+    min-height: 149px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 0 16px 16px;
+    border: 1px solid gray;
+}
+.item .time{
+    color: #b5bac1;
+    font-size: 14px;
+    font-weight: 500;
+	margin: 4px 8px; 
 }
 .item img{
-    width: 40%;
+	box-shadow: none;
+    border-radius: 16px 16px 0 0;
+    width: 100%;
 }
-.item .act_tab{ /*Hot的絕對定位*/
-    border: 1px #888 ;
-    border-style: outset;
-    background-color: red;
-    color: #fff;
-    padding: 6px 10px;
-	position: absolute; 
-    top: -4px;
-    left: -4px;
-    /* right: -4px; */
+.item .actName{
+	height:auto;
+	margin: 8px 0;  
+    color: #000;
+    line-height: 20px;
+	letter-spacing: -.16px; 
+/*     font-weight: 700; */
+/*     overflow: hidden; */
+/*     display: -webkit-box; */
+/*     -webkit-box-orient: vertical; */
+/*     -webkit-line-clamp: 2; */
+}
+/* .item .act_tab{ /*Hot的絕對定位*/ */
+/*     border: 1px #888 ; */
+/*     border-style: outset; */
+/*     background-color: red; */
+/*     color: #fff; */
+/*     padding: 6px 10px; */
+/* 	position: absolute;  */
+/*     top: -4px; */
+/*     left: -4px; */
+/*     /* right: -4px; */ */
+/* } */
+.item:hover{
+	background-color: lightgray;
 }
 </style>    
 </head>
@@ -113,31 +150,25 @@ div.tab_container div.tab_contents div.tab.-on{
    	<!-- 主體畫面設計  -->
 <div class="tab_container">
  	<div class="tab_contents">
-	<c:forEach var="actVO" items="${list}" >
 		<div class="wrap">
+	<c:forEach var="actVO" items="${list}" >
 	        <div class="item">
-	            <div class="act_tab">${actVO.type}</div>
-		            <a class="act_tab_a" href="#">
-		                <img src="http://picsum.photos/300/200?random=?" alt="">
-		                <h2>${actVO.name}</h2>
+<%-- 	            <div class="act_tab">${actVO.type}</div> --%>
+		                <img class="" src="http://picsum.photos/300/200?random=?" alt="">
+	            	<div class="div1">
+		            	<p class="time">${actVO.startDate}</p>
+		                <h2 class="actName">${actVO.name}</h2>
 		                <p class="ellipsis">${actVO.content}</p>
+	            	</div>
+		            <a class="act_tab_a" href="#">
 	                </a>
+
                 </div>
+	</c:forEach>
 	        </div>
    		</div>
-	</c:forEach>
  	</div>
 </div>
-<!-- 			<td> -->
-<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="margin-bottom: 0px;"> --%>
-<!-- 			     <input type="submit" value="編輯活動"> -->
-<%-- 			     <input type="hidden" name="activity"  value="${actVO.activityId}"> --%>
-<!-- 			     <input type="hidden" name="action"	value="update"></FORM> -->
-<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="margin-bottom: 0px;"> --%>
-<!-- 			     <input type="submit" value="刪除活動"> -->
-<%-- 			     <input type="hidden" name="activity"  value="${actVO.activityId}"> --%>
-<!-- 			     <input type="hidden" name="action" value="delete"></FORM> -->
-<!-- 			</td> -->
 	
    
    
