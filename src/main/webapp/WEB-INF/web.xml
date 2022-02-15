@@ -39,6 +39,15 @@
 		<servlet-name>MoveRequestServlet</servlet-name>
 		<url-pattern>/move/moveRequest.do</url-pattern>
 	</servlet-mapping>
+		<servlet>
+		<servlet-name>MoveRequestManageServlet</servlet-name>
+		<servlet-class>com.move_request.controller.MoveRequestManageServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MoveRequestManageServlet</servlet-name>
+		<url-pattern>/move/moveManage.do</url-pattern>
+	</servlet-mapping>
 	<servlet>
 		<servlet-name>MoveOrderServlet</servlet-name>
 		<servlet-class>com.move_order.controller.MoveOrderServlet
@@ -46,9 +55,17 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MoveOrderServlet</servlet-name>
-		<url-pattern>/move/moveorder.do</url-pattern>
+		<url-pattern>/front_end/move/moveorder.do</url-pattern>
 	</servlet-mapping>
-
+		<servlet>
+		<servlet-name>MoveOrderServlet</servlet-name>
+		<servlet-class>com.move_order.controller.MoveOrderServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MoveOrderServlet</servlet-name>
+		<url-pattern>/back_end/move/moveorder.do</url-pattern>
+	</servlet-mapping>
 	<!-- activity -->
 	<servlet>
 		<servlet-name>ActaServlet</servlet-name>
@@ -67,7 +84,14 @@
 		<servlet-name>ActivityServlet</servlet-name>
 		<url-pattern>/activity/act.do</url-pattern>
 	</servlet-mapping>
-	
+	<servlet>
+		<servlet-name>ActivityPhotoServlet</servlet-name>
+		<servlet-class>com.activity.controller.ActivityPhotoServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActivityPhotoServlet</servlet-name>
+		<url-pattern>/activity/actp.do</url-pattern>
+	</servlet-mapping>
 	<!-- product -->
 	<servlet>
 		<servlet-name>NewsServlet</servlet-name>
@@ -75,9 +99,8 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>NewsServlet</servlet-name>
-		<url-pattern>/news/NewsServlet</url-pattern>
+		<url-pattern>/back_end/news/NewsServlet</url-pattern>
 	</servlet-mapping>
-
   <servlet>
     <servlet-name>ProductServlet</servlet-name>
     <servlet-class>com.product.controller.ProductServlet</servlet-class>
