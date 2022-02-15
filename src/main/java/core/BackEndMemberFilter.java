@@ -83,15 +83,55 @@ public class BackEndMemberFilter implements Filter {
 		}
 		
 		// 判斷使用者權限
-		boolean hasAuth = false;
+		
+		//【取得session】
+		boolean hasAuthSM = false;
+		boolean hasAuthACT = false;
+		boolean hasAuthDprod = false;
+		boolean hasAuthMove = false;
+		boolean hasAuthMan = false;
+		boolean hasAuthFaq = false;
 		List<ServerManagerAuthVO> authVos = (List<ServerManagerAuthVO>) session.getAttribute("auth");
 		if (authVos == null) {
 			System.out.println("使用者無此權限");
 			res.sendRedirect("/back_end/server_manager/unAuth.jsp");
 			return;
 		}
+		//【從session判斷有哪些權限】
+		for(ServerManagerAuthVO authVo : authVos) {
+			switch (authVo) {
+			case SERVER_MANAGER: {
+				hasAuthSM = true;
+				break;
+			}
+			case ACTIVITY:{
+				hasAuthACT = true;
+				break;
+			}
+			case DOUBLE_PROD:{
+				hasAuthDprod = true;
+				break;
+			}
+			case MOVE:{
+				hasAuthMove = true;
+				break;
+			}
+			case MANAGER:{
+				hasAuthMan = true;
+				break;
+			}
+			case FAQ:{
+				hasAuthFaq = true;
+				break;
+			}
+			
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + key);
+			}
+		}
 		
 		
+		boolean hasAuth = false;
 		for (ServerManagerAuthVO authVo : authVos) { // 列舉使用者權限
 			hasAuth = true;
 			
