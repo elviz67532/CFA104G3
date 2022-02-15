@@ -1,6 +1,7 @@
 package com.member.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.Data;
