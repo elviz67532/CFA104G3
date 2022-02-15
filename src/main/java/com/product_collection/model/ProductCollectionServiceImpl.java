@@ -1,5 +1,6 @@
 package com.product_collection.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.move_order.model.MoveOrderVO;
@@ -38,12 +39,8 @@ public class ProductCollectionServiceImpl implements ProductCollectionService {
 		return dao.selectAll();
 	}
 	
-	public boolean listCollection(int memberId){
-		ProductCollectionVO collectionVO = new ProductCollectionVO();
-		ProductVO productVO = new ProductVO();
-		ProductDAOImpl pdao = new ProductDAOImpl();
-		productVO = pdao.selectById(collectionVO.getProductId());
-		
-	return true;	
+	@Override
+	public List<ProductCollectionVO> getByMemId(int memberId){
+		return dao.selectByMemId(memberId);
 	}
 }
