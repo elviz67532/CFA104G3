@@ -115,4 +115,12 @@
     <url-pattern>/server_manager/ServerManagerServlet</url-pattern>
   </servlet-mapping>	  
 
+  <servlet>
+    <servlet-name>ServerManageFunctionServlet</servlet-name>
+    <servlet-class>com.server_manager_function.controller.ServerManageFunctionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServerManageFunctionServlet</servlet-name>
+    <url-pattern>/server_manager_function/ServerManageFunctionServlet</url-pattern>
+  </servlet-mapping>	
 </web-app>
