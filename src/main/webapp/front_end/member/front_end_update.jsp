@@ -77,16 +77,13 @@ th, td {
 <center>
 
 	<body>
-
 		<main>
 			<table id="table-1">
 				<tr>
 					<td>
 						<h3>會員資料修改</h3>
 						<h4>
-							<a href="front_end_listOneMember.jsp"><img
-								src="icon/light-bulb.png" width="30" height="30" border="0">
-								HomePage</a>
+							<a href="front_end_listOneMember.jsp"> 回會員中心</a>
 						</h4>
 					</td>
 				</tr>
@@ -102,26 +99,42 @@ th, td {
 				</ul>
 			</c:if>
 
-			<FORM METHOD="post" ACTION="MemberServlet.do" name="form1">
+			<FORM METHOD="post"
+				enctype ="multipart/form-data"
+				ACTION="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"
+				name="form1">
 				<table>
-
 					<tr>
-						<td>會員姓名:</td>
-						<td><input type="TEXT" name="neme" size="10"
-							autocomplete="off" value="<%=memberVO.getName()%>" /></td>
+						<td>會員編號:<font color=red><b>*</b></font></td>
+						<td><%=memberVO.getId()%></td>
 					</tr>
-
+					
 					
 					<tr>
-						<td>生日:</td>
-						<td><input name="registerDate" id="registerDate" type="Date"
-							value="<%=(memberVO == null) ? "" : memberVO.getRegisterDate()%>"></td>
+						<td>EMAIL:</td>
+						<td><input placeholder="請輸入EMAIL" name="email" maxlength="45"
+							autocomplete="off"
+							value="<%=(memberVO == null) ? "" : memberVO.getEmail()%>" /></td>
+					</tr>
+
+					<tr>
+						<td>密碼:</td>
+						<td><input type="TEXT" name="password" maxlength="10"
+							autocomplete="off"
+							value="<%=(memberVO == null) ? "" : memberVO.getPassword()%>" /></td>
+					</tr>
+
+					<tr>
+						<td>暱稱:</td>
+						<td><input type="TEXT" name="nickname" maxlength="10"
+							autocomplete="off"
+							value="<%=(memberVO == null) ? "" : memberVO.getNickname()%>" /></td>
 					</tr>
 					<tr>
-						<td>地址:</td>
-						<td><input placeholder="請輸入地址" name="address" size="30"
+						<td>姓名:</td>
+						<td><input type="TEXT" name="name" maxlength="10"
 							autocomplete="off"
-							value="<%=(memberVO == null) ? "" : memberVO.getAddress()%>" /></td>
+							value="<%=(memberVO == null) ? "" : memberVO.getName()%>" /></td>
 					</tr>
 					<tr>
 						<td>電話:</td>
@@ -130,110 +143,46 @@ th, td {
 							value="<%=(memberVO == null) ? "" : memberVO.getPhone()%>" /></td>
 					</tr>
 
-					<tr>
-						<td>EMAIL:</td>
-						<td><input placeholder="請輸入EMAIL" name="email"
-							maxlength="45" autocomplete="off"
-							value="<%=(memberVO == null) ? "" : memberVO.getEmail()%>" /></td>
-					</tr>
+
 
 					<tr>
-						<td>密碼:</td>
-						<td><input type="PASSWORD" name="password" size="15"
-							value="<%=(memberVO == null) ? "" : memberVO.getPassword()%>" /></td>
+						<td>居住城市:</td>
+						<td><input placeholder="請輸入居住城市" name="city" size="30"
+							autocomplete="off"
+							value="<%=(memberVO == null) ? "" : memberVO.getCity()%>" /></td>
 					</tr>
+					<tr>
+						<td>居住鄉鎮:</td>
+						<td><input placeholder="請輸入居住鄉鎮" name="cityArea" size="30"
+							autocomplete="off"
+							value="<%=(memberVO == null) ? "" : memberVO.getCityArea()%>" /></td>
+					</tr>
+					<tr>
+						<td>地址:</td>
+						<td><input placeholder="請輸入地址" name="address" size="30"
+							autocomplete="off"
+							value="<%=(memberVO == null) ? "" : memberVO.getAddress()%>" /></td>
+					</tr>
+					<tr>
+						<td>圖片:</td>
+						<td><input type="file" name="avatar" size="45"
+							value="<%=(memberVO == null) ? "" : memberVO.getAvatar()%>" /></td>
+					</tr>
+
+
+
+
+
 
 				</table>
-				<br> <input type="hidden" name="action" value="member_update">
-				<input type="hidden" name="id" value="<%=memberVO.getId()%>">
-				<input type="hidden" name="state" value="${memberVO.state}">
-				 <input type="hidden"
-					name="account" value="${memberVO.account}"> <input
+				<br> <input type="hidden" name="action"
+					value="front_end_member_update"> 
+					<input type="hidden" name="account" value="<%=memberVO.getAccount()%>">
+					<input type="hidden" name="id" value="<%=memberVO.getId()%>"> <input
+					type="hidden" name="account" value="${memberVO.account}"> <input
 					type="submit" value="送出">
 			</FORM>
-		<br>
-		<br>
+			<br> <br>
 		</main>
 	</body>
-
-
-	<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
-
-	<link rel="stylesheet" type="text/css"
-		href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-	<style>
-.xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
-}
-
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-	height: 151px; /* height:  151px; */
-}
-</style>
-
-	<script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
-           theme: '',              //theme: 'dark',
- 	       timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
- 		   value: '<%=memberVO.getRegisterDate()%>
-		', // value:   new Date(),
-		//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-		//startDate:	            '2017/07/10',  // 起始日
-		//minDate:               '-1970-01-01', // 去除今日(不含)之前
-		//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-		});
-
-		// ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
-
-		//      1.以下為某一天之前的日期無法選擇
-		//      var somedate1 = new Date('2017-06-15');
-		//      $('#f_date1').datetimepicker({
-		//          beforeShowDay: function(date) {
-		//        	  if (  date.getYear() <  somedate1.getYear() || 
-		//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-		//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-		//              ) {
-		//                   return [false, ""]
-		//              }
-		//              return [true, ""];
-		//      }});
-
-		//      2.以下為某一天之後的日期無法選擇
-		//      var somedate2 = new Date('2017-06-15');
-		//      $('#f_date1').datetimepicker({
-		//          beforeShowDay: function(date) {
-		//        	  if (  date.getYear() >  somedate2.getYear() || 
-		//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-		//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-		//              ) {
-		//                   return [false, ""]
-		//              }
-		//              return [true, ""];
-		//      }});
-
-		//      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
-		//      var somedate1 = new Date('2017-06-15');
-		//      var somedate2 = new Date('2017-06-25');
-		//      $('#f_date1').datetimepicker({
-		//          beforeShowDay: function(date) {
-		//        	  if (  date.getYear() <  somedate1.getYear() || 
-		//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-		//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-		//		             ||
-		//		            date.getYear() >  somedate2.getYear() || 
-		//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-		//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-		//              ) {
-		//                   return [false, ""]
-		//              }
-		//              return [true, ""];
-		//      }});
-	</script>
 </html>

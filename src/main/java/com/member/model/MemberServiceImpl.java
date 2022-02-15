@@ -122,11 +122,11 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
-	@Override
-	public MemberVO fontMemberUpdate(String email, String password, String nickname, String name, String phone,
-			String city, String cityArea, String address, byte[] avatar) {
+@Override
+	public MemberVO frontMemberUpdate(String email, String password, String nickname, String name, String phone,
+			String city, String cityArea, String address, byte[] avatar,Integer id) {
 		MemberVO memberVO = new MemberVO();
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		memberVO = new MemberVO();
 		memberVO.setEmail(email);
 		memberVO.setPassword(password);
@@ -137,6 +137,7 @@ public class MemberServiceImpl implements MemberService {
 		memberVO.setCityArea(cityArea);
 		memberVO.setAddress(address);
 		memberVO.setAvatar(avatar);
+		memberVO.setId(id);
 		dao.update(memberVO);
 		return memberVO;
 	}

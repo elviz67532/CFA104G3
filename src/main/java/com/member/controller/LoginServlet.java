@@ -1,14 +1,17 @@
 package com.member.controller;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,19 +24,45 @@ import com.member.model.MemberServiceImpl;
 import com.member.model.MemberVO;
 import com.member.model.RandomPassword;
 
+import core.util.CommonUtil;
+
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class LoginServlet extends HttpServlet {
+	Connection con;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
+
+		res.setContentType("image/gif"); // 顯示圖片
+		ServletOutputStream out = res.getOutputStream();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT MEM_AVATAR FROM MEM_AVATAR WHERE MEM_ID = " + req.getParameter("id"));
+
+			if (rs.next()) {
+				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("image"));
+				byte[] buf = new byte[4 * 1024]; // 4K buffer
+				int len;
+				while ((len = in.read(buf)) != -1) {
+					out.write(buf, 0, len);
+				}
+				in.close();
+			} else {
+				res.sendError(HttpServletResponse.SC_NOT_FOUND);
+			}
+			rs.close();
+			stmt.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
-//TDOO
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-		if ("register".equals(action)) {
+		if ("register".equals(action)) {// 註冊
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -48,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 					errorMsgs.add("請輸入正確的郵箱格式");
 				}
 				String account = req.getParameter("account");
-				String accountReg = "^[A-Za-z0-9]{6,24}$";
+				String accountReg = "^[A-Za-z0-15]{6,24}$";
 				if (account == null || account.trim().length() == 0) {
 					errorMsgs.add("請輸入帳號");
 				} else if (!account.trim().matches(accountReg)) {
@@ -101,18 +130,17 @@ public class LoginServlet extends HttpServlet {
 				if (code == null || code.trim().length() == 0) {
 					errorMsgs.add("郵遞區號請勿空白");
 				}
-//				byte[] avatar = CommonUtil.getPictureByteArray("/CFA104G3/src/main/webapp/asset/img/avatar.gif");
+				byte[] avatar = CommonUtil.getPictureByteArray("/CFA104G3/src/main/webapp/asset/img/avatar.gif");
 				InputStream in = req.getPart("avatar").getInputStream();
-				byte[] avatar = null;
+//				byte[] avatar = null;
 				if (in.available() != 0) {
 					avatar = new byte[in.available()];
 					in.read(avatar);
 					in.close();
-				} else {
-
-					errorMsgs.add("請上傳圖片");
+//				} else {
+//
+//					errorMsgs.add("請上傳圖片");
 				}
-				
 
 				MemberVO memberVO = new MemberVO();
 				memberVO = new MemberVO();
@@ -130,9 +158,8 @@ public class LoginServlet extends HttpServlet {
 				memberVO.setCode(code);
 				memberVO.setAvatar(avatar);
 
-				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("memberVO", memberVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/member/addMember.jsp");
 					failureView.forward(req, res);
 					return;
@@ -140,8 +167,8 @@ public class LoginServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 				MemberServiceImpl memberSvc = new MemberServiceImpl();
-				memberVO = memberSvc.register(email, account, password, nickname, name, phoneReg, gender, city,
-						cityArea, address, code, avatar);
+				memberVO = memberSvc.register(email, account, password, nickname, name, phone, gender, city, cityArea,
+						address, code, avatar);
 
 				memberVO = memberSvc.login(account, password);
 
@@ -152,14 +179,14 @@ public class LoginServlet extends HttpServlet {
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/front_end/member/Signupthanks.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/member/addMember.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/register.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -198,7 +225,7 @@ public class LoginServlet extends HttpServlet {
 				}
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/CFA104G3/index.html";
+				String url = "front_end_listOneMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				res.sendRedirect(url);
 //				successView.forward(req, res);
@@ -214,18 +241,46 @@ public class LoginServlet extends HttpServlet {
 		if ("logout".equals(action)) {// 登出
 			HttpSession session = req.getSession();
 			session.invalidate();
-			String url = "/CFA10G3/login.jsp";
+			String url = "/CFA104G3/front_end/member/login.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			res.sendRedirect(url);
 //			successView.forward(req, res);
 		}
-		if ("front_end_member_update".equals(action)) { // 前台會員更新資料
+		if ("getOne_For_Member_Update".equals(action)) {
 
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer id = new Integer(req.getParameter("id"));
+
+				/*************************** 2.開始查詢資料 ****************************************/
+				MemberServiceImpl memberSvc = new MemberServiceImpl();
+				MemberVO memberVO = memberSvc.selectById(id);
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("memberVO", memberVO);
+				String url = "/front_end/member/front_end_update.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/member/listAllMember.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		if ("front_end_member_update".equals(action)) { // 前台會員更新資料
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				Integer id = new Integer(req.getParameter("id").trim());
+		
 				String email = req.getParameter("email");
 				String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
 				if (email == null || email.trim().length() == 0) {
@@ -281,8 +336,6 @@ public class LoginServlet extends HttpServlet {
 
 					errorMsgs.add("請上傳圖片");
 				}
-				
-
 
 				MemberVO memberVO = new MemberVO();
 				memberVO = new MemberVO();
@@ -296,27 +349,33 @@ public class LoginServlet extends HttpServlet {
 				memberVO.setCityArea(cityArea);
 				memberVO.setAddress(address);
 				memberVO.setAvatar(avatar);
+				memberVO.setId(id);
 
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("memberVO", memberVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/front_end_update.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
 
 				/*************************** 2.開始修改資料 *****************************************/
-				MemberServiceImpl memberSvc = new MemberServiceImpl();
-				memberVO = memberSvc.fontMemberUpdate(email, password, nickname, name, phone, city, cityArea, address,
-						avatar);
+				MemberServiceImpl memberServiceImpl = new MemberServiceImpl();
+				memberVO = memberServiceImpl.frontMemberUpdate(email, password, nickname, name, phone, city, cityArea, address, avatar,id);
+				
+//				MemberServiceImpl memberSvc = new MemberServiceImpl();
+//				memberVO = memberSvc.frontMemberUpdate(email, password, nickname, name, phone, city, cityArea, address,
+//						avatar,id);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("memberVO", memberVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				req.setAttribute("memberVO", memberVO);
 				String url = "/front_end/member/front_end_listOneMember.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("到這囉==============================");
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/front_end/member/front_end_listOneMember.jsp");

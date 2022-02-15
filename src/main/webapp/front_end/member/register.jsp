@@ -1,16 +1,38 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
 
 <%
 MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 %>
 
-<html>
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>·|­ûµù¥U</title>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>å§”åŸŸ</title>
+<link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+	crossorigin="anonymous"></script>
+<!-- Google fonts-->
+<link
+	href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+	rel="stylesheet" type="text/css" />
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+	rel="stylesheet" type="text/css" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link
+	href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css"
+	rel="stylesheet" />
 <style>
 * {
 	box-sizing: border-box;
@@ -74,201 +96,135 @@ main {
 	margin-left: 200px;
 }
 </style>
-
 </head>
-<center>
-	<main>
-		<body bgcolor='white'>
-			<table id="table-1">
-				<tr>
-					<td>
-						<h2>·|­û¸ê®Æµù¥U</h2>
-					</td>
-					<td>
-						<h4>
-							<a href="/CFA104G3/index.html">> HomePage</a>
-						</h4>
-					</td>
-				</tr>
-			</table>
 
-			<%-- ¿ù»~ªí¦C --%>
-			<c:if test="${not empty errorMsgs}">
-				<font style="color: red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
-				<ul>
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color: red">${message}</li>
-					</c:forEach>
-				</ul>
-			</c:if>
-			<br>
-			<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/front_end/member/MemberServlet.do" name="form1"  enctype="multipart/form-data">
-				<table>
-					<tr>
-						<td>¶l¥ó:</td>
-						<td><input placeholder="½Ğ¿é¤J¶l¥ó" name="email" size="10"
-							value="<%=(memberVO == null) ? "encored98931@yahoo.com.tw" : memberVO.getEmail()%>" /></td>
-					</tr>
+<body>
+	<!-- Navigation-->
+	<!-- nav -->
+	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
-					<tr id=account>
-						<td>±b¸¹:</td>
-						<td><input placeholder="½Ğ¿é¤J±b¸¹" name="account"
-							maxlength="10"
-							value="<%=(memberVO == null) ? "Encored989" : memberVO.getAccount()%>" /></td>
-					</tr>
-					<tr id=password>
-						<td>±K½X:</td>
-						<td><input placeholder="½Ğ¿é¤J±K½X" name="password"
-							maxlength="10"
-							value="<%=(memberVO == null) ? "A123456" : memberVO.getPassword()%>" /></td>
-					</tr>
-					<tr id=nickname>
-						<td>¦W¦r:</td>
-						<td><input placeholder="½Ğ¿é¤J¼ÊºÙ" name="nickname"
-							maxlength="10"
-							value="<%=(memberVO == null) ? "¤p¦W" : memberVO.getNickname()%>" /></td>
-					</tr>
-					<tr id=name>
-						<td>©m¦W:</td>
-						<td><input placeholder="½Ğ¿é¤J¦W¦r" name="name"
-							maxlength="10"
-							value="<%=(memberVO == null) ? "´¿¥O¦W" : memberVO.getName()%>" /></td>
-					</tr>
-					<tr>
-						<td>¹q¸Ü:</td>
-						<td><input placeholder="½Ğ¿é¤J¹q¸Ü" name="phone" maxlength="10"
-							value="<%=(memberVO == null) ? "0930911283" : memberVO.getPhone()%>" /></td>
-					</tr>
+	<!-- Page Header-->
+	<header class="masthead"
+		style="background-image: url('<%=request.getContextPath()%>/asset/img/move01.jpg')">
+		<div class="container position-relative px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<div class="site-heading">
+						<h1>New Life</h1>
+						<span class="subheading">è¿ æ¥ å…¨ æ–° çš„ äºº ç”Ÿ</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+<body bgcolor='white'>
+	<table id="table-1">
+		<tr>
+			z
+			<td>
+				<h2>æœƒå“¡è³‡æ–™è¨»å†Š</h2>
+			</td>
+			<td>
+				<h4>
+					<a href="/CFA104G3/index.html">> HomePage</a>
+				</h4>
+			</td>
+		</tr>
+	</table>
 
-					<tr>
-						<td>©Ê§O:</td>
-						<td><lable> <input type="radio" name="gender"
-								value="1" checked>¨k</lable> <lable> <input type="radio"
-								name="gender" value="¤k">¤k</lable></td>
-					</tr>
-					<tr>
-						<td>«°¥«:</td>
-						<td><input placeholder="½Ğ¿é¤J©~¦í«°¥«" name="city" maxlength="10"
-							value="<%=(memberVO == null) ? "®ç¶é¥«" : memberVO.getCity()%>" /></td>
-					</tr>
-					<tr>
-						<td>¶mÂí:</td>
-						<td><input placeholder="½Ğ¿é¤J©~¦í¶mÂí" name="cityArea" maxlength="10"
-							value="<%=(memberVO == null) ? "¤K¼w¥«" : memberVO.getCityArea()%>" /></td>
-					</tr>
-					<tr>
-						<td>¦a§}:</td>
-						<td><input placeholder="½Ğ¿é¤J¦a§}" name="address" maxlength="10"
-							value="<%=(memberVO == null) ? "¼sºÖ¸ô394" : memberVO.getAddress()%>" /></td>
-					</tr>
-					<tr>
-						<td>ÅçÃÒ½X:</td>
-						<td><input placeholder="½Ğ¿é¤JÅçÃÒ½X" name="code" maxlength="10"
-							value="<%=(memberVO == null) ? "331" : memberVO.getCode()%>" /></td>
-					</tr>
-					<tr>
-				<td>¹Ï¤ù:</td>
+	<%-- éŒ¯èª¤è¡¨åˆ— --%>
+	<c:if test="${not empty errorMsgs}">
+		<font style="color: red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
+		<ul>
+			<c:forEach var="message" items="${errorMsgs}">
+				<li style="color: red">${message}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
+	<br>
+	<FORM METHOD="post"
+		ACTION="${pageContext.request.contextPath}/front_end/member/MemberServlet.do"
+		name="form1" enctype="multipart/form-data">
+		<table>
+			<tr>
+				<td>éƒµä»¶:</td>
+				<td><input placeholder="è«‹è¼¸å…¥éƒµä»¶" name="email" size="10"
+					value="<%=(memberVO == null) ? "encored98931@yahoo.com.tw" : memberVO.getEmail()%>" /></td>
+			</tr>
+
+			<tr id=account>
+				<td>å¸³è™Ÿ:</td>
+				<td><input placeholder="è«‹è¼¸å…¥å¸³è™Ÿ" name="account" maxlength="10"
+					value="<%=(memberVO == null) ? "Encored989" : memberVO.getAccount()%>" /></td>
+			</tr>
+			<tr id=password>
+				<td>å¯†ç¢¼:</td>
+				<td><input placeholder="è«‹è¼¸å…¥å¯†ç¢¼" name="password" maxlength="10"
+					value="<%=(memberVO == null) ? "A123456" : memberVO.getPassword()%>" /></td>
+			</tr>
+			<tr id=nickname>
+				<td>åå­—:</td>
+				<td><input placeholder="è«‹è¼¸å…¥æš±ç¨±" name="nickname" maxlength="10"
+					value="<%=(memberVO == null) ? "å°å" : memberVO.getNickname()%>" /></td>
+			</tr>
+			<tr id=name>
+				<td>å§“å:</td>
+				<td><input placeholder="è«‹è¼¸å…¥åå­—" name="name" maxlength="10"
+					value="<%=(memberVO == null) ? "æ›¾ä»¤å" : memberVO.getName()%>" /></td>
+			</tr>
+			<tr>
+				<td>é›»è©±:</td>
+				<td><input placeholder="è«‹è¼¸å…¥é›»è©±" name="phone" maxlength="10"
+					value="<%=(memberVO == null) ? "0930911283" : memberVO.getPhone()%>" /></td>
+			</tr>
+
+			<tr>
+				<td>æ€§åˆ¥:</td>
+				<td><lable> <input type="radio" name="gender" value="1"
+						checked>ç”·</lable> <lable> <input type="radio"
+						name="gender" value="å¥³">å¥³</lable></td>
+			</tr>
+			<tr>
+				<td>åŸå¸‚:</td>
+				<td><input placeholder="è«‹è¼¸å…¥å±…ä½åŸå¸‚" name="city" maxlength="10"
+					value="<%=(memberVO == null) ? "æ¡ƒåœ’å¸‚" : memberVO.getCity()%>" /></td>
+			</tr>
+			<tr>
+				<td>é„‰é®:</td>
+				<td><input placeholder="è«‹è¼¸å…¥å±…ä½é„‰é®" name="cityArea" maxlength="10"
+					value="<%=(memberVO == null) ? "å…«å¾·å¸‚" : memberVO.getCityArea()%>" /></td>
+			</tr>
+			<tr>
+				<td>åœ°å€:</td>
+				<td><input placeholder="è«‹è¼¸å…¥åœ°å€" name="address" maxlength="10"
+					value="<%=(memberVO == null) ? "å»£ç¦è·¯394" : memberVO.getAddress()%>" /></td>
+			</tr>
+			<tr>
+				<td>é©—è­‰ç¢¼:</td>
+				<td><input placeholder="è«‹è¼¸å…¥é©—è­‰ç¢¼" name="code" maxlength="10"
+					value="<%=(memberVO == null) ? "331" : memberVO.getCode()%>" /></td>
+			</tr>
+			<tr>
+				<td>åœ–ç‰‡:</td>
 				<td><input type="file" name="avatar" size="45"
 					value="<%=(memberVO == null) ? "" : memberVO.getAvatar()%>" /></td>
 			</tr>
 
-					<tr>
-						<td>¥Í¤é:</td>
-						<td><input name="registerDate" id="registerDate" type="Date"></td>
-					</tr>
-					
-					
-
-					
-					
-					
-					
-				</table>
-				<br> <input type="hidden" name="action" value="register"><input
-					type="submit" value="°e¥X·s¼W">
-			</FORM>
-		</main>
-	</body>
+		</table>
+		<br> <input type="hidden" name="action" value="register"><input
+			type="submit" value="é€å‡ºæ–°å¢">
+	</FORM>
+	</main>
+</body>
 
 
-	<!-- =========================================¥H¤U¬° datetimepicker ¤§¬ÛÃö³]©w========================================== -->
+<!-- Footer-->
+<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+<!-- Bootstrap core JS-->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+</body>
 
-
-	<link rel="stylesheet" type="text/css"
-		href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-	<style>
-.xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
-}
-
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-	height: 151px; /* height:  151px; */
-}
-</style>
-
-	<script>
-		//         $.datetimepicker.setLocale('zh');
-		//         $('#f_date1').datetimepicker({
-		// 	       theme: '',              //theme: 'dark',
-		// 	       timepicker:false,       //timepicker:true,
-		// 	       step: 1,                //step: 60 (³o¬Otimepickerªº¹w³]¶¡¹j60¤ÀÄÁ)
-		// 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-	<%-- 		   value: '<%=hiredate%> --%>
-		// 	', // value:   new Date(),
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // ¥h°£¯S©w¤£§t
-	//startDate:	            '2017/07/10',  // °_©l¤é
-	//minDate:               '-1970-01-01', // ¥h°£¤µ¤é(¤£§t)¤§«e
-	//maxDate:               '+1970-01-01'  // ¥h°£¤µ¤é(¤£§t)¤§«á
-	});
-
-	// ----------------------------------------------------------¥H¤U¥Î¨Ó±Æ©wµLªk¿ï¾Üªº¤é´Á-----------------------------------------------------------
-
-	//      1.¥H¤U¬°¬Y¤@¤Ñ¤§«eªº¤é´ÁµLªk¿ï¾Ü
-	//      var somedate1 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-
-	//      2.¥H¤U¬°¬Y¤@¤Ñ¤§«áªº¤é´ÁµLªk¿ï¾Ü
-	//      var somedate2 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-
-	//      3.¥H¤U¬°¨â­Ó¤é´Á¤§¥~ªº¤é´ÁµLªk¿ï¾Ü (¤]¥i«ö»İ­n´«¦¨¨ä¥L¤é´Á)
-	//      var somedate1 = new Date('2017-06-15');
-	//      var somedate2 = new Date('2017-06-25');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//		             ||
-	//		            date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-	</script>
 </html>

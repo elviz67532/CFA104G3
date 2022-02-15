@@ -77,5 +77,30 @@
 		<servlet-name>NewsServlet</servlet-name>
 		<url-pattern>/news/NewsServlet</url-pattern>
 	</servlet-mapping>
+	
+	
+	
+	
+	<servlet>
+		<servlet-name>MemberServlet</servlet-name>
+		<servlet-class>com.member.controller.MemberServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>MemberServlet</servlet-name>
+		<url-pattern>/back_end/member/MemberServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>com.member.controller.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/front_end/member/MemberServlet.do</url-pattern>
+	</servlet-mapping>
+
+	
+	
 
 </web-app>

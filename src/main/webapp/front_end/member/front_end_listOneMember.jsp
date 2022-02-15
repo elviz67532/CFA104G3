@@ -4,7 +4,6 @@
 
 <%
 MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
-System.out.println(memberVO.getName());
 %>
 <html>
 <head>
@@ -67,64 +66,80 @@ main {
 </head>
 <main>
 	<body>
-	
-	<main>
-		<table id="table-2">
-			<h2 align="center" valign="center">會員資料</h2>
-		
-			<tr>
-				<td>郵件</td>
-				<td>${memberVO.email}</td>
-			</tr>
-			<tr>
-				<td>密碼</td>
-				<td>${memberVO.password}</td>
-			</tr>
-			<tr>
-				<td>暱稱</td>
-				<td>${memberVO.nickname}</td>
-			</tr>
-			<tr>
-				<td>姓名</td>
-				<td>${memberVO.name}</td>
-			</tr>
-			<tr>
-				<td>電話</td>
-				<td>${memberVO.phone}</td>
-			<tr>
-				<td>居住城市</td>
-				<td>${memberVO.city}</td>
-			</tr>
-			</tr>
-			<tr>
-				<td>居住鄉鎮</td>
-				<td>${memberVO.cityArea}</td>
-			</tr>
-			<tr>
-				<td>地址</td>
-				<td>${memberVO.address}</td>
-			</tr>
-			<tr>
-				<td>頭像</td>
-				<td>${memberVO.avatar}</td>
-			</tr>
-			
-			
-			
-			<td style="width: 100px;">
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"
-					style="margin-bottom: 0px;">
-					<input type="submit" value="修改"> <input type="hidden"
-						name="id" value="${memberVO.id}"> <input
-						type="hidden" name="action" value="front_end_member_update">
-				</FORM>
-			</td>
-		</table>
-	</main>
-	<br>
-	<br>
-	<br>
-</body>
+
+
+		<h1>
+			<a href="/CFA104G3/index.html"> 回首頁</a>
+		</h1>
+
+		<main>
+			<table id="table-2">
+				<h2 align="center" valign="center">會員資料</h2>
+
+				<tr>
+					<td>郵件</td>
+					<td>${memberVO.email}</td>
+				</tr>
+				<tr>
+					<td>密碼</td>
+					<td>${memberVO.password}</td>
+				</tr>
+				<tr>
+					<td>暱稱</td>
+					<td>${memberVO.nickname}</td>
+				</tr>
+				<tr>
+					<td>姓名</td>
+					<td>${memberVO.name}</td>
+				</tr>
+				<tr>
+					<td>電話</td>
+					<td>${memberVO.phone}</td>
+				<tr>
+					<td>居住城市</td>
+					<td>${memberVO.city}</td>
+				</tr>
+				</tr>
+				<tr>
+					<td>居住鄉鎮</td>
+					<td>${memberVO.cityArea}</td>
+				</tr>
+				<tr>
+					<td>地址</td>
+					<td>${memberVO.address}</td>
+				</tr>
+				<tr>
+					<td>頭像</td>
+					<td>${memberVO.avatar}</td>
+				</tr>
+
+
+
+				<td style="width: 100px;">
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"
+						style="margin-bottom: 0px;">
+						<input type="submit" value="修改會員資料"> <input type="hidden"
+							name="id" value="${memberVO.id}"> <input type="hidden"
+							name="action" value="getOne_For_Member_Update">
+
+
+					</FORM> 
+					<c:if test="${not empty memberVO.id}">
+						<FORM style="margin: 0;" id="Logout" METHOD="post"
+							class="logout-form"
+							action="<%=request.getContextPath()%>/front_end/member/MemberServlet.do">
+							<input type="hidden" name="action" value="logout"> 
+							<input
+								type="submit" value="登出" class="btn">
+						</FORM>
+					</c:if>
+				</td>
+			</table>
+		</main>
+		<br>
+		<br>
+		<br>
+	</body>
 </main>
 </html>
