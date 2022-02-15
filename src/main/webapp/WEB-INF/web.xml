@@ -101,7 +101,49 @@
 		<servlet-name>NewsServlet</servlet-name>
 		<url-pattern>/back_end/news/NewsServlet</url-pattern>
 	</servlet-mapping>
-	
-	<!-- product -->
-	
+  <servlet>
+    <servlet-name>ProductServlet</servlet-name>
+    <servlet-class>com.product.controller.ProductServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductServlet</servlet-name>
+    <url-pattern>/product/ProductServlet</url-pattern>
+  </servlet-mapping>	
+  
+  <servlet>
+    <servlet-name>ProductPhotoServlet</servlet-name>
+    <servlet-class>com.product_photo.controller.ProductPhotoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductPhotoServlet</servlet-name>
+    <url-pattern>/product_photo/ProductPhotoServlet</url-pattern>
+  </servlet-mapping>	  
+  
+  <servlet>
+    <servlet-name>DBGifReader2</servlet-name>
+    <servlet-class>com.product_photo.controller.DBGifReader2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReader2</servlet-name>
+    <url-pattern>/product_photo/DBGifReader2</url-pattern>
+  </servlet-mapping>	
+
+  <!-- server manager -->
+  <servlet>
+    <servlet-name>ServerManagerServlet</servlet-name>
+    <servlet-class>com.server_manager.controller.ServerManagerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServerManagerServlet</servlet-name>
+    <url-pattern>/server_manager/ServerManagerServlet</url-pattern>
+  </servlet-mapping>	  
+
+  <servlet>
+    <servlet-name>ServerManageFunctionServlet</servlet-name>
+    <servlet-class>com.server_manager_function.controller.ServerManageFunctionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServerManageFunctionServlet</servlet-name>
+    <url-pattern>/server_manager_function/ServerManageFunctionServlet</url-pattern>
+  </servlet-mapping>	
 </web-app>
