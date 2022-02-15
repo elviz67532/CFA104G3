@@ -70,18 +70,21 @@ public class ServerManagerServlet extends HttpServlet {
 				if (!allowUser(account, password)) { // 【帳號 , 密碼無效時】
 					errMsgs.add("你的帳號 , 密碼無效!");
 				} else { // 【帳號 , 密碼有效時, 才做以下工作】
+					ServerManagerVO smVO = aquireVO(account);
+					//【取得 & 設定 session】
 					HttpSession session = req.getSession();
-					//【取得session】
-					session.setAttribute("account", account); // *工作1: 才在session內做已經登入過的標識
-					System.out.println("取得session了"); // session.getAttribute => 登入的資訊
+					session.setAttribute("ServerManagerVO", smVO);
+					session.setAttribute("account", account);
+							//session.setAttribute("account", account); // *工作1: 才在session內做已經登入過的標識
+							//System.out.println("取得session了"); // session.getAttribute => 登入的資訊
+
+					
 					//【取得角色】 DB 撈資料
 					ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
 					ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
 					Integer smgrId = smSvc.getId(account);
-					
 					List<ServerManagerAuthVO> list = smaSvc.selectByManager(smgrId); // null
-					System.out.println("smaSvc.selectByManager(smgrId)"+smaSvc.selectByManager(smgrId));
-					session.setAttribute("serverManagerAuth", list); //【取得smaId】
+					session.setAttribute("auth", list); //【取得smaId】
 					try {
 						String location = (String) session.getAttribute("location");
 						if (location != null) { 
@@ -185,7 +188,8 @@ public class ServerManagerServlet extends HttpServlet {
 	public static String DBPassword(String account){
 		// SELECT * FROM SERVERMANAGER WHERE SMGR_ACCOUNT='tomcat';
 		ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
-		String password = smSvc.findByAccount(account);
+		ServerManagerVO smVO = smSvc.findByAccount(account);
+		String password = smVO.getSmgrPassword();
 		System.out.println("DBPassword: " + password);
 		return password;
 	}
@@ -198,7 +202,8 @@ public class ServerManagerServlet extends HttpServlet {
 		System.out.println("allowUser");
 		ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
 		System.out.println("產生smSvc: "+ smSvc);
-		String ans = smSvc.findByAccount(account); //DB的password
+		ServerManagerVO smVO = smSvc.findByAccount(account); //DB的password
+		String ans = smVO.getSmgrPassword();
 		System.out.println("ans: "+ ans);
 		
 		String allowUser_account = account;
@@ -207,6 +212,12 @@ public class ServerManagerServlet extends HttpServlet {
 			return true;
 		else 
 			return false;
+	}
+	
+	public ServerManagerVO aquireVO(String account) {
+		ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();		
+		ServerManagerVO smVO = smSvc.findByAccount(account); //DB的password
+		return smVO;
 	}
 	
 	public static void main(String[] args) {

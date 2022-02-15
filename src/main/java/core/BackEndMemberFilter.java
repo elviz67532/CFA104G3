@@ -19,14 +19,29 @@ import com.member.model.MemberVO;
 import com.server_manager_auth.model.ServerManagerAuthVO;
 
 public class BackEndMemberFilter implements Filter {
+	private final static Integer SERVER_MANAGER = 1;
+	private final static Integer ACTIVITY = 10;
+	private final static Integer DOUBLE_PROD = 20;
+	private final static Integer MOVE = 30;
+	private final static Integer MANAGER = 40;
+	private final static Integer FAQ = 50;
+	
+	//【URL】
+	private final static String server_manager = "http://localhost:8081/CFA104G3/back_end/server_manager/serverManager.jsp";
+	private final static String activity = "http://localhost:8081/CFA104G3/back_end/server_manager/activity.jsp";
+	private final static String double_product = "http://localhost:8081/CFA104G3/back_end/server_manager/doubleProduct.jsp";
+	private final static String move = "http://localhost:8081/CFA104G3/back_end/server_manager/move.jsp";
+	private final static String manager = "http://localhost:8081/CFA104G3/back_end/server_manager/member.jsp";
+	private final static String faq = "http://localhost:8081/CFA104G3/back_end/server_manager/FAQ.jsp";
 
 	private FilterConfig config;
-	private Map<String, Integer> urlAuths = new HashMap<>();
+	private Map<String, Integer> urlAuths = new HashMap<String, Integer>();
+	
 	
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		this.config = config;
-		initAuths();
+		initAuths(); // 【導入網頁】
 	}
 
 	@Override
@@ -56,7 +71,7 @@ public class BackEndMemberFilter implements Filter {
 			System.out.println("尚未登入");
 			res.sendRedirect("/back_end/server_manager/loginServer.jsp");
 			return;
-		} 
+		}
 		
 		// 判斷當前路徑所需權限
 		String servletPath = req.getServletPath();
@@ -68,19 +83,18 @@ public class BackEndMemberFilter implements Filter {
 		}
 		
 		// 判斷使用者權限
+		boolean hasAuth = false;
 		List<ServerManagerAuthVO> authVos = (List<ServerManagerAuthVO>) session.getAttribute("auth");
 		if (authVos == null) {
 			System.out.println("使用者無此權限");
 			res.sendRedirect("/back_end/server_manager/unAuth.jsp");
 			return;
 		}
-		boolean hasAuth = false;
-		for (ServerManagerAuthVO authVo : authVos) {
-			// TODO
-			// if (authVo.getSmgeFuncId() == currentURLAuth) {
-			//   hasAuth = true;
-			//   break;
-			// }
+		
+		
+		for (ServerManagerAuthVO authVo : authVos) { // 列舉使用者權限
+			hasAuth = true;
+			
 		}
 		// 無權限
 		if (!hasAuth) {
@@ -93,7 +107,13 @@ public class BackEndMemberFilter implements Filter {
 	}
 
 	private void initAuths() {
-		urlAuths.put("/back_end/move/moveRequestManage.jsp", 30);
+		//【a tag 的連接】
+		urlAuths.put(server_manager, SERVER_MANAGER);
+		urlAuths.put("/back_end/", ACTIVITY);
+		urlAuths.put("/back_end/server_manager/serverManagerHom.jsp", DOUBLE_PROD);
+		urlAuths.put("/back_end/move/moveRequestManage.jsp", MOVE); 
+		urlAuths.put("/back_end/server_manager/manager.jsp",MANAGER);
+		urlAuths.put("/back_end/server_manager/FAQ.jsp", FAQ);
 	}
 }	
 

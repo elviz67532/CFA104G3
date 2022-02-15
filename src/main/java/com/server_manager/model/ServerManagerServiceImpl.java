@@ -51,10 +51,15 @@ public class ServerManagerServiceImpl implements ServerManagerService{
 		return list;
 	}
 	
-	public String findByAccount(String smgrAccount) {
-		String password = dao.findByAccount(smgrAccount);
-		return password;
+	public ServerManagerVO findByAccount(String smgrAccount) {
+		ServerManagerVO smVO = dao.findByAccount(smgrAccount);
+		return smVO;
 	}
+	
+//	public String findByAccount(String smgrAccount) {
+//		String password = dao.findByAccount(smgrAccount);
+//		return password;
+//	}
 	
 	public Integer getId(String smgrAccount) {
 		int id = dao.getId(smgrAccount);
