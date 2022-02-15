@@ -99,7 +99,7 @@
 									</tr>
 
 									<c:forEach var="faqVO" items="${list}">
-										<%@ include file="page1.file"%>
+										<%@ include file="page1.jsp"%>
 
 
 										<tr>

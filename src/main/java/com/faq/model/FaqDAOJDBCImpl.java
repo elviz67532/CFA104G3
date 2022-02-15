@@ -19,7 +19,6 @@ public class FaqDAOJDBCImpl implements FaqDAO {
 	private static final String DELETE = "delete from FAQ where FAQ_ID = ?";
 	private static final String UPDATE = "update FAQ set " + "FAQ_QUESTION = ?, FAQ_ANSWER = ? " + "where FAQ_ID = ?";
 
-	
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -37,7 +36,7 @@ public class FaqDAOJDBCImpl implements FaqDAO {
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
-			
+
 			pstmt.setInt(1, vo.getId());
 			pstmt.setString(2, vo.getQuestion());
 			pstmt.setString(3, vo.getAnswer());
@@ -158,15 +157,4 @@ public class FaqDAOJDBCImpl implements FaqDAO {
 		return list;
 	}
 
-	@Override
-	public FaqVO findByPrimaryKey(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<FaqVO> getAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
