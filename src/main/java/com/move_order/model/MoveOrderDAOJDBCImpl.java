@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jdt.internal.compiler.batch.Main;
+
 import core.util.SQLUtil;
 
 public class MoveOrderDAOJDBCImpl implements MoveOrderDAO {
@@ -20,6 +22,7 @@ public class MoveOrderDAOJDBCImpl implements MoveOrderDAO {
 			+ "OS_MEM_ID = ?, OS_NAME = ?, OS_PHONE = ?, OS_FROMADDRESS = ?, OS_TOADDRESS = ?, OS_MOVETIME = ?, OS_AMOUNTFIRST = ?, OS_DEPOSIT = ?, OS_AMOUNTTOTAL = ?, OS_COMMENT = ?, OS_DATE = ?, OS_STATUS = ? "
 			+ "where OS_ID = ?";
 	private static final String DELETE = "delete from MOVE_ORDER where OS_ID = ?";
+	private static final String GET_BY_MEM_STMT = "select * from MOVE_ORDER where OS_MEM_ID = ?";
 
 	static {
 		try {
@@ -197,4 +200,47 @@ public class MoveOrderDAOJDBCImpl implements MoveOrderDAO {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<MoveOrderVO> selectByMemId(int memberId) {	
+		List<MoveOrderVO> list = new ArrayList<MoveOrderVO>();
+		MoveOrderVO moveOrderVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(GET_BY_MEM_STMT);
+
+			pstmt.setInt(1, memberId);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				moveOrderVO = new MoveOrderVO();
+				moveOrderVO.setId(rs.getInt("OS_ID"));
+				moveOrderVO.setMemberId(rs.getInt("OS_MEM_ID"));
+				moveOrderVO.setFromAddress(rs.getString("OS_FROMADDRESS"));
+				moveOrderVO.setToAddress(rs.getString("OS_TOADDRESS"));
+				moveOrderVO.setCustomer(rs.getString("OS_NAME"));
+				moveOrderVO.setPhone(rs.getString("OS_PHONE"));
+				moveOrderVO.setMoveDate(rs.getTimestamp("OS_MOVETIME"));
+				moveOrderVO.setAmountFirst(rs.getInt("OS_AMOUNTFIRST"));
+				moveOrderVO.setDeposit(rs.getInt("OS_DEPOSIT"));
+				moveOrderVO.setAmountTotal(rs.getInt("OS_AMOUNTTOTAL"));
+				moveOrderVO.setComment(rs.getString("OS_COMMENT"));
+				moveOrderVO.setOrderDate(rs.getTimestamp("OS_DATE"));
+				moveOrderVO.setStatus(rs.getInt("OS_STATUS"));
+				list.add(moveOrderVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+		
+		return list;
+	}
+
 }

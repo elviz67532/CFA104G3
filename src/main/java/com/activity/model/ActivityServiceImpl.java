@@ -11,18 +11,45 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
-	public ActivityVO addAct(Integer type, String name, String content, Timestamp applyStartDate,
-			Timestamp applyEndDate, String location, Integer cost, Integer maxMember,
-			Integer minMember, Timestamp startDate, Timestamp endDate) {
+	public ActivityVO addAct(Integer organizerMemberId, Integer type, String name, 
+			String content, Timestamp launchedDate ,Timestamp applyStartDate, 
+			Timestamp applyEndDate, String location, Integer cost, Integer applyMemberExisting, 
+			Integer maxMember, Integer minMember, Timestamp startDate, Timestamp endDate, Integer status) {
+		
+		ActivityVO vo = new ActivityVO();
+		vo.setOrganizerMemberId(organizerMemberId);
+		vo.setType(type);
+		vo.setName(name);
+		vo.setContent(content);
+		vo.setLaunchedDate(launchedDate);
+		vo.setApplyStartDate(applyStartDate);
+		vo.setApplyEndDate(applyEndDate);
+		vo.setLocation(location);
+		vo.setCost(cost);
+		vo.setApplyMemberExisting(applyMemberExisting);
+		vo.setMaxMember(maxMember);
+		vo.setMinMember(minMember);
+		vo.setStartDate(startDate);
+		vo.setEndDate(endDate);
+		vo.setStatus(status);
+		int activityId = dao.insert(vo);
+		vo.setActivityId(activityId);
+		return vo;
+	}
+
+	@Override
+	public ActivityVO updateAct(Integer type, String name, String content, Timestamp launchedDate,
+			Timestamp applyEndDate, String location, Integer applyMemberExisting, Integer maxMember, Integer minMember,
+			Timestamp startDate, Timestamp endDate) {
 		
 		ActivityVO vo = new ActivityVO();
 		vo.setType(type);
 		vo.setName(name);
 		vo.setContent(content);
-		vo.setApplyStartDate(applyStartDate);
+		vo.setLaunchedDate(launchedDate);
 		vo.setApplyEndDate(applyEndDate);
 		vo.setLocation(location);
-		vo.setCost(cost);
+		vo.setApplyMemberExisting(applyMemberExisting);
 		vo.setMaxMember(maxMember);
 		vo.setMinMember(minMember);
 		vo.setStartDate(startDate);
@@ -33,17 +60,10 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
-	public ActivityVO updateAct(Timestamp applyEndDate, String location, Integer applyMemberExisting, Integer maxMember,
-			Integer minMember, Timestamp startDate, Timestamp endDate) {
-		// TODO Auto-generated method stub
-		return null;
+	public void deleteAct(Integer activityId) {
+		dao.deleteById(activityId);
 	}
 
-	@Override
-	public ActivityVO findByActType(Integer type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public ActivityVO findByActivityId(Integer activityId) {
@@ -52,7 +72,7 @@ public class ActivityServiceImpl implements ActivityService {
 
 	@Override
 	public List<ActivityVO> getAllAct() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.selectAll();
 	}
+
 }

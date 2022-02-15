@@ -1,9 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.activity.model.*"%>
-<%@ page import="com.member.model.*"%>
+
 <%
-	ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");
-	MemberVO memVO = (MemberVO) request.getAttribute("memVO");
+	ActivityServiceImpl actSvc = new ActivityServiceImpl();
+	List<ActivityVO> list = actSvc.getAllAct();
+	pageContext.setAttribute("list",list);
 %>
 
 <!DOCTYPE html>
@@ -11,142 +14,170 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="UTF-8">
-<title>showAct</title>
-<link href="${pageContext.request.contextPath}/css/activity/activityFrontPage.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/css/activity/publishActivity.css" rel="stylesheet">
+<title>全部活動頁面appearActPage.jsp</title>
 <link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet"
+        type="text/css" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+        rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
+    
+<style>
+/* .table-striped{ */
+/* 	color: table-color; */
+/* 	bg-factor: .05; */
+/* 	bg: rgba($black, $table-striped-bg-factor); */
+/* 	order: odd; */
+/* } */
+/* .table-hover{ */
+/* 	color: table-color; */
+/* 	bg-factor: .075; */
+/* 	bg: rgba($black, $table-hover-bg-factor); */
+/* } */
+.ellipsis {
+	  overflow: hidden;
+	  display: -webkit-box;
+	  text-overflow: ellipsis;
+	  -webkit-line-clamp: 2; /*行數*/
+	  -webkit-box-orient: vertical;
+	  white-space: normal;
+	  cursor: pointer;
+      color: #959ba1;
+      font-size: 18px;
+      margin: 8px 0;  
+
+}
+div.tab_container div.tab_contents{
+/*     border: 1px solid black; */
+    /*   margin-top: 30px; */
+}
+div.tab_container div.tab_contents div.tab{
+    padding: 10px;
+    display: none;
+}
+div.tab_container div.tab_contents div.tab.-on{
+    display: block;
+}
+/*頁籤超連結*/
+.act_tab_a{
+    text-decoration: none;
+}
+.wrap{
+    width: 1260px;
+	margin: auto; 
+/*     display: fixed; */
+}
+.item{
+    width: 30%;
+    margin: 10px;
+    border: 1px solid #aaa;
+    position: relative;
+    display: inline-block;
+}
+.item .div1{
+    padding: 8px 16px;
+    min-height: 149px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 0 16px 16px;
+    border: 1px solid gray;
+}
+.item .time{
+    color: #b5bac1;
+    font-size: 14px;
+    font-weight: 500;
+	margin: 4px 8px; 
+}
+.item img{
+	box-shadow: none;
+    border-radius: 16px 16px 0 0;
+    width: 100%;
+}
+.item .actName{
+	height:auto;
+	margin: 8px 0;  
+    color: #000;
+    line-height: 20px;
+	letter-spacing: -.16px; 
+/*     font-weight: 700; */
+/*     overflow: hidden; */
+/*     display: -webkit-box; */
+/*     -webkit-box-orient: vertical; */
+/*     -webkit-line-clamp: 2; */
+}
+/* .item .act_tab{ /*Hot的絕對定位*/ */
+/*     border: 1px #888 ; */
+/*     border-style: outset; */
+/*     background-color: red; */
+/*     color: #fff; */
+/*     padding: 6px 10px; */
+/* 	position: absolute;  */
+/*     top: -4px; */
+/*     left: -4px; */
+/*     /* right: -4px; */ */
+/* } */
+.item:hover{
+	background-color: lightgray;
+}
+</style>    
 </head>
+
 <body>
+    <!-- Navigation-->
+    <!-- nav -->
+	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
-	<!-- 上 -->
-	<div class="header">
-		<h1>Entrust Area</h1>
-		<input type="text" placeholder="search" class="header_input">
-		<button class="header_input_button">
-			<i class="fas fa-search"></i>
-		</button>
-		<div class="header_right">
-			<nav class="header_list">
-				<a href="#">委域官網</a> <a href="#">個人資料</a> <a href="#">活動紀錄</a> <a
-					href="#">登入/註冊</a>
-				<!-- <button class="header_hamber"></button><i class="fas fa-grip-lines"></i></button> -->
-			</nav>
-		</div>
-	</div>
-	<!-- 上 與 中的距離 -->
-	<div class="header_to_middle">
-		<!-- 跑馬燈 -->
-		<marquee direction="left" height="20" scrollamount="5" Loop="10">
-			<!-- 停止音樂 -->
-			<!-- <marquee direction="left" height="20" scrollamount="5" Loop="10" onmouseup="audio2.play()"></marquee> -->
-			<!-- <button class="btn_run" onmousemove="audio.pause()"></button> -->
-			2022-01-17
-			17:26:00【活動】【線上水彩訓練冬令營】-素描、水彩訓練營，跳脫一般傳統制式教學，藉由設定的藝術主題導入技法的應用，用創意與想像來觸動生活經驗中美的感受，深化美的經驗，讓學員們能夠運用自身具備的感受力，完成自己獨特的作品。
-			2022-01-13
-			09:10:00【講座】【用腦很快學習英文】-還學不會英文嗎快來報名用腦很快學習英文單字講座，讓你有效吸收學習促進英文單字進步很棒
-			2022-02-02
-			03:50:00【活動】【2022亞洲洗澡營】-今天你洗澡了嗎？該洗澡了吧！我們所有哺乳動物，都有分泌一些稱為皮脂的油性/蠟狀物質的腺體，有些人可能會分泌很多皮脂(sebum)，只要不洗，這些油垢，也就可能會粘在皮膚上，黃軒表示，異常粘稠或濕冷的皮膚，再加上彈性皮膚，在人體皮膚表層產生摩擦力就會比較大，物體就容易吸附在上面，所以如何有效學習洗澡，今天就學會他
-			2022-05-18
-			08:00:00【聚餐】【水果忍者】-趣味遊戲吃水果比賽：將水果擺放在桌上，然後所有參賽的人員在5分鐘內儘量吃更多的水果，每吃掉一個水果就會得到相應的分數，吃不乾淨要扣分，時間到後，統計每隊的總分，得分最多的隊伍獲勝，獲勝者獲得水果忍者的稱號，並給予獎勵。水果對應的分值：一牙兒西瓜3分，桃子2分，梨4分，香蕉3分，西紅柿4分，黃瓜5分……，每隊都將自己吃完的水果皮或果胡等放在自己隊伍的盤子裡面，最後用於統計分數，由裁判判定是否吃乾淨，吃的不淨要減分。
-		</marquee>
-	</div>
-	<!-- 中 -->
-	<div class="middle">
-		<!-- 中左 -->
-        <div class="middle_blockDivLeft">
-<!--             <div class="middle_left"> -->
-<!--                 <ul class="middle_left_ul"> -->
-<!--                     <li><img src="image/house.png" alt=""><a href="">報名活動</a></li> -->
-<!--                     <li><img src="image/camping.png" alt=""><a href="">退出活動</a></li> -->
-<!--                     <li><img src="image/fish.png" alt=""><a href="">編輯活動</a></li> -->
-<!--                     <li><img src="image/conversation.png" alt=""><a href="">下架活動</a></li> -->
-<!--                     <li><img src="image/conversation.png" alt=""><a href="">取消活動</a></li> -->
-<!--                     <li><img src="image/conversation.png" alt=""><a href="">刪除活動</a></li> -->
-<!--                 </ul> -->
-<!--             </div> -->
-            <!-- <div class="shape-ex11"><p>拍照</p></div> -->
-        </div>
-		<!-- 中右 -->
-        <div class="middle_blockDivRight">
-            <div class="middle_right">
-                <div class="actContentDiv1">
-
-                    <div class="">
-                        <span class="actType"><%=actVO.getType()%></span>
-                        <span class="actmemId"><%=memVO.getId()%></span>
-                        <span class="actTel"><%=memVO.getPhone()%></span>
-                        <span class="actEmail"><%=memVO.getEmail()%></span>
-                        <h1 class="article-title"><%=actVO.getName()%></h1>
-                    </div>
-                    <div>
-                        <span>皮亞可頌</span>
-                        <span>currentTime</span>
-                    </div>
-                    <div>
-                        <div>
-                            <button>報名活動</button><button>退出活動</button><button>編輯活動</button>
-                            <button>下架活動</button><button>取消活動</button><button>刪除活動</button>
-                        </div>
-                        <div>
-                            <img src="image/202.jpg" alt="" width="80%">
-                            <div class="veryContentDiv">
-                            	<span>活動地點: <%=actVO.getLocation()%></span>
-                            	<span>活動費用:<%=actVO.getCost()%></span>
-                            	<span>報名開始時間:<%=actVO.getApplyStartDate()%></span>
-                        	    <span>報名截止時間:<%=actVO.getApplyEndDate()%></span>
-                            	<span>活動開始時間:<%=actVO.getStartDate()%></span>
-                            	<span>活動結束時間:<%=actVO.getEndDate()%></span>
-                            	<span>目前報名人數:<%=actVO.getApplyMemberExisting()%></span>
-                            	<span>活動人數上限:<%=actVO.getMaxMember()%></span>
-                            	<span>活動人數下限:<%=actVO.getMinMember()%></span>
-                                <span>活動內容:<%=actVO.getContent()%></span>
-                            </div>
-                        </div>
+    <!-- Page Header-->
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/bgHome01.jpg')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>New Life</h1>
+                        <span class="subheading">迎 接 全 新 的 人 生</span>
                     </div>
                 </div>
-                    <div>----------------我是分隔線----------------</div>
-                <div class="actContentDiv2">
-                    <div class="tab_container">
-                        <div class="tab_list_block">
-                            <ul class="tab_list">
-                                <li><a href="#" data-target="tab1" class="tab -on">活動提問</a></li>
-                                <li><a href="#" data-target="tab2" class="tab">檢舉活動</a></li>
-                                <li><a href="#" data-target="tab3" class="tab">為活動評分</a></li>
-                            </ul>
-                            </div>
-                        <div class="tab_contents">
-                            <div class="tab tab1 -on">
-                                <label for="">title:</label>
-                                <input type="text" name="" id="">
-                                <br>
-                                <label for="">content:</label><br>
-                                <textarea name="" id="" cols="55" rows="10"></textarea>
-                                <button>寫完就按我</button>
-                            </div>
-                            
-                            <div class="tab tab2">
-                                <label for="">title:</label>
-                                <input type="text" name="" id="">
-                                <br>
-                                <label for="">content:</label><br>
-                                <textarea name="" id="" cols="55" rows="10"></textarea>
-                                <button>寫完就按我</button>
-                            </div>
-                            <div class="tab tab3">
-                                <label for="">title:</label>
-                                <input type="text" name="" id="">
-                                <br>
-                                <label for="">content:</label><br>
-                                <textarea name="" id="" cols="55" rows="10"></textarea>
-                                <button>寫完就按我</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-			<div class="main"></div>
-		</div>
-	</div>
+        </div>
+    </header>
+   
+   	<!-- 主體畫面設計  -->
+<div class="tab_container">
+ 	<div class="tab_contents">
+		<div class="wrap">
+	<c:forEach var="actVO" items="${list}" >
+	        <div class="item">
+<%-- 	            <div class="act_tab">${actVO.type}</div> --%>
+		                <img class="" src="http://picsum.photos/300/200?random=?" alt="">
+	            	<div class="div1">
+		            	<p class="time">${actVO.startDate}</p>
+		                <h2 class="actName">${actVO.name}</h2>
+		                <p class="ellipsis">${actVO.content}</p>
+	            	</div>
+		            <a class="act_tab_a" href="#">
+	                </a>
+
+                </div>
+	</c:forEach>
+	        </div>
+   		</div>
+ 	</div>
+</div>
+	
+   
+   
+    <!-- Footer-->
+   	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
 </body>
+
 </html>

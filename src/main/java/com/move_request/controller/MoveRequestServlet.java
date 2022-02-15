@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.Collection;
@@ -101,7 +102,7 @@ public class MoveRequestServlet extends HttpServlet {
 							Date date = Date.valueOf(evaDate);
 							tEvaDate = new Timestamp(date.getTime());
 						} catch (IllegalArgumentException e) {
-							errorMsgs.put("moveDate", "請選擇日期");
+							errorMsgs.put("evaDate", "請選擇日期");
 						}
 					}
 				} else {
