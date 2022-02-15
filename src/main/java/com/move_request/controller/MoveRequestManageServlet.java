@@ -2,6 +2,7 @@ package com.move_request.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Base64;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.move_photo.model.MovePhotoService;
 import com.move_photo.model.MovePhotoServiceImpl;
+import com.move_photo.model.MovePhotoTransVO;
 import com.move_photo.model.MovePhotoVO;
 import com.move_request.model.MoveRequestManageTransVO;
 import com.move_request.model.MoveRequestService;
@@ -39,6 +41,8 @@ public class MoveRequestManageServlet extends HttpServlet {
 		if (json == null || json .isEmpty()) {
 			return;
 		}
+		
+		System.out.print(json);
 		
 		Gson gson = new Gson();
 		MoveTransVO moveRequestVO = gson.fromJson(json , MoveTransVO.class);
@@ -67,7 +71,16 @@ public class MoveRequestManageServlet extends HttpServlet {
 				
 				MoveRequestManageTransVO moveRequestManageTransVO = new MoveRequestManageTransVO();
 				moveRequestManageTransVO.setMoveRequestVO(request);
-				moveRequestManageTransVO.setMoveRequestPhotoVOs(photos);
+				
+				MovePhotoTransVO[] photosArray = new MovePhotoTransVO[photos.size()]; 
+				for (int i = 0; i < photos.size(); i++) {
+					MovePhotoTransVO movePhotoTransVO = new MovePhotoTransVO();
+					MovePhotoVO movePhotoVO = photos.get(i);
+					movePhotoTransVO.setMoveRequestId(movePhotoVO.getMoveRequestId());
+					movePhotoTransVO.setPhoto(Base64.getEncoder().encodeToString(movePhotoVO.getPhoto()));
+					photosArray[i] = movePhotoTransVO;
+				}
+				moveRequestManageTransVO.setMovePhotoTransVO(photosArray);
 				
 				CommonRes<MoveRequestManageTransVO> res = new CommonRes<>();
 				

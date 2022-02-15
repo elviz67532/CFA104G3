@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +26,7 @@
 
 <body>
 	<!-- Navigation -->
-	<script type="text/javascript" src="js/front_end/common/navigation.js"></script>
+	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
     <!-- Page Header-->
     <header class="masthead" style="background-image: url('asset/img/bgHome01.jpg')">
@@ -77,7 +81,8 @@
     </section>
     
     <!-- Footer-->
-	<script type="text/javascript" src="js/front_end/common/footer.js"></script>
+   	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+
 
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
