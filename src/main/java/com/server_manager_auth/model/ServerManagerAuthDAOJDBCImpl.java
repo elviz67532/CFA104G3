@@ -18,7 +18,8 @@ public class ServerManagerAuthDAOJDBCImpl implements ServerManagerAuthDAO{
 	private static final String DELETE_STMT = "DELETE FROM SERVERMANAGERAUTH WHERE SMGEAUTH_ID=? AND SMGR_ID=?";
 	private static final String SELECT_BY_ID_STMT = "SELECT * FROM SERVERMANAGERAUTH WHERE SMGEAUTH_ID=? AND SMGR_ID=?";
 	private static final String GET_ALL_STMT = "SELECT * FROM SERVERMANAGERAUTH";
-
+	private static final String SELECT_BY_SMGRID = "SELECT * FROM SERVERMANAGERAUTH WHERE `SMGR_ID`=?";
+	
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -121,6 +122,34 @@ public class ServerManagerAuthDAOJDBCImpl implements ServerManagerAuthDAO{
 		}
 		
 		return serverManagerAuthVO;
+	}
+
+	@Override
+	public List<ServerManagerAuthVO> selectByManager(Integer smgrId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ServerManagerAuthVO serverManagerAuthVO = null;	
+		List<ServerManagerAuthVO> list = new ArrayList<ServerManagerAuthVO>();
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(SELECT_BY_SMGRID);
+			pstmt.setInt(1, smgrId);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				
+				serverManagerAuthVO = new ServerManagerAuthVO();
+				serverManagerAuthVO.setSmgeAuthId(rs.getInt("SMGEAUTH_ID"));
+				serverManagerAuthVO.setSmgrId(smgrId);
+				list.add(serverManagerAuthVO);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);			
+		}
+		return list;
 	}
 
 }

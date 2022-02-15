@@ -1,8 +1,11 @@
 package com.server_manager_function.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +13,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.mysql.cj.Session;
+import com.server_manager_auth.model.ServerManagerAuthVO;
 import com.server_manager_function.model.ServerManageFunctionServiceImpl;
 import com.server_manager_function.model.ServerManageFunctionVO;
 
@@ -28,6 +34,110 @@ public class ServerManageFunctionServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
 		req.setCharacterEncoding("UTF-8");
+		
+		//【hyperlink param】
+		//String auth = req.getParameter("auth");
+		String[] auth = req.getParameterValues("auth");
+		System.out.println(auth[0]);//XXX
+		System.out.println(auth[1]);//admin
+		HttpSession session = req.getSession();
+		
+		//【每隻url對應的權限】
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		String FAQ = "http://localhost:8081/CFA104G3/back_end/server_manager/FAQ.jsp";
+		String Activity = "http://localhost:8081/CFA104G3/back_end/server_manager/activity.jsp";
+		String DoubleProduct = "http://localhost:8081/CFA104G3/back_end/server_manager/doubleProduct.jsp";
+		String Move = "http://localhost:8081/CFA104G3/back_end/server_manager/move.jsp";
+		String Member = "http://localhost:8081/CFA104G3/back_end/server_manager/member.jsp";
+		String ServerManager = "http://localhost:8081/CFA104G3/back_end/server_manager/serverManager.jsp";
+		map.put(FAQ,50);//FAQ
+		map.put(Activity,10);//Activity
+		map.put(DoubleProduct,20);//DoubleProduct
+		map.put(Move,30);//Move
+		map.put(Member,40);//Member
+		map.put(ServerManager,0);//ServerManager
+		
+		// null;
+		List<ServerManagerAuthVO> smaAuth = (List<ServerManagerAuthVO>) session.getAttribute("serverManagerAuth");
+		while(smaAuth.iterator().hasNext()) {
+			System.out.println(smaAuth.iterator().next());
+			//if(Integer.parseInt(smaAuth.iterator().next()) == map.get(FAQ)) {
+				
+		}
+		
+		if("FAQ".equals(auth[0]) || "Admin".equals(auth[1])) {
+			//【user所有權限】
+//			List<ServerManagerAuthVO> smaAuth = (List<ServerManagerAuthVO>) session.getAttribute("serverManagerAuth");
+//			while(smaAuth.iterator().hasNext()) {
+//				System.out.println(smaAuth.iterator().next());
+//				//if(Integer.parseInt(smaAuth.iterator().next()) == map.get(FAQ)) {
+//					
+//			}
+			//【比較】
+		}
+		else if ("Activity".equals(auth[0]) || "Admin".equals(auth[1])) {
+			
+		}
+		else if ("DoubleProduct".equals(auth[0]) || "Admin".equals(auth[1])) {
+			
+		}
+		else if ("Move".equals(auth[0]) || "Admin".equals(auth[1])) {
+			
+		}
+		else if ("Member".equals(auth[0]) || "Admin".equals(auth[1])) {
+			
+		}
+		else if ("ServerManager".equals(auth[0]) || "Admin".equals(auth[1])) {
+			
+		}
+		//【以下正常執行】
+//		PrintWriter out = res.getWriter();
+//		if("FAQ".equals(auth)) {
+//			out.println("<HTML>");
+//			out.println("<HEAD><TITLE>Hello, " + auth + "</TITLE><HEAD>");
+//			out.println("<BODY>");
+//			out.println("Hello " + auth);
+//			out.println("</BODY></HTML>");
+//		}
+//		if("Activity".equals(auth)) {
+//			out.println("<HTML>");
+//			out.println("<HEAD><TITLE>Hello, " + auth + "</TITLE><HEAD>");
+//			out.println("<BODY>");
+//			out.println("Hello " + auth);
+//			out.println("</BODY></HTML>");			
+//		}
+//		if("DoubleProduct".equals(auth)) {
+//			out.println("<HTML>");
+//			out.println("<HEAD><TITLE>Hello, " + auth + "</TITLE><HEAD>");
+//			out.println("<BODY>");
+//			out.println("Hello " + auth);
+//			out.println("</BODY></HTML>");			
+//		}
+//		if("Move".equals(auth)) {
+//			out.println("<HTML>");
+//			out.println("<HEAD><TITLE>Hello, " + auth + "</TITLE><HEAD>");
+//			out.println("<BODY>");
+//			out.println("Hello " + auth);
+//			out.println("</BODY></HTML>");			
+//		}
+//		if("Member".equals(auth)) {
+//			out.println("<HTML>");
+//			out.println("<HEAD><TITLE>Hello, " + auth + "</TITLE><HEAD>");
+//			out.println("<BODY>");
+//			out.println("Hello " + auth);
+//			out.println("</BODY></HTML>");			
+//		}
+//		if("ServerManager".equals(auth)) {
+//			out.println("<HTML>");
+//			out.println("<HEAD><TITLE>Hello, " + auth + "</TITLE><HEAD>");
+//			out.println("<BODY>");
+//			out.println("Hello " + auth);
+//			out.println("</BODY></HTML>");			
+//		}
+		
+		
+		
+		//【新刪修】
 		String action = req.getParameter("action");
 		
 		if("getOne_For_Display".equals(action)) {

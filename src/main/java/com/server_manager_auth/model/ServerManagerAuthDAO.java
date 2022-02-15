@@ -9,4 +9,5 @@ public interface ServerManagerAuthDAO {
 	public List<ServerManagerAuthVO> getAll();
 	public int deleteById(DualKey<Integer, Integer> id);
 	public ServerManagerAuthVO selectById(DualKey<Integer, Integer> id);
+	public List<ServerManagerAuthVO> selectByManager(Integer smgrId);
 }

@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>委域 | 二手 | 只吃白肉 愛挑食</title>
+    <style>
+      .SEARCHFOR{
+      padding:10px;
+      margin-bottom: 30px;
+    }
+    #pagination{
+      bottom: 0;
+    }
+    .d-block{
+      height: 30%;
+    }
+    .myImg {
+      height:  400px;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
+    }
+    </style>
+  </head>
+  <body class="d-flex flex-column h-100">
+    <main class="flex-shrink-10">
+    <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container px-5">
+      <a class="navbar-brand" href="index.html">委域</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+          class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <!-- 單一nav 首頁 -->
+          <!-- <li class="nav-item"><a class="nav-link" href="index.html">首頁</a></li> -->
+          <!-- 條列式nav 關於我們 -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">關於我們</a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+              <li><a class="dropdown-item" href="blog-home.html">我們是誰</a></li>
+              <li><a class="dropdown-item" href="blog-post.html">我們的理念</a></li>
+              <li><a class="dropdown-item" href="blog-post.html">目標使用者</a></li>
+              <li><a class="dropdown-item" href="blog-post.html">聯絡我們</a></li>
+            </ul>
+          </li>
+          <!-- 單一nav 搬家測試 -->
+          <li class="nav-item"><a class="nav-link" href="move.html">搬家</a></li>
+          <!-- 條列式nav 搬家 -->
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">搬家</a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
+              <li><a class="dropdown-item" href="portfolio-overview.html">關於我們</a></li>
+              <li><a class="dropdown-item" href="portfolio-item.html">服務說明</a></li>
+            </ul>
+          </li> -->
+          <!-- 單一nav 活動測試 -->
+          <li class="nav-item"><a class="nav-link" href="activity.html">活動</a></li>
+          <!-- 條列式nav 活動 -->
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">活動</a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
+              <li><a class="dropdown-item" href="portfolio-overview.html">關於我們</a></li>
+              <li><a class="dropdown-item" href="portfolio-item.html">服務說明</a></li>
+            </ul>
+          </li> -->
+          <!-- 單一nav 二手測試 -->
+          <li class="nav-item"><a class="nav-link" href="product.html">二手</a></li>
+          <!-- 條列式nav 二手買賣 -->
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">二手買賣</a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
+              <li><a class="dropdown-item" href="portfolio-overview.html">關於我們</a></li>
+              <li><a class="dropdown-item" href="portfolio-item.html">服務說明</a></li>
+            </ul>
+          </li> -->
+
+          <!-- 單一nav 會員中心 -->
+          <li class="nav-item"><a class="nav-link" href="index.html">會員中心</a></li>
+          <!-- 單一nav 登入 -->
+          <li class="nav-item"><a class="nav-link" href="index.html">登入</a></li>
+          <!-- 單一nav 註冊 -->
+          <li class="nav-item"><a class="nav-link" href="index.html">註冊</a></li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+<!-- 從在這開始 -->
+<!-- input group -->
+    <!-- Copy from BootStrap3 -->
+    <div class="row justify-content-center">
+      <div class="col-lg-6 SEARCHFOR">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+          </span>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+
+    <!-- 輪播 (Carousel) -->
+    <!-- 搭配圖片滿版 -->
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news1.jpg)"></div>
+        </div>
+        <div class="carousel-item">
+          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news2.jpg)"></div>
+        </div>
+        <div class="carousel-item">
+          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news3.jpg)"></div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+<!-- Navs & tabs -->
+<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+  </li>
+</ul>
+
+    <!-- row & col -->
+    <!-- card 卡片 & text-center-->
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="card text-center" style="width: 18rem;">
+          <img src="assets/img/glass.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+        <div class="card text-center" style="width: 18rem;">
+          <img src="assets/img/prod2.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+        <div class="card text-center" style="width: 18rem;">
+          <img src="assets/img/airpods.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div> 
+      </div>
+
+      <div class="row justify-content-center">
+      <div class="card text-center" style="width: 18rem;">
+        <img src="assets/img/prod4.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>        
+      <div class="card text-center" style="width: 18rem;">
+        <img src="assets/img/prod5.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+      <div class="card text-center" style="width: 18rem;">
+        <img src="assets/img/prod1.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </div>
+    
+<br>
+<br>
+<!-- Pages Copy from BootStrap3 -->
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center align-items-end">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+
+  <!-- 下面別動 -->
+</main>
+<!-- Footer-->
+<footer class="bg-dark py-4 mt-auto">
+  <div class="container px-5">
+    <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+      <div class="col-auto">
+        <div class="small m-0 text-white">本網站所有內容及圖片均不得以任何型式予以重置或傳送 Copyright &copy; 豆芽菜4ni</div>
+      </div>
+      <div class="col-auto">
+        <a class="link-light small" href="#!">常見問題</a>
+        <span class="text-white mx-1">&middot;</span>
+        <a class="link-light small" href="#!">服務範圍</a>
+        <span class="text-white mx-1">&middot;</span>
+        <a class="link-light small" href="#!">聯絡我們</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    
+  </body>
+</html>

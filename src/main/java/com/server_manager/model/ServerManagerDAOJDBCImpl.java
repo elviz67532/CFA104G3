@@ -20,6 +20,7 @@ public class ServerManagerDAOJDBCImpl implements ServerManagerDAO {
 	public static final String FIND_BY_PRIMARY_KEY = "SELECT * FROM SERVERMANAGER WHERE SMGR_ID=?";
 	public static final String GET_ALL = "SELECT * FROM SERVERMANAGER";
 	public static final String FIND_BY_ACCOUNT = "SELECT SMGR_PASSWORD FROM SERVERMANAGER WHERE SMGR_ACCOUNT=?";
+	public static final String GET_ID_BY_ACCOUNT = "SELECT SMGR_ID FROM SERVERMANAGER WHERE SMGR_ACCOUNT=?"; 
 	
 	static {
 		try {
@@ -200,5 +201,28 @@ public class ServerManagerDAOJDBCImpl implements ServerManagerDAO {
 		}
 		
 		return password;
+	}
+
+	@Override
+	public int getId(String smgrAccount) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int id = 0;
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(GET_ID_BY_ACCOUNT);
+			pstmt.setString(1, smgrAccount);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				id = rs.getInt("SMGR_ID");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+		
+		return id;
 	}
 }

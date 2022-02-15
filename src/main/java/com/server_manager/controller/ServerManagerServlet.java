@@ -15,7 +15,11 @@ import javax.servlet.http.HttpSession;
 
 import com.server_manager.model.ServerManagerServiceImpl;
 import com.server_manager.model.ServerManagerVO;
+import com.server_manager_auth.model.ServerManagerAuthServiceImpl;
+import com.server_manager_auth.model.ServerManagerAuthVO;
 import com.server_manager_function.model.ServerManageFunctionServiceImpl;
+
+import core.DualKey;
 
 public class ServerManagerServlet extends HttpServlet {
 	
@@ -69,7 +73,15 @@ public class ServerManagerServlet extends HttpServlet {
 					HttpSession session = req.getSession();
 					//【取得session】
 					session.setAttribute("account", account); // *工作1: 才在session內做已經登入過的標識
-					System.out.println("取得session了");
+					System.out.println("取得session了"); // session.getAttribute => 登入的資訊
+					//【取得角色】 DB 撈資料
+					ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
+					ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
+					Integer smgrId = smSvc.getId(account);
+					
+					List<ServerManagerAuthVO> list = smaSvc.selectByManager(smgrId); // null
+					System.out.println("smaSvc.selectByManager(smgrId)"+smaSvc.selectByManager(smgrId));
+					session.setAttribute("serverManagerAuth", list); //【取得smaId】
 					try {
 						String location = (String) session.getAttribute("location");
 						if (location != null) { 

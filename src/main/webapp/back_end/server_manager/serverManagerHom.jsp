@@ -2,6 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%
+	Object account = session.getAttribute("account");
+	if(account == null){
+		session.setAttribute("location", request.getRequestURI());
+		response.sendRedirect(request.getContextPath()+"/back_end/server_manager/loginServer.jsp");
+	}
+%>
+
 <!doctype html>
 <html lang="zh-TW">
 <head>

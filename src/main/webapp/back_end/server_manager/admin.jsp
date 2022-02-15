@@ -61,6 +61,7 @@
 												<option value=20>二手買賣
 												<option value=30>搬家管理
 												<option value=40>會員管理
+												<option value=50>FAQ管理
 											</select>
 										</c:if>
 									</th>

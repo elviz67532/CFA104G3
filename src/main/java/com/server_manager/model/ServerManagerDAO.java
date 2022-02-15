@@ -6,5 +6,5 @@ public interface ServerManagerDAO extends CoreDao<ServerManagerVO, Integer> {
 
 	public String findByAccount(String smgrAccount);
 	
-	public Integer getId(String smgrAccount);
+	public int getId(String smgrAccount);
 }
