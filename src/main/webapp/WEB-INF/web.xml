@@ -57,7 +57,7 @@
 		<servlet-name>MoveOrderServlet</servlet-name>
 		<url-pattern>/front_end/move/moveorder.do</url-pattern>
 	</servlet-mapping>
-		<servlet>
+	<servlet>
 		<servlet-name>MoveOrderServlet</servlet-name>
 		<servlet-class>com.move_order.controller.MoveOrderServlet
 		</servlet-class>

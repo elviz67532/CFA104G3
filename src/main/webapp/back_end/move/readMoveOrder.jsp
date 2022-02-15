@@ -66,9 +66,9 @@ th, td {
 					</c:if>
 					<h1>超精美後台畫面</h1>
 					<FORM METHOD="post" ACTION="moveorder.do">
-						<b>請輸入訂單編號:</b><br> <input type="text" name="id"> <input
-							type="hidden" name="action" value="getOne_For_Display"> <input
-							type="submit" value="送出">
+						<b>請輸入訂單編號:</b><br> <input type="text" name="id"> 
+						<input type="hidden" name="action" value="getOne_For_Display"> 
+						<input type="submit" value="送出">
 					</FORM>
 					<FORM METHOD="post" ACTION="moveorder.do">
 						<b>請輸入會員編號:</b><br> <input type="text" name="memberid">
