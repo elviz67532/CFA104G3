@@ -89,7 +89,7 @@
 					</a>
 				</div>
 				<div class="col-md-4 col-sm-6">
-					<a href="frontGetMoveOrder.jsp">
+					<a href="<%=request.getContextPath()%>/front_end/move/moveorder.do?action=get_By_Mem">
 						<div class="specialcard">
 							<img src="<%=request.getContextPath()%>/asset/img/default.jpeg"
 								style="background-color: red" alt="訂單">

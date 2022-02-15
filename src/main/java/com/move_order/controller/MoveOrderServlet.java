@@ -9,7 +9,7 @@ import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-
+import com.member.model.MemberVO;
 import com.move_order.model.*;
 
 public class MoveOrderServlet extends HttpServlet{
@@ -85,49 +85,6 @@ public class MoveOrderServlet extends HttpServlet{
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
-				failureView.forward(req, res);
-			}
-		}
-		
-		if ("getOne_For_Displayfront".equals(action)) { // 來自select_page.jsp的請求
-
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
-				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				String str = req.getParameter("memberId");
-				Integer memberId = null;
-				memberId = Integer.valueOf(str);
-				// Send the use back to the form, if there were errors
-				
-				/***************************2.開始查詢資料*****************************************/
-				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
-				List<MoveOrderVO> moveOrderVO = moSvc.getByMemberId(memberId);
-				if (moveOrderVO == null) {
-					errorMsgs.add("查無資料");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/move/homePage.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
-				
-				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // 資料庫取出的empVO物件,存入req
-				String url = "/front_end/move/frontGetMoveOrder.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-				successView.forward(req, res);
-
-				/***************************其他可能的錯誤處理*************************************/
-			} catch (Exception e) {
-				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front_end/move/homePage.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -314,6 +271,55 @@ public class MoveOrderServlet extends HttpServlet{
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/front_end/move/frontGetMoveOrder.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("get_By_Mem".equals(action)) { // 來自select_page.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				HttpSession session = req.getSession();
+				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+				if(memberVO == null) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/move/frontGetMoveOrder.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				int memberId = memberVO.getId();
+				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
+				List<MoveOrderVO> moveOrderVO = moSvc.getByMemberId(memberId);
+					
+			/***************************2.開始查詢資料*****************************************/
+				if (moveOrderVO.isEmpty()) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/move/frontGetMoveOrder.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+			
+			/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("moveOrderVO", moveOrderVO); // 資料庫取出的empVO物件,存入req
+				String url = "/front_end/move/frontGetMoveOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+				
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front_end/move/homePage.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -951,7 +957,7 @@ public class MoveOrderServlet extends HttpServlet{
 		}
 		
 		if ("getMem_For_Display".equals(action)) { // 來自select_page.jsp的請求
-
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -988,7 +994,7 @@ public class MoveOrderServlet extends HttpServlet{
 				/***************************2.開始查詢資料*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
 				List<MoveOrderVO> moveOrderVO = moSvc.getByMemberId(memberId);
-				if (moveOrderVO == null) {
+				if (moveOrderVO.isEmpty()) {
 					errorMsgs.add("查無資料");
 				}
 				// Send the use back to the form, if there were errors
