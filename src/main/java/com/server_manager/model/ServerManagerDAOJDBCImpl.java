@@ -19,8 +19,9 @@ public class ServerManagerDAOJDBCImpl implements ServerManagerDAO {
 	public static final String DELETE_STMT = "DELETE FROM SERVERMANAGER WHERE SMGR_ID=?";
 	public static final String FIND_BY_PRIMARY_KEY = "SELECT * FROM SERVERMANAGER WHERE SMGR_ID=?";
 	public static final String GET_ALL = "SELECT * FROM SERVERMANAGER";
-	public static final String FIND_BY_ACCOUNT = "SELECT SMGR_PASSWORD FROM SERVERMANAGER WHERE SMGR_ACCOUNT=?";
-	public static final String GET_ID_BY_ACCOUNT = "SELECT SMGR_ID FROM SERVERMANAGER WHERE SMGR_ACCOUNT=?"; 
+	public static final String FIND_BY_ACCOUNT = "SELECT * FROM SERVERMANAGER WHERE SMGR_ACCOUNT=?";
+	public static final String GET_ID_BY_ACCOUNT = "SELECT SMGR_ID FROM SERVERMANAGER WHERE SMGR_ACCOUNT=?";
+	//public static final String FIND_BY_ACCOUNT = "SELECT SMGR_PASSWORD FROM SERVERMANAGER WHERE SMGR_ACCOUNT=?";
 	
 	static {
 		try {
@@ -178,11 +179,12 @@ public class ServerManagerDAOJDBCImpl implements ServerManagerDAO {
 	}
 
 	@Override
-	public String findByAccount(String smgrAccount) {
+	public ServerManagerVO findByAccount(String smgrAccount) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String password = null;
+		ServerManagerVO smVO = new ServerManagerVO();
+		//String password = null;
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(FIND_BY_ACCOUNT);
@@ -190,8 +192,16 @@ public class ServerManagerDAOJDBCImpl implements ServerManagerDAO {
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) {
-				password = rs.getString("SMGR_PASSWORD");
-				System.out.println(password);
+				smVO.setSmgrAccount(rs.getString("SMGR_ACCOUNT"));
+				smVO.setSmgrAddress(rs.getString("SMGR_ADDRESS"));
+				smVO.setSmgrEmail(rs.getString("SMGR_EMAIL"));
+				smVO.setSmgrGender(rs.getInt("SMGR_GENDER"));
+				smVO.setSmgrId(rs.getInt("SMGR_ID"));
+				smVO.setSmgrName(rs.getString("SMGR_NAME"));
+				smVO.setSmgrPassword(rs.getString("SMGR_PASSWORD"));
+				smVO.setSmgrPhone(rs.getString("SMGR_PHONE"));
+				//password = rs.getString("SMGR_PASSWORD");
+				//System.out.println(password);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -200,7 +210,7 @@ public class ServerManagerDAOJDBCImpl implements ServerManagerDAO {
 			SQLUtil.closeResource(con, pstmt, rs);			
 		}
 		
-		return password;
+		return smVO;
 	}
 
 	@Override

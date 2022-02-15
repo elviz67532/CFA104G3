@@ -58,12 +58,8 @@ public class ServerManageFunctionServlet extends HttpServlet {
 		map.put(ServerManager,0);//ServerManager
 		
 		// null;
-		List<ServerManagerAuthVO> smaAuth = (List<ServerManagerAuthVO>) session.getAttribute("serverManagerAuth");
-		while(smaAuth.iterator().hasNext()) {
-			System.out.println(smaAuth.iterator().next());
-			//if(Integer.parseInt(smaAuth.iterator().next()) == map.get(FAQ)) {
-				
-		}
+		List<ServerManagerAuthVO> smaAuth = (List<ServerManagerAuthVO>) session.getAttribute("auth");
+		
 		
 		if("FAQ".equals(auth[0]) || "Admin".equals(auth[1])) {
 			//【user所有權限】
