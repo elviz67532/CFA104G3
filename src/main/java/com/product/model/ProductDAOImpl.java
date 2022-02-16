@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import core.util.SQLUtil;
@@ -20,7 +21,8 @@ public class ProductDAOImpl implements ProductDAO {
 	public static final String GET_PRODUCT_BY_NAME = "SELECT * FROM PRODUCT WHERE PROD_NAME=?"; // 可以一個或多個
 //	public static final String GET_PRODUCT_BY_ID = "SELECT * FROM PRODUCT WHERE prodId=?"; // 唯一
 	public static final String GET_PRODUCT_BY_TYPE = "SELECT * FROM PRODUCT WHERE PROD_TYPE=?"; // 多個
-
+	public static final String GET_NAME_ID_BY_ID = "SELECT PROD_ID, PROD_PRICE, PROD_NAME FROM PRODUCT where PROD_ID = ? OR PROD_ID = ?...";
+	
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -313,5 +315,45 @@ public class ProductDAOImpl implements ProductDAO {
 			SQLUtil.closeResource(con, pstmt, rs);
 		}
 		return key;
+	}
+	
+	@Override
+	public List<ProductVO> getCollection(List<Integer> productIds){
+		String sqlSentence = "SELECT * from PRODUCT where ";
+		for (int i = 0; i < productIds.size(); i++) {
+			sqlSentence += "PROD_ID = ?";
+			if (i < productIds.size() - 1) {
+				sqlSentence += " OR ";
+			}
+		}
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ProductVO productVO = null;
+		List<ProductVO> list = new ArrayList<ProductVO>();
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(sqlSentence);
+			
+			for(int index = 0; index < productIds.size(); index++) {
+				pstmt.setInt(index + 1, productIds.get(index));
+			}
+			
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				productVO = new ProductVO();
+
+				productVO.setId(rs.getInt("PROD_ID")); // id
+				productVO.setPrice(rs.getInt("PROD_PRICE")); // price
+				productVO.setName(rs.getString("PROD_NAME")); // name
+				list.add(productVO);
+			}
+
+		}  catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+		return list;
 	}
 }

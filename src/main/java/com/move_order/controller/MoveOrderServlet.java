@@ -229,37 +229,27 @@ public class MoveOrderServlet extends HttpServlet{
 				
 
 				
-				MoveOrderVO moveOrderVO = new MoveOrderVO();
-				moveOrderVO.setId(id);
-				moveOrderVO.setMemberId(memberId);
-				moveOrderVO.setAmountTotal(amountTotal);
-				moveOrderVO.setComment(comment);
-				moveOrderVO.setCustomer(customer);
-				moveOrderVO.setPhone(phone);
-				moveOrderVO.setFromAddress(fromAddress);
-				moveOrderVO.setToAddress(toAddress);
-				moveOrderVO.setMoveDate(moveDate);
-				moveOrderVO.setAmountFirst(amountFirst);
-				moveOrderVO.setDeposit(deposit);
-				moveOrderVO.setOrderDate(orderDate);
-				moveOrderVO.setStatus(status);
-
-
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/move/frontGetMoveOrder.jsp");
-					failureView.forward(req, res);
-
-					return; //程式中斷
-					
-				}
+				MoveOrderVO moveOrderVO1 = new MoveOrderVO();
+				moveOrderVO1.setId(id);
+				moveOrderVO1.setMemberId(memberId);
+				moveOrderVO1.setAmountTotal(amountTotal);
+				moveOrderVO1.setComment(comment);
+				moveOrderVO1.setCustomer(customer);
+				moveOrderVO1.setPhone(phone);
+				moveOrderVO1.setFromAddress(fromAddress);
+				moveOrderVO1.setToAddress(toAddress);
+				moveOrderVO1.setMoveDate(moveDate);
+				moveOrderVO1.setAmountFirst(amountFirst);
+				moveOrderVO1.setDeposit(deposit);
+				moveOrderVO1.setOrderDate(orderDate);
+				moveOrderVO1.setStatus(status);
 
 				/***************************2.開始修改資料*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
-				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
+				moveOrderVO1 = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
 
+				List<MoveOrderVO> moveOrderVO = moSvc.getByMemberId(memberId);
+				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("moveOrderVO", moveOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/front_end/move/frontGetMoveOrder.jsp";

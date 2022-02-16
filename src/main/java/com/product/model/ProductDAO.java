@@ -13,4 +13,6 @@ public interface ProductDAO extends CoreDao<ProductVO, Integer>{
 	public List<ProductVO> getProductsByType(Integer prodType);
 	
 	public String insert_get_key(ProductVO productVO);
+	
+	public List<ProductVO> getCollection(List<Integer> productIds);
 }
