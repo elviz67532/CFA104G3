@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 import com.member.model.MemberVO;
 import com.move_order.model.MoveOrderServiceImpl;
 import com.move_order.model.MoveOrderVO;
+import com.product.model.ProductServiceImpl;
+import com.product.model.ProductVO;
 import com.product_collection.model.ProductCollectionServiceImpl;
 import com.product_collection.model.ProductCollectionVO;
 
@@ -87,7 +89,9 @@ public class ProductCollectionServlet {
 				int memberId = memberVO.getId();
 				ProductCollectionServiceImpl pcSvc = new ProductCollectionServiceImpl();
 				List<ProductCollectionVO> productCollectionVO = pcSvc.getByMemId(memberId);
-					
+				productCollectionVO.get(memberId);
+				ProductServiceImpl prodSvc = new ProductServiceImpl();
+				List<ProductVO> productVOs = prodSvc.getIdForCollection(productIdList);
 			/***************************2.開始查詢資料*****************************************/
 				if (productCollectionVO.isEmpty()) {
 					errorMsgs.add("收藏是空的喔");
