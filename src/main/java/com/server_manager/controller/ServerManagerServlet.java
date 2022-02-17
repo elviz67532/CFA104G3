@@ -83,8 +83,10 @@ public class ServerManagerServlet extends HttpServlet {
 					ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
 					ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
 					Integer smgrId = smSvc.getId(account);
-					List<ServerManagerAuthVO> list = smaSvc.selectByManager(smgrId); // null
-					session.setAttribute("auth", list); //【取得smaId】
+					List<ServerManagerAuthVO> list = smaSvc.selectByManager(smgrId); //【取得smaId】
+						System.out.println("list" + list); 
+					session.setAttribute("auth", list);
+						System.out.println("auth " + session.getAttribute("auth"));
 					try {
 						String location = (String) session.getAttribute("location");
 						if (location != null) { 

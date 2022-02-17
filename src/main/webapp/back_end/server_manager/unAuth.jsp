@@ -1,7 +1,14 @@
+<%@ page import="com.server_manager.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%
+	ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
+	List<ServerManagerVO> list = smSvc.getAll();
+	session.setAttribute("list", list);
+	System.out.println(session.getAttribute("list"));
+%>
 <!doctype html>
 <html lang="zh-TW">
 <head>
