@@ -1,17 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.faq.model.*"%>
 <%@ page import="java.util.*"%>
 
 <%
-FaqVO faqVO = (FaqVO) request.getAttribute("faqVO"); //EmpServlet.java(Concroller), 存入req的faqVO物件
+FaqVO faqVO = (FaqVO) request.getAttribute("faqVO");
 %>
 
 <html>
 <head>
-<title>FAQ資料 - listOneFAQ.jsp</title>
+<title>FAQ資料</title>
 
 <style>
 table#table-1 {
@@ -53,14 +52,13 @@ th, td {
 </head>
 <body bgcolor='white'>
 
-	<h4>此頁暫練習採用 Script 的寫法取值:</h4>
+
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>FAQ資料 - ListOneFAQ.jsp</h3>
+				<h3>FAQ資料</h3>
 				<h4>
-					<a href="back_FaqMain.jsp"><img src="images/back1.gif"
-						width="100" height="32" border="0">回首頁</a>
+					<a href="back_FaqMain.jsp">回首頁</a>
 				</h4>
 			</td>
 		</tr>
