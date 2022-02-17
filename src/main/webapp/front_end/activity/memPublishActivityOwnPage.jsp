@@ -1,3 +1,4 @@
+<%@page import="com.mysql.cj.conf.ConnectionUrl.Type"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
@@ -5,21 +6,23 @@
 <!-- 改善時間用 -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%
+// 	ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");
+// 	actVO.getOrganizerMemberId()
 	ActivityServiceImpl actSvc = new ActivityServiceImpl();
-	List<ActivityVO> list = actSvc.getAllActDesc();
+	List<ActivityVO> list = actSvc.findByMemId(2);
 	pageContext.setAttribute("list",list);
 	
-	List<ActivityVO> typeList1 = actSvc.getActType(1);
-	pageContext.setAttribute("typeList1",typeList1);
+// 	List<ActivityVO> typeList1 = actSvc.getActType(1);
+// 	pageContext.setAttribute("typeList1",typeList1);
 	
-	List<ActivityVO> typeList2 = actSvc.getActType(2);
-	pageContext.setAttribute("typeList2",typeList2);
+// 	List<ActivityVO> typeList2 = actSvc.getActType(2);
+// 	pageContext.setAttribute("typeList2",typeList2);
 	
-	List<ActivityVO> typeList3 = actSvc.getActType(3);
-	pageContext.setAttribute("typeList3",typeList3);
+// 	List<ActivityVO> typeList3 = actSvc.getActType(3);
+// 	pageContext.setAttribute("typeList3",typeList3);
 	
-	List<ActivityVO> typeList4 = actSvc.getActType(4);
-	pageContext.setAttribute("typeList4",typeList4);
+// 	List<ActivityVO> typeList4 = actSvc.getActType(4);
+// 	pageContext.setAttribute("typeList4",typeList4);
 %>
 
 <!DOCTYPE html>
@@ -323,12 +326,10 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
     </header>
    
    <!-- 上與中之間 -->
-  <%@ include file="specialcard.file" %> 
-<%--    	<img class="contact" src="<%=request.getContextPath()%>/asset/img/activityImage/message.png"> --%>
+    <%@ include file="specialcard.file" %> 
+   	<img class="contact" src="<%=request.getContextPath()%>/asset/img/activityImage/message.png">
 		
    	<!-- 主體畫面設計  -->
-		
-   	
 <div class="tab_container">
 			<div class="tab_list_block">
                 <ul class="tab_list">
@@ -354,8 +355,8 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
 	                <p class="location ellipsis"><img style="width:18px; height:18px;margin-right:5px;" src="<%=request.getContextPath()%>/asset/img/activityImage/placeholder.png">${actVO.location}</p>
 	                <div style="margin: 0 50px;">
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
-			                <input type="hidden" name="activityId" value="${actVO.activityId}">
-			                <input type="hidden" name="action" value="selectOneAct"/> 
+<%-- 			                <input type="hidden" name="organizerMemberId" value="${actVO.organizerMemberId}"> --%>
+<!-- 			                <input type="hidden" name="action" value="xxx"/>  -->
 			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
 		                </FORM>
 	                </div>
