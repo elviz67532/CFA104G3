@@ -192,6 +192,20 @@ public class ServerManagerServlet extends HttpServlet {
 				failureView.forward(req, res);
 			} 
 		}
+		if("delete".equals(action)) {
+			
+			try {
+				Integer smgrId = Integer.valueOf(req.getParameter("smgrId"));
+				
+				ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
+				smSvc.delete(smgrId);
+				
+				RequestDispatcher view = req.getRequestDispatcher("/back_end/server_manager/admin.jsp");
+			} catch (NumberFormatException e) {
+				System.out.println("刪除後臺管理員失敗");
+				e.printStackTrace();
+			}
+		}
 		
 	}
 	public static String DBPassword(String account){
