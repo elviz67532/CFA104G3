@@ -4,10 +4,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%
-	ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
-	List<ServerManagerVO> list = smSvc.getAll();
-	session.setAttribute("list", list);
-	System.out.println(session.getAttribute("list"));
+	Object account = session.getAttribute("account");
+	if(account == null){
+		session.setAttribute("location", request.getRequestURI());
+		response.sendRedirect(request.getContextPath()+"/back_end/server_manager/loginServer.jsp");
+	}
 %>
 <!doctype html>
 <html lang="zh-TW">
@@ -31,7 +32,7 @@
 				<div class="container-fluid">
 
 					<!-- main -->
-					manager
+					server
 					<!-- end of main -->
 					
 				</div>
