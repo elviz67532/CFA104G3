@@ -64,6 +64,8 @@
 		<url-pattern>/back_end/server_manager/manager.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/FAQ.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/server.jsp</url-pattern>
+		<url-pattern>/back_end/server_manager/admin.jsp</url-pattern>
+		<url-pattern>/back_end/server_manager/addManager.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>

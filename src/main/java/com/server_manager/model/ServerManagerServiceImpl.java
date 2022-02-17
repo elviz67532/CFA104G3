@@ -2,6 +2,10 @@ package com.server_manager.model;
 
 import java.util.List;
 
+import com.server_manager_auth.model.ServerManagerAuthDAO;
+import com.server_manager_auth.model.ServerManagerAuthServiceImpl;
+import com.server_manager_auth.model.ServerManagerAuthVO;
+
 public class ServerManagerServiceImpl implements ServerManagerService{
 
 	private ServerManagerDAO dao;
@@ -46,8 +50,14 @@ public class ServerManagerServiceImpl implements ServerManagerService{
 		return vo;
 	}
 	
-	public List<ServerManagerVO> getAll(){
+	public List<ServerManagerVO> getAll(){ // 僅admin頁面可以使用
+		ServerManagerAuthServiceImpl authSerDao = new ServerManagerAuthServiceImpl();
 		List<ServerManagerVO> list = dao.selectAll();
+		for(ServerManagerVO vo: list) {
+			Integer smgrId = vo.getSmgrId();
+			List<ServerManagerAuthVO> authList = authSerDao.selectByManager(smgrId);
+			vo.setAuthList(authList);
+		}
 		return list;
 	}
 	

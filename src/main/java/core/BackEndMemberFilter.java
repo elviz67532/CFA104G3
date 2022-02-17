@@ -110,7 +110,8 @@ public class BackEndMemberFilter implements Filter {
 
 	private void initAuths() {
 		//【a tag 的連接】
-		urlAuths.put("/back_end/server_manager/server.jsp", SERVER_MANAGER);
+		urlAuths.put("/back_end/server_manager/admin.jsp", SERVER_MANAGER);
+		urlAuths.put("/back_end/server_manager/addManager.jsp", SERVER_MANAGER);
 		urlAuths.put("/back_end/server_manager/activity.jsp", ACTIVITY);
 		urlAuths.put("/back_end/server_manager/product.jsp", DOUBLE_PROD);
 		urlAuths.put("/back_end/move/moveRequestManage.jsp", MOVE); 
