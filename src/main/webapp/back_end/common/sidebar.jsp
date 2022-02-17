@@ -74,7 +74,7 @@
 		<div id="collapseMove" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/move/moveRequestManage.jsp">申請單管理</a>
-				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/move/moveRequestManage.jsp">訂單管理</a>
+				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/move/readMoveOrder.jsp">訂單管理</a>
 			</div>
 		</div>
 	</li>
