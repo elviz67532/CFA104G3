@@ -120,6 +120,28 @@
 	<main id="outter" class=".flex-column">
 		<div class="bd-content ps-lg-4">
 		
+			<!-- 成功/失敗訊息 -->
+			<c:if test="${not empty result}">
+			 <div class="container position-relative px-4 px-lg-5">
+	            <div class="row gx-4 gx-lg-5 justify-content-center">
+	                <div class="col-md-10 col-lg-8 col-xl-7">
+	                    <div class="site-heading"  style="text-align:center;">
+				<c:choose>
+					<c:when test="${result == 1}">
+						</label>
+						  <h1>申請成功</h1>
+					</c:when>
+					<c:otherwise>
+						</label>
+						  <h1>申請失敗，請重新申請</h1>
+					</c:otherwise>
+				</c:choose>
+					</div>
+		                </div>
+		            </div>
+		        </div>
+			</c:if>
+			
 			<!-- Form 模式 -->
 			<c:choose>
 				<c:when test="${empty result}">
@@ -179,7 +201,7 @@
 				<!-- 搬家日期 -->
 				<div class="col-12">
 					<label for="moveDate" class="form-label">搬家日期:</label> 
-					<input name="moveDate" type="text" class="form-control" id="moveDate"
+					<input name="moveDate" type="date" class="form-control" id="moveDate"
 						value="${moveDate}"
 							<c:out value="${empty result ? '' : 'disabled'}"></c:out>>
 					<c:if test="${not empty moveDateMsg}">
@@ -216,7 +238,7 @@
 				<!-- 現場估價日期 -->
 				<div class="col-12">
 					<label for="evaDate" class="form-label">現場估價日期:</label>
-					<input name="evaDate" type="text" class="form-control" id="evaDate"
+					<input name="evaDate" type="date" class="form-control" id="evaDate"
 					value= "${evaDate}"
 					<c:out value="${empty result ? '' : 'disabled'}"></c:out>>
 					<c:if test="${not empty evaDateMsg}">
