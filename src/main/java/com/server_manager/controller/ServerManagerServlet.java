@@ -31,7 +31,7 @@ public class ServerManagerServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+		String atag = req.getParameter("atag");
 		if ("loginhandler".equals(action)) {
 			
 //			System.out.println("我進來loginhandler");
@@ -103,6 +103,13 @@ public class ServerManagerServlet extends HttpServlet {
 				errMsgs.add("例外錯誤");
 				e.printStackTrace();
 			}
+		}
+		
+		if("logout".equals(atag)) {
+			HttpSession session = req.getSession();
+			session.invalidate();
+			RequestDispatcher view = req.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
+			view.forward(req, res);
 		}
 		
 		if("insert".equals(action)) {
