@@ -32,14 +32,14 @@ public class ProductReportServiceImpl implements ProductReportService {
 	}
 
 	@Override
-	public void deleteById() {
+	public  void deleteById() {
 		DualKey<Integer, Integer> id = new DualKey<Integer, Integer>(null, null);
 		dao.deleteById(id);
 	}
 
 	@Override
-	public ProductReportVO selectById() {
-		DualKey<Integer, Integer> id = new DualKey<Integer, Integer>(null, null);
+	public ProductReportVO selectById(Integer memberId, Integer productId) {
+		DualKey<Integer, Integer> id = new DualKey<Integer, Integer>(memberId, productId);
 		return dao.selectById(id);
 	}
 
@@ -47,4 +47,11 @@ public class ProductReportServiceImpl implements ProductReportService {
 	public List<ProductReportVO> selectAll() {
 		return dao.selectAll();
 	}
-}
+	
+	@Override
+	public ProductReportVO getOneById(int memberId) {		
+		return dao. getOneById(memberId);
+	}
+	
+	}
+

@@ -93,7 +93,14 @@
 		<servlet-name>NewsServlet</servlet-name>
 		<url-pattern>/back_end/news/NewsServlet</url-pattern>
 	</servlet-mapping>
-	
+		<servlet>
+		<servlet-name>NewsImageReader</servlet-name>
+		<servlet-class>com.news.controller.NewsImageReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NewsImageReader</servlet-name>
+		<url-pattern>/news/newsimage.do</url-pattern>
+	</servlet-mapping>
 	<!-- product -->
 	
 </web-app>

@@ -33,7 +33,9 @@ public class ProductDAOImpl implements ProductDAO {
 	public int insert(ProductVO productVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		int row = 0;
+		String key;
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
@@ -47,6 +49,8 @@ public class ProductDAOImpl implements ProductDAO {
 			pstmt.setInt(8, productVO.getStatus());
 
 			row = pstmt.executeUpdate();
+			rs = pstmt.getGeneratedKeys();
+			key = rs.getString(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -276,5 +280,38 @@ public class ProductDAOImpl implements ProductDAO {
 
 		return list;
 
+	}
+
+	@Override
+	public String insert_get_key(ProductVO productVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int row = 0;
+		String key = null;
+		String[] cols = { "PROD_ID" };
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
+			pstmt.setInt(1, productVO.getSellerMemberId());
+			pstmt.setInt(2, productVO.getType());
+			pstmt.setString(3, productVO.getDescription());
+			pstmt.setInt(4, productVO.getPrice());
+			pstmt.setString(5, productVO.getName());
+			pstmt.setTimestamp(6, productVO.getLaunchedDate());
+			pstmt.setString(7, productVO.getLocation());
+			pstmt.setInt(8, productVO.getStatus());
+
+			pstmt.executeUpdate();
+			rs = pstmt.getGeneratedKeys();
+			System.out.println("ProductDAO key:" + rs);
+			rs.next(); // ***
+			key = rs.getString(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+		return key;
 	}
 }

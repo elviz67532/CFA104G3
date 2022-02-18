@@ -8,10 +8,11 @@ public interface ProductReportService {
 	ProductReportVO insert(Integer productId, Integer memberId, String content, Timestamp date,
 			byte[] photo, Integer status);
 
-	void deleteById();
+	ProductReportVO selectById(Integer memberId, Integer productId);
 
-	ProductReportVO selectById();
+	ProductReportVO  getOneById(int memberId);
 
 	List<ProductReportVO> selectAll();
-
+	
+	void deleteById();
 }
