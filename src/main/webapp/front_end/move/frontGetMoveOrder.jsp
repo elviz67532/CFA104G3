@@ -129,7 +129,6 @@ td {
 						<textarea style="height: 300px; width: 500px;" name="comment">${moveOrderVO.comment}</textarea>
 						<input type="hidden" name="status" value="${moveOrderVO.status}">
 						<input type="submit" value="送出">
-
 					</FORM>
 				</td>
 			</tr>

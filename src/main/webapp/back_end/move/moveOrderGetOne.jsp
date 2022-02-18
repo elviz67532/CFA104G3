@@ -42,22 +42,56 @@ if (moveOrderVO != null) {
 <title>委域</title>
 </head>
 <style>
-  table {
-	width: 800px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-  }
-  table, th, td {
-    border: 1px solid #CCCCFF;
-  }
-  th, td {
-    padding: 5px;
-    text-align: center;
-  }
-  button{
+table{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table tr{
+  border-bottom: solid 2px white;
+}
+
+table tr:last-child{
+  border-bottom: none;
+}
+
+table th{
+  position: relative;
+  width: 30%;
+  background-color: #7d7d7d;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+table th:after{
+  display: block;
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  top:calc(50% - 10px);
+  right:-10px;
+  border-left: 10px solid #7d7d7d;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+
+table td{
+  text-align: left;
+  width: 70%;
+  text-align: center;
+  background-color: #eee;
+  padding: 10px 0;
+}
+
+.main {
+  margin: 20px auto;
+  item-align: center;
+  width: 80%;
+}  button{
   	width:200px;
-  	background-color: light blue;
+  	color: light blue;
   	margin-top: auto;
   	margin-right: 0px;
   }
@@ -84,8 +118,9 @@ if (moveOrderVO != null) {
 							</c:forEach>
 						</ul>
 					</c:if>
-
+					<div class="">
 					<h2>搬家訂單</h2>
+					<div class=""main>
 					<table>
 
 						<tr>
@@ -235,6 +270,8 @@ if (moveOrderVO != null) {
 							</td>
 						</tr>
 					</table>
+					</div>
+					</div>
 					<!-- end of main -->
 
 				</div>
