@@ -35,12 +35,129 @@ public class ServerManageFunctionServlet extends HttpServlet {
 		
 		req.setCharacterEncoding("UTF-8");
 		
+		// 【接收請求的a tag】
+		String atag = req.getParameter("atag");
+			System.out.println("atag:" + atag);
+
+		HttpSession session = req.getSession();
+			//List<ServerManagerAuthVO> smaAuth = (List<ServerManagerAuthVO>) session.getAttribute("auth");
+//		if("server".equals(atag)) {
+//			Boolean hasAuth;
+//			hasAuth = (Boolean) session.getAttribute("hasAuthSM");
+//			try {
+//				if(hasAuth == true) {
+//					RequestDispatcher view = req
+//							.getRequestDispatcher("/back_end/server_manager/server.jsp");
+//					view.forward(req, res);
+//				}
+//			} catch (Exception e) {
+//				// 【不允許】如果hasAuth=false => 導入uAth.jsp
+//				RequestDispatcher view = req
+//						.getRequestDispatcher("/back_end/server_manager/unAuth.jsp");
+//				view.forward(req, res);	
+//				e.printStackTrace();
+//			}
+//		}
+//		if("activity".equals(atag)) {
+//				System.out.println("進來activity=atag了");
+//			 Boolean hasAuth;
+//			try {
+//				hasAuth = (Boolean) session.getAttribute("hasAuthACT");
+//				 System.out.println("取得活動hasAuth參數了:" + hasAuth);
+//				 // 【允許請求】如果hasAuth=true => 導入a tag
+//				 if(hasAuth == true) {
+//					RequestDispatcher view = req
+//							.getRequestDispatcher("/back_end/server_manager/activity.jsp");
+//					view.forward(req, res);
+//				 }
+//			} catch (Exception e) {
+//				// 【不允許】如果hasAuth=false => 導入uAth.jsp
+//				RequestDispatcher view = req
+//						.getRequestDispatcher("/back_end/server_manager/unAuth.jsp");
+//				view.forward(req, res);	
+//				e.printStackTrace();
+//			}
+//		}
+//		if("productReport".equals(atag) || "productManage".equals(atag) || "productOrder".equals(atag)) {
+//			System.out.println("進來product=atag了");
+//			Boolean hasAuth;
+//			try {
+//				hasAuth = (Boolean) session.getAttribute("hasAuthDprod");
+//				 if(hasAuth == true) {
+//					RequestDispatcher view = req
+//							.getRequestDispatcher("/back_end/server_manager/product.jsp");
+//					view.forward(req, res);
+//				 }				
+//			} catch (Exception e) {
+//				// 【不允許】如果hasAuth=false => 導入uAth.jsp
+//				RequestDispatcher view = req
+//						.getRequestDispatcher("/back_end/server_manager/unAuth.jsp");
+//				view.forward(req, res);	
+//				e.printStackTrace();
+//			}
+//		}
+//		if("move".equals(atag)) {
+//			Boolean hasAuth;
+//			hasAuth = (Boolean) session.getAttribute("hasAuthMove");
+//			try {
+//				if(hasAuth == true) {
+//					RequestDispatcher view = req
+//							.getRequestDispatcher("/back_end/server_manager/move.jsp");
+//					view.forward(req, res);
+//				}
+//			} catch (Exception e) {
+//				// 【不允許】如果hasAuth=false => 導入uAth.jsp
+//				RequestDispatcher view = req
+//						.getRequestDispatcher("/back_end/server_manager/unAuth.jsp");
+//				view.forward(req, res);	
+//				e.printStackTrace();
+//			}
+//		}
+//		if("member".equals(atag)) {
+//			Boolean hasAuth;
+//			hasAuth = (Boolean) session.getAttribute("hasAuthMan");
+//			try {
+//				if(hasAuth == true) {
+//					RequestDispatcher view = req
+//							.getRequestDispatcher("/back_end/server_manager/member.jsp");
+//					view.forward(req, res);
+//				}
+//			} catch (Exception e) {
+//				// 【不允許】如果hasAuth=false => 導入uAth.jsp
+//				RequestDispatcher view = req
+//						.getRequestDispatcher("/back_end/server_manager/unAuth.jsp");
+//				view.forward(req, res);	
+//				e.printStackTrace();
+//			}
+//		}
+//		if("faq".equals(atag)) {
+//			System.out.println("進來faq=atag了");
+//			Boolean hasAuth;
+//			try {
+//				hasAuth = (Boolean) session.getAttribute("hasAuthFaq");
+//				System.out.println("取得FAQ hasAuth參數了:" + hasAuth);
+//				 if(hasAuth == true) {
+//					RequestDispatcher view = req
+//							.getRequestDispatcher("/back_end/server_manager/FAQ.jsp");
+//					view.forward(req, res);
+//				 }
+//			} catch (Exception e) {
+//				// 【不允許】如果hasAuth=false => 導入uAth.jsp
+//				RequestDispatcher view = req
+//						.getRequestDispatcher("/back_end/server_manager/unAuth.jsp");
+//				view.forward(req, res);	
+//				e.printStackTrace();
+//			}
+//		}		
+		
+		
+		
+		
+		
+		
+		
 		//【hyperlink param】
 		//String auth = req.getParameter("auth");
-		String[] auth = req.getParameterValues("auth");
-		System.out.println(auth[0]);//XXX
-		System.out.println(auth[1]);//admin
-		HttpSession session = req.getSession();
 		
 		//【每隻url對應的權限】
 		Map<String, Integer> map = new HashMap<String, Integer>();
@@ -57,35 +174,7 @@ public class ServerManageFunctionServlet extends HttpServlet {
 		map.put(Member,40);//Member
 		map.put(ServerManager,0);//ServerManager
 		
-		// null;
-		List<ServerManagerAuthVO> smaAuth = (List<ServerManagerAuthVO>) session.getAttribute("auth");
 		
-		
-		if("FAQ".equals(auth[0]) || "Admin".equals(auth[1])) {
-			//【user所有權限】
-//			List<ServerManagerAuthVO> smaAuth = (List<ServerManagerAuthVO>) session.getAttribute("serverManagerAuth");
-//			while(smaAuth.iterator().hasNext()) {
-//				System.out.println(smaAuth.iterator().next());
-//				//if(Integer.parseInt(smaAuth.iterator().next()) == map.get(FAQ)) {
-//					
-//			}
-			//【比較】
-		}
-		else if ("Activity".equals(auth[0]) || "Admin".equals(auth[1])) {
-			
-		}
-		else if ("DoubleProduct".equals(auth[0]) || "Admin".equals(auth[1])) {
-			
-		}
-		else if ("Move".equals(auth[0]) || "Admin".equals(auth[1])) {
-			
-		}
-		else if ("Member".equals(auth[0]) || "Admin".equals(auth[1])) {
-			
-		}
-		else if ("ServerManager".equals(auth[0]) || "Admin".equals(auth[1])) {
-			
-		}
 		//【以下正常執行】
 //		PrintWriter out = res.getWriter();
 //		if("FAQ".equals(auth)) {

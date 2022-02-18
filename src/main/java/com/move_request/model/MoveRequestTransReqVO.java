@@ -5,7 +5,8 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class MoveTransVO {
-	public String mode;
-	public Integer id;
+public class MoveRequestTransReqVO {
+	private String action;
+	private Integer id;
+	private Integer price;
 }

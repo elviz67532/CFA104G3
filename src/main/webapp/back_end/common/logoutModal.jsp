@@ -13,7 +13,7 @@
 			<div class="modal-body">選擇登出繼續動作</div>
 			<div class="modal-footer">
 				<button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-				<a class="btn btn-primary" href="#">登出</a>
+				<a class="btn btn-primary" href="<%=request.getContextPath()%>/server_manager/ServerManagerServlet?atag=logout">登出</a>
 			</div>
 		</div>
 	</div>

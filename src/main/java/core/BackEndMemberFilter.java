@@ -23,7 +23,7 @@ public class BackEndMemberFilter implements Filter {
 	private final static Integer ACTIVITY = 10;
 	private final static Integer DOUBLE_PROD = 20;
 	private final static Integer MOVE = 30;
-	private final static Integer MANAGER = 40;
+	private final static Integer MEMBER = 40;
 	private final static Integer FAQ = 50;
 	
 	//【URL】
@@ -64,15 +64,15 @@ public class BackEndMemberFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest)request; 
 		HttpServletResponse res = (HttpServletResponse)response;
 		
-		// 判斷是否登入
+		// 判斷是否登入 【目前登入不在filter】
 		HttpSession session = req.getSession();
 		String account = (String) session.getAttribute("account");
 		if (account == null) {
 			System.out.println("尚未登入");
-			res.sendRedirect("/back_end/server_manager/loginServer.jsp");
+			res.sendRedirect("/CFA104G3/back_end/server_manager/loginServer.jsp");
 			return;
 		}
-		
+
 		// 判斷當前路徑所需權限
 		String servletPath = req.getServletPath();
 		Integer currentURLAuth = urlAuths.get(servletPath);
@@ -83,77 +83,74 @@ public class BackEndMemberFilter implements Filter {
 		}
 		
 		// 判斷使用者權限
-		
-		//【取得session】
-		boolean hasAuthSM = false;
-		boolean hasAuthACT = false;
-		boolean hasAuthDprod = false;
-		boolean hasAuthMove = false;
-		boolean hasAuthMan = false;
-		boolean hasAuthFaq = false;
+			//【取得session】
 		List<ServerManagerAuthVO> authVos = (List<ServerManagerAuthVO>) session.getAttribute("auth");
 		if (authVos == null) {
 			System.out.println("使用者無此權限");
-			res.sendRedirect("/back_end/server_manager/unAuth.jsp");
+			res.sendRedirect("/CFA104G3/back_end/server_manager/unAuth.jsp");
 			return;
 		}
-		//【從session判斷有哪些權限】
-		for(ServerManagerAuthVO authVo : authVos) {
-			switch (authVo) {
-			case SERVER_MANAGER: {
-				hasAuthSM = true;
-				break;
-			}
-			case ACTIVITY:{
-				hasAuthACT = true;
-				break;
-			}
-			case DOUBLE_PROD:{
-				hasAuthDprod = true;
-				break;
-			}
-			case MOVE:{
-				hasAuthMove = true;
-				break;
-			}
-			case MANAGER:{
-				hasAuthMan = true;
-				break;
-			}
-			case FAQ:{
-				hasAuthFaq = true;
-				break;
-			}
-			
-			default:
-				throw new IllegalArgumentException("Unexpected value: " + key);
-			}
-		}
-		
-		
+		//【賦予權限】
 		boolean hasAuth = false;
-		for (ServerManagerAuthVO authVo : authVos) { // 列舉使用者權限
-			hasAuth = true;
-			
+		// 擁有權限
+		for (ServerManagerAuthVO authVo : authVos) { // user 登入一個網頁檢查一次
+			if(authVo.getSmgeAuthId() == currentURLAuth) {
+				hasAuth = true;
+				break;
+			}
 		}
 		// 無權限
 		if (!hasAuth) {
 			System.out.println("未授權");
-			res.sendRedirect("/back_end/server_manager/unAuth.jsp");
+			res.sendRedirect("/CFA104G3/back_end/server_manager/unAuth.jsp");
 		}
 		
-		// 擁有權限
 		chain.doFilter(request, response);
 	}
 
 	private void initAuths() {
 		//【a tag 的連接】
-		urlAuths.put(server_manager, SERVER_MANAGER);
-		urlAuths.put("/back_end/", ACTIVITY);
-		urlAuths.put("/back_end/server_manager/serverManagerHom.jsp", DOUBLE_PROD);
+		urlAuths.put("/back_end/server_manager/admin.jsp", SERVER_MANAGER);
+		urlAuths.put("/back_end/server_manager/addManager.jsp", SERVER_MANAGER);
+		urlAuths.put("/back_end/server_manager/activity.jsp", ACTIVITY);
+		urlAuths.put("/back_end/server_manager/product.jsp", DOUBLE_PROD);
 		urlAuths.put("/back_end/move/moveRequestManage.jsp", MOVE); 
-		urlAuths.put("/back_end/server_manager/manager.jsp",MANAGER);
+		urlAuths.put("/back_end/server_manager/manager.jsp",MEMBER);
 		urlAuths.put("/back_end/server_manager/FAQ.jsp", FAQ);
 	}
 }	
 
+
+//		boolean hasAuthSM = false;
+//		boolean hasAuthACT = false;
+//		boolean hasAuthDprod = false;
+//		boolean hasAuthMove = false;
+//		boolean hasAuthMan = false;
+//		boolean hasAuthFaq = false;
+//		for(ServerManagerAuthVO authVo : authVos) {
+//			if(authVo.getSmgeAuthId() == SERVER_MANAGER) {
+//				hasAuthSM = true;
+//				session.setAttribute("hasAuthSM", hasAuthSM);
+//			}
+//			else if (authVo.getSmgeAuthId() == ACTIVITY) {
+//				hasAuthACT = true;
+//				session.setAttribute("hasAuthACT", hasAuthACT);
+//			}
+//			else if(authVo.getSmgeAuthId() == DOUBLE_PROD) {
+//				hasAuthDprod = true;
+//				session.setAttribute("hasAuthDprod", hasAuthDprod);
+//				System.out.println("獲得hasAuthDprod");
+//			}	
+//			else if(authVo.getSmgeAuthId() == MOVE) {
+//				hasAuthMove = true;
+//				session.setAttribute("hasAuthMove", hasAuthMove);
+//			}
+//			else if(authVo.getSmgeAuthId() == MEMBER) {
+//				hasAuthMan = true;
+//				session.setAttribute("hasAuthMan", hasAuthMan);
+//			}
+//			else if(authVo.getSmgeAuthId() == FAQ) {
+//				hasAuthFaq = true;
+//				session.setAttribute("hasAuthFaq", hasAuthFaq);
+//			}
+//		}

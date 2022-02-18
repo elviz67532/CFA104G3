@@ -31,7 +31,7 @@ public class ServerManagerServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+		String atag = req.getParameter("atag");
 		if ("loginhandler".equals(action)) {
 			
 //			System.out.println("我進來loginhandler");
@@ -83,8 +83,10 @@ public class ServerManagerServlet extends HttpServlet {
 					ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
 					ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
 					Integer smgrId = smSvc.getId(account);
-					List<ServerManagerAuthVO> list = smaSvc.selectByManager(smgrId); // null
-					session.setAttribute("auth", list); //【取得smaId】
+					List<ServerManagerAuthVO> list = smaSvc.selectByManager(smgrId); //【取得smaId】
+						System.out.println("list" + list); 
+					session.setAttribute("auth", list);
+						System.out.println("auth " + session.getAttribute("auth"));
 					try {
 						String location = (String) session.getAttribute("location");
 						if (location != null) { 
@@ -101,6 +103,13 @@ public class ServerManagerServlet extends HttpServlet {
 				errMsgs.add("例外錯誤");
 				e.printStackTrace();
 			}
+		}
+		
+		if("logout".equals(atag)) {
+			HttpSession session = req.getSession();
+			session.invalidate();
+			RequestDispatcher view = req.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
+			view.forward(req, res);
 		}
 		
 		if("insert".equals(action)) {
@@ -182,6 +191,20 @@ public class ServerManagerServlet extends HttpServlet {
 						.getRequestDispatcher("/back_end/server_manager/addServerManager.jsp");
 				failureView.forward(req, res);
 			} 
+		}
+		if("delete".equals(action)) {
+			
+			try {
+				Integer smgrId = Integer.valueOf(req.getParameter("smgrId"));
+				
+				ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
+				smSvc.delete(smgrId);
+				
+				RequestDispatcher view = req.getRequestDispatcher("/back_end/server_manager/admin.jsp");
+			} catch (NumberFormatException e) {
+				System.out.println("刪除後臺管理員失敗");
+				e.printStackTrace();
+			}
 		}
 		
 	}
