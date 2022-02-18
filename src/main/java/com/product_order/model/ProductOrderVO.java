@@ -19,7 +19,3 @@ public class ProductOrderVO implements Serializable {
 	private Integer status;
 	private Integer amountOfPrice;
 }
-
-
-//964
-//GTR

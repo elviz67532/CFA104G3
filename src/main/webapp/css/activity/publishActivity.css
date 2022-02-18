@@ -1,9 +1,5 @@
 /* ===================3.html=================== */
-.middle_right{
-    /* background-color: lightsalmon; */
-}
 fieldset{
-    /* border: none; */
     width: 400px;
 }
 legend{
@@ -28,103 +24,37 @@ legend{
 .actFormInput,.formLabel {
     margin: .2rem 0;
 }
-.actPhoto{
-}
-/*��2.css��tn*/
-/* .form_btn{
-    border: 2px black  solid;
-    font-size: 16px;
-    background-color: lightseagreen;
-    width: 350px;
-    border-radius: 10px;
-} */
-
-
 
 .actSelect:focus{
 	border: 2px solid black;
-    background-color: lightgreen;
+    background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
 }
 
 /*input hover*/
 input[type="text"]:focus{
 	border: 2px solid black;
-    background-color: lightgreen;
+    background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
 }
-input[type="tel"]:focus{
-	border: 2px solid black;
-    background-color: lightgreen;
-}
-input[type="email"]:focus{
-	border: 2px solid black;
-    background-color: lightgreen;
-}
-/* input[type="file"]:focus{
-    background-color: aquamarine;
-} */
+
 input[type="number"]:focus{
 	border: 2px solid black;
-    background-color: lightgreen;
+    background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
 }
 input[type="date"]:focus{
 	border: 2px solid black;
-    background-color: lightgreen;
+    background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
 }
-input[type="time"]:focus{
+input[type="datetime-local"]:focus{
 	border: 2px solid black;
-    background-color: lightgreen;
+    background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
 }
 textarea:focus{
 	border: 2px solid black;
-    background-color: lightgreen;
+    background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
 }
-/*=================������=================*/
-.shape-ex11{
-    margin-top: 10px;
-    width: 150px;
-    height: 40px;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    line-height: 40px;
-    color: #000;
-    background-color: transparent;
-    position: relative;
-    transition: all .3s linear;
-}
-
-.shape-ex11:hover{
-    background-color: lightgreen;
-}
-
-/*video*/
-/* div.video_placeholder{
-    border: 1px solid red;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100vh;
-  
-    position: relative;
-    overflow: hidden;
-  } */
-  /*
-  div.video_placeholder::after{
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 1px solid blue;
-    background-color: hsla(0, 0%, 0%, .5);
-  }
-  */
-  
-  /* #the_video{
-    border: 1px solid blue;
-    position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }   */

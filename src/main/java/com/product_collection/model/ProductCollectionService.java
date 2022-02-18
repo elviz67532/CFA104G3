@@ -10,4 +10,6 @@ public interface ProductCollectionService {
 
 	List<ProductCollectionVO> selectAll();
 
+	List<ProductCollectionVO> getByMemId(int memberId);
+
 }

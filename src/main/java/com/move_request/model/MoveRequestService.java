@@ -14,9 +14,9 @@ public interface MoveRequestService {
 	
 	boolean evaluate(int requestId, int price);
 
-	// unsued
 	MoveRequestVO getRequest(int requestId);
 	
+	// unsued
 	List<Date> getUnavaliableMoveDates(Date today);
 
 	List<Date> getUnavaliableEvaDates(Date today);

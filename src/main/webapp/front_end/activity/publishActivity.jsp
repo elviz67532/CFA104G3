@@ -14,6 +14,7 @@
 <meta charset="UTF-8">
 <title>委域刊登活動publishActivity.jsp</title>
 <link href="${pageContext.request.contextPath}/css/activity/publishActivity.css" rel="stylesheet">
+
 <!-- sweet -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
@@ -97,14 +98,55 @@
     font-size: 16px;
     border-radius: 0;
 }
+/* .btn{ */
+/* 	width: 100%; */
+/* 	color: #fff; */
+/*     padding: 16px 40px; */
+/*     border-radius: 4px; */
+/*     background-color: lightgreen; */
+/* 	margin: 8px 0 60px 0; */
+/* } */
 .btn{
 	width: 100%;
-	color: #fff;
     padding: 16px 40px;
-    border-radius: 4px;
-    background-color: lightgreen;
 	margin: 8px 0 60px 0;
 }
+.btn-hover {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+    outline: none;
+}
+
+.btn-hover.color-5 {
+    background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+}
+
 </style>
 </head>
 
@@ -114,13 +156,13 @@
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
     <!-- Page Header-->
-    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/bgHome01.jpg')">
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/activity01.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>New Life</h1>
-                        <span class="subheading">迎 接 全 新 的 人 生</span>
+                        <h1>New Activity</h1>
+                        <span class="subheading">與 你 分 享 的 快 樂<br><br>勝 過 獨 自 擁 有</span>
                     </div>
                 </div>
             </div>
@@ -149,7 +191,7 @@
 			
 			<label class="formLabel"for="type">活動種類: <span style="color: red">${errorMsgs.type}</span></label> 
 			<select class="actSelect" name="type" id="">
-				<option value="0">請選擇類型</option>
+			 	<option value="" style="display: none">請選擇類型</option>
 				<option value="1">活動</option>
 				<option value="2">聚餐</option>
 				<option value="3">講座</option>
@@ -159,7 +201,7 @@
 			<label class="formLabel" for="location">活動地點: <span style="color: red">${errorMsgs.location}</span></label>
 			<input class="actFormInput" type="text" name="location" value="<%= (actVO == null) ? "303 新竹縣湖口鄉民和街27號" : actVO.getLocation() %>"/><br>
 		 	
-		 	<label class="formLabel" for="actName">活動照片: <span style="color: red">${errorMsgs.photo}</span></label>
+		 	<label class="formLabel" for="photo">活動照片: <span style="color: red">${errorMsgs.photo}</span></label>
            	<input class="actPhoto" name="actp" type="file" accept="image/*" value=""><br>
 <!--       	多張 multiple     -->
 			<label class="formLabel" for="content">活動內容: <span style="color: red">${errorMsgs.content}</span></label>
@@ -173,19 +215,23 @@
 				value="<%= (actVO == null) ? "2000" : actVO.getCost() %>"/><br>
 	
 			<label class="formLabel" for="applyStartDate">報名開始時間: <span style="color: red">${errorMsgs.applyStartDate}</span></label>
-			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" value="${param.applyStartDate}"/><br>
+			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" value="${actVO.applyStartDate}"/><br>
+<%-- 			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" value="<%= (actVO == null)? "2022-03-04T08:30": actVO.getApplyStartDate()%>"/><br> --%>
 	
 			<label class="formLabel" for="applyEndDate">報名截止時間: <span style="color: red">${errorMsgs.applyEndDate}</span></label>
-			<input class="actTimeFormInput" step="1" type="datetime-local" name="applyEndDate" value="${param.applyEndDate}"/><br>
+			<input class="actTimeFormInput" step="1" type="datetime-local" name="applyEndDate" value="${actVO.applyEndDate}"/><br>
+<%-- 			<input class="actTimeFormInput" step="1" type="datetime-local" name="applyEndDate" value="<%= (actVO == null)? "2022-03-05T10:40": actVO.getApplyEndDate()%>"/><br> --%>
 	
 			<label class="formLabel" for="startDate">活動開始時間: <span style="color: red">${errorMsgs.startDate}</span></label>
-			<input class="actTimeFormInput" step="1" type="datetime-local" name="startDate" value="${param.startDate}"/><br> 
+			<input class="actTimeFormInput" step="1" type="datetime-local" name="startDate" value="${actVO.startDate}"/><br> 
+<%-- 			<input class="actTimeFormInput" step="1" type="datetime-local" name="startDate" value="<%= (actVO == null)? "2022-03-06T12:50": actVO.getStartDate()%>"/><br>  --%>
 			
 			<label class="formLabel" for="endDate">活動結束時間: <span style="color: red">${errorMsgs.endDate}</span></label>
-			<input class="actTimeFormInput" step="1" type="datetime-local" name="endDate" value="${param.endDate}"/><br> 
+			<input class="actTimeFormInput" step="1" type="datetime-local" name="endDate" value="${actVO.endDate}"/><br> 
+<%-- 			<input class="actTimeFormInput" step="1" type="datetime-local" name="endDate" value="<%= (actVO == null)? "2022-03-07T15:00": actVO.getEndDate()%>"/><br>  --%>
 				
-<%-- 			<label class="formLabel" for="applyMemberExisting">報名人數倒數: <span style="color: red">${errorMsgs.applyMemberExisting}</span></label> --%>
-<%-- 			<span class="actNumberFormInput" style="font-size: 36px; color: red;">${param.maxMember}</span><br>  --%>
+<!-- 			<label class="formLabel" for="applyMemberExisting">報名人數倒數: <span style="color: red"></span></label> -->
+<%-- 			<span class="actNumberFormInput" style="font-size: 36px; color: red;" >${param.maxMember}</span><br>  --%>
 	
 			<label class="formLabel" for="maxMember">活動人數上限: <span style="color: red">${errorMsgs.maxMember}</span></label>
 			<input class="actFormInput actNumberFormInput" type="number" step="" min="0"
@@ -197,10 +243,12 @@
 				max="1000" pattern="[0-9]" name="minMember"
 				value="<%= (actVO == null) ? "20" : actVO.getMinMember() %>"/><br>
 <!-- 			sweetalert 加在insert 就會有沒效果 -->
-			<input type="hidden" name="action" id="sweetBtnInsert" value="insert"/> 
-<!-- 			sweetalert 加在submit 有效果但不能insert -->
-			<input type="submit" class="btn" value="送出表單"/>
-			
+			<div style="text-align: center;">
+	
+				<input type="hidden" name="action" value="insert"/> 
+	<!-- 			sweetalert 加在submit 有效果但不能insert -->
+				<input type="submit" class="btn-hover color-5" value="送出表單" />
+			</div>
 		</form>
 	</div>
 </div>

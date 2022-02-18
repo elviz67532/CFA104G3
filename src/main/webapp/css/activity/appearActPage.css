@@ -1,34 +1,237 @@
-/*上層*/
-.actContentDiv1{
-    border: 2px purple solid;
-    text-align: center;
-}
-/*下層表單*/
-.actContentDiv2{
-    border: 2px blue solid;
+
+.ellipsis {
+	  display: -webkit-box;
+	  text-overflow: ellipsis;
+	  -webkit-line-clamp: 1; /*行數*/
+	  -webkit-box-orient: vertical;
+	  overflow: hidden;
+	  white-space: normal;
+	  cursor: pointer;
+      color: #959ba1;
+      font-size: 18px;
+      margin: 8px 0;  
 }
 
-/**/
-.veryContentDiv{
-    border: 2px greenyellow solid;
+.btn{
+	width: 100%;
+    padding: 16px 40px;
+	margin: 8px 0 60px 0;
 }
-/*==============標題==============*/
-.article-title{
-    display: inline;
-    -webkit-box-flex: 0;
-    -ms-flex: 0 1 100%;
-    flex: 0 1 100%;
-    font-size: 20px;
-    font-weight: bold;
-    color: #333333;
-    line-height: 1.5em;
-    vertical-align: middle;
+.btn-hover {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+    outline: none;
+}
+.btn-hover.color-9 {
+margin: 0 20px;
+width: 200px;
+height: 50px;
+padding: 0;
+    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
 }
 
 
-.actmemId{
-    color: #FFFFFF;
-    background-color: #808080;
-    border-radius: 10px;
+.tab_container{
+/* 	border: 2px solid blue; */
+	margin:  auto auto auto 30px; 
+}
+div.tab_container div.tab_contents{
+/*     border: 1px solid black; */
+    /*   margin-top: 30px; */
+}
+div.tab_container div.tab_contents div.tab{
+    padding: 10px;
+    display: none;
+}
+div.tab_container div.tab_contents div.tab.-on{
+    display: block;
+}
+/*頁籤超連結*/
+.act_tab_a{
+    text-decoration: none;
+}
+.wrap{
+    width: 1260px;
+	margin: auto;
+/* 	margin-right: 30px;  */
+/* 	border: 1px solid #aaa;  */
+/*     display: fixed; */
+}
+.item{
+    width: 30%;
+    margin: 10px;
+/*     border: 1px solid #aaa; */
+    position: relative;
+    display: inline-block;
+    transition: transform .3s;
+}
+.item:hover{
+opacity: 0.8;
+background-color: white; 
+transform: scale(1.02); 
+border-radius: 16px;
+}
+.item .div1{
+    padding: 8px 16px;
+    min-height: 149px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 0 16px 16px;
+    border: 1px solid gray;
+height:180px;
+}
+.item .time{
+    color: #b5bac1;
+    font-size: 14px;
+    font-weight: 500;
+	margin: 4px 8px; 
+}
+.item img{
+	box-shadow: none;
+    border-radius: 16px 16px 0 0;
+    width: 100%;
+height: 200px;
+transition: .5s; 
+}
+/* .item img:hover{  */
+/* 	transform: scale(1.02);  */
+/* 	border-radius: 16px; */
+/* }  */
+.location{
+    margin: 0 20px 10px 0;
+    color: gray;
+    font-size: 14px;
+    font-weight: 500;
+}
+.item .actName{
+overflow: hidden;
+white-space: normal;
+/* border: 2px solid red; */
+	height:auto;
+padding: 10px 0;
+	margin: 8px 0;  
+    color: #000;
+    line-height: 20px;
+	letter-spacing: -.16px; 
+/*     font-weight: 700; */
+/*     overflow: hidden; */
+/*     display: -webkit-box; */
+/*     -webkit-box-orient: vertical; */
+/*     -webkit-line-clamp: 2; */
+}
+/*=======================頁籤=======================*/
+
+/* 頁籤區塊 */
+div.tab_container div.tab_list_block{
+    padding-left: 20px;
 }
 
+/* 頁籤列表 */
+div.tab_container div.tab_list_block ul.tab_list{
+    list-style: none;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+margin-top: -20px;
+margin-left: -40px;
+text-align: center;
+width: 100%;
+}
+div.tab_container div.tab_list_block ul.tab_list > li{
+    display: inline-block;
+}
+div.tab_container div.tab_list_block ul.tab_list > li > a{
+    text-decoration: none;
+display: inline-block; 
+    padding: 14px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    color: white;
+    position: relative;
+    top: 1px;
+}
+
+/* 畫出底部黑線 */
+div.tab_container div.tab_list_block ul.tab_list > li > a::after{
+    content: "";
+    position: absolute;
+    width: calc(100% + 2px);
+    height: 1px;
+    background-color: white; /*下面線的顏色*/
+	bottom:-1px; /*下面線*/
+    left: -1px;
+    z-index: 1;
+}
+div.tab_container div.tab_list_block ul.tab_list > li > a.-on{
+/* 	border: 1px solid black;  */
+	color: black;  
+}
+/* 將底部黑線改成白色 */
+div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
+	background-color: white; 
+    width: 100%;
+    left: 0;
+}
+
+/*btn*/
+.btn-hover {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+    outline: none;
+}
+
+.btn-hover.color-5 {
+    background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+}

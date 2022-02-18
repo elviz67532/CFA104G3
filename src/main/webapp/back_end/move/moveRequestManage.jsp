@@ -40,7 +40,6 @@
 					MoveRequestService moveRequestService = new MoveRequestServiceImpl();
 					List<MoveRequestVO> allRequests = moveRequestService.findAllRequests();
 					
-					
 					// 顯示格式
 					SimpleDateFormat ymdtmFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 					SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -87,9 +86,9 @@
                                     	for (MoveRequestVO vo : allRequests) {
                                        	%>
 										<tr>
-											<td><%=EHandled.parseCode(vo.getHandled()).getText()%></td>
-											<td><%=EMoveRequestStatus.parseCode(vo.getStatus()).getText()%></td>
-											<td><%=EMoveRequestEvaType.parseCode(vo.getEvaluateType()).getText()%></td>
+											<td><%=vo.getHandled() == null ? "" : EHandled.parseCode(vo.getHandled()).getText()%></td>
+											<td><%=vo.getStatus() == null ? "" : EMoveRequestStatus.parseCode(vo.getStatus()).getText()%></td>
+											<td><%=vo.getEvaluateType() == null ? "" : EMoveRequestEvaType.parseCode(vo.getEvaluateType()).getText()%></td>
 											<td><%=vo.getMemberId()%></td>
 											<td><%=vo.getMoveDate() == null ? "" : ymdFormat.format(vo.getMoveDate())%></td>
 											<td><%=vo.getEvaluateDate() == null ? "" : ymdFormat.format(vo.getEvaluateDate())%></td>
@@ -124,7 +123,7 @@
 	<!-- Bootstrap core JavaScript-->
 	<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
 	<script
@@ -132,7 +131,7 @@
 
 	<!-- Custom scripts for all pages-->
 	<script
-		src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
+		src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js" ></script>
 
 	<!-- Page level plugins -->
 	<script
@@ -143,14 +142,15 @@
 	<!-- Page level custom scripts -->
 	<script src="<%=request.getContextPath()%>/js/demo/datatables-demo.js"></script>
 	
-	<!-- 註冊按鈕觸發功能  -->	
+	<!--  -->	
 	<script>
-		$("button[class='viewRequest']").click(function(){/*登入時點*/
+		$("button[class='viewRequest']").click(function(){
 	        let self = this;
 	        let requestId = self.value;
 			
-	        document.cookie = 'requestId='+requestId+';';
-	    	window.location.href='moveRequest.html';
+	        document.cookie = 'requestId=' + requestId;
+
+	        window.location.href='moveRequest.jsp';
 		});
 	</script>
 </body>
