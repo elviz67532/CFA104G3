@@ -15,7 +15,7 @@ pageContext.setAttribute("list", list);
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link
-	href="<%=request.getContextPath()%>/css/back_end/sb-admin-2.min.css"
+	href="<%=request.getContextPath()%>/css/move/moveTotal.css"
 	rel="stylesheet">
 <link
 	href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.css"
@@ -29,20 +29,40 @@ pageContext.setAttribute("list", list);
 <title>委域</title>
 </head>
 <style>
+.main {
+   margin: 20px auto; 
+}
 table {
-	width: 800px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
+  border: solid #4e73df;
+  border-spacing: 0;
+  width: 80%;
+}
+tr {
+  text-align: center;
+}
+th {
+  padding: 10px;
+}
+table tbody tr:nth-child(odd){
+  background-color: #eee
+}
+table thead {
+  background-color: #4e73df;
+  color: white;
+}
+table thead th:first-child {
+  border-radius: 5px 0 0 0;
+}
+table thead th:last-child {
+  border-radius: 0 5px 0 0;
+  border-right: 1px solid blue;
+}
+table tbody tr:last-child td:first-child {
+  border-radius: 0 0 0 5px;
 }
 
-table, th, td {
-	border: 1px solid #CCCCFF;
-}
-
-th, td {
-	padding: 5px;
-	text-align: center;
+table tbody tr:last-child td:last-child {
+  border-radius: 0 0 5px 0;
 }
 </style>
 <body id="page-top">
@@ -53,9 +73,10 @@ th, td {
 			<div id="content">
 				<!-- Topbar -->
 				<jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
-				<div class="container-fluid">
+				<div class="div1">
 
 					<!-- main -->
+					<div class="main">
 					<c:if test="${not empty errorMsgs}">
 						<font style="color: red">請修正以下錯誤:</font>
 						<ul>
@@ -64,20 +85,18 @@ th, td {
 							</c:forEach>
 						</ul>
 					</c:if>
-					<h1>超精美後台畫面</h1>
 					<FORM METHOD="post" ACTION="moveorder.do">
 						<b>請輸入訂單編號:</b><br> <input type="text" name="id"> 
 						<input type="hidden" name="action" value="getOne_For_Display"> 
-						<input type="submit" value="送出">
+						<input type="submit" value="送出" style="background-color: #4e73df; color: white; text-align: center; border: 2px solid #4e73df;">
 					</FORM>
 					<FORM METHOD="post" ACTION="moveorder.do">
 						<b>請輸入會員編號:</b><br> <input type="text" name="memberid">
 						<input type="hidden" name="action" value="getMem_For_Display">
-						<input type="submit" value="送出">
+						<input type="submit" value="送出" style="background-color: #4e73df; color: white; text-align: center; border: 2px solid #4e73df;">
 					</FORM>
 					<table>
-
-						<tr>
+						<thead>
 							<th class="text-nowrap">訂單編號</th>
 							<th class="text-nowrap">會員編號</th>
 							<th class="text-nowrap">客戶姓名</th>
@@ -86,13 +105,53 @@ th, td {
 							<th class="text-nowrap">搬家目的地地址</th>
 							<th class="text-nowrap">搬家時間</th>
 							<th class="text-nowrap">估價金額</th>
-							<th>訂金</th>
+							<th class="text-nowrap">訂金</th>
 							<th class="text-nowrap">最後付款金額</th>
 							<th class="text-nowrap">訂單成立時間</th>
 							<th class="text-nowrap">訂單狀態</th>
 							<th class="text-nowrap">修改訂單</th>
-						</tr>
-						<c:forEach var="moveOrderVO" items="${list}">
+						</thead>
+<div><%  int rowsPerPage = 5;      
+    int rowNumber=0;      
+    int pageNumber=0;          
+    int whichPage=1;      
+    int pageIndexArray[]=null;
+    int pageIndex=0; 
+%>
+
+<%  
+    rowNumber=list.size();
+    if (rowNumber%rowsPerPage !=0)
+         pageNumber=rowNumber/rowsPerPage + 1;
+    else pageNumber=rowNumber/rowsPerPage;    
+
+    pageIndexArray=new int[pageNumber]; 
+    for (int i=1 ; i<=pageIndexArray.length ; i++)
+         pageIndexArray[i-1]=i*rowsPerPage-rowsPerPage;
+%>
+
+<%  try {
+       whichPage = Integer.parseInt(request.getParameter("whichPage"));
+       pageIndex=pageIndexArray[whichPage-1];
+    } catch (NumberFormatException e) {
+       whichPage=1;
+       pageIndex=0;
+    } catch (ArrayIndexOutOfBoundsException e) {
+         if (pageNumber>0){
+              whichPage=pageNumber;
+              pageIndex=pageIndexArray[pageNumber-1];
+         }
+    } 
+%>
+
+<%if (pageNumber>0){%>
+  <b><font color=red>第<%=whichPage%>/<%=pageNumber%>頁</font></b>
+<%}%>
+
+<b>●符 合 查 詢 條 件 如 下 所 示: 共<font color=red><%=rowNumber%></font>筆</b>
+</div>
+						<tbody>
+						<c:forEach var="moveOrderVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							<tr>
 								<td>${moveOrderVO.id}</td>
 								<td>${moveOrderVO.memberId}</td>
@@ -116,8 +175,35 @@ th, td {
 									</FORM>
 								</td>
 						</c:forEach>
-					</table>
-					<h3>我用很久ㄟ</h3>
+						</tbody>
+					</table><br>
+					<div><%if (rowsPerPage<rowNumber) {%>
+    				<%if(pageIndex>=rowsPerPage){%>
+        			<A href="<%=request.getRequestURI()%>?whichPage=1">至第一頁</A>&nbsp;
+        			<A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">上一頁 </A>&nbsp;
+   					 <%}%>
+  
+    				<%if(pageIndex<pageIndexArray[pageNumber-1]){%>
+        			<A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁 </A>&nbsp;
+        			<A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>">至最後一頁</A>&nbsp;
+    				<%}%>
+  					<%}%>
+
+					<br><br>
+
+  					<%if (pageNumber>1) {%>
+  					
+    				<FORM METHOD="post" ACTION="<%=request.getRequestURI()%>">   
+	      				<select size="1" name="whichPage" style="background-color: #4e73df; color: white; text-align: center;border:1px solid #4e73df; ">
+		         			<%for (int i=1; i<=pageNumber; i++){%>
+		            		<option value="<%=i%>">跳至第<%=i%>頁
+		         			<%}%> 
+	      				 </select>
+       					<input type="submit" value="確定" style="background-color: #4e73df; color: white; text-align: center; border: 4px solid white;">  
+    				</FORM>
+    				
+ 					<%}%></div>
+					</div>
 					<!-- end of main -->
 
 				</div>
