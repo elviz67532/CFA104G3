@@ -128,7 +128,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>ActivityPhotoServlet</servlet-name>
-		<servlet-class>com.activity.controller.ActivityPhotoServlet</servlet-class>
+		<servlet-class>com.activity_photo.controller.ActivityPhotoServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ActivityPhotoServlet</servlet-name>

@@ -26,11 +26,12 @@ public class ActivityPhotoServlet extends HttpServlet {
 //		doPost(req, res);
 		res.setContentType("image/*");
 		ServletOutputStream out = res.getOutputStream();
-
+		System.out.println("test1");
 		try {
 			Statement stmt = con.createStatement();
-			String activityId = req.getParameter("ACTP_ACT_ID").trim();
-			ResultSet rs = stmt.executeQuery("SELECT ACTP_PHOTO FROM activity_photo WHERE ACTP_ACT_ID =" + activityId);
+			String id = req.getParameter("ACTP_ACT_ID");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT ACTP_PHOTO FROM activity_photo WHERE ACTP_ACT_ID =" + id);
 
 			if (rs.next()) {
 				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("ACTP_PHOTO"));
@@ -40,6 +41,7 @@ public class ActivityPhotoServlet extends HttpServlet {
 					out.write(buf, 0, len);
 				}
 				in.close();
+				System.out.println("1、" + buf.length);
 			} else {
 //				res.sendError(HttpServletResponse.SC_NOT_FOUND);
 				InputStream in = getServletContext().getResourceAsStream("/asset/img/activityImage/nodata/20192.jpg");
@@ -47,23 +49,25 @@ public class ActivityPhotoServlet extends HttpServlet {
 				in.read(b);
 				out.write(b);
 				in.close();
+				System.out.println("2、"+ b.length);
 			}
 			rs.close();
 			stmt.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 			InputStream in = getServletContext().getResourceAsStream("/asset/img/activityImage/nodata/20192.jpg");
 			byte[] b = new byte[in.available()];
 			in.read(b);
 			out.write(b);
 			in.close();
-
+			System.out.println("3、"+ b.length);
 		}
 	}
 
 	public void init() throws ServletException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/CFA104G3?rewriteBatchedStatements=true&serverTimezone=Asia/Taipei", "root", "password");
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 		} catch (ClassNotFoundException e) {
 			throw new UnavailableException("Couldn't load JdbcOdbcDriver");
 		} catch (SQLException e) {
