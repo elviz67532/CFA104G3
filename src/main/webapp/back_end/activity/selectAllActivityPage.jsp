@@ -20,6 +20,17 @@
     <link href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 	<title>委域活動管理頁面selectAllActivityPage.jsp</title>
+<style>
+form{
+	display: inline;
+	border-radius: 16px;
+}
+form:hover{
+	cursor: pointer;
+	border-radius: 16px;
+	margin-bottom: 0px;
+}
+</style>
 </head>
 <body id="page-top">
 	<div id="wrapper">
@@ -65,19 +76,31 @@
 					<td>${actVO.startDate} ~ ${actVO.endDate}</td>
 <%-- 					<td >${actVO.content}</td> --%>
 					<td>${actVO.status}</td>
+			<td>
+			    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
+				       <input type="hidden" name="action" value="normalBack"/> 
+				       <input type="hidden" name="activityId" value="${actVO.activityId}">
+				       <input type="submit" value="恢復活動"/>
+			    </FORM>
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
+				       <input type="hidden" name="action" value="cancelBack"/> 
+		  	      	   <input type="hidden" name="activityId" value="${actVO.activityId}">
+				       <input type="submit" value="取消活動"/>
+		        </FORM>
+			    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
+				       <input type="hidden" name="action" value="removeBack"/> 
+				       <input type="hidden" name="activityId" value="${actVO.activityId}">
+				       <input type="submit" value="下架活動"/>
+			    </FORM>
+				<FORM  METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
+				     <input type="hidden" name="activityId"  value="${actVO.activityId}">
+				     <input type="hidden" name="action" value="deleteBack">
+				     <input disabled type="submit" value="刪除活動">
+				</FORM>
+			</td>
 				</tr>
 				</c:forEach>
 			</table>
-<!-- 			<td> -->
-<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="margin-bottom: 0px;"> --%>
-<!-- 			     <input type="submit" value="編輯活動"> -->
-<%-- 			     <input type="hidden" name="activity"  value="${actVO.activityId}"> --%>
-<!-- 			     <input type="hidden" name="action"	value="update"></FORM> -->
-<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="margin-bottom: 0px;"> --%>
-<!-- 			     <input type="submit" value="刪除活動"> -->
-<%-- 			     <input type="hidden" name="activity"  value="${actVO.activityId}"> --%>
-<!-- 			     <input type="hidden" name="action" value="delete"></FORM> -->
-<!-- 			</td> -->
 					<!-- end of main -->
 					
 				</div>

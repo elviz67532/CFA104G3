@@ -30,7 +30,7 @@
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
     <!-- Page Header-->
-    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/bgHome01.jpg')">
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/move01.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
@@ -44,7 +44,7 @@
     </header>
    
    	<!-- 主體畫面設計  -->
-   
+   <h2></h2>
    
    
     <!-- Footer-->
