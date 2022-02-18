@@ -121,6 +121,15 @@
 		<url-pattern>/activity/acta.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>ActrServlet</servlet-name>
+		<servlet-class>com.activity_report.controller.ActivityReportServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActrServlet</servlet-name>
+		<url-pattern>/activity/actr.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>ActivityServlet</servlet-name>
 		<servlet-class>com.activity.controller.ActivityServlet</servlet-class>
 	</servlet>
@@ -129,6 +138,16 @@
 		<url-pattern>/activity/act.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
+
+		<servlet-name>ActrImage</servlet-name>
+		<servlet-class>com.activity_report.controller.DBGifReader4</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActrImage</servlet-name>
+		<url-pattern>/activity/ActrImage.do</url-pattern>
+	</servlet-mapping>
+	
+
 		<servlet-name>ActivityPhotoServlet</servlet-name>
 		<servlet-class>com.activity_photo.controller.ActivityPhotoServlet</servlet-class>
 	</servlet>
@@ -136,6 +155,7 @@
 		<servlet-name>ActivityPhotoServlet</servlet-name>
 		<url-pattern>/activity/actp.do</url-pattern>
 	</servlet-mapping>
+
 	<!-- product -->
 	<servlet>
 		<servlet-name>NewsServlet</servlet-name>
