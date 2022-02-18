@@ -20,7 +20,61 @@
 				<div class="container-fluid">
 
 					<!-- main -->
-					example
+						<h3>資料新增:</h3>
+
+	<%-- 錯誤表列 --%>
+	<c:if test="${not empty errorMsgs}">
+		<font style="color: red">請修正以下錯誤:</font>
+		<ul>
+			<c:forEach var="message" items="${errorMsgs}">
+				<li style="color: red">${message}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
+
+	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/back_end/news/NewsServlet" name="form1" enctype="multipart/form-data">
+		<table>
+			<!-- 	<tr> -->
+			<!-- 		<td>最新消息編號:</td> -->
+			<!-- 		<td><input type="TEXT" name="sal" size="45" -->
+			<%-- 			 value="<%= (vo==null)? "" : vo.getId()%>" /></td> --%>
+			<!-- 	</tr> -->
+			<tr>
+				<td>消息分類編號:</td>
+				<td><input class="form-control" list="datalistOptions" placeholder="Type to search..." name="type" size="15"
+					value="<%=(vo == null) ? "" : vo.getType()%>" /></td>
+					<datalist id="datalistOptions">
+  						<option value="1">
+  						<option value="2">
+  						<option value="3">
+  						<option value="4">
+  						<option value="5">
+					</datalist>
+			</tr>
+			<tr>
+				<td>標題:</td>
+				<td><input type="TEXT" name="title" size="45" 
+					value="<%=(vo == null) ? "" : vo.getTitle()%>" /></td>
+			</tr>
+			<tr>
+				<td>內容:</td>
+				<td><textarea class="form-control" name="content" size="45"
+					value="<%=(vo == null) ? "" : vo.getContent()%>" rows="3"/></textarea></td>
+			</tr>
+			<tr>
+				<td>圖片:</td>
+				<td><input type="file" name="image" size="45"
+					value="<%=(vo == null) ? "" : vo.getImage()%>" /></td>
+			</tr>
+			<jsp:useBean id="newsSvc" scope="page"
+				class="com.news.model.NewsServiceImpl" />
+
+
+		</table>
+		<br> 
+		<input type="hidden" name="action" value="insert"> 
+		<input type="submit" value="送出新增">
+	</FORM>
 					<!-- end of main -->
 					
 				</div>
