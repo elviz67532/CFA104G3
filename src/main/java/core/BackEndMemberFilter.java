@@ -87,7 +87,7 @@ public class BackEndMemberFilter implements Filter {
 		List<ServerManagerAuthVO> authVos = (List<ServerManagerAuthVO>) session.getAttribute("auth");
 		if (authVos == null) {
 			System.out.println("使用者無此權限");
-			res.sendRedirect("http://localhost:8081/CFA104G3/back_end/server_manager/unAuth.jsp");
+			res.sendRedirect("/CFA104G3/back_end/server_manager/unAuth.jsp");
 			return;
 		}
 		//【賦予權限】
