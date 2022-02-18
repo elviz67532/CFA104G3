@@ -96,9 +96,10 @@ public class ServerManagerDAOJDBCImpl implements ServerManagerDAO {
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(DELETE_STMT);
-
+			System.out.println("smgrId: " + smgrId);
 			pstmt.setInt(1, smgrId);
-
+			
+			System.out.println(pstmt);
 			row = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
