@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.server_manager.model.ServerManagerServiceImpl;
 import com.server_manager.model.ServerManagerVO;
+import com.server_manager_auth.model.ServerManagerAuthDAOJDBCImpl;
 import com.server_manager_auth.model.ServerManagerAuthServiceImpl;
 import com.server_manager_auth.model.ServerManagerAuthVO;
 import com.server_manager_function.model.ServerManageFunctionServiceImpl;
@@ -192,15 +193,55 @@ public class ServerManagerServlet extends HttpServlet {
 				failureView.forward(req, res);
 			} 
 		}
+		if("update".equals(action)) {
+			Integer smgrId = Integer.valueOf(req.getParameter("smgrId"));
+			String[] smgeAuthIds = req.getParameterValues("smgeAuthId");
+			System.out.println("update smgrId: " + smgrId);
+			for(String smgeAuthId : smgeAuthIds) {
+				System.out.println("update smgeAuthId: " + smgeAuthId.toString());
+			}
+			//【delete】
+			ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
+			for(String smgeAuthId : smgeAuthIds) {
+				Integer smgeAuthId_ = Integer.valueOf(smgeAuthId);
+				DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId_, smgrId);
+				smaSvc.deleteById(dual);
+				//System.out.println("update smgeAuthId: " + smgeAuthId.toString());
+			}
+			//【insert】
+			for(String smgsAuthId : smgeAuthIds) {
+				ServerManagerAuthVO smaVO = new ServerManagerAuthVO();
+				Integer smgeAuthId_ = Integer.valueOf(smgsAuthId);
+				smaVO.setSmgeAuthId(smgeAuthId_);
+				smaVO.setSmgrId(smgrId);
+				smaSvc.insert(smaVO);
+			}
+			
+			RequestDispatcher view  = req
+					.getRequestDispatcher("/back_end/server_manager/admin.jsp");
+			view.forward(req, res);
+		}
 		if("delete".equals(action)) {
 			
 			try {
 				Integer smgrId = Integer.valueOf(req.getParameter("smgrId"));
-				
+				Integer smgeAuthId = Integer.valueOf(req.getParameter("smgeAuthId"));
+				ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
+				DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId, smgrId);
+				smaSvc.deleteById(dual);				
 				ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
 				smSvc.delete(smgrId);
-				
+//				try {
+//					ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
+//					DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId, smgrId);
+//					smaSvc.deleteById(dual);
+//				} catch (Exception e) {
+//					
+//					e.printStackTrace();
+//				}
+
 				RequestDispatcher view = req.getRequestDispatcher("/back_end/server_manager/admin.jsp");
+				view.forward(req, res);
 			} catch (NumberFormatException e) {
 				System.out.println("刪除後臺管理員失敗");
 				e.printStackTrace();
