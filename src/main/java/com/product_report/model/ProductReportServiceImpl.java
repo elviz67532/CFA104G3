@@ -14,32 +14,32 @@ public class ProductReportServiceImpl implements ProductReportService {
 	}
 
 	@Override
-	public ProductReportVO insert(Integer PRODRP_PROD_ID, Integer PRODRP_MEM_ID, String PRODRP_CONTENT,
-			Timestamp PRODRP_DATE, byte[] PRODRP_PHOTO, Integer PRODRP_STATUS) {
+	public ProductReportVO insert(Integer productId, Integer memberId, String content,
+			Timestamp date, byte[] photo, Integer status) {
 
-		ProductReportVO productReportVO = new ProductReportVO();
+		ProductReportVO vo = new ProductReportVO();
 
-		productReportVO.setProductId(PRODRP_PROD_ID);
-		productReportVO.setMemberId(PRODRP_MEM_ID);
-		productReportVO.setContent(PRODRP_CONTENT);
-		productReportVO.setDate(PRODRP_DATE);
-		productReportVO.setPhoto(PRODRP_PHOTO);
-		productReportVO.setStatus(PRODRP_STATUS);
-		dao.insert(productReportVO);
+		vo.setProductId(productId);
+		vo.setMemberId(memberId);
+		vo.setContent(content);
+		vo.setDate(date);
+		vo.setPhoto(photo);
+		vo.setStatus(status);
+		dao.insert(vo);
 
-		return productReportVO;
+		return vo;
 
 	}
 
 	@Override
-	public void deleteById() {
+	public  void deleteById() {
 		DualKey<Integer, Integer> id = new DualKey<Integer, Integer>(null, null);
 		dao.deleteById(id);
 	}
 
 	@Override
-	public ProductReportVO selectById() {
-		DualKey<Integer, Integer> id = new DualKey<Integer, Integer>(null, null);
+	public ProductReportVO selectById(Integer memberId, Integer productId) {
+		DualKey<Integer, Integer> id = new DualKey<Integer, Integer>(memberId, productId);
 		return dao.selectById(id);
 	}
 
@@ -47,4 +47,11 @@ public class ProductReportServiceImpl implements ProductReportService {
 	public List<ProductReportVO> selectAll() {
 		return dao.selectAll();
 	}
-}
+	
+	@Override
+	public ProductReportVO getOneById(int memberId) {		
+		return dao. getOneById(memberId);
+	}
+	
+	}
+

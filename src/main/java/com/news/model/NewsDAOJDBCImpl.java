@@ -8,15 +8,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.dao.CoreDao;
 import core.util.SQLUtil;
 
 public class NewsDAOJDBCImpl implements NewsDAO {
-	private static final String GET_ALL_STMT = "select * from NEWS order by NEWS_ID";
-	private static final String GET_ONE_STMT = "select * from NEWS where NEWS_ID = ?";
-	private static final String INSERT_STMT = "insert into NEWS(NEWS_CONTENT, NEWS_IMG, NEWS_TIME, NEWS_TYPE) values(?, ?, ?, ?)";
+	private static final String GET_ALL_STMT = "select NEWS_ID, NEWS_CONTENT, NEWS_IMG, NEWS_TIME, NEWS_TYPE, NEWS_TITLE from NEWS order by NEWS_ID";
+	private static final String GET_ONE_STMT = "select NEWS_ID, NEWS_CONTENT, NEWS_IMG, NEWS_TIME, NEWS_TYPE, NEWS_TITLE from NEWS where NEWS_ID = ?";
+	private static final String INSERT_STMT = "insert into NEWS(NEWS_CONTENT, NEWS_IMG, NEWS_TIME, NEWS_TYPE, NEWS_TITLE) values(?, ?, ?, ?, ?)";
 	private static final String DELETE = "delete from NEWS where NEWS_ID = ?";
-	private static final String UPDATE = "update NEWS set NEWS_CONTENT = ?, NEWS_IMG = ?, NEWS_TIME = ?, NEWS_TYPE = ? where NEWS_ID = ?";
+	private static final String UPDATE = "update NEWS set NEWS_CONTENT = ?, NEWS_IMG = ?, NEWS_TIME = ?, NEWS_TYPE = ?, NEWS_TITLE = ? where NEWS_ID = ?";
 
 	static {
 		try {
@@ -35,12 +34,13 @@ public class NewsDAOJDBCImpl implements NewsDAO {
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
-
+			
 			pstmt.setString(1, pojo.getContent());
 			pstmt.setBytes(2, pojo.getImage());
 			pstmt.setTimestamp(3, pojo.getDate());
 			pstmt.setInt(4, pojo.getType());
-
+			pstmt.setString(5, pojo.getTitle());
+			
 			insertedRow = pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -75,6 +75,7 @@ public class NewsDAOJDBCImpl implements NewsDAO {
 
 	@Override
 	public int update(NewsVO pojo) {
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int updateRow;
@@ -82,13 +83,16 @@ public class NewsDAOJDBCImpl implements NewsDAO {
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
-
+			
+			
 			pstmt.setString(1, pojo.getContent());
 			pstmt.setBytes(2, pojo.getImage());
 			pstmt.setTimestamp(3, pojo.getDate());
 			pstmt.setInt(4, pojo.getType());
-			pstmt.setInt(5, pojo.getId());
-
+			pstmt.setString(5, pojo.getTitle());			
+			pstmt.setInt(6, pojo.getId());
+			
+			
 			updateRow = pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -121,6 +125,7 @@ public class NewsDAOJDBCImpl implements NewsDAO {
 				vo.setImage(rs.getBytes("NEWS_IMG"));
 				vo.setDate(rs.getTimestamp("NEWS_TIME"));
 				vo.setType(rs.getInt("NEWS_TYPE"));
+				vo.setTitle(rs.getString("NEWS_TITLE"));
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -152,6 +157,7 @@ public class NewsDAOJDBCImpl implements NewsDAO {
 				vo.setImage(rs.getBytes("NEWS_IMG"));
 				vo.setDate(rs.getTimestamp("NEWS_TIME"));
 				vo.setType(rs.getInt("NEWS_TYPE"));
+				vo.setTitle(rs.getString("NEWS_TITLE"));
 				list.add(vo);
 			}
 		} catch (SQLException se) {

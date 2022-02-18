@@ -83,8 +83,7 @@ public class ActivityAttendServlet extends HttpServlet {
 					actaVO = actaSvc.addActa(memberId, activityId, comment, note, status);
 					
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
-					String url = "/back_end/activity/listAllActa.jsp";
-					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllActa.jsp
+					RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/appearActPage.jsp"); // 新增成功後轉交listAllActa.jsp
 					successView.forward(req, res);				
 					
 					/***************************其他可能的錯誤處理**********************************/

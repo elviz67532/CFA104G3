@@ -1,164 +1,300 @@
-<%@ page contentType="text/html; charset=UTF-8"
-    pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.move_order.model.*"%>  
 <%@ page import="java.util.*"%>
+<%@ page import="com.move_order.model.*"%>
 <%
-	MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
-	List<MoveOrderVO> list = moSvc.getAll();
-	pageContext.setAttribute("list", list);
-%>  
-<!DOCTYPE html>
-<html>
+MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
+List<MoveOrderVO> list = moSvc.getAll();
+pageContext.setAttribute("list", list);
+%>
+<!doctype html>
+<html lang="zh-TW">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>moveOrder</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link
+	href="<%=request.getContextPath()%>/css/back_end/sb-admin-2.min.css"
+	rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+<title>å§”åŸŸ</title>
+</head>
 <style>
-  table {
+table {
 	width: 800px;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
-  }
-  table, th, td {
-    border: 1px solid #CCCCFF;
-  }
-  th, td {
-    padding: 5px;
-    text-align: center;
-  }
-  button{
-  	width:200px;
-  	background-color: light blue;
-  	margin-top: auto;
-  	margin-right: 0px;
-  }
-</style>
-</head>
-<body>
-<h1>¶Wºë¬ü«á¥xµe­±</h1>
-<table>
+}
 
-	<tr>
-		<th>­q³æ½s¸¹</th>
-		<th>·|­û½s¸¹</th>
-		<th>«È¤á©m¦W</th>
-		<th>«È¤á¹q¸Ü</th>
-		<th>·h®a¥Ø«e¦a§}</th>
-		<th>·h®a¥Øªº¦a¦a§}</th>
-		<th>·h®a®É¶¡</th>
-		<th>¦ô»ùª÷ÃB</th>
-		<th>­qª÷</th>
-		<th>³Ì«á¥I´Úª÷ÃB</th>
-		<th>­q³æ¦¨¥ß®É¶¡</th>
-		<th>µû½×</th>
-		<th>­q³æª¬ºA</th>		
-	</tr>
-<c:forEach var="moveOrderVO" items="${list}">
-	<tr>	
-		<td>${moveOrderVO.id}</td>
-		<td>${moveOrderVO.memberId}</td>
-		<td>${moveOrderVO.customer}</td>
-		<td>${moveOrderVO.phone}</td>
-		<td>${moveOrderVO.fromAddress}</td>
-		<td>${moveOrderVO.toAddress}</td>
-		<td>${moveOrderVO.moveDate}</td>
-		<td>${moveOrderVO.amountFirst}</td>
-		<td>${moveOrderVO.deposit}</td>
-		<td>
-		<FORM METHOD="post" ACTION="moveorder.do">
-        	<input type="hidden" name="action" value="update">
-        	<input type="hidden" name="id" value="${moveOrderVO.id}">
-        	<input type="hidden" name="memberId" value="${moveOrderVO.memberId}">
-        	<input type="hidden" name="customer" value="${moveOrderVO.customer}">
-        	<input type="hidden" name="phone" value="${moveOrderVO.phone}">
-        	<input type="hidden" name="fromAddress" value="${moveOrderVO.fromAddress}">
-        	<input type="hidden" name="toAddress" value="${moveOrderVO.toAddress}">
-        	<input type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
-        	<input type="hidden" name="amountFirst" value="${moveOrderVO.amountFirst}">
-        	<input type="hidden" name="deposit" value="${moveOrderVO.deposit}">
-        	<input type="text" name="amountTotal" value="${moveOrderVO.amountTotal}">
-        	<input type="hidden" name="comment" value="${moveOrderVO.comment}">
-        	<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}">
-        	<input type="hidden" name="status" value="${moveOrderVO.status}">
-        	<input type="submit" value="°e¥X">
-      		
-    	</FORM>
-    	</td>
-    	<td>${moveOrderVO.orderDate}</td>
-		<td>${moveOrderVO.comment}</td>
-		<td>
-		<FORM METHOD="post" ACTION="moveorder.do">
-        	<input type="hidden" name="action" value="updatestatusto1">
-        	<input type="hidden" name="id" value="${moveOrderVO.id}">
-        	<input type="hidden" name="memberId" value="${moveOrderVO.memberId}">
-        	<input type="hidden" name="customer" value="${moveOrderVO.customer}">
-        	<input type="hidden" name="phone" value="${moveOrderVO.phone}">
-        	<input type="hidden" name="fromAddress" value="${moveOrderVO.fromAddress}">
-        	<input type="hidden" name="toAddress" value="${moveOrderVO.toAddress}">
-        	<input type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
-        	<input type="hidden" name="amountFirst" value="${moveOrderVO.amountFirst}">
-        	<input type="hidden" name="deposit" value="${moveOrderVO.deposit}">
-        	<input type="hidden" name="amountTotal" value="${moveOrderVO.amountTotal}">
-        	<input type="hidden" name="comment" value="${moveOrderVO.comment}">
-        	<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}">
-        	<input type="hidden" name="status" value="${moveOrderVO.status}">
-        	<button type="submit">¤£Ã±­q«´¬ùµ²§ô­q³æ</button>
-  	  	</FORM>
-  	  	<FORM METHOD="post" ACTION="moveorder.do">
-        	<input type="hidden" name="action" value="updatestatusto2">
-        	<input type="hidden" name="id" value="${moveOrderVO.id}">
-        	<input type="hidden" name="memberId" value="${moveOrderVO.memberId}">
-        	<input type="hidden" name="customer" value="${moveOrderVO.customer}">
-        	<input type="hidden" name="phone" value="${moveOrderVO.phone}">
-        	<input type="hidden" name="fromAddress" value="${moveOrderVO.fromAddress}">
-        	<input type="hidden" name="toAddress" value="${moveOrderVO.toAddress}">
-        	<input type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
-        	<input type="hidden" name="amountFirst" value="${moveOrderVO.amountFirst}">
-        	<input type="hidden" name="deposit" value="${moveOrderVO.deposit}">
-        	<input type="hidden" name="amountTotal" value="${moveOrderVO.amountTotal}">
-        	<input type="hidden" name="comment" value="${moveOrderVO.comment}">
-        	<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}">
-        	<input type="hidden" name="status" value="${moveOrderVO.status}">
-        	<button type="submit">µ¥«İ¹B°e³fª«</button>
-  	  	</FORM>
-  	  	<FORM METHOD="post" ACTION="moveorder.do">
-        	<input type="hidden" name="action" value="updatestatusto3">
-        	<input type="hidden" name="id" value="${moveOrderVO.id}">
-        	<input type="hidden" name="memberId" value="${moveOrderVO.memberId}">
-        	<input type="hidden" name="customer" value="${moveOrderVO.customer}">
-        	<input type="hidden" name="phone" value="${moveOrderVO.phone}">
-        	<input type="hidden" name="fromAddress" value="${moveOrderVO.fromAddress}">
-        	<input type="hidden" name="toAddress" value="${moveOrderVO.toAddress}">
-        	<input type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
-        	<input type="hidden" name="amountFirst" value="${moveOrderVO.amountFirst}">
-        	<input type="hidden" name="deposit" value="${moveOrderVO.deposit}">
-        	<input type="hidden" name="amountTotal" value="${moveOrderVO.amountTotal}">
-        	<input type="hidden" name="comment" value="${moveOrderVO.comment}">
-        	<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}">
-        	<input type="hidden" name="status" value="${moveOrderVO.status}">
-        	<button type="submit">¹B°e¤¤</button>
-  	  	</FORM>
-  	  	<FORM METHOD="post" ACTION="moveorder.do">
-        	<input type="hidden" name="action" value="updatestatusto4">
-        	<input type="hidden" name="id" value="${moveOrderVO.id}">
-        	<input type="hidden" name="memberId" value="${moveOrderVO.memberId}">
-        	<input type="hidden" name="customer" value="${moveOrderVO.customer}">
-        	<input type="hidden" name="phone" value="${moveOrderVO.phone}">
-        	<input type="hidden" name="fromAddress" value="${moveOrderVO.fromAddress}">
-        	<input type="hidden" name="toAddress" value="${moveOrderVO.toAddress}">
-        	<input type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
-        	<input type="hidden" name="amountFirst" value="${moveOrderVO.amountFirst}">
-        	<input type="hidden" name="deposit" value="${moveOrderVO.deposit}">
-        	<input type="hidden" name="amountTotal" value="${moveOrderVO.amountTotal}">
-        	<input type="hidden" name="comment" value="${moveOrderVO.comment}">
-        	<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}">
-        	<input type="hidden" name="status" value="${moveOrderVO.status}">
-        	<button type="submit">§¹¦¨­q³æ</button>
-  	  	</FORM>	
-		</td>	
-</c:forEach>
-</table>
-<h3>§Ú¥Î«Ü¤[£°</h3>
+table, th, td {
+	border: 1px solid #CCCCFF;
+}
+
+th, td {
+	padding: 5px;
+	text-align: center;
+}
+
+.box1 {
+	width: 200px;
+	background-color: light blue;
+	margin-top: auto;
+	margin-right: 0px;
+}
+.box2 {
+	width: 200px;
+	background-color: light blue;
+	margin-top: auto;
+	margin-right: 0px;
+}
+.box3 {
+	width: 200px;
+	background-color: light blue;
+	margin-top: auto;
+	margin-right: 0px;
+}
+.box4 {
+	width: 200px;
+	background-color: light blue;
+	margin-top: auto;
+	margin-right: 0px;
+}
+</style>
+<body id="page-top">
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<jsp:include page="/back_end/common/sidebar.jsp"></jsp:include>
+		<div id="content-wrapper" class="d-flex flex-column">
+			<div id="content">
+				<!-- Topbar -->
+				<jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
+				<div class="container-fluid">
+
+					<!-- main -->
+					<h1>è¶…ç²¾ç¾å¾Œå°ç•«é¢</h1>
+					<table>
+
+						<tr>
+							<th class="text-nowrap">è¨‚å–®ç·¨è™Ÿ</th>
+							<th class="text-nowrap">æœƒå“¡ç·¨è™Ÿ</th>
+							<th class="text-nowrap">å®¢æˆ¶å§“å</th>
+							<th class="text-nowrap">å®¢æˆ¶é›»è©±</th>
+							<th class="text-nowrap">æ¬å®¶ç›®å‰åœ°å€</th>
+							<th class="text-nowrap">æ¬å®¶ç›®çš„åœ°åœ°å€</th>
+							<th class="text-nowrap">æ¬å®¶æ™‚é–“</th>
+							<th class="text-nowrap">ä¼°åƒ¹é‡‘é¡</th>
+							<th>è¨‚é‡‘</th>
+							<th class="text-nowrap">æœ€å¾Œä»˜æ¬¾é‡‘é¡</th>
+							<th class="text-nowrap">è¨‚å–®æˆç«‹æ™‚é–“</th>
+							<th>è©•è«–</th>
+							<th class="text-nowrap">è¨‚å–®ç‹€æ…‹</th>
+						</tr>
+						<c:forEach var="moveOrderVO" items="${list}">
+							<tr>
+								<td>${moveOrderVO.id}</td>
+								<td>${moveOrderVO.memberId}</td>
+								<td>${moveOrderVO.customer}</td>
+								<td>${moveOrderVO.phone}</td>
+								<td>${moveOrderVO.fromAddress}</td>
+								<td>${moveOrderVO.toAddress}</td>
+								<td>${moveOrderVO.moveDate}</td>
+								<td>${moveOrderVO.amountFirst}</td>
+								<td>${moveOrderVO.deposit}</td>
+								<td>
+									<FORM METHOD="post" ACTION="moveorder.do">
+										<input type="hidden" name="action" value="update"> <input
+											type="hidden" name="id" value="${moveOrderVO.id}"> <input
+											type="hidden" name="memberId" value="${moveOrderVO.memberId}">
+										<input type="hidden" name="customer"
+											value="${moveOrderVO.customer}"> <input type="hidden"
+											name="phone" value="${moveOrderVO.phone}"> <input
+											type="hidden" name="fromAddress"
+											value="${moveOrderVO.fromAddress}"> <input
+											type="hidden" name="toAddress"
+											value="${moveOrderVO.toAddress}"> <input
+											type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
+										<input type="hidden" name="amountFirst"
+											value="${moveOrderVO.amountFirst}"> <input
+											type="hidden" name="deposit" value="${moveOrderVO.deposit}">
+										<input type="text" name="amountTotal"
+											value="${moveOrderVO.amountTotal}"> <input
+											type="hidden" name="comment" value="${moveOrderVO.comment}">
+										<input type="hidden" name="orderDate"
+											value="${moveOrderVO.orderDate}"> <input
+											type="hidden" name="status" value="${moveOrderVO.status}">
+										<input type="submit" value="é€å‡º">
+
+									</FORM>
+								</td>
+								<td>${moveOrderVO.orderDate}</td>
+								<td>${moveOrderVO.comment}</td>
+								<td>
+									<FORM METHOD="post" ACTION="moveorder.do">
+										<input type="hidden" name="action" value="updatestatusto1">
+										<input type="hidden" name="id" value="${moveOrderVO.id}">
+										<input type="hidden" name="memberId"
+											value="${moveOrderVO.memberId}"> <input type="hidden"
+											name="customer" value="${moveOrderVO.customer}"> <input
+											type="hidden" name="phone" value="${moveOrderVO.phone}">
+										<input type="hidden" name="fromAddress"
+											value="${moveOrderVO.fromAddress}"> <input
+											type="hidden" name="toAddress"
+											value="${moveOrderVO.toAddress}"> <input
+											type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
+										<input type="hidden" name="amountFirst"
+											value="${moveOrderVO.amountFirst}"> <input
+											type="hidden" name="deposit" value="${moveOrderVO.deposit}">
+										<input type="hidden" name="amountTotal"
+											value="${moveOrderVO.amountTotal}"> <input
+											type="hidden" name="comment" value="${moveOrderVO.comment}">
+										<input type="hidden" name="orderDate"
+											value="${moveOrderVO.orderDate}"> <input
+											type="hidden" name="status" value="${moveOrderVO.status}">
+										<button type="submit" id="foo1" class="box1">ä¸ç°½è¨‚å¥‘ç´„çµæŸè¨‚å–®</button>
+									</FORM>
+									<FORM METHOD="post" ACTION="moveorder.do">
+										<input type="hidden" name="action" value="updatestatusto2">
+										<input type="hidden" name="id" value="${moveOrderVO.id}">
+										<input type="hidden" name="memberId"
+											value="${moveOrderVO.memberId}"> <input type="hidden"
+											name="customer" value="${moveOrderVO.customer}"> <input
+											type="hidden" name="phone" value="${moveOrderVO.phone}">
+										<input type="hidden" name="fromAddress"
+											value="${moveOrderVO.fromAddress}"> <input
+											type="hidden" name="toAddress"
+											value="${moveOrderVO.toAddress}"> <input
+											type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
+										<input type="hidden" name="amountFirst"
+											value="${moveOrderVO.amountFirst}"> <input
+											type="hidden" name="deposit" value="${moveOrderVO.deposit}">
+										<input type="hidden" name="amountTotal"
+											value="${moveOrderVO.amountTotal}"> <input
+											type="hidden" name="comment" value="${moveOrderVO.comment}">
+										<input type="hidden" name="orderDate"
+											value="${moveOrderVO.orderDate}"> <input
+											type="hidden" name="status" value="${moveOrderVO.status}">
+										<button type="submit" id="foo2" class="box2">ç­‰å¾…é‹é€è²¨ç‰©</button>
+									</FORM>
+									<FORM METHOD="post" ACTION="moveorder.do">
+										<input type="hidden" name="action" value="updatestatusto3">
+										<input type="hidden" name="id" value="${moveOrderVO.id}">
+										<input type="hidden" name="memberId"
+											value="${moveOrderVO.memberId}"> <input type="hidden"
+											name="customer" value="${moveOrderVO.customer}"> <input
+											type="hidden" name="phone" value="${moveOrderVO.phone}">
+										<input type="hidden" name="fromAddress"
+											value="${moveOrderVO.fromAddress}"> <input
+											type="hidden" name="toAddress"
+											value="${moveOrderVO.toAddress}"> <input
+											type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
+										<input type="hidden" name="amountFirst"
+											value="${moveOrderVO.amountFirst}"> <input
+											type="hidden" name="deposit" value="${moveOrderVO.deposit}">
+										<input type="hidden" name="amountTotal"
+											value="${moveOrderVO.amountTotal}"> <input
+											type="hidden" name="comment" value="${moveOrderVO.comment}">
+										<input type="hidden" name="orderDate"
+											value="${moveOrderVO.orderDate}"> <input
+											type="hidden" name="status" value="${moveOrderVO.status}">
+										<button type="submit" id="foo3" class="box3">é‹é€ä¸­</button>
+									</FORM>
+									<FORM METHOD="post" ACTION="moveorder.do">
+										<input type="hidden" name="action" value="updatestatusto4">
+										<input type="hidden" name="id" value="${moveOrderVO.id}">
+										<input type="hidden" name="memberId"
+											value="${moveOrderVO.memberId}"> <input type="hidden"
+											name="customer" value="${moveOrderVO.customer}"> <input
+											type="hidden" name="phone" value="${moveOrderVO.phone}">
+										<input type="hidden" name="fromAddress"
+											value="${moveOrderVO.fromAddress}"> <input
+											type="hidden" name="toAddress"
+											value="${moveOrderVO.toAddress}"> <input
+											type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
+										<input type="hidden" name="amountFirst"
+											value="${moveOrderVO.amountFirst}"> <input
+											type="hidden" name="deposit" value="${moveOrderVO.deposit}">
+										<input type="hidden" name="amountTotal"
+											value="${moveOrderVO.amountTotal}"> <input
+											type="hidden" name="comment" value="${moveOrderVO.comment}">
+										<input type="hidden" name="orderDate"
+											value="${moveOrderVO.orderDate}"> <input
+											type="hidden" name="status" value="${moveOrderVO.status}">
+										<button type="submit" id="foo4" class="box4">å®Œæˆè¨‚å–®</button>
+									</FORM>
+								</td>
+						</c:forEach>
+					</table>
+					<h3>æˆ‘ç”¨å¾ˆä¹…ã„Ÿ</h3>
+					<script>
+						function triggerAlert1() {
+							var box1 = document.querySelector('.box1');
+							box1.style.backgroundColor = "black";
+
+						}
+						var ele1 = document.getElementById('foo1');
+						ele1.onclick = triggerAlert1;
+						
+						function triggerAlert2() {
+							var box2 = document.querySelector('.box2');
+							box2.style.backgroundColor = "green";
+
+						}
+						var ele2 = document.getElementById('foo2');
+						ele2.onclick = triggerAlert2;
+						
+						function triggerAlert3() {
+							var box3 = document.querySelector('.box3');
+							box3.style.backgroundColor = "red";
+
+						}
+						var ele3 = document.getElementById('foo3');
+						ele3.onclick = triggerAlert3;
+						
+						function triggerAlert4() {
+							var box4 = document.querySelector('.box4');
+							box4.style.backgroundColor = "blue";
+
+						}
+						var ele4 = document.getElementById('foo4');
+						ele4.onclick = triggerAlert4;
+
+					</script>
+					<!-- end of main -->
+
+				</div>
+			</div>
+			<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
+		</div>
+	</div>
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Logout Modal-->
+	<jsp:include page="/back_end/common/logoutModal.jsp"></jsp:include>
+
+	<!-- custom script -->
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
 </body>
+
 </html>

@@ -1,16 +1,17 @@
 package com.product_order.model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
 import core.util.SQLUtil;
 
 public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
+
+	String driver = "com.mysql.cj.jdbc.Driver";
+	String url = "jdbc:mysql://localhost:3306/CFA104G3?serverTimezone=Asia/Taipei";
+	String userid = "root";
+	String passwd = "password";
+
 	private static final String GET_ALL_STMT = "select * from PRODUCT_ORDER order by PRODO_ID";
 	private static final String GET_ONE_STMT = "select * from PRODUCT_ORDER where PRODO_ID = ?";
 	private static final String INSERT_STMT = "insert into PRODUCT_ORDER"
@@ -187,16 +188,17 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 
 		return list;
 	}
-	
+
 	@Override
 	public List<ProductOrderVO> getAll() {
-		// TODO 
+
 		return null;
 	}
 
 	@Override
 	public ProductOrderVO findByPrimaryKey(Integer id) {
-		// TODO 
+
 		return null;
 	}
+
 }

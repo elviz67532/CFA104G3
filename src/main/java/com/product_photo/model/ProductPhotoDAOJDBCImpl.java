@@ -1,5 +1,8 @@
 package com.product_photo.model;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,6 +20,8 @@ public class ProductPhotoDAOJDBCImpl implements ProductPhotoDAO {
 	private static final String INSERT_STMT = "insert into PRODUCT_PHOTO (PRODPH_PROD_ID,PRODPH_PHOTO) values(?, ?)";
 	private static final String DELETE = "delete from PRODUCT_PHOTO where PRODPH_ID = ?";		
 	private static final String UPDATE = "update PRODUCT_PHOTO set PRODPH_PHOTO = ? where PRODPH_ID = ?";
+	private final String INSERT = "INSERT INTO PRODUCT_PHOTO(PRODPH_PROD_ID, PRODPH_PHOTO) VALUES (?, ?)";
+	private final String GET_BLOB = "SELECT * FROM PRODUCT_PHOTO WHERE PRODPH_PROD_ID=?";
 	
 	static {
 		try {
@@ -153,4 +158,54 @@ public class ProductPhotoDAOJDBCImpl implements ProductPhotoDAO {
 
 		return list;
 	}
+
+	@Override
+	public int insertId(Integer prodPhProdId, String photoPath) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int row=0;
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL,SQLUtil.USER,SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(INSERT);
+			FileInputStream fis = new FileInputStream(photoPath);
+			pstmt.setInt(1, prodPhProdId);
+			pstmt.setBlob(2, fis);
+			
+			row = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// DriverManager.getConnection
+			e.printStackTrace();
+		} catch (IOException e) {
+			// FileInputStream
+			e.printStackTrace();
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
+		
+		return row;
+	}
+
+	@Override
+	public Blob getBlob(Integer prodPhProdId) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		java.sql.Blob blob = null;
+		
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL,SQLUtil.USER,SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(GET_BLOB);
+			pstmt.setInt(1, prodPhProdId);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				blob  = rs.getBlob("PRODPH_PHOTO");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return (Blob) blob;
+	}
+
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.Collection;
@@ -19,8 +20,10 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.member.model.MemberVO;
 import com.move_photo.model.MovePhotoVO;
 import com.move_request.model.EMoveRequestEvaType;
 import com.move_request.model.EMoveRequestStatus;
@@ -44,8 +47,18 @@ public class MoveRequestServlet extends HttpServlet {
 		req.setAttribute("errorMsgs", errorMsgs);
 
 		if ("moveRequest".equals(action)) {
+//			HttpSession session = req.getSession();
+//			MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
+//			if (memberVo == null) {
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/homePage.jsp");
+//				failureView.forward(req, res);
+//				return;
+//			}
+//			
+//			int memberId = memberVo.getId();
 			
-			// TODO 確認會員, 取得會員id
+			// TODO 補上MEMBER
+
 			int memberId = 0;
 
 			String fromAddress = req.getParameter("fromAddress");
@@ -101,7 +114,7 @@ public class MoveRequestServlet extends HttpServlet {
 							Date date = Date.valueOf(evaDate);
 							tEvaDate = new Timestamp(date.getTime());
 						} catch (IllegalArgumentException e) {
-							errorMsgs.put("moveDate", "請選擇日期");
+							errorMsgs.put("evaDate", "請選擇日期");
 						}
 					}
 				} else {

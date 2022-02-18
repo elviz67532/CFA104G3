@@ -23,4 +23,6 @@ public interface MoveOrderService {
 
 	boolean getDataFromRequest(MoveRequestVO moveRequestVO, int deposit);
 
+	List<MoveOrderVO> getByMemberId(int memberId);
+
 }

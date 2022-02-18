@@ -1,6 +1,11 @@
 package com.product_collection.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.move_order.model.MoveOrderVO;
+import com.product.model.ProductDAOImpl;
+import com.product.model.ProductVO;
 
 import core.DualKey;
 
@@ -11,27 +16,31 @@ public class ProductCollectionServiceImpl implements ProductCollectionService {
 	public ProductCollectionServiceImpl() {
 		dao = new ProductCollectionDAOJDBCImpl();
 	}
-
 	@Override
-	public ProductCollectionVO Insert(Integer PRODC_MEM_ID, Integer PRODC_PROD_ID) {
-		ProductCollectionVO productCollectionVO = new ProductCollectionVO();
+	public ProductCollectionVO insert(Integer memberId, Integer productId) {
+		ProductCollectionVO vo = new ProductCollectionVO();
 
-		productCollectionVO.setMemberId(PRODC_MEM_ID);
-		productCollectionVO.setProductId(PRODC_PROD_ID);
-		dao.insert(productCollectionVO);
+		vo.setMemberId(memberId);
+		vo.setProductId(productId);
+		dao.insert(vo);
 
-		return productCollectionVO;
+		return vo;
 
 	}
 
 	@Override
-	public void DeleteById() {
+	public void deleteById() {
 		DualKey<Integer, Integer> id = new DualKey<Integer, Integer>(null, null);
 		dao.deleteById(id);
 	}
 
-	@Override
-	public List<ProductCollectionVO> SelectAll() {
+	@Override	
+	public List<ProductCollectionVO> selectAll() {
 		return dao.selectAll();
+	}
+	
+	@Override
+	public List<ProductCollectionVO> getByMemId(int memberId){
+		return dao.selectByMemId(memberId);
 	}
 }
