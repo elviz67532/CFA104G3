@@ -50,7 +50,7 @@ public class MoveRequestServlet extends HttpServlet {
 //			HttpSession session = req.getSession();
 //			MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
 //			if (memberVo == null) {
-//				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/moveRequest.jsp");
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/homePage.jsp");
 //				failureView.forward(req, res);
 //				return;
 //			}

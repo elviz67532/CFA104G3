@@ -65,6 +65,7 @@ public class MemberServiceImpl implements MemberService {
 		dao.deleteById(id);
 	}
 
+	@Override
 	public MemberVO selectById(Integer id) {
 		return dao.selectById(id);
 	}

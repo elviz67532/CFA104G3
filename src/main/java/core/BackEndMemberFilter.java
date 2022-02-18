@@ -87,7 +87,7 @@ public class BackEndMemberFilter implements Filter {
 		List<ServerManagerAuthVO> authVos = (List<ServerManagerAuthVO>) session.getAttribute("auth");
 		if (authVos == null) {
 			System.out.println("使用者無此權限");
-			res.sendRedirect("http://localhost:8081/CFA104G3/back_end/server_manager/unAuth.jsp");
+			res.sendRedirect("/CFA104G3/back_end/server_manager/unAuth.jsp");
 			return;
 		}
 		//【賦予權限】
@@ -110,7 +110,8 @@ public class BackEndMemberFilter implements Filter {
 
 	private void initAuths() {
 		//【a tag 的連接】
-		urlAuths.put("/back_end/server_manager/server.jsp", SERVER_MANAGER);
+		urlAuths.put("/back_end/server_manager/admin.jsp", SERVER_MANAGER);
+		urlAuths.put("/back_end/server_manager/addManager.jsp", SERVER_MANAGER);
 		urlAuths.put("/back_end/server_manager/activity.jsp", ACTIVITY);
 		urlAuths.put("/back_end/server_manager/product.jsp", DOUBLE_PROD);
 		urlAuths.put("/back_end/move/moveRequestManage.jsp", MOVE); 

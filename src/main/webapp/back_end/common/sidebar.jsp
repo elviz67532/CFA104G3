@@ -106,7 +106,8 @@
 		</a>
 		<div id="collapseManager" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="/CFA104G3/back_end/server_manager/server.jsp">權限管理</a>
+				<a class="collapse-item" href="/CFA104G3/back_end/server_manager/admin.jsp">權限管理</a>
+				<a class="collapse-item" href="/CFA104G3/back_end/server_manager/addManager.jsp">新增管理員</a>				
 			</div>
 		</div>
 	</li>
