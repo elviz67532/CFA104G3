@@ -5,9 +5,22 @@
 
 
 <% 
-NewsServiceImpl newsServiceImpl=new NewsServiceImpl(); List<NewsVO> list =
-newsServiceImpl.selectAllNews();
+NewsServiceImpl newsServiceImpl=new NewsServiceImpl(); 
+List<NewsVO> list = newsServiceImpl.selectAllNews();
 pageContext.setAttribute("list", list);
+
+
+HashMap<Integer, String> type1 = new HashMap<>();
+type1.put(1,"系統");
+type1.put(2,"活動");
+type1.put(3,"搬家");
+type1.put(4,"二手");
+
+HashMap<Integer, List<NewsVO>> newVOs = new HashMap<>();
+type1.get(1);
+type1.get(2);
+type1.get(3);
+type1.get(4);
 %>
 
 <!DOCTYPE html>
@@ -38,7 +51,7 @@ pageContext.setAttribute("list", list);
     <jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
     <!-- Page Header-->
-    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/default.jpg')">
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/news.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
@@ -95,13 +108,13 @@ pageContext.setAttribute("list", list);
                                         </tr>
                                     </thead>
                                     <tbody>
- 									<c:forEach var="newsVO" items="${list}">
+ 									<c:forEach var="newsVO" items="${list}"> 																			
 										<tr>
-											<td>${newsVO.id}</td>
-											<td>${newsVO.type}</td>
+											<td>${newsVO.id}</td>															
+											<td>${newsVO.type}</td>							
 											<td>${newsVO.title}</td>			
 											<td>${newsVO.date}</td>		
-										</tr>
+										</tr>											 									
 									</c:forEach>
                                     </tbody>
                                 </table>

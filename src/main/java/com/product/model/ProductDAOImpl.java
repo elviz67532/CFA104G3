@@ -316,6 +316,7 @@ public class ProductDAOImpl implements ProductDAO {
 		}
 		return key;
 	}
+
 	
 	@Override
 	public List<ProductVO> getCollection(List<Integer> productIds){
@@ -356,4 +357,5 @@ public class ProductDAOImpl implements ProductDAO {
 		}
 		return list;
 	}
+
 }
