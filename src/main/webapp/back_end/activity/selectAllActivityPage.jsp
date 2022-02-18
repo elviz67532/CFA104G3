@@ -15,7 +15,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link href="<%=request.getContextPath()%>/css/back_end/sb-admin-2.min.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/css/activity/backNewFile.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -29,6 +29,11 @@ form:hover{
 	cursor: pointer;
 	border-radius: 16px;
 	margin-bottom: 0px;
+}
+table th {
+	color: black;
+	padding: 5px 10px;
+	text-align:center;
 }
 </style>
 </head>
@@ -46,20 +51,20 @@ form:hover{
 					<h1>委域活動管理頁面</h1>
 			<table class="table table-striped table-hover">	
 				<tr>
-					<th>活動編號</th>
-					<th>會員編號</th>
-					<th>活動建立時間</th>
-					<th>種類</th>
-					<th>名稱</th>
-					<th>目前報名人數</th>
-					<th>活動人數</th>
-					<th>活動費用</th>
-					<th>活動地點</th>
-					<th>報名時間</th>
-					<th>活動時間</th>
+					<th class="text-nowrap">活動編號</th>
+					<th class="text-nowrap">會員編號</th>
+					<th class="text-nowrap">活動建立時間</th>
+					<th class="text-nowrap">種類</th>
+					<th class="text-nowrap">名稱</th>
+					<th class="text-nowrap">目前報名人數</th>
+					<th class="text-nowrap">活動人數</th>
+					<th class="text-nowrap">活動費用</th>
+					<th class="text-nowrap">活動地點</th>
+					<th class="text-nowrap">報名時間</th>
+					<th class="text-nowrap">活動時間</th>
 <!-- 					<th>活動內容</th> -->
-					<th>活動狀態</th>
-					<th>按鈕</th>
+					<th class="text-nowrap">活動狀態</th>
+					<th class="text-nowrap">按鈕</th>
 				</tr>
 				<c:forEach var="actVO" items="${list}" >
 				<tr> 
@@ -68,7 +73,8 @@ form:hover{
 					<td>${actVO.launchedDate}</td>
 					<td>${actVO.type}</td>
 					<td>${actVO.name}</td>
-					<td>${actVO.applyMemberExisting}</td>
+					<td></td>
+<%-- 					<td>${actVO.applyMemberExisting}</td> --%>
 					<td>${actVO.minMember} ~ ${actVO.maxMember}</td>
 					<td>${actVO.cost}</td>
 					<td>${actVO.location}</td>

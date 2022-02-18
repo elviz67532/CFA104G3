@@ -15,7 +15,7 @@ public class ActivityAttendDAOJDBCImpl implements ActivityAttendDAO {
 	private static final String GET_ALL_STMT = "select * from ACTIVITY_ATTEND";
 	private static final String GET_ONE_STMT = "select * from ACTIVITY_ATTEND where ACTA_MEM_ID = ? and ACTA_ACT_ID = ?";
 	private static final String INSERT_STMT = "insert into ACTIVITY_ATTEND"
-			+ "(ACTA_MEM_ID, ACTA_ACT_ID, ACTA_RELPY_CONTENT, ACTA_CONTENT_NOTE, ACTA__PAY_STATUS) "
+			+ "(ACTA_MEM_ID, ACTA_ACT_ID, ACTA_RELPY_CONTENT, ACTA_CONTENT_NOTE, ACTA_PAY_STATUS) "
 			+ "values (?, ?, ?, ?, ?)";
 	private static final String DELETE = "delete from ACTIVITY_ATTEND where ACTA_MEM_ID = ? and ACTA_ACT_ID = ? ";
 	private static final String UPDATE = "update ACTIVITY_ATTEND set "

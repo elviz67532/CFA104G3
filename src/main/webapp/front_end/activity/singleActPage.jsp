@@ -2,11 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.activity.model.*"%>
+<!-- 報名用 -->
+<%@ page import="com.activity_attend.model.*"%>
 <!-- 改善時間用 -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%
 	//ActivityServlet.java (Concroller) 存入req的actVO物件 (包括幫忙取出的actVO, 也包括輸入資料錯誤時的actVO物件)
 	ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");
+	ActivityAttendVO actaVO = (ActivityAttendVO) request.getAttribute("actaVO");
 %>
 <%
 	request.setAttribute("findActivityTypeString", new String[]{"活動","聚餐","講座","其他"});
@@ -282,7 +285,7 @@
    
    	<!-- 主體畫面設計  -->
 <div style="border: 2px white groove; width: 70%; margin: 0 auto 60px auto;">
-				<img class="showImage" src="http://picsum.photos/300/200?random=?" alt="">
+                <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
 <%--                     <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?activityId=${actVO.activityId}" > --%>
    	<section class="section1">
                <div style="display: block; margin-left: 10px; padding: 4px;">
@@ -376,14 +379,51 @@
 				        <div class="overlay">
 				            <article>
 				                <h2>來報名活動吧!</h2>
-								<!-- 內容從這裡開始 -->
-								
-								
-								
-								
-								<!-- 內容從這裡結束 -->
-				            	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
-							       <input type="hidden" name="action" value="attend"/> 
+				            	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/acta.do" style="display: inline;">
+<!-- =============================== 內容從這裡開始 =============================== -->
+<table>
+			<tr>
+				<td>參與會員編號:</td>
+				<td><input type="TEXT" name="memberId" size="45"
+					value="<%=(actaVO == null) ? "7" : actaVO.getMemberId()%>" /></td>
+			</tr>
+			<tr>
+				<td>參與活動編號:</td>
+				<td><input type="TEXT" name="activityId" size="45"
+					value="<%=(actaVO == null) ? "1005" : actaVO.getActivityId()%>" /></td>
+			</tr>
+			<tr>
+				<td>評論內容:</td>
+				<td><input type="TEXT" name="comment" size="45"
+					value="<%=(actaVO == null)?"不好玩":actaVO.getComment() %>" /></td>
+			</tr>
+			<tr>
+				<td>活動內容備註:</td>
+				<td><input type="TEXT" name="note" size="45"
+					value="<%=(actaVO== null)?"佛教徒" : actaVO.getNote()%>" /></td>
+			</tr>
+			<tr>
+<!-- 				<td>付款狀態:</td> -->
+<!-- 				<td><input type="TEXT" name="status" size="45" -->
+<%-- 					value="<%=(actaVO == null) ? "1" : actaVO.getStatus()%>" /></td> --%>				
+<!-- 				<select name="status"> -->
+<%--    					<option value="<%=(actaVO == null) ? "0" : actaVO.getStatus()%>">未付款</option> --%>
+<%--    					<option value="<%=(actaVO == null) ? "1" : actaVO.getStatus()%>">已付款</option> --%>
+<!-- 				</select>	 -->
+<!-- 			</tr> -->
+			<tr>
+		<td>付款狀態:<font color=red><b>*</b></font></td>
+		<td><select size="1" name="status">
+				<option value="-1">請選擇付款狀態</option>
+				<option value="0" >未付款</option>
+   				<option value="1">已付款</option>
+					
+		</select></td>
+		</tr>
+			
+</table>
+<!-- =============================== 內容從這裡結束 =============================== -->
+							       <input type="hidden" name="action" value="insert"/> 
 				      	           <input type="hidden" name="activityId" value="${actVO.activityId}">
 							       <input type="submit" class="btn btn-hover color-1" value="送出表單"/>
 						       	</FORM>
