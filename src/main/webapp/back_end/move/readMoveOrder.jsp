@@ -92,7 +92,45 @@ th, td {
 							<th class="text-nowrap">訂單狀態</th>
 							<th class="text-nowrap">修改訂單</th>
 						</tr>
-						<c:forEach var="moveOrderVO" items="${list}">
+						<div><%  int rowsPerPage = 5;      
+    int rowNumber=0;      
+    int pageNumber=0;          
+    int whichPage=1;      
+    int pageIndexArray[]=null;
+    int pageIndex=0; 
+%>
+
+<%  
+    rowNumber=list.size();
+    if (rowNumber%rowsPerPage !=0)
+         pageNumber=rowNumber/rowsPerPage + 1;
+    else pageNumber=rowNumber/rowsPerPage;    
+
+    pageIndexArray=new int[pageNumber]; 
+    for (int i=1 ; i<=pageIndexArray.length ; i++)
+         pageIndexArray[i-1]=i*rowsPerPage-rowsPerPage;
+%>
+
+<%  try {
+       whichPage = Integer.parseInt(request.getParameter("whichPage"));
+       pageIndex=pageIndexArray[whichPage-1];
+    } catch (NumberFormatException e) {
+       whichPage=1;
+       pageIndex=0;
+    } catch (ArrayIndexOutOfBoundsException e) {
+         if (pageNumber>0){
+              whichPage=pageNumber;
+              pageIndex=pageIndexArray[pageNumber-1];
+         }
+    } 
+%>
+
+<%if (pageNumber>0){%>
+  <b><font color=red>第<%=whichPage%>/<%=pageNumber%>頁</font></b>
+<%}%>
+
+<b>●符 合 查 詢 條 件 如 下 所 示: 共<font color=red><%=rowNumber%></font>筆</b></div>
+						<c:forEach var="moveOrderVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							<tr>
 								<td>${moveOrderVO.id}</td>
 								<td>${moveOrderVO.memberId}</td>
@@ -117,6 +155,30 @@ th, td {
 								</td>
 						</c:forEach>
 					</table>
+					<div><%if (rowsPerPage<rowNumber) {%>
+    				<%if(pageIndex>=rowsPerPage){%>
+        			<A href="<%=request.getRequestURI()%>?whichPage=1">至第一頁</A>&nbsp;
+        			<A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">上一頁 </A>&nbsp;
+   					 <%}%>
+  
+    				<%if(pageIndex<pageIndexArray[pageNumber-1]){%>
+        			<A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁 </A>&nbsp;
+        			<A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>">至最後一頁</A>&nbsp;
+    				<%}%>
+  					<%}%>
+
+					<br><br>
+
+  					<%if (pageNumber>1) {%>
+    				<FORM METHOD="post" ACTION="<%=request.getRequestURI()%>">   
+      				<select size="1" name="whichPage">
+         			<%for (int i=1; i<=pageNumber; i++){%>
+            		<option value="<%=i%>">跳至第<%=i%>頁
+         			<%}%> 
+      				 </select>
+       				<input type="submit" value="確定" >  
+    				</FORM>
+ 					<%}%></div>
 					<h3>我用很久ㄟ</h3>
 					<!-- end of main -->
 

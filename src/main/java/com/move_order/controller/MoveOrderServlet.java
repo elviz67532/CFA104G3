@@ -12,6 +12,8 @@ import javax.servlet.http.*;
 import com.member.model.MemberVO;
 import com.move_order.model.*;
 
+import core.FrontEndMemberFilter;
+
 public class MoveOrderServlet extends HttpServlet{
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -277,6 +279,7 @@ public class MoveOrderServlet extends HttpServlet{
 				HttpSession session = req.getSession();
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 				if(memberVO == null) {
+//					FrontEndMemberFilter.doFilter(req, res, gg);
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/front_end/move/frontGetMoveOrder.jsp");
 					failureView.forward(req, res);
