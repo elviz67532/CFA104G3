@@ -17,7 +17,7 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 			+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String DELETE = "delete from MEMBER where MEM_ID = ?";
 	private static final String UPDATE = "update MEMBER set "
-			+ "MEM_EMAIL = ?, MEM_ACCOUNT = ?, MEM_PASSWORD = ?, MEM_NICKNAME = ?, MEM_NAME = ?, MEM_PHONE = ?, MEM_GENDER = ?, MEM_CITY = ?, MEM_CITYAREA = ?, MEM_ADDRESS = ?, MEM_CODE = ?, MEM_AVATAR = ?, MEM_TIME = ?, MEM_STATUS = ? "
+			+ "MEM_EMAIL = ?, MEM_PASSWORD = ?, MEM_NICKNAME = ?, MEM_NAME = ?, MEM_PHONE = ?, MEM_CITY = ?, MEM_CITYAREA = ?, MEM_ADDRESS	 = ?, MEM_AVATAR = ?"
 			+ "where MEM_ID = ?";
 	private static final String LOGIN = "select * from MEMBER where MEM_ACCOUNT = ?and MEM_PASSWORD = ? ";
 	public static final String FORGETPASSWORD = "SELECT * FROM MEMBER where MEM_EMAIL = ?";
@@ -91,21 +91,20 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, vo.getEmail());
-			pstmt.setString(2, vo.getAccount());
-			pstmt.setString(3, vo.getPassword());
-			pstmt.setString(4, vo.getNickname());
-			pstmt.setString(5, vo.getName());
-			pstmt.setString(6, vo.getPhone());
-			pstmt.setInt(7, vo.getGender());
-			pstmt.setString(8, vo.getCity());
-			pstmt.setString(9, vo.getCityArea());
-			pstmt.setString(10, vo.getAddress());
-			pstmt.setString(11, vo.getCode());
-			pstmt.setBytes(12, vo.getAvatar());
-			pstmt.setTimestamp(13, vo.getRegisterDate());
-			pstmt.setInt(14, vo.getStatus());
-			pstmt.setInt(15, vo.getId());
+			pstmt.setString(2, vo.getPassword());
+			pstmt.setString(3, vo.getNickname());
+			pstmt.setString(4, vo.getName());
+			pstmt.setString(5, vo.getPhone());
+			pstmt.setString(6, vo.getCity());
+			pstmt.setString(7, vo.getCityArea());
+			pstmt.setString(8, vo.getAddress());
+			pstmt.setBytes(9, vo.getAvatar());
+			pstmt.setInt(10, vo.getId());
 
+//			"update MEMBER set "
+//			+ "MEM_EMAIL = ?, MEM_PASSWORD = ?, MEM_NICKNAME = ?, MEM_NAME = ?, MEM_PHONE = ?, MEM_CITY = ?, MEM_CITYAREA = ?, MEM_ADDRESS	 = ?, MEM_AVATAR = ?"
+//			+ "where MEM_ID = ?";
+//			
 			updateRow = pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -212,7 +211,7 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 			pstmt = con.prepareStatement(LOGIN);
 
 			pstmt.setString(1, account);
-			pstmt.setString(1, password);
+			pstmt.setString(2, password);
 
 			rs = pstmt.executeQuery();
 
@@ -282,30 +281,11 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+			SQLUtil.closeResource(con, pstmt, rs);
 		}
 		return vo;
 	}
+
 	public MemberVO selectById(Integer id) {
 		MemberVO vo = null;
 		Connection con = null;

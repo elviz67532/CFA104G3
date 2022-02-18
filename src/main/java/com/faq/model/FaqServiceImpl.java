@@ -1,5 +1,7 @@
 package com.faq.model;
 
+import java.util.*;
+
 public class FaqServiceImpl implements FaqService {
 
 	private FaqDAO dao;
@@ -8,40 +10,52 @@ public class FaqServiceImpl implements FaqService {
 		dao = new FaqDAOJDBCImpl();
 	}
 
-	public FaqVO addFaq(String question, String answer) {
+	@Override
+	public FaqVO addFaq(Integer id, String question, String answer) {
 
-		FaqVO faqVO = new FaqVO();
+		FaqVO vo = new FaqVO();
 
-		faqVO.setQuestion(question);
-		faqVO.setAnswer(answer);
+		vo.setId(id);
+		vo.setQuestion(question);
+		vo.setAnswer(answer);
 
-		dao.insert(faqVO);
+		int row = dao.insert(vo);
 
-		return faqVO;
+		System.out.println("FAQ " + row);
+
+		return vo;
 	}
 
+	@Override
 	public FaqVO updateFaq(Integer id, String question, String answer) {
 
-		FaqVO faqVO = new FaqVO();
+		FaqVO vo = new FaqVO();
 
-		faqVO.setId(id);
-		faqVO.setQuestion(question);
-		faqVO.setAnswer(answer);
+		vo.setId(id);
+		vo.setQuestion(question);
+		vo.setAnswer(answer);
 
-		dao.update(faqVO);
+		int row = dao.update(vo);
 
-		return faqVO;
+		System.out.println("FAQ " + row);
+
+		System.out.println("FAQ已更新");
+		return vo;
 	}
 
+	@Override
 	public void deleteFaq(Integer id) {
-		dao.deleteById(id);
+		int row = dao.deleteById(id);
+		System.out.println("FAQ " + row);
 	}
 
+	@Override
 	public FaqVO getOneFaq(Integer id) {
-		return dao.findByPrimaryKey(id);
+		return dao.selectById(id);
 	}
 
+	@Override
 	public List<FaqVO> getAll() {
-		return dao.getAll();
+		return dao.selectAll();
 	}
 }

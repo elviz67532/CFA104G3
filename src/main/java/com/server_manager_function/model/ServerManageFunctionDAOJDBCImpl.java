@@ -11,12 +11,13 @@ import java.util.List;
 import core.util.SQLUtil;
 
 public class ServerManageFunctionDAOJDBCImpl implements ServerManageFunctionDAO {
-	private static final String GET_ALL_STMT = "select * from SERVERMANAGEFUNCTION";
-	private static final String GET_FROM_ID_STMT = "select * from SERVERMANAGEFUNCTION where SMGEFUNC_ID = ?";
-	private static final String INSERT_STMT = "insert into SERVERMANAGEFUNCTION (SMGEFUNC_ID, SMGEFUNC) VALUES (?, ?)";
-	private static final String DELETE_STMT = "delete from SERVERMANAGEFUNCTION where SMGEFUNC_ID = ?";
-	private static final String UPDATE_STMT = "update SERVERMANAGEFUNCTION set SMGEFUNC = ? where SMGEFUNC_ID = ?";
-
+	// SQL 
+	private static final String INSERT_STMT = "INSERT INTO SERVERMANAGEFUNCTION (SMGEFUNC_ID, SMGEFUNC) VALUES (?, ?)";
+	private static final String DELETE_STMT = "DELETE FROM SERVERMANAGEFUNCTION WHERE SMGEFUNC_ID=?";
+	private static final String UPDATE_STMT = "UPDATE SERVERMANAGEFUNCTION SET SMGEFUNC=? WHERE SMGEFUNC_ID=?";
+	private static final String GET_FROM_ID_STMT = "SELECT * FROM SERVERMANAGEFUNCTION WHERE SMGEFUNC_ID=?";
+	private static final String GET_ALL_STMT = "SELECT * FROM SERVERMANAGEFUNCTION";
+	
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -24,49 +25,44 @@ public class ServerManageFunctionDAOJDBCImpl implements ServerManageFunctionDAO 
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
-	public int insert(ServerManageFunctionVO serverManageFunctionVO) {
+	public int insert(Integer smgeFuncId, String smgeFunc) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int row = 0;
-
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
-
-			pstmt.setInt(1, serverManageFunctionVO.getSmgeFuncId());
-			pstmt.setString(2, serverManageFunctionVO.getSmgeFunc());
-
+			pstmt.setInt(1, smgeFuncId);
+			pstmt.setString(2, smgeFunc);
 			row = pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			SQLUtil.closeResource(con, pstmt, null);
 		}
-
 		return row;
 	}
 
 	@Override
-	public int deleteById(Integer smgeFuncId) {
+	public int delete(Integer smgeFuncId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int row = 0;
-
 		try {
-			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			con = DriverManager.getConnection(SQLUtil.URL,SQLUtil.USER,SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(DELETE_STMT);
-
 			pstmt.setInt(1, smgeFuncId);
-
 			row = pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			SQLUtil.closeResource(con, pstmt, null);
 		}
-
 		return row;
 	}
 
@@ -75,75 +71,77 @@ public class ServerManageFunctionDAOJDBCImpl implements ServerManageFunctionDAO 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int row = 0;
-
 		try {
-			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
-
+			con = DriverManager.getConnection(SQLUtil.URL,SQLUtil.USER,SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 			pstmt.setString(1, serverManageFunctionVO.getSmgeFunc());
 			pstmt.setInt(2, serverManageFunctionVO.getSmgeFuncId());
-
 			row = pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			SQLUtil.closeResource(con, pstmt, null);
 		}
-
 		return row;
+		
 	}
 
 	@Override
-	public ServerManageFunctionVO selectById(Integer smgeFuncId) {
+	public ServerManageFunctionVO GetFromId(Integer smgeFuncId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		ResultSet rs = null;		
 		ServerManageFunctionVO serverManageFunctionVO = null;
 
 		try {
-			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			con = DriverManager.getConnection(SQLUtil.URL,SQLUtil.USER,SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(GET_FROM_ID_STMT);
 			pstmt.setInt(1, smgeFuncId);
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
+			while(rs.next()) {
 				serverManageFunctionVO = new ServerManageFunctionVO();
-				serverManageFunctionVO.setSmgeFuncId(rs.getInt("SMGEFUNC_ID"));
+				serverManageFunctionVO.setSmgeFuncId(smgeFuncId);
 				serverManageFunctionVO.setSmgeFunc(rs.getString("SMGEFUNC"));
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			SQLUtil.closeResource(con, pstmt, rs);
 		}
-
+		
 		return serverManageFunctionVO;
 	}
 
 	@Override
-	public List<ServerManageFunctionVO> selectAll() {
-		List<ServerManageFunctionVO> list = new ArrayList<ServerManageFunctionVO>();
+	public List<ServerManageFunctionVO> getAll() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ServerManageFunctionVO serverManageFunctionVO = null;
-
+		List<ServerManageFunctionVO> list = new ArrayList<ServerManageFunctionVO>();
+		
 		try {
-			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			con = DriverManager.getConnection(SQLUtil.URL,SQLUtil.USER,SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
+			while(rs.next()) {
 				serverManageFunctionVO = new ServerManageFunctionVO();
 				serverManageFunctionVO.setSmgeFuncId(rs.getInt(1));
 				serverManageFunctionVO.setSmgeFunc(rs.getString(2));
+				
 				list.add(serverManageFunctionVO);
 			}
+			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			SQLUtil.closeResource(con, pstmt, rs);
 		}
-
+		
 		return list;
 	}
 }
