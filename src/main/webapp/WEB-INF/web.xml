@@ -147,7 +147,7 @@
 		<url-pattern>/activity/ActrImage.do</url-pattern>
 	</servlet-mapping>
 	
-
+	<servlet>
 		<servlet-name>ActivityPhotoServlet</servlet-name>
 		<servlet-class>com.activity_photo.controller.ActivityPhotoServlet</servlet-class>
 	</servlet>
