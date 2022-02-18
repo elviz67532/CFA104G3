@@ -23,6 +23,17 @@
 			<span>FAQ</span>
 		</a>
 	</li>
+	
+		<!-- 最新消息管理	 -->
+	<hr class="sidebar-divider">
+	<li class="nav-item">
+		<a class="nav-link" 
+		   href="/CFA104G3/back_end/news/listallnews.jsp"
+		   onclick="this.parentNode.submit()">
+			<i class="fas fa-fw fa-table"></i> 
+			<span>最新消息</span>
+		</a>
+	</li>
     
 	<!-- 活動管理 -->
 	<hr class="sidebar-divider">
@@ -54,7 +65,7 @@
 		</a>
 		<div id="collapseProduct" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="/CFA104G3/back_end/server_manager/product.jsp">檢舉管理</a>
+				<a class="collapse-item" href="/CFA104G3/back_end/product/productReportManage.jsp">檢舉管理</a>				
 				<a class="collapse-item" href="/CFA104G3/back_end/server_manager/product.jsp">商品管理</a>
 				<a class="collapse-item" href="/CFA104G3/back_end/server_manager/product.jsp">訂單管理</a>
 			</div>
