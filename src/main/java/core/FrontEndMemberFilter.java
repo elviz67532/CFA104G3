@@ -47,7 +47,7 @@ public class FrontEndMemberFilter implements Filter {
 		MemberVO memberVo = (MemberVO) session.getAttribute("memberVO");
 		if (memberVo == null) {
 			System.out.println("尚未登入");
-			res.sendRedirect("/front_end/member/login.jsp");
+			res.sendRedirect("/CFA104G3/front_end/member/login.jsp");
 		} else {
 			System.out.println("登入會員名稱=" + memberVo.getName());
 			chain.doFilter(request, response);

@@ -72,7 +72,7 @@
                 
 				<!-- 以jsp語法去產生 -->
                 <div class="col-md-4 col-sm-6">
-                    <a href="#">
+                    <a href="moveRequestManage.jsp">
                         <div class="specialcard">
                             <img src="<%=request.getContextPath()%>/asset/img/default.jpeg" style="background-color:red" alt="申請單">
                             <div class="specialcard-text">

@@ -12,8 +12,6 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
     <title>委域</title>
     <link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
@@ -27,7 +25,6 @@
 </head>
 
 <body>
-    <!-- Navigation-->
     <!-- nav -->
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
@@ -37,8 +34,8 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>New Life</h1>
-                        <span class="subheading">迎 接 全 新 的 人 生</span>
+                        <h1>申請搬家</h1>
+<!--                         <span class="subheading"></span> -->
                     </div>
                 </div>
             </div>

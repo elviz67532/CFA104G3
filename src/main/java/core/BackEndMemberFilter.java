@@ -54,7 +54,7 @@ public class BackEndMemberFilter implements Filter {
 		String account = (String) session.getAttribute("account");
 		if (account == null) {
 			System.out.println("尚未登入");
-			res.sendRedirect("/back_end/server_manager/loginServer.jsp");
+			res.sendRedirect("/CFA104G3/back_end/server_manager/loginServer.jsp");
 			return;
 		} 
 		
@@ -71,7 +71,7 @@ public class BackEndMemberFilter implements Filter {
 		List<ServerManagerAuthVO> authVos = (List<ServerManagerAuthVO>) session.getAttribute("auth");
 		if (authVos == null) {
 			System.out.println("使用者無此權限");
-			res.sendRedirect("/back_end/server_manager/unAuth.jsp");
+			res.sendRedirect("/CFA104G3/back_end/server_manager/unAuth.jsp");
 			return;
 		}
 		boolean hasAuth = false;
@@ -85,7 +85,7 @@ public class BackEndMemberFilter implements Filter {
 		// 無權限
 		if (!hasAuth) {
 			System.out.println("未授權");
-			res.sendRedirect("/back_end/server_manager/unAuth.jsp");
+			res.sendRedirect("/CFA104G3/back_end/server_manager/unAuth.jsp");
 		}
 		
 		// 擁有權限

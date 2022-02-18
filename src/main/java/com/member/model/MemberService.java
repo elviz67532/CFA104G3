@@ -9,4 +9,6 @@ public interface MemberService {
 
 	MemberVO updateMember(MemberVO memberVO);
 
+	MemberVO selectById(Integer id);
+
 }
