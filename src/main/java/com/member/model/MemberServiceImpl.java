@@ -101,7 +101,6 @@ public class MemberServiceImpl implements MemberService {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
 		MemberVO memberVO = new MemberVO();
-		memberVO = new MemberVO();
 		memberVO.setEmail(email);
 		memberVO.setAccount(account);
 		memberVO.setPassword(password);
@@ -116,15 +115,16 @@ public class MemberServiceImpl implements MemberService {
 		memberVO.setAvatar(avatar);
 		memberVO.setRegisterDate(timestamp);
 		memberVO.setStatus(0);
-
-		dao.insert(memberVO);
+		int id = dao.insert(memberVO);
+		memberVO.setId(id);
+  
 		return memberVO;
 
 	}
 
-@Override
+	@Override
 	public MemberVO frontMemberUpdate(String email, String password, String nickname, String name, String phone,
-			String city, String cityArea, String address, byte[] avatar,Integer id) {
+			String city, String cityArea, String address, byte[] avatar, Integer id) {
 		MemberVO memberVO = new MemberVO();
 //		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		memberVO = new MemberVO();
@@ -140,6 +140,27 @@ public class MemberServiceImpl implements MemberService {
 		memberVO.setId(id);
 		dao.update(memberVO);
 		return memberVO;
+	}
+
+	@Override
+	public boolean veriftyCode(Integer id, String code) {
+
+		return dao.veriftyCode(id, code) > 0;
+
+	}
+
+	private boolean updateStatus(Integer id, Integer status) {
+		return dao.updateStatus(id, status) > 0;
+	}
+
+	@Override
+	public boolean banMember(Integer id) {
+		return updateStatus(id, 2);
+	}
+
+	@Override
+	public boolean restoreMember(Integer id) {
+		return updateStatus(id, 1);
 	}
 }
 

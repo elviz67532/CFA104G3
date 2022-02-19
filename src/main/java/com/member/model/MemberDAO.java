@@ -11,5 +11,10 @@ public interface MemberDAO extends CoreDao<MemberVO, Integer> {
 	MemberVO forgetpassword(String email);
 
 	MemberVO findByName(String name);
-    
+
+	int veriftyCode(Integer id,String code);
+
+	int updateStatus(Integer id,Integer status);
+
+	
 }
