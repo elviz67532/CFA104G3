@@ -78,8 +78,7 @@
 	<!-- move -->
 	<servlet>
 		<servlet-name>MoveRequestServlet</servlet-name>
-		<servlet-class>com.move_request.controller.MoveRequestServlet
-		</servlet-class>
+		<servlet-class>com.move_request.controller.MoveRequestServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MoveRequestServlet</servlet-name>
@@ -87,8 +86,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>MoveRequestManageServlet</servlet-name>
-		<servlet-class>com.move_request.controller.MoveRequestManageServlet
-		</servlet-class>
+		<servlet-class>com.move_request.controller.MoveRequestManageServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MoveRequestManageServlet</servlet-name>
@@ -96,8 +94,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>MoveOrderServlet</servlet-name>
-		<servlet-class>com.move_order.controller.MoveOrderServlet
-		</servlet-class>
+		<servlet-class>com.move_order.controller.MoveOrderServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MoveOrderServlet</servlet-name>
@@ -105,8 +102,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>MoveOrderServlet</servlet-name>
-		<servlet-class>com.move_order.controller.MoveOrderServlet
-		</servlet-class>
+		<servlet-class>com.move_order.controller.MoveOrderServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MoveOrderServlet</servlet-name>
@@ -116,8 +112,7 @@
 	<!-- activity -->
 	<servlet>
 		<servlet-name>ActaServlet</servlet-name>
-		<servlet-class>com.activity_attend.controller.ActivityAttendServlet
-		</servlet-class>
+		<servlet-class>com.activity_attend.controller.ActivityAttendServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ActaServlet</servlet-name>
@@ -163,9 +158,10 @@
 	<servlet-mapping>
 		<servlet-name>ActivityQuestionServlet</servlet-name>
 		<url-pattern>/activity/actq.do</url-pattern>
-	</servlet-mapping>
-  
-	<!-- product -->
+	</servlet-mapping>  
+
+	<!-- 耀德 product和news 下-->
+  <!-- news -->
 	<servlet>
 		<servlet-name>NewsServlet</servlet-name>
 		<servlet-class>com.news.controller.NewsServlet</servlet-class>
@@ -174,8 +170,7 @@
 		<servlet-name>NewsServlet</servlet-name>
 		<url-pattern>/back_end/news/NewsServlet</url-pattern>
 	</servlet-mapping>
-
-  <!-- news -->
+  
   <servlet>
 		<servlet-name>NewsImageReader</servlet-name>
 		<servlet-class>com.news.controller.NewsImageReader</servlet-class>
@@ -183,7 +178,27 @@
 	<servlet-mapping>
 		<servlet-name>NewsImageReader</servlet-name>
 		<url-pattern>/news/newsimage.do</url-pattern>
+	</servlet-mapping>	
+  	
+  <servlet>
+		<servlet-name>ProductReportServlet</servlet-name>
+		<servlet-class>com.product_report.controller.ProductReportServlet</servlet-class>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>ProductReportServlet</servlet-name>
+		<url-pattern>/back_end/product/report/report.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ProductReportImageReader</servlet-name>
+		<servlet-class>com.product_report.controller.ProductReportImageReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductReportImageReader</servlet-name>
+		<url-pattern>/back_end/product/report/reportphoto.do</url-pattern>
+	</servlet-mapping>
+  
+  <!-- 耀德 product和news 上-->
   
 	<!-- product -->
 	<servlet>
@@ -196,8 +211,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>ProductPhotoServlet</servlet-name>
-		<servlet-class>com.product_photo.controller.ProductPhotoServlet
-		</servlet-class>
+		<servlet-class>com.product_photo.controller.ProductPhotoServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ProductPhotoServlet</servlet-name>
@@ -205,8 +219,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>DBGifReader2</servlet-name>
-		<servlet-class>com.product_photo.controller.DBGifReader2
-		</servlet-class>
+		<servlet-class>com.product_photo.controller.DBGifReader2</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DBGifReader2</servlet-name>
