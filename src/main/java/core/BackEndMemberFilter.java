@@ -115,6 +115,7 @@ public class BackEndMemberFilter implements Filter {
 		urlAuths.put("/back_end/server_manager/activity.jsp", ACTIVITY);
 		urlAuths.put("/back_end/server_manager/product.jsp", DOUBLE_PROD);
 		urlAuths.put("/back_end/move/moveRequestManage.jsp", MOVE); 
+		urlAuths.put("/back_end/move/readMoveOrder.jsp", MOVE);
 		urlAuths.put("/back_end/server_manager/manager.jsp",MEMBER);
 		urlAuths.put("/back_end/server_manager/FAQ.jsp", FAQ);
 	}

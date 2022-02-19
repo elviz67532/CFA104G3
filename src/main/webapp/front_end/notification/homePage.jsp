@@ -1,6 +1,8 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
 <%@ page import="com.notification.model.*"%>
 <%@ page import="com.member.model.*"%>
@@ -9,9 +11,56 @@
 	MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
 	if (memberVo != null) {
 		Integer memberId = memberVo.getId();
-		List<NotificationVO> notificationVOs = service.getMemberAllNotification(memberId);
-		pageContext.setAttribute("notifications", notificationVOs);
+		List<NotificationVO> allNotificationVOs = service.getMemberAllNotification(memberId);
+		List<NotificationVO> moveNotifications = new ArrayList<>();
+		List<NotificationVO> productNotifications = new ArrayList<>();
+		List<NotificationVO> activityNotifications = new ArrayList<>();
+		List<NotificationVO> otherNotifications = new ArrayList<>();
+		
+		Comparator notifyComparator = new Comparator<NotificationVO>() {
+			@Override
+			public int compare(NotificationVO o1, NotificationVO o2) {
+				if (o1.getNotifyTime() == null) {
+					return 1;
+				}
+				if (o2.getNotifyTime() == null) {
+					return -1;
+				}
+				if(o1.getNotifyTime().after(o2.getNotifyTime())) {
+					return -1;
+				}
+				return 1;
+			}
+		};
+		
+		for(NotificationVO vo: allNotificationVOs) {
+			Integer type = vo.getType();
+			if (type == 0) {
+				otherNotifications.add(vo);				
+			} else if (type == 1) {
+				moveNotifications.add(vo);
+			} else if (type == 2) {
+				productNotifications.add(vo);
+			} else if (type == 3) {
+				activityNotifications.add(vo);
+			}
+		}
+		
+		// 排序
+		Collections.sort(otherNotifications, notifyComparator);
+		Collections.sort(moveNotifications, notifyComparator);
+		Collections.sort(productNotifications, notifyComparator);
+		Collections.sort(activityNotifications, notifyComparator);
+		Collections.sort(allNotificationVOs, notifyComparator);
+
+		pageContext.setAttribute("otherNotifications", otherNotifications);
+		pageContext.setAttribute("moveNotifications", moveNotifications);
+		pageContext.setAttribute("productNotifications", productNotifications);
+		pageContext.setAttribute("activityNotifications", activityNotifications);
+		pageContext.setAttribute("notifications", allNotificationVOs);
 	}
+	String type = (String)request.getParameter("type");
+	pageContext.setAttribute("type", type);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +82,7 @@
         rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/css/notification/style.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
@@ -47,7 +97,6 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
                         <h1>訊息通知</h1>
-<!--                         <span class="subheading">迎 接 全 新 的 人 生</span> -->
                     </div>
                 </div>
             </div>
@@ -56,29 +105,132 @@
    
    	<!-- 主體畫面設計  -->
     <nav>
-		<div class="nav nav-tabs" id="nav-tab" role="tablist">
-		    <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all" aria-selected="true">全部通知</button>
-		    <button class="nav-link" id="nav-move-tab" data-bs-toggle="tab" data-bs-target="#nav-move" type="button" role="tab" aria-controls="nav-move" aria-selected="false">搬家</button>
-		    <button class="nav-link" id="nav-product-tab" data-bs-toggle="tab" data-bs-target="#nav-product" type="button" role="tab" aria-controls="nav-product" aria-selected="false">二手買賣</button>
-	   	    <button class="nav-link" id="nav-activity-tab" data-bs-toggle="tab" data-bs-target="#nav-activity" type="button" role="tab" aria-controls="nav-activity" aria-selected="false">活動舉辦</button>
-			<button class="nav-link" id="nav-other-tab" data-bs-toggle="tab" data-bs-target="#nav-other" type="button" role="tab" aria-controls="nav-other" aria-selected="false">其他</button>
+		<div class="nav nav-tabs outter" id="nav-tab" role="tablist">
+		    <button class="nav-link <c:if test='${empty type}'>active</c:if>" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all" aria-selected="true">全部通知</button>
+		    <button class="nav-link <c:if test='${type eq 1}'>active</c:if>" id="nav-move-tab" data-bs-toggle="tab" data-bs-target="#nav-move" type="button" role="tab" aria-controls="nav-move" aria-selected="false">搬家</button>
+		    <button class="nav-link <c:if test='${type eq 2}'>active</c:if>" id="nav-product-tab" data-bs-toggle="tab" data-bs-target="#nav-product" type="button" role="tab" aria-controls="nav-product" aria-selected="false">二手買賣</button>
+	   	    <button class="nav-link <c:if test='${type eq 3}'>active</c:if>" id="nav-activity-tab" data-bs-toggle="tab" data-bs-target="#nav-activity" type="button" role="tab" aria-controls="nav-activity" aria-selected="false">活動舉辦</button>
+			<button class="nav-link <c:if test='${type eq 0}'>active</c:if>" id="nav-other-tab" data-bs-toggle="tab" data-bs-target="#nav-other" type="button" role="tab" aria-controls="nav-other" aria-selected="false">其他</button>
 		</div>
 	</nav>
-	<div class="tab-content" id="nav-tabContent">
-		<div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
-		...
+	<div class="tab-content outter" id="nav-tabContent">
+		<div class="tab-pane fade <c:if test='${empty type}'>show active</c:if>" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+<!-- view觸發 -->
+			<div class="accordion" id="accordionPanelsStayOpenExample">
+				<c:forEach var="vo" items="${notifications}">
+					<div class="accordion-item <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
+					  <h2 class="accordion-header" id="panelsStayOpen-${vo.id}">
+					    <button value="${vo.id}" class="<c:if test='${vo.viewed eq false}'>viewNotify bg-gradient-info text-white </c:if>accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-${vo.id}" aria-expanded="true" aria-controls="panelsStayOpen-collapse-${vo.id}">
+				    		<c:choose>
+				    			<c:when test="${vo.viewed eq false}">
+				    				<fmt:formatDate value="${vo.notifyTime}" pattern="yyyy-M-dd HH:mm"/>
+				    			</c:when>
+				    			<c:otherwise>
+				    				<b><fmt:formatDate value="${vo.notifyTime}" pattern="yyyy-M-dd HH:mm"/></b>
+				    			</c:otherwise>
+				    		</c:choose>
+					    </button>
+					  </h2>
+					  <div id="panelsStayOpen-collapse-${vo.id}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-${vo.id}">
+					    <div class="accordion-body <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
+					    	${vo.content} 	
+					    </div>
+					  </div>
+					</div>
+				</c:forEach>
+			</div>
 		</div>
-		<div class="tab-pane fade" id="nav-move" role="tabpanel" aria-labelledby="nav-move-tab">
-		...
+		<div class="tab-pane fade <c:if test='${type eq 1}'>show active</c:if>" id="nav-move" role="tabpanel" aria-labelledby="nav-move-tab">
+			<c:forEach  var="vo" items="${moveNotifications}">
+				<div class="accordion-item <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
+					<h2 class="accordion-header" id="move-${vo.id}">
+				    	<button value="${vo.id}" class="<c:if test='${vo.viewed eq false}'>viewNotify bg-gradient-info text-white </c:if>accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#move-collapse-${vo.id}" aria-expanded="true" aria-controls="move-collapse-${vo.id}">
+			    			<c:choose>
+			    				<c:when test="${vo.viewed eq false}">
+			    					<fmt:formatDate value="${vo.notifyTime}" pattern="yyyy-M-dd HH:mm"/>
+			    				</c:when>
+				    			<c:otherwise>
+				    				<b><fmt:formatDate value="${vo.notifyTime}" pattern="yyyy-M-dd HH:mm"/></b>
+				    			</c:otherwise>
+			    			</c:choose>
+				    	</button>
+				  	</h2>	
+				  	<div id="move-collapse-${vo.id}" class="accordion-collapse collapse show" aria-labelledby="move-${vo.id}">
+					    <div class="accordion-body <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
+					    	${vo.content} 	
+					    </div>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
-		<div class="tab-pane fade" id="nav-product" role="tabpanel" aria-labelledby="nav-product-tab">
-		...
+		<div class="tab-pane fade <c:if test='${type eq 2}'>show active</c:if>" id="nav-product" role="tabpanel" aria-labelledby="nav-product-tab">
+			<c:forEach  var="vo" items="${productNotifications}">
+				<div class="accordion-item <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
+					<h2 class="accordion-header" id="product-${vo.id}">
+				    	<button value="${vo.id}" class="<c:if test='${vo.viewed eq false}'>viewNotify bg-gradient-info text-white </c:if>accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#product-collapse-${vo.id}" aria-expanded="true" aria-controls="product-collapse-${vo.id}">
+			    			<c:choose>
+			    				<c:when test="${vo.viewed eq false}">
+			    					<fmt:formatDate value="${vo.notifyTime}" pattern="yyyy-M-dd HH:mm"/>
+			    				</c:when>
+				    			<c:otherwise>
+				    				<b><fmt:formatDate value="${vo.notifyTime}" pattern="yyyy-M-dd HH:mm"/></b>
+				    			</c:otherwise>
+			    			</c:choose>
+				    	</button>
+				  	</h2>	
+				  	<div id="product-collapse-${vo.id}" class="accordion-collapse collapse show" aria-labelledby="product-${vo.id}">
+					    <div class="accordion-body <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
+					    	${vo.content} 	
+					    </div>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
-		<div class="tab-pane fade" id="nav-activity" role="tabpanel" aria-labelledby="nav-activity-tab">
-		...
+		<div class="tab-pane fade <c:if test='${type eq 3}'>show active</c:if>" id="nav-activity" role="tabpanel" aria-labelledby="nav-activity-tab">
+			<c:forEach  var="vo" items="${activityNotifications}">
+				<div class="accordion-item <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
+					<h2 class="accordion-header" id="activity-${vo.id}">
+				    	<button value="${vo.id}" class="<c:if test='${vo.viewed eq false}'>viewNotify bg-gradient-info text-white </c:if>accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#activity-collapse-${vo.id}" aria-expanded="true" aria-controls="activity-collapse-${vo.id}">
+			    			<c:choose>
+			    				<c:when test="${vo.viewed eq false}">
+			    					<fmt:formatDate value="${vo.notifyTime}" pattern="yyyy-M-dd HH:mm"/>
+			    				</c:when>
+				    			<c:otherwise>
+				    				<b><fmt:formatDate value="${vo.notifyTime}" pattern="yyyy-M-dd HH:mm"/></b>
+				    			</c:otherwise>
+			    			</c:choose>
+				    	</button>
+				  	</h2>	
+				  	<div id="activity-collapse-${vo.id}" class="accordion-collapse collapse show" aria-labelledby="activity-${vo.id}">
+					    <div class="accordion-body <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
+					    	${vo.content} 	
+					    </div>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
-		<div class="tab-pane fade" id="nav-other" role="tabpanel" aria-labelledby="nav-other-tab">
-		...
+		<div class="tab-pane fade <c:if test='${type eq 0}'>show active</c:if>" id="nav-other" role="tabpanel" aria-labelledby="nav-other-tab">
+			<c:forEach  var="vo" items="${otherNotifications}">
+				<div class="accordion-item <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
+					<h2 class="accordion-header" id="other-${vo.id}">
+				    	<button value="${vo.id}" class="<c:if test='${vo.viewed eq false}'>viewNotify bg-gradient-info text-white </c:if>accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#other-collapse-${vo.id}" aria-expanded="true" aria-controls="other-collapse-${vo.id}">
+			    			<c:choose>
+			    				<c:when test="${vo.viewed eq false}">
+			    					<fmt:formatDate value="${vo.notifyTime}" pattern="yyyy-M-dd HH:mm"/>
+			    				</c:when>
+				    			<c:otherwise>
+				    				<b><fmt:formatDate value="${vo.notifyTime}" pattern="yyyy-M-dd HH:mm"/></b>
+				    			</c:otherwise>
+			    			</c:choose>
+				    	</button>
+				  	</h2>	
+				  	<div id="other-collapse-${vo.id}" class="accordion-collapse collapse show" aria-labelledby="other-${vo.id}">
+					    <div class="accordion-body <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
+					    	${vo.content} 	
+					    </div>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
 	</div>
    
@@ -90,4 +242,19 @@
     <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
 </body>
 
+<script>
+$(".viewNotify").click(function(){
+    let self = this;
+    let notifyId = self.value;
+		 	
+    $.ajax({
+        url: "/CFA104G3/notification/notification.do",
+        type: "POST",
+        data: JSON.stringify({'action':'viewedNotify', 'id':notifyId}),
+        success: function(data) {
+        	location.reload();
+        }
+	});
+});
+</script>
 </html>

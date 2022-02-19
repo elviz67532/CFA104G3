@@ -58,7 +58,7 @@
             	<div class="col-md-4 col-sm-6 ">
                     <a href="aboutUs.jsp">
                         <div class="specialcard">
-                            <img src="<%=request.getContextPath()%>/asset/img/default.jpeg" style="background-color:red" alt="關於我們">
+                            <img src="<%=request.getContextPath()%>/asset/img/moverequestmanage.jpg" style="background-color:red" alt="關於我們">
                             <div class="specialcard-text">
                                 <h3>關於我們</h3>
                             </div>
@@ -68,7 +68,7 @@
                 <div class="col-md-4 col-sm-6 ">
                     <a href="moveRequest.jsp">
                         <div class="specialcard">
-                            <img src="<%=request.getContextPath()%>/asset/img/default.jpeg" style="background-color:red" alt="申請搬家">
+                            <img src="<%=request.getContextPath()%>/asset/img/moveorderpic.jpg" style="background-color:red" alt="申請搬家">
                             <div class="specialcard-text">
                                 <h3>申請搬家</h3>
                             </div>
@@ -80,7 +80,7 @@
                 <div class="col-md-4 col-sm-6">
                     <a href="moveRequestManage.jsp">
                         <div class="specialcard">
-                            <img src="<%=request.getContextPath()%>/asset/img/default.jpeg" style="background-color:red" alt="申請單">
+                            <img src="<%=request.getContextPath()%>/asset/img/moveorderpic.jpg" style="background-color:red" alt="申請單">
                             <div class="specialcard-text">
                                 <h3>申請單管理</h3>
                             </div>
@@ -90,7 +90,7 @@
                 <div class="col-md-4 col-sm-6">
                     <a href="<%=request.getContextPath()%>/front_end/move/moveorder.do?action=get_By_Mem">
                         <div class="specialcard">
-                            <img src="<%=request.getContextPath()%>/asset/img/default.jpeg" style="background-color:red" alt="訂單">
+                            <img src="<%=request.getContextPath()%>/asset/img/moveorderpic.jpg" style="background-color:red" alt="訂單">
                             <div class="specialcard-text">
                                 <h3>訂單管理</h3>
                             </div>
