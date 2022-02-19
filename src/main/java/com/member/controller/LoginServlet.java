@@ -441,7 +441,7 @@ public class LoginServlet extends HttpServlet {
 
 		}
 
-
+System.out.println("程式的起點");
 		if ("getImage".equals(action)) {
 			res.setContentType("image/gif"); // 顯示圖片
 			ServletOutputStream out = res.getOutputStream();
@@ -449,10 +449,10 @@ public class LoginServlet extends HttpServlet {
 			try {
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt
-						.executeQuery("SELECT MEM_AVATAR FROM MEM_AVATAR WHERE MEM_ID = " + req.getParameter("id"));
-	
+						.executeQuery("SELECT MEM_AVATAR FROM MEMBER WHERE MEM_ID = " + req.getParameter("MEM_ID"));
+	System.out.println("程式的終點");
 				if (rs.next()) {
-					BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("image"));
+					BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("MEM_AVATAR"));
 					byte[] buf = new byte[4 * 1024]; // 4K buffer
 					int len;
 					while ((len = in.read(buf)) != -1) {
