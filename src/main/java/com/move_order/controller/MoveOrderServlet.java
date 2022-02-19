@@ -12,6 +12,8 @@ import javax.servlet.http.*;
 import com.member.model.MemberVO;
 import com.move_order.model.*;
 
+import core.FrontEndMemberFilter;
+
 public class MoveOrderServlet extends HttpServlet{
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -229,37 +231,27 @@ public class MoveOrderServlet extends HttpServlet{
 				
 
 				
-				MoveOrderVO moveOrderVO = new MoveOrderVO();
-				moveOrderVO.setId(id);
-				moveOrderVO.setMemberId(memberId);
-				moveOrderVO.setAmountTotal(amountTotal);
-				moveOrderVO.setComment(comment);
-				moveOrderVO.setCustomer(customer);
-				moveOrderVO.setPhone(phone);
-				moveOrderVO.setFromAddress(fromAddress);
-				moveOrderVO.setToAddress(toAddress);
-				moveOrderVO.setMoveDate(moveDate);
-				moveOrderVO.setAmountFirst(amountFirst);
-				moveOrderVO.setDeposit(deposit);
-				moveOrderVO.setOrderDate(orderDate);
-				moveOrderVO.setStatus(status);
-
-
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/move/frontGetMoveOrder.jsp");
-					failureView.forward(req, res);
-
-					return; //程式中斷
-					
-				}
+				MoveOrderVO moveOrderVO1 = new MoveOrderVO();
+				moveOrderVO1.setId(id);
+				moveOrderVO1.setMemberId(memberId);
+				moveOrderVO1.setAmountTotal(amountTotal);
+				moveOrderVO1.setComment(comment);
+				moveOrderVO1.setCustomer(customer);
+				moveOrderVO1.setPhone(phone);
+				moveOrderVO1.setFromAddress(fromAddress);
+				moveOrderVO1.setToAddress(toAddress);
+				moveOrderVO1.setMoveDate(moveDate);
+				moveOrderVO1.setAmountFirst(amountFirst);
+				moveOrderVO1.setDeposit(deposit);
+				moveOrderVO1.setOrderDate(orderDate);
+				moveOrderVO1.setStatus(status);
 
 				/***************************2.開始修改資料*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
-				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
+				moveOrderVO1 = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
 
+				List<MoveOrderVO> moveOrderVO = moSvc.getByMemberId(memberId);
+				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("moveOrderVO", moveOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/front_end/move/frontGetMoveOrder.jsp";
@@ -287,6 +279,7 @@ public class MoveOrderServlet extends HttpServlet{
 				HttpSession session = req.getSession();
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 				if(memberVO == null) {
+//					FrontEndMemberFilter.doFilter(req, res, gg);
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/front_end/move/frontGetMoveOrder.jsp");
 					failureView.forward(req, res);
@@ -320,322 +313,6 @@ public class MoveOrderServlet extends HttpServlet{
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/front_end/move/homePage.jsp");
-				failureView.forward(req, res);
-			}
-		}
-		
-		if ("updatestatusto1".equals(action)) { // 來自update_emp_input.jsp的請求
-			
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-		
-			try {
-				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-
-				Integer amountTotal = null;
-				try {
-					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
-				} catch (NumberFormatException e) {
-					amountTotal = 0;
-					errorMsgs.add("請輸入金額");
-				}
-				String comment = req.getParameter("comment");
-				Integer id = Integer.valueOf(req.getParameter("id"));
-				Integer memberId = Integer.valueOf(req.getParameter("memberId"));
-				String customer = req.getParameter("customer");
-				String phone = req.getParameter("phone");
-				String fromAddress = req.getParameter("fromAddress");
-				String toAddress = req.getParameter("toAddress");
-				Timestamp moveDate = java.sql.Timestamp.valueOf(req.getParameter("moveDate"));
-				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
-				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
-				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
-				//設定狀態變為1
-				Integer status = 1;
-				
-
-				
-				MoveOrderVO moveOrderVO = new MoveOrderVO();
-				moveOrderVO.setId(id);
-				moveOrderVO.setMemberId(memberId);
-				moveOrderVO.setAmountTotal(amountTotal);
-				moveOrderVO.setComment(comment);
-				moveOrderVO.setCustomer(customer);
-				moveOrderVO.setPhone(phone);
-				moveOrderVO.setFromAddress(fromAddress);
-				moveOrderVO.setToAddress(toAddress);
-				moveOrderVO.setMoveDate(moveDate);
-				moveOrderVO.setAmountFirst(amountFirst);
-				moveOrderVO.setDeposit(deposit);
-				moveOrderVO.setOrderDate(orderDate);
-				moveOrderVO.setStatus(status);
-
-
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/move/moveOrder.jsp");
-					failureView.forward(req, res);
-
-					return; //程式中斷
-					
-				}
-
-				/***************************2.開始修改資料*****************************************/
-				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
-				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
-
-				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/move/moveOrder.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
-				successView.forward(req, res);
-
-				/***************************其他可能的錯誤處理*************************************/
-			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:"+e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back_end/move/moveOrder.jsp");
-				failureView.forward(req, res);
-			}
-		}
-		
-		if ("updatestatusto2".equals(action)) { // 來自update_emp_input.jsp的請求
-			
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-		
-			try {
-				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-
-				Integer amountTotal = null;
-				try {
-					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
-				} catch (NumberFormatException e) {
-					amountTotal = 0;
-					errorMsgs.add("請輸入金額");
-				}
-				String comment = req.getParameter("comment");
-				Integer id = Integer.valueOf(req.getParameter("id"));
-				Integer memberId = Integer.valueOf(req.getParameter("memberId"));
-				String customer = req.getParameter("customer");
-				String phone = req.getParameter("phone");
-				String fromAddress = req.getParameter("fromAddress");
-				String toAddress = req.getParameter("toAddress");
-				Timestamp moveDate = java.sql.Timestamp.valueOf(req.getParameter("moveDate"));
-				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
-				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
-				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
-				//設定狀態變為2
-				Integer status = 2;
-				
-
-				
-				MoveOrderVO moveOrderVO = new MoveOrderVO();
-				moveOrderVO.setId(id);
-				moveOrderVO.setMemberId(memberId);
-				moveOrderVO.setAmountTotal(amountTotal);
-				moveOrderVO.setComment(comment);
-				moveOrderVO.setCustomer(customer);
-				moveOrderVO.setPhone(phone);
-				moveOrderVO.setFromAddress(fromAddress);
-				moveOrderVO.setToAddress(toAddress);
-				moveOrderVO.setMoveDate(moveDate);
-				moveOrderVO.setAmountFirst(amountFirst);
-				moveOrderVO.setDeposit(deposit);
-				moveOrderVO.setOrderDate(orderDate);
-				moveOrderVO.setStatus(status);
-
-
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/move/moveOrder.jsp");
-					failureView.forward(req, res);
-
-					return; //程式中斷
-					
-				}
-
-				/***************************2.開始修改資料*****************************************/
-				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
-				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
-
-				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/move/moveOrder.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
-				successView.forward(req, res);
-
-				/***************************其他可能的錯誤處理*************************************/
-			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:"+e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back_end/move/moveOrder.jsp");
-				failureView.forward(req, res);
-			}
-		}
-		
-		if ("updatestatusto3".equals(action)) { // 來自update_emp_input.jsp的請求
-			
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-		
-			try {
-				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-
-				Integer amountTotal = null;
-				try {
-					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
-				} catch (NumberFormatException e) {
-					amountTotal = 0;
-					errorMsgs.add("請輸入金額");
-				}
-				String comment = req.getParameter("comment");
-				Integer id = Integer.valueOf(req.getParameter("id"));
-				Integer memberId = Integer.valueOf(req.getParameter("memberId"));
-				String customer = req.getParameter("customer");
-				String phone = req.getParameter("phone");
-				String fromAddress = req.getParameter("fromAddress");
-				String toAddress = req.getParameter("toAddress");
-				Timestamp moveDate = java.sql.Timestamp.valueOf(req.getParameter("moveDate"));
-				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
-				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
-				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
-				//設定狀態變為3
-				Integer status = 3;
-				
-
-				
-				MoveOrderVO moveOrderVO = new MoveOrderVO();
-				moveOrderVO.setId(id);
-				moveOrderVO.setMemberId(memberId);
-				moveOrderVO.setAmountTotal(amountTotal);
-				moveOrderVO.setComment(comment);
-				moveOrderVO.setCustomer(customer);
-				moveOrderVO.setPhone(phone);
-				moveOrderVO.setFromAddress(fromAddress);
-				moveOrderVO.setToAddress(toAddress);
-				moveOrderVO.setMoveDate(moveDate);
-				moveOrderVO.setAmountFirst(amountFirst);
-				moveOrderVO.setDeposit(deposit);
-				moveOrderVO.setOrderDate(orderDate);
-				moveOrderVO.setStatus(status);
-
-
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/move/moveOrder.jsp");
-					failureView.forward(req, res);
-
-					return; //程式中斷
-					
-				}
-
-				/***************************2.開始修改資料*****************************************/
-				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
-				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
-
-				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/move/moveOrder.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
-				successView.forward(req, res);
-
-				/***************************其他可能的錯誤處理*************************************/
-			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:"+e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back_end/move/moveOrder.jsp");
-				failureView.forward(req, res);
-			}
-		}
-		
-		if ("updatestatusto4".equals(action)) { // 來自update_emp_input.jsp的請求
-			
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-		
-			try {
-				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-
-				Integer amountTotal = null;
-				try {
-					amountTotal = Integer.valueOf(req.getParameter("amountTotal").trim());
-				} catch (NumberFormatException e) {
-					amountTotal = 0;
-					errorMsgs.add("請輸入金額");
-				}
-				String comment = req.getParameter("comment");
-				Integer id = Integer.valueOf(req.getParameter("id"));
-				Integer memberId = Integer.valueOf(req.getParameter("memberId"));
-				String customer = req.getParameter("customer");
-				String phone = req.getParameter("phone");
-				String fromAddress = req.getParameter("fromAddress");
-				String toAddress = req.getParameter("toAddress");
-				Timestamp moveDate = java.sql.Timestamp.valueOf(req.getParameter("moveDate"));
-				Integer amountFirst = Integer.valueOf(req.getParameter("amountFirst").trim());
-				Integer deposit = Integer.valueOf(req.getParameter("deposit").trim());
-				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
-				//設定狀態變為4
-				Integer status = 4;
-				
-
-				
-				MoveOrderVO moveOrderVO = new MoveOrderVO();
-				moveOrderVO.setId(id);
-				moveOrderVO.setMemberId(memberId);
-				moveOrderVO.setAmountTotal(amountTotal);
-				moveOrderVO.setComment(comment);
-				moveOrderVO.setCustomer(customer);
-				moveOrderVO.setPhone(phone);
-				moveOrderVO.setFromAddress(fromAddress);
-				moveOrderVO.setToAddress(toAddress);
-				moveOrderVO.setMoveDate(moveDate);
-				moveOrderVO.setAmountFirst(amountFirst);
-				moveOrderVO.setDeposit(deposit);
-				moveOrderVO.setOrderDate(orderDate);
-				moveOrderVO.setStatus(status);
-
-
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("moveOrderVO", moveOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/move/moveOrder.jsp");
-					failureView.forward(req, res);
-
-					return; //程式中斷
-					
-				}
-
-				/***************************2.開始修改資料*****************************************/
-				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
-				moveOrderVO = moSvc.updateMoveOrder(id, memberId, customer, phone, fromAddress, toAddress, moveDate, amountFirst, deposit, amountTotal, comment, orderDate, status);
-
-				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("moveOrderVO", moveOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/move/moveOrder.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
-				successView.forward(req, res);
-
-				/***************************其他可能的錯誤處理*************************************/
-			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:"+e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back_end/move/moveOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -1073,7 +750,7 @@ public class MoveOrderServlet extends HttpServlet{
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("moveOrderVO", moveOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+							.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 					failureView.forward(req, res);
 
 					return; //程式中斷
@@ -1086,7 +763,7 @@ public class MoveOrderServlet extends HttpServlet{
 
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("moveOrderVO", moveOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/move/moveOrderGetMem.jsp";
+				String url = "/back_end/move/moveOrderGetOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -1094,7 +771,7 @@ public class MoveOrderServlet extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -1152,7 +829,7 @@ public class MoveOrderServlet extends HttpServlet{
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("moveOrderVO", moveOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+							.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 					failureView.forward(req, res);
 
 					return; //程式中斷
@@ -1165,7 +842,7 @@ public class MoveOrderServlet extends HttpServlet{
 
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("moveOrderVO", moveOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/move/moveOrderGetMem.jsp";
+				String url = "/back_end/move/moveOrderGetOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -1173,7 +850,7 @@ public class MoveOrderServlet extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -1231,7 +908,7 @@ public class MoveOrderServlet extends HttpServlet{
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("moveOrderVO", moveOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+							.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 					failureView.forward(req, res);
 
 					return; //程式中斷
@@ -1244,7 +921,7 @@ public class MoveOrderServlet extends HttpServlet{
 
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("moveOrderVO", moveOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/move/moveOrderGetMem.jsp";
+				String url = "/back_end/move/moveOrderGetOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -1252,7 +929,7 @@ public class MoveOrderServlet extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -1310,7 +987,7 @@ public class MoveOrderServlet extends HttpServlet{
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("moveOrderVO", moveOrderVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+							.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 					failureView.forward(req, res);
 
 					return; //程式中斷
@@ -1323,7 +1000,7 @@ public class MoveOrderServlet extends HttpServlet{
 
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("moveOrderVO", moveOrderVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/move/moveOrderGetMem.jsp";
+				String url = "/back_end/move/moveOrderGetOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -1331,7 +1008,7 @@ public class MoveOrderServlet extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back_end/move/moveOrderGetMem.jsp");
+						.getRequestDispatcher("/back_end/move/moveOrderGetOne.jsp");
 				failureView.forward(req, res);
 			}
 		}

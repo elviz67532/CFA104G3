@@ -93,8 +93,7 @@ th, td {
 					<!-- main -->
 
 					<h2>二手商品訂單</h2>
-					<table>
-					</table>
+
 
 					<%-- 錯誤表列 --%>
 					<c:if test="${not empty errorMsgs}">

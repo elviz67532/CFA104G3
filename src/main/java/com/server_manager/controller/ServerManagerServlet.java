@@ -2,6 +2,8 @@ package com.server_manager.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import com.server_manager.model.ServerManagerServiceImpl;
 import com.server_manager.model.ServerManagerVO;
+import com.server_manager_auth.model.ServerManagerAuthDAOJDBCImpl;
 import com.server_manager_auth.model.ServerManagerAuthServiceImpl;
 import com.server_manager_auth.model.ServerManagerAuthVO;
 import com.server_manager_function.model.ServerManageFunctionServiceImpl;
@@ -31,7 +34,7 @@ public class ServerManagerServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+		String atag = req.getParameter("atag");
 		if ("loginhandler".equals(action)) {
 			
 //			System.out.println("我進來loginhandler");
@@ -70,18 +73,23 @@ public class ServerManagerServlet extends HttpServlet {
 				if (!allowUser(account, password)) { // 【帳號 , 密碼無效時】
 					errMsgs.add("你的帳號 , 密碼無效!");
 				} else { // 【帳號 , 密碼有效時, 才做以下工作】
+					ServerManagerVO smVO = aquireVO(account);
+					//【取得 & 設定 session】
 					HttpSession session = req.getSession();
-					//【取得session】
-					session.setAttribute("account", account); // *工作1: 才在session內做已經登入過的標識
-					System.out.println("取得session了"); // session.getAttribute => 登入的資訊
+					session.setAttribute("ServerManagerVO", smVO);
+					session.setAttribute("account", account);
+							//session.setAttribute("account", account); // *工作1: 才在session內做已經登入過的標識
+							//System.out.println("取得session了"); // session.getAttribute => 登入的資訊
+
+					
 					//【取得角色】 DB 撈資料
 					ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
 					ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
 					Integer smgrId = smSvc.getId(account);
-					
-					List<ServerManagerAuthVO> list = smaSvc.selectByManager(smgrId); // null
-					System.out.println("smaSvc.selectByManager(smgrId)"+smaSvc.selectByManager(smgrId));
-					session.setAttribute("serverManagerAuth", list); //【取得smaId】
+					List<ServerManagerAuthVO> list = smaSvc.selectByManager(smgrId); //【取得smaId】
+						System.out.println("list" + list); 
+					session.setAttribute("auth", list);
+						System.out.println("auth " + session.getAttribute("auth"));
 					try {
 						String location = (String) session.getAttribute("location");
 						if (location != null) { 
@@ -98,6 +106,13 @@ public class ServerManagerServlet extends HttpServlet {
 				errMsgs.add("例外錯誤");
 				e.printStackTrace();
 			}
+		}
+		
+		if("logout".equals(atag)) {
+			HttpSession session = req.getSession();
+			session.invalidate();
+			RequestDispatcher view = req.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
+			view.forward(req, res);
 		}
 		
 		if("insert".equals(action)) {
@@ -180,43 +195,90 @@ public class ServerManagerServlet extends HttpServlet {
 				failureView.forward(req, res);
 			} 
 		}
+		if("update".equals(action)) {
+			Integer smgrId = Integer.valueOf(req.getParameter("smgrId"));
+			String[] smgeAuthIds = req.getParameterValues("smgeAuthId");
+			System.out.println("update smgrId: " + smgrId);
+			for(String smgeAuthId : smgeAuthIds) {
+				System.out.println("update smgeAuthId: " + smgeAuthId.toString());
+			}
+			//【delete】
+			ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
+			for(String smgeAuthId : smgeAuthIds) {
+				Integer smgeAuthId_ = Integer.valueOf(smgeAuthId);
+				DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId_, smgrId);
+				smaSvc.deleteById(dual);
+				//System.out.println("update smgeAuthId: " + smgeAuthId.toString());
+			}
+			//【insert】
+			for(String smgsAuthId : smgeAuthIds) {
+				ServerManagerAuthVO smaVO = new ServerManagerAuthVO();
+				Integer smgeAuthId_ = Integer.valueOf(smgsAuthId);
+				smaVO.setSmgeAuthId(smgeAuthId_);
+				smaVO.setSmgrId(smgrId);
+				smaSvc.insert(smaVO);
+			}
+			
+			RequestDispatcher view  = req
+					.getRequestDispatcher("/back_end/server_manager/admin.jsp");
+			view.forward(req, res);
+		}
+		if("delete".equals(action)) {
+			
+			try {
+				Integer smgrId = Integer.valueOf(req.getParameter("smgrId"));
+				Integer smgeAuthId = Integer.valueOf(req.getParameter("smgeAuthId"));
+				ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
+				DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId, smgrId);
+				smaSvc.deleteById(dual);				
+				ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
+				smSvc.delete(smgrId);
+//				try {
+//					ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
+//					DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId, smgrId);
+//					smaSvc.deleteById(dual);
+//				} catch (Exception e) {
+//					
+//					e.printStackTrace();
+//				}
+
+				RequestDispatcher view = req.getRequestDispatcher("/back_end/server_manager/admin.jsp");
+				view.forward(req, res);
+			} catch (NumberFormatException e) {
+				System.out.println("刪除後臺管理員失敗");
+				e.printStackTrace();
+			}
+		}
 		
-	}
-	public static String DBPassword(String account){
-		// SELECT * FROM SERVERMANAGER WHERE SMGR_ACCOUNT='tomcat';
-		ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
-		String password = smSvc.findByAccount(account);
-		System.out.println("DBPassword: " + password);
-		return password;
 	}
 	
 	public boolean allowUser(String account, String password) {
 		
-			//【檢查使用者輸入的帳號(account) 密碼(password)是否有效】
-			// 應至資料庫搜尋比對
+		//【檢查使用者輸入的帳號(account) 密碼(password)是否有效】
+		// 應至資料庫搜尋比對
 		//DB
 		System.out.println("allowUser");
 		ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
 		System.out.println("產生smSvc: "+ smSvc);
-		String ans = smSvc.findByAccount(account); //DB的password
+		ServerManagerVO smVO = smSvc.findByAccount(account); //DB的password
+		if (smVO == null) {
+			return false;
+		}
+		
+		String ans = smVO.getSmgrPassword();
 		System.out.println("ans: "+ ans);
 		
-		String allowUser_account = account;
-		String allowUser_password = password;
 		if(account.equals(account) && ans.equals(password))
 			return true;
 		else 
 			return false;
 	}
 	
-	public static void main(String[] args) {
-		String pwd = DBPassword("tomcat");
-		//System.out.println("password:" + pwd);
-		
-		// 測試時記得加上static
-		//System.out.println("allowuser: " + allowUser("tomcat", DBPassword("tomcat"))); 
+	public ServerManagerVO aquireVO(String account) {
+		ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();		
+		ServerManagerVO smVO = smSvc.findByAccount(account); //DB的password
+		return smVO;
 	}
-
 }
 
 

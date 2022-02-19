@@ -31,8 +31,7 @@ import com.move_request.model.MoveRequestService;
 import com.move_request.model.MoveRequestServiceImpl;
 import com.move_request.model.MoveRequestVO;
 
-// TODO 發生檔案太大異常時處理方式
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 3 * 1024 * 1024, maxRequestSize = 3 * 3 * 1024 * 1024)
 public class MoveRequestServlet extends HttpServlet {
 
 	@Override
@@ -46,11 +45,12 @@ public class MoveRequestServlet extends HttpServlet {
 		Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 
+		
 		if ("moveRequest".equals(action)) {
 //			HttpSession session = req.getSession();
 //			MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
 //			if (memberVo == null) {
-//				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/moveRequest.jsp");
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/homePage.jsp");
 //				failureView.forward(req, res);
 //				return;
 //			}
@@ -69,6 +69,8 @@ public class MoveRequestServlet extends HttpServlet {
 			String evaDate = req.getParameter("evaDate");
 			Collection<Part> parts = req.getParts();
 
+			// TODO 指定允許時間(EVA、MOVE)
+			
 			try {
 				checkEmpty(errorMsgs, fromAddress, "fromAddress");
 				checkEmpty(errorMsgs, toAddress, "toAddress");
@@ -162,7 +164,6 @@ public class MoveRequestServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher("/front_end/move/moveRequest.jsp");
 				successView.forward(req, res);
 			} catch (Exception e) {
-				req.setAttribute("exception", e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/moveRequest.jsp");
 				failureView.forward(req, res);
 			}

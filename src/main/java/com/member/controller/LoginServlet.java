@@ -37,7 +37,6 @@ public class LoginServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
-
 	}
 
 	public void init() throws ServletException {
@@ -117,6 +116,7 @@ public class LoginServlet extends HttpServlet {
 					errorMsgs.put("gender","性別");
 				}
 
+
 //				String city = req.getParameter("city").trim();
 //				if (city == null || city.trim().length() == 0) {
 //					errorMsgs.add("城市請勿空白");
@@ -132,6 +132,7 @@ public class LoginServlet extends HttpServlet {
 
 			    byte[] avatar = CommonUtil.getPictureByteArray(getServletContext().getRealPath("/")+"/asset/img/avatar.jpg");
 //				InputStream in = req.getPart("avatar").getInputStream();
+
 //				byte[] avatar = null;
 //				if (in.available() != 0) {
 //					avatar = new byte[in.available()];
@@ -411,6 +412,7 @@ public class LoginServlet extends HttpServlet {
 			}
 
 		}
+
 		if ("validate".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -439,17 +441,18 @@ public class LoginServlet extends HttpServlet {
 
 		}
 
+
 		if ("getImage".equals(action)) {
 			res.setContentType("image/gif"); // 顯示圖片
 			ServletOutputStream out = res.getOutputStream();
-			System.out.println("圖片");
+	
 			try {
 				Statement stmt = con.createStatement();
-				String id = req.getParameter("MEM_ID");
-				ResultSet rs = stmt.executeQuery("SELECT MEM_AVATAR FROM MEMBER WHERE MEM_ID = " + id);
-
+				ResultSet rs = stmt
+						.executeQuery("SELECT MEM_AVATAR FROM MEM_AVATAR WHERE MEM_ID = " + req.getParameter("id"));
+	
 				if (rs.next()) {
-					BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("MEM_AVATAR"));
+					BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("image"));
 					byte[] buf = new byte[4 * 1024]; // 4K buffer
 					int len;
 					while ((len = in.read(buf)) != -1) {
@@ -464,9 +467,7 @@ public class LoginServlet extends HttpServlet {
 			} catch (Exception e) {
 				System.out.println(e);
 			}
-
 		}
-
 	}
 
 	private String generateForm(HttpServletRequest req, int id, String code) {//信箱連結

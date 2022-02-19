@@ -4,9 +4,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.faq.model.*"%>
 <%@ page import="java.util.*"%>
+<%
+// 傳入參數
+FaqServiceImpl faqSvc = new FaqServiceImpl();
+List<FaqVO> list = faqSvc.getAll();
+request.setAttribute("list", list);
+%>
 
 <!doctype html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
@@ -23,116 +29,130 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
-<title>委域</title>
+<title>委域-Entrust area</title>
 </head>
+<style>
+table {
+	width: 800px;
+	background-color: white;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table, th, td {
+	border: 1px solid #CCCCFF;
+}
+
+th, td {
+	padding: 5px;
+	text-align: center;
+}
+
+.box1 {
+	width: 200px;
+	background-color: black;
+	margin-top: auto;
+	margin-right: 0px;
+}
+
+.box2 {
+	width: 200px;
+	background-color: black;
+	margin-top: auto;
+	margin-right: 0px;
+}
+
+.box3 {
+	width: 200px;
+	background-color: black;
+	margin-top: auto;
+	margin-right: 0px;
+}
+
+.box4 {
+	width: 200px;
+	background-color: black;
+	margin-top: auto;
+	margin-right: 0px;
+}
+</style>
 <body id="page-top">
-
-	<!-- Page Wrapper -->
 	<div id="wrapper">
-
 		<!-- Sidebar -->
 		<jsp:include page="/back_end/common/sidebar.jsp"></jsp:include>
-
-		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
-
-			<!-- Main Content -->
 			<div id="content">
 				<!-- Topbar -->
 				<jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
 				<div class="container-fluid">
-					<!-- 全域錯誤、傳入參數 -->
-					<%
-					// 傳入參數
-					FaqServiceImpl faqSvc = new FaqServiceImpl();
-					List<FaqVO> list = faqSvc.getAll();
-					pageContext.setAttribute("list", list);
-					%>
 
 					<!-- main -->
-					<h1 class="h3 mb-2 text-gray-800">幫助中心</h1>
 
-					<!-- DataTales Example -->
-					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">FAQ管理</h6>
-						</div>
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
-									<tr>
-										<td>
-											<h3>所有FAQ資料</h3>
-											<h4></h4>
-										</td>
-									</tr>
-								</table>
+					<h2>
+						所有FAQ資料
+						<td><a href='addFaq.jsp'><input type="submit"
+								value="新增FAQ"></a></td>
+					</h2>
+					<a href="back_FaqMain.jsp">回首頁</a>
+					</td>
 
-								<%-- 錯誤表列 --%>
-								<c:if test="${not empty errorMsgs}">
-									<font style="color: red">請修正以下錯誤:</font>
-									<ul>
-										<c:forEach var="message" items="${errorMsgs}">
-											<li style="color: red">${message}</li>
-										</c:forEach>
-									</ul>
-								</c:if>
+					<%-- 錯誤表列 --%>
+					<c:if test="${not empty errorMsgs}">
+						<font style="color: red">請修正以下錯誤:</font>
+						<ul>
+							<c:forEach var="message" items="${errorMsgs}">
+								<li style="color: red">${message}</li>
+							</c:forEach>
+						</ul>
+					</c:if>
 
-								<table>
-									<tr>
-									<thead>
-										<tr>
-											<th>FAQ編號</th>
-											<th>問題</th>
-											<th>回答</th>
+					<table>
 
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>FAQ編號</th>
-											<th>問題</th>
-											<th>回答</th>
-										</tr>
-									</tfoot>
-									</tr>
+						<thead>
+							<tr>
+								<th>FAQ編號</th>
+								<th>問題</th>
+								<th>回答</th>
 
-									<c:forEach var="faqVO" items="${list}">
-										<%@ include file="page1.file"%>
+							</tr>
+							<%@ include file="page1.jsp"%>
+							<c:forEach var="faqVO" items="${list}" begin="<%=pageIndex%>"
+								end="<%=pageIndex+rowsPerPage-1%>">
+						</thead>
 
 
-										<tr>
-											<td>${faqVO.id}</td>
-											<td>${faqVO.question}</td>
-											<td>${faqVO.answer}</td>
 
-											<td>
-												<FORM METHOD="post" ACTION="faq.do">
 
-													<input type="submit" value="修改"> <input
-														type="hidden" name="empno" value="${ProductVO.id}">
-													<input type="hidden" name="action"
-														value="getOne_For_Update">
-												</FORM>
-											</td>
-											<td>
-												<FORM METHOD="post" ACTION="productorder.do">
-													<input type="submit" value="刪除"> <input
-														type="hidden" name="empno" value="${ProductVO.id}">
-													<input type="hidden" name="action" value="delete">
-												</FORM>
-											</td>
-										</tr>
-									</c:forEach>
-								</table>
-							</div>
-						</div>
-					</div>
+						<tr>
+							<td>${faqVO.id}</td>
+							<td>${faqVO.question}</td>
+							<td>${faqVO.answer}</td>
+
+							<td>
+								<FORM METHOD="post" ACTION="faq">
+
+									<input type="submit" value="修改"> <input type="hidden"
+										name="id" value="${faqVO.id}"> <input type="hidden"
+										name="action" value="getOne_For_Update">
+								</FORM>
+							</td>
+							<td>
+								<FORM METHOD="post" ACTION="faq">
+									<input type="submit" value="刪除"> <input type="hidden"
+										name="id" value="${faqVO.id}"> <input type="hidden"
+										name="action" value="delete">
+								</FORM>
+						</tr>
+						</c:forEach>
+					</table>
+					<%@ include file="page2.jsp"%>
 				</div>
 			</div>
-			<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
 		</div>
+	</div>
+	</div>
+	<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
+	</div>
 	</div>
 	<!-- End of Page Wrapper -->
 

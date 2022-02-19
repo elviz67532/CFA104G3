@@ -1,0 +1,104 @@
+.ellipsis {
+	  overflow: hidden;
+	  display: -webkit-box;
+	  text-overflow: ellipsis;
+	  -webkit-line-clamp: 2; /*行數*/
+	  -webkit-box-orient: vertical;
+	  white-space: normal;
+}
+.section1{ 
+	padding: 24px 48px 32px 48px; 
+    background-color: #fff; 
+} 
+.section2{
+	padding: 2% 48px 0 48px;
+    background-color: #fff;
+}
+
+.launchedDate{
+    color: #b5bac1;
+    font-size: 14px;
+    font-weight: 500;
+	margin: 4px 8px; 
+}
+.showImage{
+	box-shadow: none;
+    border-radius: 16px;
+    width: 100%;
+}
+.actType{
+    padding: 2px 24px;
+	background-color: #00aaf5;
+/* 	background-color: #ff93c2; */
+    box-shadow: 0 2px 4px rgb(255 147 194 / 30%);
+}
+.actName{
+	font-size: 32px;
+    font-weight: 600;
+    color: #212121;
+    margin-top: 10px;
+    margin-bottom: 24px;
+}
+.innerDiv{
+	box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+    padding: 16px;
+    border-radius: 16px;
+    font-size: 16px;
+    margin: auto 20px auto auto;
+}
+.timeDiv{
+	font-weight: 700;
+    color: #595e64;
+}
+.actInformation{
+	margin: 20px auto 2rem auto;
+	text-align: left;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f5f5f5;
+    color: #262626;
+    font-weight: 600;
+    font-size: 24px;
+}
+.btn{
+	width: 100%;
+    padding: 16px 40px;
+	margin: 8px 0 60px 0;
+}
+.btn-hover {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+    outline: none;
+}
+.btn-hover.color-1 {
+    background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+}
+.btn-hover.color-11 {
+       background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);
+        box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
+}

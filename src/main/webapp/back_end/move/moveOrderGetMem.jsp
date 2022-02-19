@@ -6,9 +6,6 @@
 <%
 List<MoveOrderVO> moveOrderVO = (List<MoveOrderVO>) request.getAttribute("moveOrderVO");
 %>
-
-
-
 <!doctype html>
 <html lang="zh-TW">
 <head>
@@ -103,127 +100,92 @@ button {
 								<td>${moveOrderVO.deposit}</td>
 								<td>
 									<FORM METHOD="post" ACTION="moveorder.do">
-										<input type="hidden" name="action" value="update"> <input
-											type="hidden" name="id" value="${moveOrderVO.id}"> <input
-											type="hidden" name="memberId" value="${moveOrderVO.memberId}">
-										<input type="hidden" name="customer"
-											value="${moveOrderVO.customer}"> <input type="hidden"
-											name="phone" value="${moveOrderVO.phone}"> <input
-											type="hidden" name="fromAddress"
-											value="${moveOrderVO.fromAddress}"> <input
-											type="hidden" name="toAddress"
-											value="${moveOrderVO.toAddress}"> <input
-											type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
-										<input type="hidden" name="amountFirst"
-											value="${moveOrderVO.amountFirst}"> <input
-											type="hidden" name="deposit" value="${moveOrderVO.deposit}">
-										<input type="text" name="amountTotal"
-											value="${moveOrderVO.amountTotal}"> <input
-											type="hidden" name="comment" value="${moveOrderVO.comment}">
-										<input type="hidden" name="orderDate"
-											value="${moveOrderVO.orderDate}"> <input
-											type="hidden" name="status" value="${moveOrderVO.status}">
+										<input type="hidden" name="action" value="update"> 
+										<input type="hidden" name="id" value="${moveOrderVO.id}"> 
+										<input type="hidden" name="memberId" value="${moveOrderVO.memberId}">
+										<input type="hidden" name="customer" value="${moveOrderVO.customer}"> 
+										<input type="hidden" name="phone" value="${moveOrderVO.phone}"> 
+										<input type="hidden" name="fromAddress" value="${moveOrderVO.fromAddress}"> 
+										<input type="hidden" name="toAddress" value="${moveOrderVO.toAddress}"> 
+										<input type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
+										<input type="hidden" name="amountFirst" value="${moveOrderVO.amountFirst}"> 
+										<input type="hidden" name="deposit" value="${moveOrderVO.deposit}">
+										<input type="text" name="amountTotal" value="${moveOrderVO.amountTotal}"> 
+										<input type="hidden" name="comment" value="${moveOrderVO.comment}">
+										<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}"> 
+										<input type="hidden" name="status" value="${moveOrderVO.status}">
 										<input type="submit" value="送出">
-
 									</FORM>
 								</td>
 								<td>${moveOrderVO.orderDate}</td>
 								<td>${moveOrderVO.comment}</td>
 								<td>
 									<FORM METHOD="post" ACTION="moveorder.do">
-										<input type="hidden" name="action"
-											value="updatestatusto1bymem"> <input type="hidden"
-											name="id" value="${moveOrderVO.id}"> <input
-											type="hidden" name="memberId" value="${moveOrderVO.memberId}">
-										<input type="hidden" name="customer"
-											value="${moveOrderVO.customer}"> <input type="hidden"
-											name="phone" value="${moveOrderVO.phone}"> <input
-											type="hidden" name="fromAddress"
-											value="${moveOrderVO.fromAddress}"> <input
-											type="hidden" name="toAddress"
-											value="${moveOrderVO.toAddress}"> <input
-											type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
-										<input type="hidden" name="amountFirst"
-											value="${moveOrderVO.amountFirst}"> <input
-											type="hidden" name="deposit" value="${moveOrderVO.deposit}">
-										<input type="hidden" name="amountTotal"
-											value="${moveOrderVO.amountTotal}"> <input
-											type="hidden" name="comment" value="${moveOrderVO.comment}">
-										<input type="hidden" name="orderDate"
-											value="${moveOrderVO.orderDate}"> <input
-											type="hidden" name="status" value="${moveOrderVO.status}">
+										<input type="hidden" name="action" value="updatestatusto1bymem"> 
+										<input type="hidden" name="id" value="${moveOrderVO.id}"> 
+										<input type="hidden" name="memberId" value="${moveOrderVO.memberId}">
+										<input type="hidden" name="customer" value="${moveOrderVO.customer}"> 
+										<input type="hidden" name="phone" value="${moveOrderVO.phone}"> 
+										<input type="hidden" name="fromAddress" value="${moveOrderVO.fromAddress}"> 
+										<input type="hidden" name="toAddress" value="${moveOrderVO.toAddress}"> 
+										<input type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
+										<input type="hidden" name="amountFirst" value="${moveOrderVO.amountFirst}"> 
+										<input type="hidden" name="deposit" value="${moveOrderVO.deposit}">
+										<input type="hidden" name="amountTotal" value="${moveOrderVO.amountTotal}"> 
+										<input type="hidden" name="comment" value="${moveOrderVO.comment}">
+										<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}"> 
+										<input type="hidden" name="status" value="${moveOrderVO.status}">
 										<button type="submit">不簽訂契約結束訂單</button>
 									</FORM>
 									<FORM METHOD="post" ACTION="moveorder.do">
-										<input type="hidden" name="action"
-											value="updatestatusto2bymem"> <input type="hidden"
-											name="id" value="${moveOrderVO.id}"> <input
-											type="hidden" name="memberId" value="${moveOrderVO.memberId}">
-										<input type="hidden" name="customer"
-											value="${moveOrderVO.customer}"> <input type="hidden"
-											name="phone" value="${moveOrderVO.phone}"> <input
-											type="hidden" name="fromAddress"
-											value="${moveOrderVO.fromAddress}"> <input
-											type="hidden" name="toAddress"
-											value="${moveOrderVO.toAddress}"> <input
-											type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
-										<input type="hidden" name="amountFirst"
-											value="${moveOrderVO.amountFirst}"> <input
-											type="hidden" name="deposit" value="${moveOrderVO.deposit}">
-										<input type="hidden" name="amountTotal"
-											value="${moveOrderVO.amountTotal}"> <input
-											type="hidden" name="comment" value="${moveOrderVO.comment}">
-										<input type="hidden" name="orderDate"
-											value="${moveOrderVO.orderDate}"> <input
-											type="hidden" name="status" value="${moveOrderVO.status}">
+										<input type="hidden" name="action" value="updatestatusto2bymem"> 
+										<input type="hidden" name="id" value="${moveOrderVO.id}"> 
+										<input type="hidden" name="memberId" value="${moveOrderVO.memberId}">
+										<input type="hidden" name="customer" value="${moveOrderVO.customer}"> 
+										<input type="hidden" name="phone" value="${moveOrderVO.phone}"> 
+										<input type="hidden" name="fromAddress" value="${moveOrderVO.fromAddress}"> 
+										<input type="hidden" name="toAddress" value="${moveOrderVO.toAddress}"> 
+										<input type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
+										<input type="hidden" name="amountFirst" value="${moveOrderVO.amountFirst}"> 
+										<input type="hidden" name="deposit" value="${moveOrderVO.deposit}">
+										<input type="hidden" name="amountTotal" value="${moveOrderVO.amountTotal}"> 
+										<input type="hidden" name="comment" value="${moveOrderVO.comment}">
+										<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}"> 
+										<input type="hidden" name="status" value="${moveOrderVO.status}">
 										<button type="submit">等待運送貨物</button>
 									</FORM>
 									<FORM METHOD="post" ACTION="moveorder.do">
-										<input type="hidden" name="action"
-											value="updatestatusto3bymem"> <input type="hidden"
-											name="id" value="${moveOrderVO.id}"> <input
-											type="hidden" name="memberId" value="${moveOrderVO.memberId}">
-										<input type="hidden" name="customer"
-											value="${moveOrderVO.customer}"> <input type="hidden"
-											name="phone" value="${moveOrderVO.phone}"> <input
-											type="hidden" name="fromAddress"
-											value="${moveOrderVO.fromAddress}"> <input
-											type="hidden" name="toAddress"
-											value="${moveOrderVO.toAddress}"> <input
-											type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
-										<input type="hidden" name="amountFirst"
-											value="${moveOrderVO.amountFirst}"> <input
-											type="hidden" name="deposit" value="${moveOrderVO.deposit}">
-										<input type="hidden" name="amountTotal"
-											value="${moveOrderVO.amountTotal}"> <input
-											type="hidden" name="comment" value="${moveOrderVO.comment}">
-										<input type="hidden" name="orderDate"
-											value="${moveOrderVO.orderDate}"> <input
-											type="hidden" name="status" value="${moveOrderVO.status}">
+										<input type="hidden" name="action" value="updatestatusto3bymem"> 
+										<input type="hidden" name="id" value="${moveOrderVO.id}"> 
+										<input type="hidden" name="memberId" value="${moveOrderVO.memberId}">
+										<input type="hidden" name="customer" value="${moveOrderVO.customer}"> 
+										<input type="hidden" name="phone" value="${moveOrderVO.phone}"> 
+										<input type="hidden" name="fromAddress" value="${moveOrderVO.fromAddress}"> 
+										<input type="hidden" name="toAddress" value="${moveOrderVO.toAddress}"> 
+										<input type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
+										<input type="hidden" name="amountFirst" value="${moveOrderVO.amountFirst}"> 
+										<input type="hidden" name="deposit" value="${moveOrderVO.deposit}">
+										<input type="hidden" name="amountTotal" value="${moveOrderVO.amountTotal}"> 
+										<input type="hidden" name="comment" value="${moveOrderVO.comment}">
+										<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}"> 
+										<input type="hidden" name="status" value="${moveOrderVO.status}">
 										<button type="submit">運送中</button>
 									</FORM>
 									<FORM METHOD="post" ACTION="moveorder.do">
-										<input type="hidden" name="action"
-											value="updatestatusto4bymem"> <input type="hidden"
-											name="id" value="${moveOrderVO.id}"> <input
-											type="hidden" name="memberId" value="${moveOrderVO.memberId}">
-										<input type="hidden" name="customer"
-											value="${moveOrderVO.customer}"> <input type="hidden"
-											name="phone" value="${moveOrderVO.phone}"> <input
-											type="hidden" name="fromAddress"
-											value="${moveOrderVO.fromAddress}"> <input
-											type="hidden" name="toAddress"
-											value="${moveOrderVO.toAddress}"> <input
-											type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
-										<input type="hidden" name="amountFirst"
-											value="${moveOrderVO.amountFirst}"> <input
-											type="hidden" name="deposit" value="${moveOrderVO.deposit}">
-										<input type="hidden" name="amountTotal"
-											value="${moveOrderVO.amountTotal}"> <input
-											type="hidden" name="comment" value="${moveOrderVO.comment}">
-										<input type="hidden" name="orderDate"
-											value="${moveOrderVO.orderDate}"> <input
-											type="hidden" name="status" value="${moveOrderVO.status}">
+										<input type="hidden" name="action" value="updatestatusto4bymem"> 
+										<input type="hidden" name="id" value="${moveOrderVO.id}"> 
+										<input type="hidden" name="memberId" value="${moveOrderVO.memberId}">
+										<input type="hidden" name="customer" value="${moveOrderVO.customer}"> 
+										<input type="hidden" name="phone" value="${moveOrderVO.phone}"> 
+										<input type="hidden" name="fromAddress" value="${moveOrderVO.fromAddress}"> 
+										<input type="hidden" name="toAddress" value="${moveOrderVO.toAddress}"> 
+										<input type="hidden" name="moveDate" value="${moveOrderVO.moveDate}">
+										<input type="hidden" name="amountFirst" value="${moveOrderVO.amountFirst}"> 
+										<input type="hidden" name="deposit" value="${moveOrderVO.deposit}">
+										<input type="hidden" name="amountTotal" value="${moveOrderVO.amountTotal}"> 
+										<input type="hidden" name="comment" value="${moveOrderVO.comment}">
+										<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}"> 
+										<input type="hidden" name="status" value="${moveOrderVO.status}">
 										<button type="submit">完成訂單</button>
 									</FORM>
 								</td>

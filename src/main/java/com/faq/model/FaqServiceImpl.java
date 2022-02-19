@@ -1,6 +1,9 @@
 package com.faq.model;
 
+
+
 import java.util.*;
+
 
 public class FaqServiceImpl implements FaqService {
 
@@ -11,16 +14,18 @@ public class FaqServiceImpl implements FaqService {
 	}
 
 	@Override
-	public FaqVO addFaq(String question, String answer) {
+	public FaqVO addFaq(Integer id, String question, String answer) {
 
 		FaqVO vo = new FaqVO();
 
+		vo.setId(id);
 		vo.setQuestion(question);
 		vo.setAnswer(answer);
 
-		dao.insert(vo);
+		int row = dao.insert(vo);
 
-		
+		System.out.println("FAQ " + row);
+
 		return vo;
 	}
 
@@ -33,24 +38,27 @@ public class FaqServiceImpl implements FaqService {
 		vo.setQuestion(question);
 		vo.setAnswer(answer);
 
-		dao.update(vo);
+		int row = dao.update(vo);
 
-		System.out.println("商品訂單已修改");
+		System.out.println("FAQ " + row);
+
+		System.out.println("FAQ已更新");
 		return vo;
 	}
 
 	@Override
 	public void deleteFaq(Integer id) {
-		dao.deleteById(id);
+		int row = dao.deleteById(id);
+		System.out.println("FAQ " + row);
 	}
 
 	@Override
 	public FaqVO getOneFaq(Integer id) {
-		return dao.findByPrimaryKey(id);
+		return dao.selectById(id);
 	}
 
 	@Override
 	public List<FaqVO> getAll() {
-		return dao.getAll();
+		return dao.selectAll();
 	}
 }

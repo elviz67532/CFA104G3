@@ -14,7 +14,6 @@ public class ActivityReportServiceImpl implements ActivityReportService {
 			byte[] photo) {
 
 		ActivityReportVO actrVO = new ActivityReportVO();
-
 		actrVO.setActivityId(activityId);
 		actrVO.setMemberId(memberId);
 		actrVO.setContent(content);

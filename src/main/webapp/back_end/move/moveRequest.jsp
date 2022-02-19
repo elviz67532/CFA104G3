@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <!doctype html>
@@ -34,50 +33,56 @@
 								action="/CFA104G3/move/moveManage.do"
 								name="moveManage">
 								<input type="hidden" name="action" value="moveManage">
+								<input type="hidden" id="requestId" value="moveManage">
+								
+								<!-- 客戶名稱 -->
+								<div class="col-12">
+									<label for="memberName" class="form-label">客戶名稱:</label>
+									<input id="memberName" name="memberName" type="text" class="form-control"
+										disabled>
+								</div>
 				
 								<!-- 收貨地址 -->
 								<div class="col-6">
 									<label for="fromAddress" class="form-label">收貨地址:</label>
-									<input id="fromAddress" name="fromAddress" type="text" class="form-control" id="fromAddress"
+									<input id="fromAddress" name="fromAddress" type="text" class="form-control"
 										disabled>
 								</div>
 									
 								<!-- 送達地址 -->
 								<div class="col-6">
 									<label for="toAddress" class="form-label">送達地址:</label>
-									<input id="toAddress" name="toAddress" type="text" class="form-control" id="toAddress"
+									<input id="toAddress" name="toAddress" type="text" class="form-control"
 										disabled>
 								</div>
 									
 								<!-- 貨物描述 -->
 								<div class="col-12">
 									<label for="items" class="form-label">貨物描述:</label>
-									<input id="items" name="items" type="text" class="form-control" id="items"
+									<input id="items" name="items" type="text" class="form-control"
 										disabled>
 								</div>
 				
 								<!-- 搬家日期 -->
 								<div class="col-12">
 									<label for="moveDate" class="form-label">搬家日期:</label> 
-									<input id="moveDate" name="moveDate" type="text" class="form-control" id="moveDate"
+									<input id="moveDate" name="moveDate" type="text" class="form-control"
 										disabled>
 								</div>
 									
 								<!-- 申請模式 -->
 								<div class="col-12">
 									<label class="form-label">申請模式:</label><br/>
-									
-									<label id="mode"></label>
-<!-- 									<div class="form-check form-check-inline col-6"> -->
-<!-- 										<input class="form-check-input" type="radio" name="requestMode" -->
-<!-- 											id="online" disabled/> -->
-<!-- 										<label class="form-check-label" for="online">線上估價</label> -->
-<!-- 									</div> -->
-<!-- 									<div class="form-check form-check-inline col-6"> -->
-<!-- 										<input class="form-check-input" type="radio" name="requestMode" -->
-<!-- 											id="site" value="site" disabled/> -->
-<!-- 										<label class="form-check-label" for="site">現場估價</label> -->
-<!-- 									</div> -->
+									<div class="form-check form-check-inline col-6">
+										<input class="form-check-input" type="radio" name="requestMode"
+											id="online" disabled/>
+										<label class="form-check-label" for="online">線上估價</label>
+									</div>
+									<div class="form-check form-check-inline col-6">
+										<input class="form-check-input" type="radio" name="requestMode"
+											id="site" value="site" disabled/>
+										<label class="form-check-label" for="site">現場估價</label>
+									</div>
 								</div>
 								
 								<!-- 現場估價日期 -->
@@ -87,35 +92,28 @@
 									disabled>
 								</div>
 
-								<hr style="border: 1px solid black; width: 100%;" />
-
 								<div class="col-12">
-									<label for="itemPhoto" class="form-label">線上估價照片:</label><br />
+									<label for="itemPhoto" class="form-label">線上估價照片:</label><br/>
 									<div id="photos">
 									</div>
 								</div>
 								
-								<hr>
-	
-<!-- 線上估價模式 -> 填入金額 -> 審核成功	 -->
-<!-- 線上估價模式 -> 填入金額 -> 審核失敗			 -->
-<!-- 現場場估價模式 -> 審核成功 -->
-<!-- 現場估價模式 -> 審核失敗 -->
-<!-- 狀態 -->
+								<hr style="border: 1px solid black; width: 100%;" />
+								
+								<div class="col-4">
+									<label for="status" class="form-label">申請單狀態:</label><br/>
+									<input name="status" type="text" class="form-control" id="status"
+									disabled>
+								</div>
 
-
-<!-- 								修改估價 -->
-<!-- 				審核完成 -->
-<!-- 任意狀態皆能變為					審核失敗 -->
-
-
-
-<!-- 								submit -->
-<!-- 								<div class="col-12"> -->
-<!-- 									<button type="submit" class="btn btn-primary mb-3"> -->
-<!-- 										<c:out value="審核成功/失敗/關閉/估價"></c:out> -->
-<!-- 									</button> -->
-<!-- 								</div> -->
+							    <div class="col-4">
+							   		<label for="evaulatePrice" class="form-label">估價金額:</label><br/>
+							      	<input type="number" id="evaulatePrice" class="form-control">
+							  	</div>
+								<div class="col-4">
+								  	<button type="button" id="verifyOK" value="">審核成功</button>
+								  	<button type="button" id="verifyNAK" value="">審核失敗</button>
+								</div>
 							</form>
 						</div>
 					</main>
@@ -151,39 +149,43 @@
 	    function initMoveRequest() {
 	        const value = `${document.cookie}`;
 	        
+	        // 先禁用所有input
 	        let requestId = getCookie('requestId');
+	        if (requestId === 'undefined' || requestId === null) {
+	        	$('#evaulatePrice').attr('disabled', true);
+	        	$('#verifyOK').attr('disabled', true);
+	        	$('#verifyNAK').attr('disabled', true);
+	        	return;
+	        }
 	        
+	        $('#requestId').val(requestId);
 	        $.ajax({
 	            url: "/CFA104G3/move/moveManage.do",
 	            type: "POST",
-	            data: JSON.stringify({'mode':'backManage', 'id':requestId}),
+	            data: JSON.stringify({'action':'backManage', 'id':requestId}),
 	            success: function(data){
 	            	console.log('success');
 	        		let jsonObj = JSON.parse(data);
 	        		if(jsonObj.errorCode==='success') {
-		        		let moveRequestVO = jsonObj.body.moveRequestVO;
-		        		let movePhotoTransVO = jsonObj.body.movePhotoTransVO;	        		
+	        			let body = jsonObj.body;
+	        			$('#memberName').val(body.memberName);
 		        		
-		        		$('#fromAddress').val(moveRequestVO.fromAddress);
-		        		$('#toAddress').val(moveRequestVO.toAddress);
-		        		$('#items').val(moveRequestVO.items);
-		        		$('#moveDate').val(moveRequestVO.moveDate);
+		        		$('#fromAddress').val(body.fromAddress);
+		        		$('#toAddress').val(body.toAddress);
+		        		$('#items').val(body.items);
+		        		$('#moveDate').val(body.moveDate);
 		        		
-		        		if ("0" == moveRequestVO.evaluateType) {
-		        			$('#mode').text('#線上估價');
-// 		        			$('#online').attr('checked', true);
+		        		if ("0" == body.evaluateType) {
+		        			$('#online').attr('checked', true);
 		        			$('#siteEvaDiv').hide();
 
-		        		} else if ("1" == moveRequestVO.evaluateType) {
-		        			$('#mode').text('#現場估價');
-// 		        			$('#site').attr('checked', true);
-
+		        		} else if ("1" == body.evaluateType) {
+		        			$('#site').attr('checked', true);
 		        		}
-		        		$('#evaDate').val(moveRequestVO.evaluateDate);
+		        		$('#evaDate').val(body.evaluateDate);
 		        		$('#photos').val('');
 		        		
-		        		console.log(movePhotoTransVO);
-		        		$.each(movePhotoTransVO, function(index, moveRequestPhoto) {
+		        		$.each(body.movePhotoTransVOs, function(index, moveRequestPhoto) {
 	        			  console.log(moveRequestPhoto);
 	        			  console.log(moveRequestPhoto.moveRequestId);
 	        			  
@@ -193,14 +195,62 @@
 	        			  img.setAttribute("style", "max-width: 50%; border: solid black 2px;");
 	        			  img.setAttribute("src", 'data:image/all;base64, '+ moveRequestPhoto.photo);
 	        			  $("#photos").append(img);
-
-	        			  console.log(moveRequestPhoto.photo);
-	        			}); 		
+	        			}); 	
+		        		
+		        		$('#status').val(body.status);
+        				$('#evaulatePrice').val(body.evaluatePrice);
+	        		} else if(jsonObj.errorCode==='login'){
+	        	        window.location.href = jsonObj.body;
 	        		}
         		},
 	    	});
     	};
+    	$("#verifyOK").click(function(){
+	        let self = this;
+		    let price = $('#evaulatePrice').val();
+		    let status = $('#reqStatus').val();
+	  		let requestId = $('#requestId').val();
+            $.ajax({
+	            url: "/CFA104G3/move/moveManage.do",
+	            type: "POST",
+	            data: JSON.stringify({'action':'verifyOK', 'id':requestId, 'price' : price}),
+	            success: function(data){
+	        		let jsonObj = JSON.parse(data);
+	       			if(jsonObj.errorCode==='success') {
+		            	let body = jsonObj.body;
+		            	console.log(body.status);	
+        				$('#status').val(body.status);
+        				$('#evaulatePrice').val(body.evaluatePrice);
+	        		} else if(jsonObj.errorCode==='login'){
+	        	        window.location.href = jsonObj.body;
+	        		}
+	            }
+            })
+		});
+    	
+    	$("#verifyNAK").click(function(){
+    	    let self = this;
+  		    let price = $('#evaulatePrice').val();
+  		    let status = $('#reqStatus').val();
+	  		let requestId = $('#requestId').val();
+
+	  		$.ajax({
+	            url: "/CFA104G3/move/moveManage.do",
+	            type: "POST",
+	            data: JSON.stringify({'action':'verifyNAK', 'id':requestId, 'price' : price}),
+	            success: function(data){
+	            	let jsonObj = JSON.parse(data);
+        			if(jsonObj.errorCode==='success') {
+        				let body = jsonObj.body;
+        				$('#status').val(body.status);
+        				$('#evaulatePrice').val(body.evaluatePrice);
+        				console.log(body.evaluatePrice);
+	        		} else if(jsonObj.errorCode==='login')  {
+	        	        window.location.href = jsonObj.body;
+	        		}
+	            }
+            })
+		});
 	</script>
 </body>
-
 </html>

@@ -2,12 +2,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.activity.model.*"%>
-
+<%@ page import="com.activity_photo.model.*"%>
+<!-- 改善時間用 -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<!-- switch -->
+<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 <%
+	ActivityVO actVO = new ActivityVO();
 	ActivityServiceImpl actSvc = new ActivityServiceImpl();
 	List<ActivityVO> list = actSvc.getAllAct();
 	pageContext.setAttribute("list",list);
-	
+	ActivityPhotoVO actpVO = new ActivityPhotoVO();
+%>
+<%
+	request.setAttribute("findActivityTypeString", new String[]{"活動","聚餐","講座","其他"});
 %>
 
 <!DOCTYPE html>
@@ -15,8 +23,9 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="UTF-8">
-<title>活動預覽頁面appearActPage.jsp</title>
+<title>活動預覽頁面previewActPage.jsp</title>
 <link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet">
+
 <link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
 <!-- sweet -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
@@ -34,19 +43,7 @@
         rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
-    
 <style>
-/* .table-striped{ */
-/* 	color: table-color; */
-/* 	bg-factor: .05; */
-/* 	bg: rgba($black, $table-striped-bg-factor); */
-/* 	order: odd; */
-/* } */
-/* .table-hover{ */
-/* 	color: table-color; */
-/* 	bg-factor: .075; */
-/* 	bg: rgba($black, $table-hover-bg-factor); */
-/* } */
 .ellipsis {
 	  overflow: hidden;
 	  display: -webkit-box;
@@ -77,16 +74,22 @@
 }
 .actType{
     padding: 2px 24px;
-	background-color: #00aaf5;
+	background-color: #212121;
+	color: white;
+    border-radius: 16px;
+    font-size: 16px;
 /* 	background-color: #ff93c2; */
     box-shadow: 0 2px 4px rgb(255 147 194 / 30%);
+    font-family: Courier, monospace;
 }
+
 .actName{
 	font-size: 32px;
     font-weight: 600;
     color: #212121;
     margin-top: 10px;
     margin-bottom: 24px;
+	font-family: Courier, monospace;
 }
 .innerDiv{
 	box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
@@ -98,9 +101,10 @@
 .timeDiv{
 	font-weight: 700;
     color: #595e64;
+    font-family: Courier, monospace;
 }
 .actInformation{
-	margin: 20px auto 2rem auto;
+	margin: 20px auto 1rem auto;
 	text-align: left;
     padding-bottom: 10px;
     border-bottom: 1px solid #f5f5f5;
@@ -130,6 +134,8 @@
     -o-transition: all .4s ease-in-out;
     -webkit-transition: all .4s ease-in-out;
     transition: all .4s ease-in-out;
+    
+    font-family: Courier, monospace;
 }
 
 .btn-hover:hover {
@@ -151,7 +157,15 @@
        background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);
         box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
 }
+.detailP{
+ 	color: #000; 
+ 	word-wrap: break-word; 
+ 	font-weight: 700;
+ 	color: gray;
+	font-family: Courier, monospace;
+}
 </style>    
+   
 </head>
 
 <body>
@@ -160,13 +174,13 @@
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
     <!-- Page Header-->
-    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/bgHome01.jpg')">
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/activity01.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>New Life</h1>
-                        <span class="subheading">迎 接 全 新 的 人 生</span>
+                        <h1>New Activity</h1>
+                        <span class="subheading">至 今 我 仍 深 深 感 動</span>
                     </div>
                 </div>
             </div>
@@ -176,51 +190,53 @@
    	<!-- 主體畫面設計  -->
 <!--                活動預覽頁面 -->
    		<div style="border: 2px white groove; width: 70%; margin: 0 auto 60px auto;">
-				<img class="showImage" src="http://picsum.photos/300/200?random=?" alt="">
-<%--                     <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?activityId=${actVO.activityId}" > --%>
+<!-- 				<img class="showImage" src="http://picsum.photos/300/200?random=?" alt=""> -->
+        <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
    	<section class="section1">
                <div style="display: block;margin-right:20px; padding: 4px;">
-             		<span class="actType">actTypeTest: ${actVO.type}</span>
+             		<c:set var="typeNum" scope="request" value="${actVO.type}"/>
+             		<span class="actType">${findActivityTypeString[typeNum]}</span>
+					
              		<button class="btn-hover color-11" style=" float:right; padding: 20px;">報名人數倒數: ${actVO.applyMemberExisting}</button></div>
                <div>
                	<h2 class="actName">活動名稱: ${actVO.name}</h2>
                </div>
                <div class="innerDiv">
                		<div class="timeDiv">
-						活動報名時間: ${actVO.applyStartDate}  ~  ${actVO.applyEndDate}
+            				活動報名時間: <fmt:formatDate value="${actVO.applyStartDate}" pattern="yyyy-MM-dd hh:mm:ss"/>  ~  <fmt:formatDate value="${actVO.applyEndDate}" pattern="yyyy-MM-dd hh:mm:ss"/>
                		</div>
               	</div>
                <div class="actInformation">
 					活動資訊
                </div>
-               <span style="font-size:20px;">${actVO.content} </span>
+               <span style="font-size:20px; font-family: Courier, monospace;">${actVO.content} </span>
                <p style="margin-bottom: 20px;"></p>
-               <p style="color: #000; word-wrap: break-word;">
+               <p class="detailP">
                	<span style="color: yellowgreen;">
                		<strong>活動時間: </strong>
                	</span>
-               		${actVO.startDate}
+               		<fmt:formatDate value="${actVO.startDate}" pattern="yyyy-MM-dd hh:mm:ss"/>
                </p>
-               <p style="color: #000; word-wrap: break-word;">
+               <p class="detailP">
                	<span style="color: yellowgreen;">
-               		<strong>活動費用: </strong>
+               		<strong>活動費用:  </strong>
                	</span>
-               		${actVO.cost}
+               		${actVO.cost} 元
                </p>
-                <p style="color: #000; word-wrap: break-word;">
+                <p class="detailP">
                	<span style="color: yellowgreen;">
-               		<strong>活動地點: </strong>
+               		<strong>活動地點:  </strong>
                	</span>
                		${actVO.location}
                </p>
-                <p style="color: #000; word-wrap: break-word;">
+                <p class="detailP">
                	<span style="color: yellowgreen;">
-               		<strong>活動人數限制: </strong>
+               		<strong>活動人數限制:  </strong>
                	</span>
                		${actVO.minMember}  ~  ${actVO.maxMember}
                </p>
                <input type="submit" class="btn btn-hover color-1" id="sweetBtnPreview" value="結束預覽"/>
-               <p class="launchedDate">${actVO.launchedDate}</p>
+               <p class="launchedDate"><fmt:formatDate value="${actVO.launchedDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
  	</section>
  	<section class="section2">
  		
@@ -241,13 +257,13 @@
     <script>
     	var btn1 = document.getElementById('sweetBtnPreview');
     	btn1.addEventListener('click', function() {
-            swal('幹得漂亮！', '你完成了預覽！', 'success');
+            swal('幹得漂亮！', '你刊登了這筆活動！', 'success');
         });
     	$('#sweetBtnPreview').click (function (e) {
    		   e.preventDefault(); //will stop the link href to call the blog page
 
    		   setTimeout(function () {
-   		       window.location.href = "http://localhost:8081/CFA104G3/front_end/activity/appearActPage.jsp"; //will redirect to your blog page (an ex: blog.html)
+   		       window.location.href = "http://localhost:8081/CFA104G3/front_end/activity/homePage.jsp"; //will redirect to your blog page (an ex: blog.html)
    		    }, 1000); //will call the function after 2 secs.
 
    		});

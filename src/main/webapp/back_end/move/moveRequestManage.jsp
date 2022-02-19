@@ -40,7 +40,6 @@
 					MoveRequestService moveRequestService = new MoveRequestServiceImpl();
 					List<MoveRequestVO> allRequests = moveRequestService.findAllRequests();
 					
-					
 					// 顯示格式
 					SimpleDateFormat ymdtmFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 					SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -149,7 +148,7 @@
 	        let self = this;
 	        let requestId = self.value;
 			
-	        document.cookie = 'requestId='+requestId;
+	        document.cookie = 'requestId=' + requestId;
 
 	        window.location.href='moveRequest.jsp';
 		});
