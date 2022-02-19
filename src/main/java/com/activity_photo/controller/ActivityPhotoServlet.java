@@ -26,7 +26,7 @@ public class ActivityPhotoServlet extends HttpServlet {
 //		doPost(req, res);
 		res.setContentType("image/*");
 		ServletOutputStream out = res.getOutputStream();
-		System.out.println("test1");
+//		System.out.println("test1");
 		try {
 			Statement stmt = con.createStatement();
 			String id = req.getParameter("ACTP_ACT_ID");
@@ -41,7 +41,7 @@ public class ActivityPhotoServlet extends HttpServlet {
 					out.write(buf, 0, len);
 				}
 				in.close();
-				System.out.println("1、" + buf.length);
+//				System.out.println("1、" + buf.length);
 			} else {
 //				res.sendError(HttpServletResponse.SC_NOT_FOUND);
 				InputStream in = getServletContext().getResourceAsStream("/asset/img/activityImage/nodata/20192.jpg");
@@ -49,7 +49,7 @@ public class ActivityPhotoServlet extends HttpServlet {
 				in.read(b);
 				out.write(b);
 				in.close();
-				System.out.println("2、"+ b.length);
+//				System.out.println("2、"+ b.length);
 			}
 			rs.close();
 			stmt.close();
@@ -60,7 +60,7 @@ public class ActivityPhotoServlet extends HttpServlet {
 			in.read(b);
 			out.write(b);
 			in.close();
-			System.out.println("3、"+ b.length);
+//			System.out.println("3、"+ b.length);
 		}
 	}
 

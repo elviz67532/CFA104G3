@@ -12,13 +12,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%	
 // 	HttpSession session = Request.getSession();
-	MemberVO memVO = (MemberVO) session.getAttribute("memVO");
-	ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");
-	ActivityServiceImpl actSvc = new ActivityServiceImpl();
 // 	List<ActivityVO> list = actSvc.findByMemId(memberId);
-	List<ActivityVO> list = actSvc.findByMemId(2);
+
+	MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+	ActivityServiceImpl actSvc = new ActivityServiceImpl();
+	List<ActivityVO> list = actSvc.findByMemId(memberVO.getId());
 	pageContext.setAttribute("list",list);
-	
 	
 // 	List<ActivityVO> typeList1 = actSvc.getActType(1);
 // 	pageContext.setAttribute("typeList1",typeList1);
@@ -313,7 +312,7 @@ padding: 0;
     </header>
    
    <!-- 上與中之間 -->
-    <%@ include file="specialcard2.jsp" %> 
+<%--     <%@ include file="specialcard2.jsp" %>  --%>
 <%--    	<img class="contact" src="<%=request.getContextPath()%>/asset/img/activityImage/message.png"> --%>
 		
    	<!-- 主體畫面設計  -->
@@ -347,9 +346,9 @@ padding: 0;
 	                <p class="ellipsis">${actVO.content} </p>
 	                <div style="margin: 0 50px;">
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
-<%-- 			                <input type="hidden" name="organizerMemberId" value="${actVO.organizerMemberId}"> --%>
-<!-- 			                <input type="hidden" name="action" value="xxx"/>  -->
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
+              			  	 <input type="hidden" name="activityId" value="${actVO.activityId}">
+			                <input type="hidden" name="action" value="selectOneAct"/> 
+			                <input type="submit" class="btn-hover color-9" value="查看該筆活動"/>
 		                </FORM>
 	                </div>
             	</div>
