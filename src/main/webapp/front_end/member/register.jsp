@@ -126,7 +126,7 @@ main {
 			</td>
 			<td>
 				<h4>
-					<a href="/CFA104G3/index.html">> HomePage</a>
+					<a href="/CFA104G3/index.jsp">> HomePage</a>
 				</h4>
 			</td>
 		</tr>

@@ -31,37 +31,13 @@ public class LoginServlet extends HttpServlet {
 	Connection con;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
-		res.setContentType("image/gif"); // 顯示圖片
-		ServletOutputStream out = res.getOutputStream();
-
-		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("SELECT MEM_AVATAR FROM MEM_AVATAR WHERE MEM_ID = " + req.getParameter("id"));
-
-			if (rs.next()) {
-				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("image"));
-				byte[] buf = new byte[4 * 1024]; // 4K buffer
-				int len;
-				while ((len = in.read(buf)) != -1) {
-					out.write(buf, 0, len);
-				}
-				in.close();
-			} else {
-				res.sendError(HttpServletResponse.SC_NOT_FOUND);
-			}
-			rs.close();
-			stmt.close();
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+		doPost(req, res);
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-
+		
 		if ("register".equals(action)) {// 註冊
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -130,7 +106,8 @@ public class LoginServlet extends HttpServlet {
 				if (code == null || code.trim().length() == 0) {
 					errorMsgs.add("郵遞區號請勿空白");
 				}
-				byte[] avatar = CommonUtil.getPictureByteArray("/CFA104G3/src/main/webapp/asset/img/avatar.gif");
+				
+				byte[] avatar = CommonUtil.getPictureByteArray(getServletContext().getRealPath("/")  + "/asset/img/undraw_profile_1.svg");
 				InputStream in = req.getPart("avatar").getInputStream();
 //				byte[] avatar = null;
 				if (in.available() != 0) {
@@ -415,7 +392,34 @@ public class LoginServlet extends HttpServlet {
 			}
 
 		}
+		
 
+		if ("getImage".equals(action)) {
+			res.setContentType("image/gif"); // 顯示圖片
+			ServletOutputStream out = res.getOutputStream();
+	
+			try {
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt
+						.executeQuery("SELECT MEM_AVATAR FROM MEM_AVATAR WHERE MEM_ID = " + req.getParameter("id"));
+	
+				if (rs.next()) {
+					BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("image"));
+					byte[] buf = new byte[4 * 1024]; // 4K buffer
+					int len;
+					while ((len = in.read(buf)) != -1) {
+						out.write(buf, 0, len);
+					}
+					in.close();
+				} else {
+					res.sendError(HttpServletResponse.SC_NOT_FOUND);
+				}
+				rs.close();
+				stmt.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
 	}
 
 	private String generateForm(HttpServletRequest req, int id) {
