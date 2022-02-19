@@ -10,6 +10,7 @@ public class NewsServiceImpl {
 	public NewsServiceImpl() {
 		dao = new NewsDAOJDBCImpl();
 	}
+	
 
 	public NewsVO insert(String content, byte[] image, Timestamp date,
 			Integer type, String title) {
@@ -26,9 +27,11 @@ public class NewsServiceImpl {
 		return pojo;
 
 	}
+
 	
 	public NewsVO update(Integer id, String content, byte[] image, Timestamp date,
 			Integer type, String title) {
+		
 		NewsVO pojo = new NewsVO();
 
 		pojo.setId(id);
@@ -37,6 +40,7 @@ public class NewsServiceImpl {
 		pojo.setDate(date);
 		pojo.setType(type);
 		pojo.setTitle(title);
+		
 		dao.update(pojo);
 
 		return pojo;
@@ -48,9 +52,11 @@ public class NewsServiceImpl {
 		dao.deleteById(id);
 	}
 
+
 	public NewsVO selectOneNews(Integer id) {
 		return dao.selectById(id);
 	}
+
 
 	public List<NewsVO> selectAllNews() {
 		return dao.selectAll();

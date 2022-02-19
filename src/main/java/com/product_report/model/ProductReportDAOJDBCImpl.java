@@ -21,7 +21,9 @@ public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 	private static final String UPDATE = "UPDATE PRODCUT_REPORT set "
 			+ "PRODRP_CONTENT = ?, PRODRP_DATE = ?, PRODRP_PHOTO = ?, PRODRP_STATUS = ? "
 			+ "where PRODRP_MEM_ID = ? and PRODRP_PROD_ID = ?";
-
+	private static final String CHANGE_STATUS = "update PRODCUT_REPORT set PRODRP_STATUS = ? where PRODRP_PROD_ID = ? and PRODRP_MEM_ID = ?";
+	private static final String GET_ONE_ID = "select * from PRODCUT_REPORT where PRODRP_MEM_ID = ? order by PRODRP_PROD_ID";
+	
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -152,7 +154,7 @@ public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 	}
 
 	@Override
-	public int deleteById(DualKey<Integer, Integer> id) {
+	public int deleteById(DualKey<Integer, Integer>id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int deleteRow;
@@ -173,4 +175,68 @@ public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 
 		return deleteRow;
 	}
+	
+	@Override
+	public ProductReportVO getOneById(int memberId) {
+		ProductReportVO vo = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+
+			pstmt.setInt(1, memberId);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				vo = new ProductReportVO();
+				vo.setProductId(rs.getInt("PRODRP_PROD_ID"));
+				vo.setMemberId(rs.getInt("PRODRP_MEM_ID"));
+				vo.setContent(rs.getString("PRODRP_CONTENT"));
+				vo.setDate(rs.getTimestamp("PRODRP_DATE"));
+				vo.setPhoto(rs.getBytes("PRODRP_PHOTO"));
+				vo.setStatus(rs.getInt("PRODRP_STATUS"));
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+
+		return vo;
+	}
+//	@Override
+//	public int changeStatus(DualKey<Integer, Integer> id, int status) {
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		int updateRow;
+//	
+//		
+//		try {
+//			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+//			pstmt = con.prepareStatement(CHANGE_STATUS);
+//						
+//			pstmt.setInt(1, status);
+//			pstmt.setInt(2, id.getK1());
+//			pstmt.setInt(3, id.getK2());
+//			
+//			updateRow = pstmt.executeUpdate();
+//		} catch (SQLException se) {
+//			throw new RuntimeException("A database error occured. " + se.getMessage());
+//		} finally {
+//			SQLUtil.closeResource(con, pstmt, null);
+//		}
+//
+//		return updateRow;
+//	}
+//	
+//	public void main(String[] args) {
+//	ProductReportDAOJDBCImpl vo = new ProductReportDAOJDBCImpl();
+//	
+//	vo.changeStatus(null, 0);
+//	}
+
 }

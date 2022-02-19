@@ -96,19 +96,22 @@
 									<th>
 										<c:if test="${smVO.smgrId !=1}" var="varName" scope="session">
 										
-										<jsp:useBean id="hmap" class="java.util.HashMap" />
-										<c:forEach var="auth" items="${smVO.authList}">
-											<c:set target="${hmap}" property="${auth}" value="${auth}"/> 
-										</c:forEach>
-										
 										<c:set var="rights" scope="session" value="${20}"/>
 										
-										<c:forEach var="entrySet" items="${map}">
-											<input type="checkbox" name="smgeAuthId" value="${entrySet.key} <c:if test="${hmap.containsKey(entrySet.key)}">checked</c:if>  ">
-											<label>${entrySet.value}</label>	
-										</c:forEach>
-<!-- 										checked -->
 										
+										<%
+											Set<Entry<Integer, String>> entrySet = map.entrySet();
+											for(Entry<Integer, String> entry : entrySet){
+												Integer rightNum = entry.getKey(); // 10 20 30 
+												String right = entry.getValue(); // 活動 二手
+										%>
+										
+												<input type="checkbox" name="smgeAuthId" value=<%=rightNum%>>
+												<label><%=right %></label>	
+										<% 	} %>
+										
+										
+																	
 <%-- 											<c:forEach var="auth" items="${smVO.authList}"> --%>
 <%--  												<c:out value="${map[auth.smgeAuthId]}"></c:out> --%>
 <%-- 													<input type="checkbox" name="smgeAuthId" value=10 <c:if test="${auth.smgeAuthId==10}">checked</c:if>> --%>

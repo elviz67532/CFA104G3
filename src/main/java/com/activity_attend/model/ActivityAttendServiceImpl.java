@@ -44,12 +44,18 @@ public class ActivityAttendServiceImpl implements ActivityAttendService {
 	}
 
 	@Override
-	public ActivityAttendVO getOneActa(DualKey<Integer, Integer> id) {
+	public ActivityAttendVO getOneActa(Integer memberId, Integer activityId) {
+		
+		
+		DualKey<Integer, Integer> id = new DualKey<Integer, Integer>(memberId, activityId);
+//		DualKey<Integer, Integer> a = new DualKey<Integer, Integer>(null, null);
+//		getOneActa(a);			
 		return dao.selectById(id);
 	}
 
 	@Override
 	public List<ActivityAttendVO> getAll() {    //test
+			
 		return dao.selectAll();
 	}
 }

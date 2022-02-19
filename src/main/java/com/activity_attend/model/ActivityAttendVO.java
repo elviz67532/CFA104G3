@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class ActivityAttendVO implements Serializable {
+	private Integer Id;
 	private Integer memberId;
 	private Integer activityId;
 	private String comment;

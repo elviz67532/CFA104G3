@@ -122,6 +122,15 @@
 		<url-pattern>/activity/acta.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>ActrServlet</servlet-name>
+		<servlet-class>com.activity_report.controller.ActivityReportServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActrServlet</servlet-name>
+		<url-pattern>/activity/actr.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>ActivityServlet</servlet-name>
 		<servlet-class>com.activity.controller.ActivityServlet</servlet-class>
 	</servlet>
@@ -130,15 +139,24 @@
 		<url-pattern>/activity/act.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
+
+		<servlet-name>ActrImage</servlet-name>
+		<servlet-class>com.activity_report.controller.DBGifReader4</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActrImage</servlet-name>
+		<url-pattern>/activity/ActrImage.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>ActivityPhotoServlet</servlet-name>
-		<servlet-class>com.activity.controller.ActivityPhotoServlet
-		</servlet-class>
+		<servlet-class>com.activity_photo.controller.ActivityPhotoServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ActivityPhotoServlet</servlet-name>
 		<url-pattern>/activity/actp.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- product -->
 	<servlet>
 		<servlet-name>NewsServlet</servlet-name>
@@ -148,6 +166,18 @@
 		<servlet-name>NewsServlet</servlet-name>
 		<url-pattern>/back_end/news/NewsServlet</url-pattern>
 	</servlet-mapping>
+
+  <!-- news -->
+  <servlet>
+		<servlet-name>NewsImageReader</servlet-name>
+		<servlet-class>com.news.controller.NewsImageReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NewsImageReader</servlet-name>
+		<url-pattern>/news/newsimage.do</url-pattern>
+	</servlet-mapping>
+  
+	<!-- product -->
 	<servlet>
 		<servlet-name>ProductServlet</servlet-name>
 		<servlet-class>com.product.controller.ProductServlet</servlet-class>
@@ -203,7 +233,6 @@
 		<servlet-name>ServerManagerServlet</servlet-name>
 		<url-pattern>/server_manager/ServerManagerServlet</url-pattern>
 	</servlet-mapping>
-
 	<servlet>
 		<servlet-name>ServerManageFunctionServlet</servlet-name>
 		<servlet-class>com.server_manager_function.controller.ServerManageFunctionServlet
@@ -236,5 +265,6 @@
 		<servlet-name>NotificationServlet</servlet-name>
 		<url-pattern>/notification/notification.do</url-pattern>
 	</servlet-mapping>
+
 
 </web-app>

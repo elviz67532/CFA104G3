@@ -27,13 +27,13 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="UTF-8">
-<title>全部活動頁面appearActPage.jsp</title>
+<title>全部活動頁面homePage.jsp</title>
 <link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet">
 <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 
-<link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
+<!-- <link rel="icon" type="image/x-icon" href="asset/favicon.ico" /> -->
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -299,7 +299,23 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
 	opacity: 0.8;
 	transform: scale(1.02);
 }
-
+.contact2 {
+/* border: 2px solid red; */
+	font-size: 12px;
+	width: 100px;
+	height: 20px;
+	position: fixed;
+	color: black;
+	top: 93%;
+	left: 89.3%;
+	opacity: 0.5; /*透明度50%*/
+	transition: transform .3s;
+}
+.contact2:hover { /*滑鼠滑過*/
+	opacity: 1;
+	color: black;
+	transform: scale(1.02);
+}
 </style>    
 </head>
 
@@ -321,11 +337,28 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
             </div>
         </div>
     </header>
+       <%@ include file="specialcard.jsp" %> 
    
    <!-- 上與中之間 -->
-  <%@ include file="specialcard.file" %> 
-<%--    	<img class="contact" src="<%=request.getContextPath()%>/asset/img/activityImage/message.png"> --%>
-		
+   <div>
+   	<a href="<%=request.getContextPath()%>/front_end/activity/publishActivity.jsp">
+   	<img id="imgContact" class="contact" src="<%=request.getContextPath()%>/asset/img/activityImage/leaf.png">
+   	<span id="spanContact" class="contact2"></span>
+   	</a>
+   </div>
+	<script type="text/javascript">
+		var img = document.getElementById('imgContact');
+		var span = document.getElementById('spanContact');
+		img.addEventListener("mouseover", function() {
+			span.innerHTML = "&nbsp;&nbsp;&nbsp;這是葉子";
+			setTimeout(function() {
+				span.innerHTML = "去辦活動了啦";
+		  	}, 1500);
+			setTimeout(function() {
+				span.innerHTML = "";
+		  	}, 5000);
+	    });
+	</script>
    	<!-- 主體畫面設計  -->
 		
    	
@@ -345,7 +378,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
 	<c:forEach var="actVO" items="${list}" >
 	        <div class="item">
 <%-- 	            <div class="act_tab">${actVO.type}</div> --%>
-	            <img class="" src="http://picsum.photos/300/200?random=?" alt="">
+                <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
             	<div class="div1">
 	            	<p class="time">開始時間: 
 	            	<fmt:formatDate value="${actVO.startDate}" pattern="yyyy-MM-dd hh:mm:ss"/>
@@ -370,7 +403,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
 	<c:forEach var="actVO" items="${typeList1}" >
 	        <div class="item">
 <%-- 	            <div class="act_tab">${actVO.type}</div> --%>
-	            <img class="" src="http://picsum.photos/300/200?random=?" alt="">
+                <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
             	<div class="div1">
 	            	<p class="time">${actVO.startDate}</p>
 	                <h2 class="actName">${actVO.name}</h2>
@@ -394,7 +427,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
 	<c:forEach var="actVO" items="${typeList2}" >
 	        <div class="item">
 <%-- 	            <div class="act_tab">${actVO.type}</div> --%>
-	            <img class="" src="http://picsum.photos/300/200?random=?" alt="">
+                <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
             	<div class="div1">
 	            	<p class="time">${actVO.startDate}</p>
 	                <h2 class="actName">${actVO.name}</h2>
@@ -417,7 +450,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
 	<c:forEach var="actVO" items="${typeList3}" >
 	        <div class="item">
 <%-- 	            <div class="act_tab">${actVO.type}</div> --%>
-	            <img class="" src="http://picsum.photos/300/200?random=?" alt="">
+                <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
             	<div class="div1">
 	            	<p class="time">${actVO.startDate}</p>
 	                <h2 class="actName">${actVO.name}</h2>
@@ -440,7 +473,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
 	<c:forEach var="actVO" items="${typeList4}" >
 	        <div class="item">
 <%-- 	            <div class="act_tab">${actVO.type}</div> --%>
-	            <img class="" src="http://picsum.photos/300/200?random=?" alt="">
+                <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
             	<div class="div1">
 	            	<p class="time">${actVO.startDate}</p>
 	                <h2 class="actName">${actVO.name}</h2>
