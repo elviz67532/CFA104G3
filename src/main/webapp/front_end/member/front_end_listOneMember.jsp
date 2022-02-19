@@ -69,7 +69,7 @@ main {
 
 
 		<h1>
-			<a href="/CFA104G3/index.html"> 回首頁</a>
+			<a href="/CFA104G3/index."> 回首頁</a>
 		</h1>
 
 		<main>
