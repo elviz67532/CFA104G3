@@ -8,19 +8,19 @@ import lombok.Data;
 
 @Data
 public class MemberVO implements Serializable {
-	private int id;
+	private Integer id;
 	private String email;
 	private String account;
 	private String password;
 	private String nickname;
 	private String name;
 	private String phone;
-	private int gender;
+	private Integer gender;
 	private String city;
 	private String cityArea;
 	private String address;
 	private String code;
 	private byte[] avatar;
 	private Timestamp registerDate;
-	private int status;
+	private Integer status;
 }

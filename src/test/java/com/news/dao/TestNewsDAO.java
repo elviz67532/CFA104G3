@@ -38,8 +38,11 @@ public class TestNewsDAO {
 		pojo.setImage(data);
 		pojo.setDate(Timestamp.valueOf("2022-10-12 15:00:06"));
 		pojo.setType(1);
-
+		pojo.setTitle("13234");
+		
+		
 		int row = dao.insert(pojo);
+		
 		assertNotEquals(row, 0);
 	}
 
@@ -55,12 +58,16 @@ public class TestNewsDAO {
 
 		byte[] data = new byte[1];
 		data[0] = 0x06;
-		pojo.setId(1);
+		
 		pojo.setContent("最新消息內容");
 		pojo.setImage(data);
 		pojo.setDate(Timestamp.valueOf("2022-10-12 15:00:06"));
 		pojo.setType(1);
-
+		pojo.setTitle("dd");
+		pojo.setId(8);
+		
+		System.out.println(1);
+		
 		int row = dao.update(pojo);
 		assertNotEquals(row, 0);
 	}

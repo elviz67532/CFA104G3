@@ -1,29 +1,43 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
 
 
 <%
 MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 %>
-<html>
-<head>
-<title>·|­û¸ê®Æ</title>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>å§”åŸŸ</title>
+<link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+	crossorigin="anonymous"></script>
+<!-- Google fonts-->
+<link
+	href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+	rel="stylesheet" type="text/css" />
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+	rel="stylesheet" type="text/css" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link
+	href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css"
+	rel="stylesheet" />
 <style>
 * {
 	box-sizing: border-box;
 	font-family: monospace;
 	line-height: 150%;
-}
-
-table#table-1 {
-	text-align: center;
-	margin: 0 auto;
-}
-
-table#table-1 h4 {
-	color: red;
-	margin-bottom: 1px;
 }
 
 table#table-2 {
@@ -36,110 +50,116 @@ h2 {
 	margin-top: 40px;
 }
 
-h4 {
-	color: blue;
-	display: inline;
-}
-
 table {
-	width: 1000px;
+	width: 400px;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	color: black;
 }
 
-th, td {
-	padding: 5px;
-	text-align: center;
-}
-
-main {
-	position: absolute;
-	top: 3.5%;
-	/* 	left: 12.5%; */
-	height: calc(100vh - 100px);
-	width: calc(100% - 200px);
-	margin-left: 200px;
+td {
+	padding: 7px;
+	font-weight: bold;
+	/* 	text-align: center; */
 }
 </style>
-
 </head>
-<main>
-	<body>
+
+<body>
+	<!-- Navigation-->
+	<!-- nav -->
+	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
+
+	<!-- Page Header-->
+	<header class="masthead"
+		style="background-image: url('<%=request.getContextPath()%>/asset/img/move01.jpg')">
+		<div class="container position-relative px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<div class="site-heading">
+						<h1>New Life</h1>
+						<span class="subheading">è¿ æ¥ å…¨ æ–° çš„ äºº ç”Ÿ</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
 
 
-		<h1>
-			<a href="/CFA104G3/index."> ¦^­º­¶</a>
-		</h1>
+	<h1 href="/CFA104G3/index.jsp" align="center" valign="center" >
+		<a href="/CFA104G3/index.jsp"> é¦–é </a>
+	</h1>
 
-		<main>
-			<table id="table-2">
-				<h2 align="center" valign="center">·|­û¸ê®Æ</h2>
+	<main>
+		<table id="table-2">
+			<h2 align="center" valign="center">æœƒå“¡è³‡æ–™</h2>
 
-				<tr>
-					<td>¶l¥ó</td>
-					<td>${memberVO.email}</td>
-				</tr>
-				<tr>
-					<td>±K½X</td>
-					<td>${memberVO.password}</td>
-				</tr>
-				<tr>
-					<td>¼ÊºÙ</td>
-					<td>${memberVO.nickname}</td>
-				</tr>
-				<tr>
-					<td>©m¦W</td>
-					<td>${memberVO.name}</td>
-				</tr>
-				<tr>
-					<td>¹q¸Ü</td>
-					<td>${memberVO.phone}</td>
-				<tr>
-					<td>©~¦í«°¥«</td>
-					<td>${memberVO.city}</td>
-				</tr>
-				</tr>
-				<tr>
-					<td>©~¦í¶mÂí</td>
-					<td>${memberVO.cityArea}</td>
-				</tr>
-				<tr>
-					<td>¦a§}</td>
-					<td>${memberVO.address}</td>
-				</tr>
-				<tr>
-					<td>ÀY¹³</td>
-					<td>${memberVO.avatar}</td>
-				</tr>
-
-
-
-				<td style="width: 100px;">
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"
-						style="margin-bottom: 0px;">
-						<input type="submit" value="­×§ï·|­û¸ê®Æ"> <input type="hidden"
-							name="id" value="${memberVO.id}"> <input type="hidden"
-							name="action" value="getOne_For_Member_Update">
+			<tr>
+				<td>éƒµä»¶</td>
+				<td>${memberVO.email}</td>
+			</tr>
+			<tr>
+				<td>å¯†ç¢¼</td>
+				<td>${memberVO.password}</td>
+			</tr>
+			<tr>
+				<td>æš±ç¨±</td>
+				<td>${memberVO.nickname}</td>
+			</tr>
+			<tr>
+				<td>å§“å</td>
+				<td>${memberVO.name}</td>
+			</tr>
+			<tr>
+				<td>é›»è©±</td>
+				<td>${memberVO.phone}</td>
+			<tr>
+				<td>å±…ä½åŸå¸‚</td>
+				<td>${memberVO.city}</td>
+			</tr>
+			</tr>
+			<tr>
+				<td>å±…ä½é„‰é®</td>
+				<td>${memberVO.cityArea}</td>
+			</tr>
+			<tr>
+				<td>åœ°å€</td>
+				<td>${memberVO.address}</td>
+			</tr>
+			<tr>
+				<td>é ­åƒ</td>
+				<td><img src="<%=request.getContextPath()%>/front_end/member/MemberServlet.do?action=getImage&MEM_ID=${memberVO.id}" ></td>
+			</tr>
 
 
-					</FORM> 
-					<c:if test="${not empty memberVO.id}">
-						<FORM style="margin: 0;" id="Logout" METHOD="post"
-							class="logout-form"
-							action="<%=request.getContextPath()%>/front_end/member/MemberServlet.do">
-							<input type="hidden" name="action" value="logout"> 
-							<input
-								type="submit" value="µn¥X" class="btn">
-						</FORM>
-					</c:if>
-				</td>
-			</table>
-		</main>
-		<br>
-		<br>
-		<br>
-	</body>
-</main>
+			<td style="width: 100px;" >
+				<FORM METHOD="post"
+					ACTION="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"
+					style="margin-bottom: 0px; " >
+					<input type="submit" value="ä¿®æ”¹æœƒå“¡è³‡æ–™"> <input type="hidden"
+						name="id" value="${memberVO.id}"> <input type="hidden"
+						name="action" value="getOne_For_Member_Update">
+                </FORM>
+
+<%--  <c:if test="${not empty memberVO.id}"> --%> 
+<!-- 					<FORM style="margin: 0;" id="Logout" METHOD="post" -->
+<!-- 						class="logout-form" -->
+<%-- 						action="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"> --%>
+<!-- 						<input type="hidden" name="action" value="logout"> <input -->
+<!-- 							type="submit" value="ç™»å‡º" class="btn"> -->
+<!-- 					</FORM> -->
+<%-- 				</c:if> --%>
+			</td>
+	
+		</table>
+	</main>
+	<!-- Footer-->
+	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+	<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+
+</body>
 </html>
