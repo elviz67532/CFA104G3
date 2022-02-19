@@ -183,7 +183,7 @@ public class ServerManagerDAOJDBCImpl implements ServerManagerDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ServerManagerVO smVO = new ServerManagerVO();
+		ServerManagerVO smVO = null;
 		//String password = null;
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
@@ -192,6 +192,7 @@ public class ServerManagerDAOJDBCImpl implements ServerManagerDAO {
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) {
+				smVO = new ServerManagerVO();
 				smVO.setSmgrAccount(rs.getString("SMGR_ACCOUNT"));
 				smVO.setSmgrAddress(rs.getString("SMGR_ADDRESS"));
 				smVO.setSmgrEmail(rs.getString("SMGR_EMAIL"));

@@ -9,5 +9,9 @@ public interface NotificationService {
 
 	List<NotificationVO> getMemberAllNotification(Integer memberId);
 
-	List<NotificationVO> getMemberUnviewedNotification(Integer memberId);
+	List<NotificationVO> getMemberLatestNotification(Integer memberId, Integer count);
+	
+	int getUnviewNotificationCount(Integer memberId);
+
+	int viewNotification(Integer memberId);
 }

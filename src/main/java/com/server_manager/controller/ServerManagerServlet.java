@@ -2,6 +2,8 @@ package com.server_manager.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import com.server_manager.model.ServerManagerServiceImpl;
 import com.server_manager.model.ServerManagerVO;
+import com.server_manager_auth.model.ServerManagerAuthDAOJDBCImpl;
 import com.server_manager_auth.model.ServerManagerAuthServiceImpl;
 import com.server_manager_auth.model.ServerManagerAuthVO;
 import com.server_manager_function.model.ServerManageFunctionServiceImpl;
@@ -192,15 +195,55 @@ public class ServerManagerServlet extends HttpServlet {
 				failureView.forward(req, res);
 			} 
 		}
+		if("update".equals(action)) {
+			Integer smgrId = Integer.valueOf(req.getParameter("smgrId"));
+			String[] smgeAuthIds = req.getParameterValues("smgeAuthId");
+			System.out.println("update smgrId: " + smgrId);
+			for(String smgeAuthId : smgeAuthIds) {
+				System.out.println("update smgeAuthId: " + smgeAuthId.toString());
+			}
+			//【delete】
+			ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
+			for(String smgeAuthId : smgeAuthIds) {
+				Integer smgeAuthId_ = Integer.valueOf(smgeAuthId);
+				DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId_, smgrId);
+				smaSvc.deleteById(dual);
+				//System.out.println("update smgeAuthId: " + smgeAuthId.toString());
+			}
+			//【insert】
+			for(String smgsAuthId : smgeAuthIds) {
+				ServerManagerAuthVO smaVO = new ServerManagerAuthVO();
+				Integer smgeAuthId_ = Integer.valueOf(smgsAuthId);
+				smaVO.setSmgeAuthId(smgeAuthId_);
+				smaVO.setSmgrId(smgrId);
+				smaSvc.insert(smaVO);
+			}
+			
+			RequestDispatcher view  = req
+					.getRequestDispatcher("/back_end/server_manager/admin.jsp");
+			view.forward(req, res);
+		}
 		if("delete".equals(action)) {
 			
 			try {
 				Integer smgrId = Integer.valueOf(req.getParameter("smgrId"));
-				
+				Integer smgeAuthId = Integer.valueOf(req.getParameter("smgeAuthId"));
+				ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
+				DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId, smgrId);
+				smaSvc.deleteById(dual);				
 				ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
 				smSvc.delete(smgrId);
-				
+//				try {
+//					ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
+//					DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId, smgrId);
+//					smaSvc.deleteById(dual);
+//				} catch (Exception e) {
+//					
+//					e.printStackTrace();
+//				}
+
 				RequestDispatcher view = req.getRequestDispatcher("/back_end/server_manager/admin.jsp");
+				view.forward(req, res);
 			} catch (NumberFormatException e) {
 				System.out.println("刪除後臺管理員失敗");
 				e.printStackTrace();
@@ -208,29 +251,23 @@ public class ServerManagerServlet extends HttpServlet {
 		}
 		
 	}
-	public static String DBPassword(String account){
-		// SELECT * FROM SERVERMANAGER WHERE SMGR_ACCOUNT='tomcat';
-		ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
-		ServerManagerVO smVO = smSvc.findByAccount(account);
-		String password = smVO.getSmgrPassword();
-		System.out.println("DBPassword: " + password);
-		return password;
-	}
 	
 	public boolean allowUser(String account, String password) {
 		
-			//【檢查使用者輸入的帳號(account) 密碼(password)是否有效】
-			// 應至資料庫搜尋比對
+		//【檢查使用者輸入的帳號(account) 密碼(password)是否有效】
+		// 應至資料庫搜尋比對
 		//DB
 		System.out.println("allowUser");
 		ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
 		System.out.println("產生smSvc: "+ smSvc);
 		ServerManagerVO smVO = smSvc.findByAccount(account); //DB的password
+		if (smVO == null) {
+			return false;
+		}
+		
 		String ans = smVO.getSmgrPassword();
 		System.out.println("ans: "+ ans);
 		
-		String allowUser_account = account;
-		String allowUser_password = password;
 		if(account.equals(account) && ans.equals(password))
 			return true;
 		else 
@@ -242,15 +279,6 @@ public class ServerManagerServlet extends HttpServlet {
 		ServerManagerVO smVO = smSvc.findByAccount(account); //DB的password
 		return smVO;
 	}
-	
-	public static void main(String[] args) {
-		String pwd = DBPassword("tomcat");
-		//System.out.println("password:" + pwd);
-		
-		// 測試時記得加上static
-		//System.out.println("allowuser: " + allowUser("tomcat", DBPassword("tomcat"))); 
-	}
-
 }
 
 

@@ -18,9 +18,7 @@ public class ActivityAttendDAOJDBCImpl implements ActivityAttendDAO {
 			+ "(ACTA_MEM_ID, ACTA_ACT_ID, ACTA_RELPY_CONTENT, ACTA_CONTENT_NOTE, ACTA_PAY_STATUS) "
 			+ "values (?, ?, ?, ?, ?)";
 	private static final String DELETE = "delete from ACTIVITY_ATTEND where ACTA_MEM_ID = ? and ACTA_ACT_ID = ? ";
-	private static final String UPDATE = "update ACTIVITY_ATTEND set "
-			+ "ACTA_RELPY_CONTENT = ?, ACTA_CONTENT_NOTE = ?, ACTA__PAY_STATUS = ? "
-			+ "WHERE ACTA_MEM_ID = ? and ACTA_ACT_ID = ?";
+	private static final String UPDATE = "update ACTIVITY_ATTEND set ACTA_RELPY_CONTENT = ?, ACTA_CONTENT_NOTE = ?, ACTA_PAY_STATUS = ? WHERE ACTA_MEM_ID = ? and ACTA_ACT_ID = ?";
 
 	static {
 		try {
@@ -102,7 +100,7 @@ public class ActivityAttendDAOJDBCImpl implements ActivityAttendDAO {
 				vo.setActivityId(rs.getInt("ACTA_ACT_ID"));
 				vo.setComment(rs.getString("ACTA_RELPY_CONTENT"));
 				vo.setNote(rs.getString("ACTA_CONTENT_NOTE"));
-				vo.setStatus(rs.getInt("ACTA__PAY_STATUS"));
+				vo.setStatus(rs.getInt("ACTA_PAY_STATUS"));
 				list.add(vo);
 			}
 		} catch (SQLException se) {
