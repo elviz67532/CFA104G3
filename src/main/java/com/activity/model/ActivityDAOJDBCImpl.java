@@ -56,7 +56,7 @@ public class ActivityDAOJDBCImpl implements ActivityDAO {
 
 			rs = pstmt.executeQuery();
 
-			if (rs.next()) {
+			while(rs.next()) {
 				vo = new ActivityVO();
 				vo.setActivityId(rs.getInt("ACT_ID"));
 				vo.setOrganizerMemberId(rs.getInt("ACT_ORGANIZER_MEM_ID"));

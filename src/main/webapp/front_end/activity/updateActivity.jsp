@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>委域更新活動使用updateActivity.jsp</title>
-<link href="${pageContext.request.contextPath}/css/activity/publishActivity.css" rel="stylesheet">
+<%-- <link href="${pageContext.request.contextPath}/css/activity/publishActivity.css" rel="stylesheet"> --%>
 
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
@@ -84,6 +84,11 @@
     font-size: 16px;
     border-radius: 0;
 }
+.actSelect:hover{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
 .actPhoto{
 	width: 100%;
     flex: 1;
@@ -104,6 +109,36 @@
     font-size: 16px;
     border-radius: 0;
 }
+
+/*input hover*/
+input[type="text"]:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+
+input[type="number"]:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+input[type="date"]:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+input[type="datetime-local"]:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+textarea:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+
+
 .btn{
 	width: 100%;
     padding: 16px 40px;

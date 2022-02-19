@@ -141,7 +141,6 @@
 		<url-pattern>/activity/act.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
-
 		<servlet-name>ActrImage</servlet-name>
 		<servlet-class>com.activity_report.controller.DBGifReader4</servlet-class>
 	</servlet>
@@ -149,7 +148,6 @@
 		<servlet-name>ActrImage</servlet-name>
 		<url-pattern>/activity/ActrImage.do</url-pattern>
 	</servlet-mapping>
-	
 	<servlet>
 		<servlet-name>ActivityPhotoServlet</servlet-name>
 		<servlet-class>com.activity_photo.controller.ActivityPhotoServlet</servlet-class>
@@ -158,7 +156,15 @@
 		<servlet-name>ActivityPhotoServlet</servlet-name>
 		<url-pattern>/activity/actp.do</url-pattern>
 	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>ActivityQuestionServlet</servlet-name>
+		<servlet-class>com.activity_question.controller.ActivityQuestionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActivityQuestionServlet</servlet-name>
+		<url-pattern>/activity/actq.do</url-pattern>
+	</servlet-mapping>
+  
 	<!-- product -->
 	<servlet>
 		<servlet-name>NewsServlet</servlet-name>

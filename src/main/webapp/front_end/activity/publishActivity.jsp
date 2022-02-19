@@ -13,7 +13,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="UTF-8">
 <title>委域刊登活動publishActivity.jsp</title>
-<link href="${pageContext.request.contextPath}/css/activity/publishActivity.css" rel="stylesheet">
+<%-- <link href="<%=request.getContextPath()%>/css/activity/publishActivity.css" rel="stylesheet"> --%>
 
 <!-- sweet -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
@@ -78,6 +78,11 @@
     font-size: 16px;
     border-radius: 0;
 }
+.actSelect:hover{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
 .actPhoto{
 	width: 100%;
     flex: 1;
@@ -98,6 +103,35 @@
     font-size: 16px;
     border-radius: 0;
 }
+
+/*input hover*/
+input[type="text"]:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+
+input[type="number"]:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+input[type="date"]:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+input[type="datetime-local"]:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+textarea:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+
 /* .btn{ */
 /* 	width: 100%; */
 /* 	color: #fff; */
@@ -203,7 +237,8 @@
 		 	
 		 	<label class="formLabel" for="photo">活動照片: <span style="color: red">${errorMsgs.photo}</span></label>
            	<input class="actPhoto" name="actp" type="file" accept="image/*" value=""><br>
-<!--       	多張 multiple     -->
+<!--       	多張照片 multiple     -->
+
 			<label class="formLabel" for="content">活動內容: <span style="color: red">${errorMsgs.content}</span></label>
 			<textarea class="actFormInput actContentFormInput" cols="55" name="content">"<%= (actVO == null) ? 
 					"空想食境Fantasy MEALity 為 Manga'Z 所打造出的獨特餐飲體驗，將餐飲結合虛擬實境，用120分鐘的時間帶消費者走入空想王國體驗超乎想像的美食饗宴。" 
