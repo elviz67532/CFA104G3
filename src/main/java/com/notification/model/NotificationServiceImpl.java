@@ -24,7 +24,17 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public List<NotificationVO> getMemberUnviewedNotification(Integer memberId) {
-		return moveRequestDAO.selectMemberUnviewNotifications(memberId);
+	public List<NotificationVO> getMemberLatestNotification(Integer memberId, Integer count) {
+		return moveRequestDAO.getMemberLatestNotification(memberId, count);
+	}
+
+	@Override
+	public int getUnviewNotificationCount(Integer memberId) {
+		return moveRequestDAO.getUnviewNotificationCount(memberId);
+	}
+
+	@Override
+	public int viewNotification(Integer notificationId) {
+		return moveRequestDAO.setViewNotification(notificationId);
 	}
 }

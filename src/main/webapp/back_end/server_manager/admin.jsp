@@ -111,8 +111,7 @@
 										<% 	} %>
 										
 										
-										
-										
+																	
 <%-- 											<c:forEach var="auth" items="${smVO.authList}"> --%>
 <%--  												<c:out value="${map[auth.smgeAuthId]}"></c:out> --%>
 <%-- 													<input type="checkbox" name="smgeAuthId" value=10 <c:if test="${auth.smgeAuthId==10}">checked</c:if>> --%>

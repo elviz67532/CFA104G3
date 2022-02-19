@@ -8,8 +8,9 @@ public interface NotificationDAO extends CoreDao<NotificationVO, Integer> {
 
 	List<NotificationVO> selectMemberNotifications(Integer memberId);
 
-	List<NotificationVO> selectMemberUnviewNotifications(Integer memberId);
+	List<NotificationVO> getMemberLatestNotification(Integer memberId, Integer count);
 
-	int updateNotificationsToView(List<Integer> ids);
+	int getUnviewNotificationCount(Integer memberId);
 
+	int setViewNotification(Integer notificationId);
 }
