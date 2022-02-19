@@ -41,6 +41,7 @@
 	<filter-mapping>
 		<filter-name>frontEndMemberFilter</filter-name>
 		<url-pattern>/front_end/move/moveRequest.jsp</url-pattern>
+		<url-pattern>/front_end/move/frontGetMoveOrder.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -59,6 +60,7 @@
 	<filter-mapping>
 		<filter-name>backEndMemberFilter</filter-name>
 		<url-pattern>/back_end/move/moveRequestManage.jsp</url-pattern>
+		<url-pattern>/back_end/move/readMoveOrder.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/activity.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/product.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/manager.jsp</url-pattern>

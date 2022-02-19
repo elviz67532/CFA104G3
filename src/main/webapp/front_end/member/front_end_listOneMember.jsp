@@ -162,5 +162,4 @@ td {
 	<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
 
 </body>
-
 </html>
