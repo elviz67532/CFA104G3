@@ -81,6 +81,15 @@
 		</ul>
 	</c:if>
 	<br><br>
+	
+	<!-- 麵包屑 (Breadcrumb) -->
+	<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總攬</a></li>
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp">買賣家</a></li>
+	    <li class="breadcrumb-item active" aria-current="page">商品管理</li>
+	  </ol>
+	</nav>	
 	<div>
 		<table class="table table-hover table-bordered table-sm align-middle border-light rounded-3">
 			<thead>

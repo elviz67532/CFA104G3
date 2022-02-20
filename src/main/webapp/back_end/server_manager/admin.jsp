@@ -26,6 +26,7 @@
 	map.put(30,"搬家");
 	map.put(40, "會員");
 	map.put(50, "FAQ");
+	map.put(60, "NEWS");
 	pageContext.setAttribute("map", map);
 %>
 <%
@@ -100,7 +101,7 @@
 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/server_manager/ServerManagerServlet">								
 											<!-- 【產生該員工的五組計數器】 -->		
 											<% 
-												int act=0; int prod=0; int move=0; int mem=0; int faq=0; 
+												int act=0; int prod=0; int move=0; int mem=0; int faq=0; int news=0; 
 											%>
 											<div style="display: none;">
 												<c:forEach var="auth" items="${smVO.authList}">
@@ -109,6 +110,7 @@
 													<c:if test="${auth.smgeAuthId==30}"><%=move++ %></c:if>
 													<c:if test="${auth.smgeAuthId==40}"><%=mem++ %></c:if>
 													<c:if test="${auth.smgeAuthId==50}"><%=faq++ %></c:if>
+													<c:if test="${auth.smgeAuthId==60}"><%=news++ %></c:if>
 												</c:forEach>
 											</div>
 											<%if(act>0){%>
@@ -156,7 +158,15 @@
 <!-- 													<input type="hidden" name="smgeAuthId" value=50> -->
 													<label>FAQ</label>
 											<%	} %>																																												
-								
+											<%if(news>0){%>
+													<input type="checkbox" name="smgeAuthId" value=60 checked>
+<!-- 													<input type="hidden" name="smgeAuthId" value=50> -->
+													<label>NEWS</label>
+											<% 	} else {%>
+													<input type="checkbox" name="smgeAuthId" value=60>
+<!-- 													<input type="hidden" name="smgeAuthId" value=50> -->
+													<label>NEWS</label>
+											<%	} %>								
 											<input type="hidden" name="smgrId" value="${smVO.smgrId}">
 											<input type="hidden" name="action" value="update">		
 											<input type="submit" value="修改">

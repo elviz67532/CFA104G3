@@ -88,6 +88,18 @@
             </div>
         </div>
     </header>
+    
+	<!-- 麵包屑 (Breadcrumb) -->
+	<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總攬</a></li>
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp">買賣家</a></li>
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/sellerAllProducts.jsp">商品管理</a></li>
+	    <li class="breadcrumb-item active" aria-current="page">修改商品</li>
+	    <li class="breadcrumb-item active" aria-current="page">查看修改結果</li>
+	  </ol>
+	</nav>	
+    
 	<table class="table table-bordered" style="background: mintcream;">
 		<tr>
 			<th>商品編號</th>

@@ -79,6 +79,16 @@
 			</ul>
 		</c:if>
 	
+		<!-- 麵包屑 (Breadcrumb) -->
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總攬</a></li>
+		    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp">買賣家</a></li>
+		    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/sellerAllProducts.jsp">商品管理</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">修改商品</li>
+		  </ol>
+		</nav>	
+	
 		<FORM METHOD="post" ACTION="ProductServlet" name="form1">
 		<table>
 			<tr>
@@ -89,7 +99,7 @@
 			<tr>
 				<td>商品名稱:</td>
 				<td><input type="text" name="prodName"
-				value="<%= (productVO == null)? "呵呵~": productVO.getName()%>"
+				value="<%= (productVO == null)? "": productVO.getName()%>"
 				class="input-group-text"
 				style="margin: 15px;"/></td>
 			</tr>
@@ -97,13 +107,15 @@
 			<tr>
 				<td>會員編號:</td>
 				<td><input type="text" name="memId"
-				value="<%= (productVO == null)? "123456": productVO.getSellerMemberId() %>"/></td>
+				value="<%= (productVO == null)? "": productVO.getSellerMemberId() %>"
+				class="input-group-text"
+				style="margin: 15px;"/></td>
 			</tr>
 			<jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductServiceImpl"></jsp:useBean>
 		
 			<tr>
 				<td>商品類別:</td>
-				<td><select size="1" name="prodType">
+				<td><select size="1" name="prodType" class="input-group-text">
 		<%-- 			<c:forEach var="type" items="${ProductUtil.prodType}"> --%>
 		<!-- 				<option value="type">type -->
 		<%-- 			</c:forEach> --%>
@@ -117,28 +129,35 @@
 			</tr>
 				<td>商品敘述:</td>
 				<td><input type="text" name="prodDesc"
-				value="<%= (productVO == null)? "商品敘述": productVO.getDescription() %>"
+				value="<%= (productVO == null)? "": productVO.getDescription() %>"
+				class="input-group-text"
 				style="margin: 15px;"/></td>
 			</tr>
 				
 			<tr>
 				<td>價格:</td>
 				<td><input type="text" name="prodPrice"
-				value="<%= (productVO == null)? "0": productVO.getPrice() %>"/></td>			
+				value="<%= (productVO == null)? "": productVO.getPrice() %>"
+				class="input-group-text"
+				style="margin: 15px;"/></td>			
 			</tr>
 			<tr>
 				<td>上架時間:</td>
-				<td><input type="text" name="prodUpdate"
-				value="<%= new java.sql.Date(System.currentTimeMillis()) %>"/></td>			
+				<td><input type="text" name="prodUpdate" disabled
+				value="<%= new java.sql.Date(System.currentTimeMillis()) %>"
+				class="input-group-text"
+				style="margin: 15px;"/></td>			
 			</tr>
 			<tr>
 				<td>所在地:</td>
 				<td><input type="text" name="prodLoc"
-				value="<%= (productVO == null)? "unknown": productVO.getLocation() %>"/></td>			
+				value="<%= (productVO == null)? "": productVO.getLocation() %>"
+				class="input-group-text"
+				style="margin: 15px;"/></td>			
 			</tr>	
 			<tr>
 				<td>商品狀態:</td>
-				<td><select size="1" name="prodStatus">
+				<td><select size="1" name="prodStatus" class="input-group-text" style="margin: 15px;">
 						<option>--請選擇--				
 						<option value=0 ${(productVO.status == 0)? 'selected':''}>販售中
 						<option value=1 ${(productVO.status == 1)? 'selected':''}>完售

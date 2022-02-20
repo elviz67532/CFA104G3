@@ -112,13 +112,13 @@
 			<!-- 左邊3欄  list group 分類功能-->
 			<div class="col-12 col-md-3 list-group">
 				<FORM METHOD="post" ACTION="product/ProductServlet">
-				  <a href="homePage.jsp" class="list-group-item list-group-item-action active" aria-current="true">
+				  <a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp" class="list-group-item list-group-item-action active" aria-current="true">
 				    總覽
 				  </a>
-				  <a href="browseElec.jsp"  name="prodType" value=4 class="list-group-item list-group-item-action">電器類</a>
-				  <a href="browseFurniture.jsp" class="list-group-item list-group-item-action">寢具</a>
-				  <a href="browseOthers.jsp" class="list-group-item list-group-item-action">其他</a>
-				  <a href="vendor.jsp" class="list-group-item list-group-item-action">買賣家</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/browseElec.jsp"  name="prodType" value=4 class="list-group-item list-group-item-action">電器類</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/browseFurniture.jsp" class="list-group-item list-group-item-action">寢具</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/browseOthers.jsp" class="list-group-item list-group-item-action">其他</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp" class="list-group-item list-group-item-action">買賣家</a>
 				</FORM>
 			</div>
 			<!-- 右邊9欄  card 卡片 & text-center -->

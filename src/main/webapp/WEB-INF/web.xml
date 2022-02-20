@@ -64,7 +64,7 @@
 		<url-pattern>/back_end/move/moveRequestManage.jsp</url-pattern>
 		<url-pattern>/back_end/move/readMoveOrder.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/activity.jsp</url-pattern>
-		<url-pattern>/back_end/server_manager/product.jsp</url-pattern>
+		<url-pattern>/back_end/product/seller.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/manager.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/FAQ.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/server.jsp</url-pattern>
