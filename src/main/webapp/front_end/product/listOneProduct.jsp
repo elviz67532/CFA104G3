@@ -56,5 +56,15 @@
 	</tr>
 	
 </table>
+<FORM METHOD="post" ACTION="moveorder.do">
+	<input type="hidden" name="action" value="insert">
+	<input type="hidden" name="productId">
+	<input type="submit" value="加入收藏">
+</FORM>
+<FORM METHOD="post" ACTION="moveorder.do">
+	<input type="hidden" name="action" value="delete_from_collection">
+	<input type="hidden" name="productId">
+	<input type="submit" value="取消收藏">
+</FORM>
 </body>
 </html>

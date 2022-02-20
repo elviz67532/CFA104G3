@@ -83,7 +83,15 @@ table td{
   item-align: center;
   width: 80%;
 }
+body {
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
 </style>
+<script>
+$('#button1').click(function() {
+	 alert('Hello World!');
+});
+</script>
 </head>
 
 <body>
@@ -148,15 +156,15 @@ table td{
 			</tr>
 			<tr>
 				<th class="text-nowrap">估價金額:</th>
-				<td>${moveOrderVO.amountFirst}</td>
+				<td>${moveOrderVO.amountFirst}元</td>
 			</tr>
 			<tr>
 				<th class="text-nowrap">訂金:</th>
-				<td>${moveOrderVO.deposit}</td>
+				<td>${moveOrderVO.deposit}元</td>
 			</tr>
 			<tr>
 				<th class="text-nowrap">最終付款金額:</th>
-				<td>${moveOrderVO.amountTotal}</td>
+				<td>${moveOrderVO.amountTotal}元</td>
 			</tr>
 			<tr>
 				<th class="text-nowrap">訂單成立時間:</th>
@@ -180,7 +188,7 @@ table td{
 						<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}">
 						<textarea style="height: 300px; width: 500px;" name="comment">${moveOrderVO.comment}</textarea>
 						<input type="hidden" name="status" value="${moveOrderVO.status}">
-						<input type="submit" value="送出">
+						<button id="button1" >送出</button>
 					</FORM>
 				</td>
 			</tr>
