@@ -1,8 +1,7 @@
-package com.activity_photo.controller;
+package com.product_report.controller;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,58 +15,62 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.product_report.model.ProductReportVO;
+
 import core.util.SQLUtil;
 
-public class ActivityPhotoServlet extends HttpServlet {
+
+public class ProductReportImageReader extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
 	Connection con;
 
-	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-//		doPost(req, res);
-		res.setContentType("image/*");
+	public void doGet(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+
+		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();
-//		System.out.println("test1");
+		
 		try {
 			Statement stmt = con.createStatement();
-			String id = req.getParameter("ACTP_ACT_ID");
+			String productId = req.getParameter("PRODRP_PROD_ID");
+			String memberId = req.getParameter("PRODRP_MEM_ID");
+			
 			ResultSet rs = stmt.executeQuery(
-					"SELECT ACTP_PHOTO FROM activity_photo WHERE ACTP_ACT_ID =" + id);
-
+//					雙主見有夠麻煩
+			    "SELECT PRODRP_PHOTO FROM PRODCUT_REPORT WHERE PRODRP_PROD_ID =\'+productId' and PRODRP_MEM_ID = \'+memberId'");
 			if (rs.next()) {
-				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("ACTP_PHOTO"));
+				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("PRODRP_PHOTO"));
 				byte[] buf = new byte[4 * 1024]; // 4K buffer
 				int len;
 				while ((len = in.read(buf)) != -1) {
 					out.write(buf, 0, len);
 				}
 				in.close();
-//				System.out.println("1、" + buf.length);
-			} else {
-//				res.sendError(HttpServletResponse.SC_NOT_FOUND);
-				InputStream in = getServletContext().getResourceAsStream("/asset/img/activityImage/nodata/20192.jpg");
-				byte[] b = new byte[in.available()];
-				in.read(b);
-				out.write(b);
-				in.close();
-//				System.out.println("2、"+ b.length);
+			}  else {
+				res.sendError(HttpServletResponse.SC_NOT_FOUND);
+//				InputStream in = getServletContext().getResourceAsStream("");
+//				byte[] b = new byte[in.available()];
+//				in.read(b);
+//				out.write(b);
+//				in.close();
 			}
 			rs.close();
 			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			InputStream in = getServletContext().getResourceAsStream("/asset/img/activityImage/nodata/20192.jpg");
-			byte[] b = new byte[in.available()];
-			in.read(b);
-			out.write(b);
-			in.close();
-//			System.out.println("3、"+ b.length);
+//			InputStream in = getServletContext().getResourceAsStream("/front-end/mem/images/null.jpg");
+//			byte[] b = new byte[in.available()];
+//			in.read(b);
+//			out.write(b);
+//			in.close();
 		}
 	}
 
 	public void init() throws ServletException {
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			Class.forName(SQLUtil.DRIVER);
+			con = DriverManager.getConnection("SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD");
 		} catch (ClassNotFoundException e) {
 			throw new UnavailableException("Couldn't load JdbcOdbcDriver");
 		} catch (SQLException e) {
@@ -75,11 +78,9 @@ public class ActivityPhotoServlet extends HttpServlet {
 		}
 	}
 
-
 	public void destroy() {
 		try {
-			if (con != null)
-				con.close();
+			if (con != null) con.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}

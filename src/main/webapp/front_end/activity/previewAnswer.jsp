@@ -1,29 +1,30 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+
 <%@ page import="com.activity.model.*"%>
-<%@ page import="com.activity_photo.model.*"%>
+<!-- 報名用 -->
+<%@ page import="com.activity_attend.model.*"%>
+<!-- 問答用 -->
+<%@ page import="com.activity_question.model.*"%>
+
+<%@ page import="com.member.model.*"%>
+
 <!-- 改善時間用 -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<!-- switch -->
-<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 <%
-	ActivityVO actVO = new ActivityVO();
-	ActivityServiceImpl actSvc = new ActivityServiceImpl();
-	List<ActivityVO> list = actSvc.getAllAct();
-	pageContext.setAttribute("list",list);
-	ActivityPhotoVO actpVO = new ActivityPhotoVO();
-%>
-<%
-	request.setAttribute("findActivityTypeString", new String[]{"活動","聚餐","講座","其他"});
-%>
-
+	MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+	
+	ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");
+	
+	ActivityQuestionVO actqVO = (ActivityQuestionVO) request.getAttribute("actqVO");
+%>   
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="UTF-8">
-<title>活動預覽頁面previewActPage.jsp</title>
+<title>活動問答previewQuestion.jsp</title>
 <%-- <link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet"> --%>
 
 <link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
@@ -56,51 +57,23 @@
 	padding: 24px 48px 32px 48px; 
     background-color: #fff; 
 } 
-.section2{
-	padding: 2% 48px 0 48px;
-    background-color: #fff;
-}
 
-.launchedDate{
+.problemDate{
     color: #b5bac1;
     font-size: 14px;
     font-weight: 500;
 	margin: 4px 8px; 
 }
-.showImage{
-	box-shadow: none;
-    border-radius: 16px;
-    width: 100%;
-}
-.actType{
-    padding: 2px 24px;
+
+.idSpan{
+	padding: 2px 24px;
 	background-color: #212121;
 	color: white;
     border-radius: 16px;
-    font-size: 16px;
 /* 	background-color: #ff93c2; */
     box-shadow: 0 2px 4px rgb(255 147 194 / 30%);
     font-family: Courier, monospace;
-}
-
-.actName{
-	font-size: 32px;
-    font-weight: 600;
-    color: #212121;
-    margin-top: 10px;
-    margin-bottom: 24px;
-	font-family: Courier, monospace;
-}
-.innerDiv{
-	box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
-    padding: 16px;
-    border-radius: 16px;
     font-size: 16px;
-    margin: auto 20px auto auto;
-}
-.timeDiv{
-	font-weight: 700;
-    color: #595e64;
     font-family: Courier, monospace;
 }
 .actInformation{
@@ -153,15 +126,8 @@
     background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
     box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
 }
-.btn-hover.color-11 {
-       background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);
-        box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
-}
-.detailP{
- 	color: #000; 
- 	word-wrap: break-word; 
- 	font-weight: 700;
- 	color: gray;
+.question{
+	font-size:20px; 
 	font-family: Courier, monospace;
 }
 </style>    
@@ -187,72 +153,30 @@
         </div>
     </header>
    
-   	<!-- 主體畫面設計  -->
-<!--                活動預覽頁面 -->
-   		<div style="border: 2px white groove; width: 70%; margin: 0 auto 60px auto;">
+		<!-- 主體畫面設計  -->
+<!--                問題預覽頁面 -->
+   		<div style="border: 2px white groove; width: 40%; margin: 0 auto 60px auto;">
 <!-- 				<img class="showImage" src="http://picsum.photos/300/200?random=?" alt=""> -->
-        <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
    	<section class="section1">
-               <div style="display: block;margin-right:20px; padding: 4px;">
-             		<c:set var="typeNum" scope="request" value="${actVO.type}"/>
-             		<span class="actType">${findActivityTypeString[typeNum]}</span>
-					
-             		<button class="btn-hover color-11" style=" float:right; padding: 20px;">報名人數倒數: ${actVO.applyMemberExisting}</button></div>
-               <div>
-               	<h2 class="actName">活動名稱: ${actVO.name}</h2>
+               <div class="idDiv">
+	               <span class="idSpan">會員編號: ${memberVO.id} </span><br>
+		           <span class="idSpan">活動編號: ${actqVO.activityId} </span><br>
                </div>
-               <div class="innerDiv">
-               		<div class="timeDiv">
-            				活動報名時間: <fmt:formatDate value="${actVO.applyStartDate}" pattern="yyyy-MM-dd hh:mm:ss"/>  ~  <fmt:formatDate value="${actVO.applyEndDate}" pattern="yyyy-MM-dd hh:mm:ss"/>
-               		</div>
-              	</div>
-               <div class="actInformation">
-					活動資訊
-               </div>
-               <span style="font-size:20px; font-family: Courier, monospace;">${actVO.content} </span>
-               <p style="margin-bottom: 20px;"></p>
-               <p class="detailP">
-               	<span style="color: yellowgreen;">
-               		<strong>活動時間: </strong>
-               	</span>
-               		<fmt:formatDate value="${actVO.startDate}" pattern="yyyy-MM-dd hh:mm:ss"/>
-               </p>
-               <p class="detailP">
-               	<span style="color: yellowgreen;">
-               		<strong>活動費用:  </strong>
-               	</span>
-               		${actVO.cost} 元
-               </p>
-                <p class="detailP">
-               	<span style="color: yellowgreen;">
-               		<strong>活動地點:  </strong>
-               	</span>
-               		${actVO.location}
-               </p>
-                <p class="detailP">
-               	<span style="color: yellowgreen;">
-               		<strong>活動人數限制:  </strong>
-               	</span>
-               		${actVO.minMember}  ~  ${actVO.maxMember}
-               </p>
+		           <br>
+               <span class="question">
+               我的回應是:
+               <br>
+               ${actqVO.problem} </span>
+               <br>
+               
                <input type="submit" class="btn-hover color-1" id="sweetBtnPreview" value="結束預覽"/>
-               <p class="launchedDate" style="text-align:center;"><fmt:formatDate value="${actVO.launchedDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
- 	</section>
- 	<section class="section2">
+               <p style="text-align:center;" class="problemDate"><fmt:formatDate value="${actqVO.problemDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
  	</section>
    		</div>
-   
-   
-    <!-- Footer-->
-   	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
-    <script>
+	<script>
     	var btn1 = document.getElementById('sweetBtnPreview');
     	btn1.addEventListener('click', function() {
-            swal('幹得漂亮！', '你刊登了這筆活動！', 'success');
+            swal('幹得漂亮！', '你回答了這個問題！', 'success');
         });
     	$('#sweetBtnPreview').click (function (e) {
    		   e.preventDefault(); //will stop the link href to call the blog page

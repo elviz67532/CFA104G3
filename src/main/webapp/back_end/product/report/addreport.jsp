@@ -1,9 +1,10 @@
-<%@page import="com.news.model.*" %>
+<%@ page import="com.product_report.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.*" %>
+<%@page import="java.sql.Timestamp"%>
 
-<% NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");%>
+<%ProductReportVO productReportVO = (ProductReportVO) request.getAttribute("productReportVO");%>
 
 <!doctype html>
 <html lang="zh-TW">
@@ -26,7 +27,7 @@
 
         <!-- Sidebar -->
         <jsp:include page="/back_end/common/sidebar.jsp"></jsp:include>
-
+        
         <div id="content-wrapper" class="d-flex flex-column">
 
             <div id="content">
@@ -35,8 +36,8 @@
                 <jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
                 <div class="container-fluid">
                     <br><br>
-                    <li><a href='listallnews.jsp' class="btn btn-outline-primary">前往消息管理</a><br><br></li>
-
+                    <li><a href='productReportManage.jsp' class="btn btn-outline-primary">前往檢舉管理</a><br><br></li>
+                    
                     <%-- 錯誤表列 --%>
                         <c:if test="${not empty errorMsgs}">
                             <font style="color: red">請修正以下錯誤:</font>
@@ -47,54 +48,59 @@
                             </ul>
                         </c:if>
 
+                        <h3 class="m-0 font-weight-bold text-primary">測試新增檢舉案:</h3><br>
+                        
                         <!-- main -->
-                        <h3 class="m-0 font-weight-bold text-primary">新增最新消息:</h3><br>
-                        <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/back_end/news/NewsServlet"
+                        
+                        <FORM METHOD="post" ACTION="report.do"
                             name="form1" enctype="multipart/form-data">
                             <table>
                                 <tr>
-                                    <td>消息分類編號:</td>
-                                    <td><input class="form-control" list="datalistOptions"
-                                            placeholder="Type to search..." name="type" size="15"
-                                            value="<%=(newsVO == null) ? "" : newsVO.getType()%>" />
-                                    </td>
-                                    <datalist id="datalistOptions">
-                                        <option name="活動" value="1">
-                                        <option value="2">
-                                        <option value="3">
-                                        <option value="4">
-                                        <option value="5">
-                                    </datalist>
-                                </tr>
-                                <tr>
-                                    <td>標題:</td>
-                                    <td><input type="TEXT" name="title" size="45"
-                                            value="<%=(newsVO == null) ? "" : newsVO.getTitle()%>" />
+                                    <td>商品編號:</td>
+                                    <td><input type="TEXT" name="productId" size="45"
+                                            value="<%=(productReportVO == null) ? "" : productReportVO.getProductId()%>" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>內容:</td>
+                                    <td>會員編號:</td>
+                                    <td><input type="TEXT" name="memberId" size="45"
+                                            value="<%=(productReportVO == null) ? "" : productReportVO.getMemberId()%>" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>內文:</td>
                                     <td><textarea class="form-control" name="content" size="45"
-                                            value="<%=(newsVO == null) ? "" : newsVO.getContent()%>"
+                                            value="<%=(productReportVO == null) ? "" : productReportVO.getContent()%>"
                                             rows="3" /></textarea></td>
                                 </tr>
                                 <tr>
+                                    <td>狀態:</td>
+                                    <td><input type="TEXT" name="status" size="45"
+                                            value="<%=(productReportVO == null) ? "" : productReportVO.getStatus()%>" />
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>圖片:</td>
-                                    <td><input type="file" name="image" size="45"
-                                            value="<%=(newsVO == null) ? "" : newsVO.getImage()%>" />
+                                    <td><input type="file" name="photo" size="45"
+                                            value="<%=(productReportVO == null) ? "" : productReportVO.getPhoto()%>" />
                                     </td>
                                 </tr>
 
-                                <jsp:useBean id="newsSvc" scope="page" class="com.news.model.NewsServiceImpl" />
+                                <jsp:useBean id="reportSvc" scope="page"
+                                    class="com.product_report.model.ProductReportServiceImpl" />
+
                             </table>
                             <input type="hidden" name="action" value="insert">
                             <input type="submit" value="送出新增" class="btn btn-outline-primary">
                         </FORM>
+                        
                         <!-- end of main -->
+
                 </div>
             </div>
             <jsp:include page="/back_end/common/footer.jsp"></jsp:include>
         </div>
+
     </div>
 
     <!-- Scroll to Top Button-->

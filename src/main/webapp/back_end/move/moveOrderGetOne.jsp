@@ -89,7 +89,8 @@ table td{
   margin: 20px auto;
   item-align: center;
   width: 80%;
-}  button{
+}  
+button{
   	width:200px;
   	color: light blue;
   	margin-top: auto;
@@ -120,7 +121,7 @@ table td{
 					</c:if>
 					<div class="">
 					<h2>搬家訂單</h2>
-					<div class=""main>
+					<div class="main">
 					<table>
 
 						<tr>
@@ -270,6 +271,7 @@ table td{
 							</td>
 						</tr>
 					</table>
+					<input type="button" value="回首頁" onclick="location.href='readMoveOrder.jsp'">
 					</div>
 					</div>
 					<!-- end of main -->
