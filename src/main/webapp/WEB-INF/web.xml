@@ -170,14 +170,9 @@
 		<servlet-name>NewsServlet</servlet-name>
 		<url-pattern>/back_end/news/NewsServlet</url-pattern>
 	</servlet-mapping>
-<<<<<<< HEAD
-
+	
 	<!-- news -->
 	<servlet>
-=======
-  
-  <servlet>
->>>>>>> branch 'master' of https://github.com/elviz67532/CFA104G3.git
 		<servlet-name>NewsImageReader</servlet-name>
 		<servlet-class>com.news.controller.NewsImageReader</servlet-class>
 	</servlet>
