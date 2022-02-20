@@ -16,7 +16,7 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="UTF-8">
-<title>單一活動瀏覽路人頁面singleActPageForPasserby.jsp</title>
+<title>單一活動瀏覽遊客頁面singleActPageForPasserby.jsp</title>
 <link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet">
 <link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
 <!-- sweet -->
@@ -287,29 +287,7 @@
    	<section class="section1">
                <div style="display: block; margin-left: 10px; padding: 4px;">
                <div style="width: 100%;">
-<%--                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;"> --%>
-<!-- 		               <input type="hidden" name="action" value="selectOneActForEdit"/>  -->
-<%-- 		               <input type="hidden" name="activityId" value="${actVO.activityId}"> --%>
-<!-- 	               	   <input type="submit" class="btn btn-hover color-3" value="編輯活動"/> -->
-<!-- 			       </FORM> -->
-<%-- 			       <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;"> --%>
-<!-- 				       <input type="hidden" name="action" value="delete"/>  -->
-<%-- 	      	           <input type="hidden" name="activityId" value="${actVO.activityId}"> --%>
-<!-- 				       <input type="submit" class="btn btn-hover color-3" value="刪除活動"/> -->
-<!-- 			       </FORM> -->
-<%-- 			       <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;"> --%>
-<!-- 				       <input type="hidden" name="action" value="cancel"/>  -->
-<%--     	      	       <input type="hidden" name="activityId" value="${actVO.activityId}"> --%>
-<!-- 				       <input type="submit" class="btn btn-hover color-3" value="取消活動"/> -->
-<!--                	   </FORM> -->
-<%-- 			       <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;"> --%>
-<!-- 				       <input type="hidden" name="action" value="remove"/>  -->
-<%-- 				       <input type="hidden" name="activityId" value="${actVO.activityId}"> --%>
-<!-- 				       <input type="submit" class="btn btn-hover color-3" value="下架活動"/> -->
-<!-- 			       </FORM> -->
                </div>
-<%-- 		      <c:set var="typeNum" scope="request" value="${actVO.type}"/> --%>
-<%--              		<span class="actType">${findActivityTypeString[typeNum]}</span> --%>
 		       <br>
 		       <span class="actType">
 				    <%	int type = actVO.getType();
@@ -362,90 +340,16 @@
 <!-- 	               <div style="border: 2px solid red;"> -->
 	               <div>
 	        			<button type="button" class="btn_modal btn btn-hover color-1">報名活動</button>
-<!-- 	        			<button type="button" class="btn_modal2 btn btn-hover color-1">為活動評分</button> -->
-<!--     				    <button type="button" class="btn_modal3 btn btn-hover color-1">檢舉活動</button> -->
-<%--     					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;"> --%>
-<!-- 					       <input type="hidden" name="action" value="quit"/>  -->
-<%-- 		      	           <input type="hidden" name="activityId" value="${actVO.activityId}"> --%>
-<!-- 					       <input type="submit" class="btn btn-hover color-1" value="退出活動"/> -->
-<!-- 			       		</FORM> -->
 	               </div>
 				<!--   ==================== 報名活動 ====================   -->
-	               <div class="main">
-			       <!-- 彈出視窗 -->
-				        <div class="overlay">
-				            <article>
-				                <h2>來報名活動吧!</h2>
-								<!-- 內容從這裡開始 -->
-								
-								
-								
-								
-								<!-- 內容從這裡結束 -->
-				            	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
-							       <input type="hidden" name="action" value="attend"/> 
-				      	           <input type="hidden" name="activityId" value="${actVO.activityId}">
-							       <input type="submit" class="btn btn-hover color-1" value="送出表單"/>
-						       	</FORM>
-						       	<button type="button" class="btn_modal_close btn btn-hover color-1">取消活動</button>
-				            </article>
-				        </div>
-			        </div>
 			        
 			      <!--   ==================== 為活動評分 ====================   -->  
-<!-- 			        <div class="main2"> -->
-<!-- 			       彈出視窗 -->
-<!-- 				        <div class="overlay2"> -->
-<!-- 				            <article> -->
-<!-- 				                <h2>來評分活動囉!</h2> -->
-<!-- 								內容從這裡開始 -->
-								
-								
-								
-								
-<!-- 								內容從這裡結束 -->
-<%-- 				            	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">  --%>
-<!-- 							       <input type="hidden" name="action" value="score"/>  -->
-<%-- 				      	           <input type="hidden" name="activityId" value="${actVO.activityId}"> --%>
-<!-- 							       <input type="submit" class="btn btn-hover color-1" value="為活動評分"/> -->
-<!-- 						        </FORM> -->
-<!-- 						       	<button type="button" class="btn_modal_close2 btn btn-hover color-1">取消評分</button> -->
-<!-- 				            </article> -->
-<!-- 				        </div> -->
-<!-- 			        </div> -->
 			        
 <!-- 			          ==================== 檢舉活動 ====================     -->
-<!-- 			        <div class="main3"> -->
-<!-- 			       彈出視窗 -->
-<!-- 				        <div class="overlay3"> -->
-<!-- 				            <article> -->
-<!-- 				                <h2>來檢舉活動囉!</h2> -->
-<!-- 								內容從這裡開始 -->
-								
-								
-								
-								
-<!-- 								內容從這裡結束 -->
-<%-- 				            	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">  --%>
-<!-- 							       <input type="hidden" name="action" value="attend"/>  -->
-<%-- 				      	           <input type="hidden" name="activityId" value="${actVO.activityId}"> --%>
-<!-- 							       <input type="submit" class="btn btn-hover color-1" value="檢舉活動"/> -->
-<!-- 						        </FORM> -->
-<!-- 						       	<button type="button" class="btn_modal_close3 btn btn-hover color-1">取消檢舉</button> -->
-<!-- 				            </article> -->
-<!-- 				        </div> -->
-<!-- 			        </div> -->
 		       </div>
                <p class="launchedDate" style="text-align: center;"><fmt:formatDate value="${actVO.launchedDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
  	</section>
- 	<section class="section2">
- 		
- 	</section>
    		</div>
-<!-- 			<td> -->
-<!-- 			</td> -->
-	
-   
    
     <!-- Footer-->
    	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
