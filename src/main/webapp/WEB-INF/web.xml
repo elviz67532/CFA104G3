@@ -137,12 +137,14 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>ActrImage</servlet-name>
-		<servlet-class>com.activity_report.controller.DBGifReader4</servlet-class>
+		<servlet-class>com.activity_report.controller.DBGifReader4
+		</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ActrImage</servlet-name>
 		<url-pattern>/activity/ActrImage.do</url-pattern>
 	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>ActivityPhotoServlet</servlet-name>
 		<servlet-class>com.activity_photo.controller.ActivityPhotoServlet</servlet-class>
@@ -170,8 +172,6 @@
 		<servlet-name>NewsServlet</servlet-name>
 		<url-pattern>/back_end/news/NewsServlet</url-pattern>
 	</servlet-mapping>
-	
-	<!-- news -->
 	<servlet>
 		<servlet-name>NewsImageReader</servlet-name>
 		<servlet-class>com.news.controller.NewsImageReader</servlet-class>
@@ -179,8 +179,8 @@
 	<servlet-mapping>
 		<servlet-name>NewsImageReader</servlet-name>
 		<url-pattern>/news/newsimage.do</url-pattern>
-	</servlet-mapping>	
-  	
+  </servlet-mapping>
+  
   <servlet>
 		<servlet-name>ProductReportServlet</servlet-name>
 		<servlet-class>com.product_report.controller.ProductReportServlet</servlet-class>
@@ -189,7 +189,6 @@
 		<servlet-name>ProductReportServlet</servlet-name>
 		<url-pattern>/back_end/product/report/report.do</url-pattern>
 	</servlet-mapping>
-	
 	<servlet>
 		<servlet-name>ProductReportImageReader</servlet-name>
 		<servlet-class>com.product_report.controller.ProductReportImageReader</servlet-class>

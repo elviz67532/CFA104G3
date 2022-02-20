@@ -14,13 +14,13 @@ public class ServerManagerServiceImpl implements ServerManagerService{
 		dao = new ServerManagerDAOJDBCImpl(); 
 	}
 	
-	public ServerManagerVO insert(Integer smgrId, String smgrEmail, String smgrAccount, 
+	public ServerManagerVO insert(String smgrEmail, String smgrAccount, 
 			String smgrPassword, String smgrName, String smgrPhone, Integer smgrGender, 
 			String smgrAddress) {
 		
 		ServerManagerVO smVO = new ServerManagerVO();
 		
-		smVO.setSmgrId(smgrId);
+		//smVO.setSmgrId(smgrId);
 		smVO.setSmgrEmail(smgrEmail);
 		smVO.setSmgrAccount(smgrAccount);
 		smVO.setSmgrPassword(smgrPassword);

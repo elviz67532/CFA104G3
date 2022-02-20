@@ -3,10 +3,20 @@ package com.product.model;
 
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.sql.Timestamp;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+
+import com.product.model.ProductDAOImpl;
+import com.product.model.ProductVO;
 
 
 
@@ -147,5 +157,23 @@ class ProductDAOImplTest {
 			System.out.println();
 		}
 		assertTrue(list.size() > 0);
+	}
+	
+	@Test
+	@DisplayName("getProductByMem")
+	public void testGetProductByMem() {
+		
+		Integer sellerMem = 17;
+		List<ProductVO> list = dao.getProductsByMem(sellerMem);
+		for (ProductVO productVO : list) {
+			System.out.print(productVO.getId());
+			System.out.print(" ");
+			System.out.print("type: ");
+			System.out.print(productVO.getType());
+			System.out.print(" ");
+			System.out.print(productVO.getName());
+			System.out.println();
+		}
+		assertTrue(list.size() > 0);		
 	}
 }
