@@ -13,11 +13,11 @@ import core.util.SQLUtil;
 
 public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 	private static final String GET_ALL_STMT = "select * from PRODCUT_REPORT";
-	private static final String GET_ONE_STMT = "select * from PRODCUT_REPORT where PRODRP_PROD_ID = ? and PRODRP_MEM_ID = ?";
+	private static final String GET_ONE_STMT = "select PRODRP_PROD_ID, PRODRP_MEM_ID, PRODRP_CONTENT, PRODRP_DATE, PRODRP_PHOTO, PRODRP_STATUS from PRODCUT_REPORT where PRODRP_PROD_ID = ? and PRODRP_MEM_ID = ?";
 	private static final String INSERT_STMT = "insert into PRODCUT_REPORT"
 			+ "(PRODRP_PROD_ID, PRODRP_MEM_ID, PRODRP_CONTENT, PRODRP_DATE, PRODRP_PHOTO, PRODRP_STATUS) "
 			+ "values (?, ?, ?, ?, ?, ?)";
-	private static final String DELETE = "delete from PRODCUT_REPORT where PRODRP_PROD_ID = ? and PRODRP_MEM_ID = ?";
+	private static final String DELETE = "delete from PRODCUT_REPORT where PRODRP_MEM_ID = ? and PRODRP_PROD_ID = ?";
 	private static final String UPDATE = "UPDATE PRODCUT_REPORT set "
 			+ "PRODRP_CONTENT = ?, PRODRP_DATE = ?, PRODRP_PHOTO = ?, PRODRP_STATUS = ? "
 			+ "where PRODRP_MEM_ID = ? and PRODRP_PROD_ID = ?";
@@ -185,7 +185,7 @@ public class ProductReportDAOJDBCImpl implements ProductReportDAO {
 
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
-			pstmt = con.prepareStatement(GET_ONE_STMT);
+			pstmt = con.prepareStatement(GET_ONE_ID);
 
 			pstmt.setInt(1, memberId);
 

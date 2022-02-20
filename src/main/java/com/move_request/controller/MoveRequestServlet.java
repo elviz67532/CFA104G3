@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.management.Notification;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -30,9 +31,11 @@ import com.move_request.model.EMoveRequestStatus;
 import com.move_request.model.MoveRequestService;
 import com.move_request.model.MoveRequestServiceImpl;
 import com.move_request.model.MoveRequestVO;
+import com.notification.model.ENotificationType;
+import com.notification.model.NotificationService;
+import com.notification.model.NotificationServiceImpl;
 
-// TODO 發生檔案太大異常時處理方式
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 3 * 1024 * 1024, maxRequestSize = 3 * 3 * 1024 * 1024)
 public class MoveRequestServlet extends HttpServlet {
 
 	@Override
@@ -47,20 +50,17 @@ public class MoveRequestServlet extends HttpServlet {
 		req.setAttribute("errorMsgs", errorMsgs);
 
 		if ("moveRequest".equals(action)) {
-//			HttpSession session = req.getSession();
-//			MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
-//			if (memberVo == null) {
-//				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/homePage.jsp");
-//				failureView.forward(req, res);
-//				return;
-//			}
-//			
-//			int memberId = memberVo.getId();
+			HttpSession session = req.getSession();
+			MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
+			if (memberVo == null) {
+				res.sendRedirect(req.getContextPath() + "/front_end/member/login.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/homePage.jsp");
+				failureView.forward(req, res);
+				return;
+			}
 			
-			// TODO 補上MEMBER
-
-			int memberId = 0;
-
+			int memberId = memberVo.getId();
+			
 			String fromAddress = req.getParameter("fromAddress");
 			String toAddress = req.getParameter("toAddress");
 			String items = req.getParameter("items");
@@ -69,6 +69,8 @@ public class MoveRequestServlet extends HttpServlet {
 			String evaDate = req.getParameter("evaDate");
 			Collection<Part> parts = req.getParts();
 
+			// TODO 指定允許時間(EVA、MOVE)
+			
 			try {
 				checkEmpty(errorMsgs, fromAddress, "fromAddress");
 				checkEmpty(errorMsgs, toAddress, "toAddress");
@@ -117,6 +119,13 @@ public class MoveRequestServlet extends HttpServlet {
 							errorMsgs.put("evaDate", "請選擇日期");
 						}
 					}
+					
+					if (tMoveDate != null && tEvaDate != null) {
+						long diffTime = tMoveDate.getTime() - tEvaDate.getTime(); 
+						if(diffTime < 7 * 24 * 60 * 60 * 1000) {
+							errorMsgs.put("evaDate", "搬家日期與估價日期時間過近");
+						}
+					}
 				} else {
 					errorMsgs.put("requestMode", "請選擇估價模式");
 				}
@@ -140,8 +149,6 @@ public class MoveRequestServlet extends HttpServlet {
 				boolean addOk = service.addRequest(memberId, fromAddress, toAddress, items, tMoveDate, evaluateType,
 						tEvaDate, photos);
 				
-				// TODO 更正失敗
-				// TODO 跳回首頁
 				if (addOk) {
 					MoveRequestVO vo = new MoveRequestVO();
 					vo.setMemberId(memberId);
@@ -150,9 +157,14 @@ public class MoveRequestServlet extends HttpServlet {
 					vo.setEvaluateDate(tEvaDate);
 					vo.setItems(items);
 					vo.setMoveDate(tMoveDate);
+					vo.setEvaluateType(evaluateType.getTypeCode());
 					req.setAttribute("moveRequestVO", vo);
 					req.setAttribute("movePhotosVO", photos);
 					req.setAttribute("result", "1");
+					
+					// 送出通知
+					NotificationService notifService = new NotificationServiceImpl();
+					notifService.addNotification(memberId, "新增搬家申請單成功, 請耐心等待審核", ENotificationType.MOVE);
 				} else {
 					req.setAttribute("moveRequestVO", null);
 					req.setAttribute("movePhotosVO", null);
@@ -162,7 +174,10 @@ public class MoveRequestServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher("/front_end/move/moveRequest.jsp");
 				successView.forward(req, res);
 			} catch (Exception e) {
-				req.setAttribute("exception", e.getMessage());
+				e.printStackTrace();
+				req.setAttribute("moveRequestVO", null);
+				req.setAttribute("movePhotosVO", null);
+				req.setAttribute("result", "0");
 				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/moveRequest.jsp");
 				failureView.forward(req, res);
 			}
@@ -170,7 +185,6 @@ public class MoveRequestServlet extends HttpServlet {
 	}
 
 	/**
-	 * 
 	 * @return Returns true if checkString is empty
 	 */
 	private boolean checkEmpty(Map<String, String> errorMsgs, String checkString, String errorMsgId) {

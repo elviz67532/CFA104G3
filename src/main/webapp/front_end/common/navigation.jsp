@@ -11,12 +11,20 @@
 	MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
 	if (memberVo != null) {
 		Integer memberId = memberVo.getId();
-		List<NotificationVO> notificationVOs = service.getMemberUnviewedNotification(memberId);
+		int count = service.getUnviewNotificationCount(memberId);
+		
+		List<NotificationVO> notificationVOs = service.getMemberLatestNotification(memberId, 5);
+		pageContext.setAttribute("notificationsCnt", count);
 		pageContext.setAttribute("notifications", notificationVOs);
 	}
 %>
 <link href="<%=request.getContextPath()%>/css/back_end/sb-admin-2.min.css" rel="stylesheet">
-
+<style>
+/* 重製label下方外距 */
+label {
+	margin-bottom: 0rem;
+}
+</style>
 <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 	<div class="container px-4 px-lg-5">
 	    <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">委域</a>
@@ -61,11 +69,13 @@
 								aria-expanded="false">
 								<i class="fas fa-bell fa-fw"></i>
 								<c:choose>
-									<c:when test="${notifications.size() gt 5}">
+									<c:when test="${notificationsCnt gt 5}">
 										<span class="badge badge-danger badge-counter">5+</span>
 									</c:when>
+									<c:when test="${notificationsCnt eq 0}">
+									</c:when>
 									<c:otherwise>
-										<span class="badge badge-danger badge-counter">${notifications.size()}</span>
+										<span class="badge badge-danger badge-counter">${notificationsCnt}</span>
 									</c:otherwise>
 								</c:choose> 
 							</a> 
@@ -77,7 +87,7 @@
 								<!-- 筆記 -->
 								<!-- bg-primary、bg-success、bg-warning -->
 								<c:forEach var="notification" items="${notifications}">
-									<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/front_end/notification/detail.jsp?${notification.id}">
+									<a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/front_end/notification/homePage.jsp?type=${notification.type}">
 										<div class="mr-3">
 											<div class="icon-circle bg-primary">
 												<i class="fas fa-file-alt text-white"></i>
@@ -87,10 +97,10 @@
 											<div class="small text-gray-500" style="">
 												<fmt:formatDate value="${notification.notifyTime}" pattern="yyyy-M-dd HH:mm"/>
 											</div>
-											<span class="font-weight-bold" style="overflow: hidden">
+											<span class="<c:if test='${notification.viewed eq false}'>font-weight-bold</c:if>" style="overflow: hidden">
 												<c:choose>
 													<c:when test="${fn:length(notification.content) gt 20}">
-															<c:out value="${fn:substring(notification.content, 0, 20)}..."></c:out>
+														<c:out value="${fn:substring(notification.content, 0, 20)}..."></c:out>
 													</c:when>
 													<c:otherwise>
 														<c:out value="${notification.content}"></c:out>
@@ -108,8 +118,8 @@
 				          		<a class="nav-link px-lg-3 py-3 py-lg-4 dropdown-toggle" id="navbarDropdownProfile" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">${memberVO.nickname}</a>
 			            		<ul class="dropdown-menu dropdown-menu-end"
 									aria-labelledby="navbarDropdownProfile">
-									<li><a class="dropdown-item" href="#">個人檔案</a></li>
-									<li><a class="dropdown-item" href="#">登出</a></li>
+									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/front_end/member/front_end_listOneMember.jsp">個人檔案</a></li>
+									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/front_end/member/MemberServlet.do?action=logout">登出</a></li>
 								</ul>
 			               	</li>
 						</li>

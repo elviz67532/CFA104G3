@@ -2,10 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.server_manager.model.*"%>
-
-<%
-	ServerManagerVO serverManagerVO = (ServerManagerVO)session.getAttribute("ServerManagerVO");
-%>
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
 	<!-- Sidebar Toggle (Topbar) -->

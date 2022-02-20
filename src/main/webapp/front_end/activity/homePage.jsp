@@ -28,7 +28,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="UTF-8">
 <title>全部活動頁面homePage.jsp</title>
-<link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet">
+<%-- <link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet"> --%>
 <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
@@ -59,51 +59,6 @@
       font-size: 18px;
       margin: 8px 0;  
 }
-
-.btn{
-	width: 100%;
-    padding: 16px 40px;
-	margin: 8px 0 60px 0;
-}
-.btn-hover {
-    width: 200px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-    cursor: pointer;
-    margin: 20px;
-    height: 55px;
-    text-align:center;
-    border: none;
-    background-size: 300% 100%;
-
-    border-radius: 50px;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-}
-
-.btn-hover:hover {
-    background-position: 100% 0;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-}
-
-.btn-hover:focus {
-    outline: none;
-}
-.btn-hover.color-9 {
-margin: 0 20px;
-width: 200px;
-height: 50px;
-padding: 0;
-    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
-    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
-}
-
 
 .tab_container{
 /* 	border: 2px solid blue; */
@@ -257,7 +212,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
     margin: 20px;
     height: 55px;
     text-align:center;
-    border: none;
+/*     border: none; */
     background-size: 300% 100%;
 
     border-radius: 50px;
@@ -279,11 +234,23 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
     outline: none;
 }
 
+
 .btn-hover.color-5 {
     background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
     box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
 }
-
+.btn-hover.color-8 {
+    background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+    box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+}
+.btn-hover.color-9 {
+margin: 0 20px;
+width: 200px;
+height: 50px;
+padding: 0;
+    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
 /*msg*/
 .contact {
 	width: 50px;
@@ -337,14 +304,14 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
             </div>
         </div>
     </header>
-       <%@ include file="specialcard.jsp" %> 
+       <%@ include file="specialcard2.jsp" %> 
    
    <!-- 上與中之間 -->
    <div>
-   	<a href="<%=request.getContextPath()%>/front_end/activity/publishActivity.jsp">
-   	<img id="imgContact" class="contact" src="<%=request.getContextPath()%>/asset/img/activityImage/leaf.png">
-   	<span id="spanContact" class="contact2"></span>
-   	</a>
+	   	<a href="<%=request.getContextPath()%>/front_end/activity/publishActivity.jsp">
+	   		<img id="imgContact" class="contact" src="<%=request.getContextPath()%>/asset/img/activityImage/leaf.png">
+	   		<span id="spanContact" class="contact2"></span>
+	   	</a>
    </div>
 	<script type="text/javascript">
 		var img = document.getElementById('imgContact');
@@ -389,7 +356,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
 			                <input type="hidden" name="activityId" value="${actVO.activityId}">
 			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
+			                <input type="submit" class="btn-hover color-9" value="查看該筆活動"/>
 		                </FORM>
 	                </div>
             	</div>
@@ -412,7 +379,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
 			                <input type="hidden" name="activityId" value="${actVO.activityId}">
 			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
+			                <input type="submit" class="btn-hover color-9" value="查看該筆活動"/>
 		                </FORM>
 	                </div>
             	</div>
@@ -436,7 +403,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
 			                <input type="hidden" name="activityId" value="${actVO.activityId}">
 			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
+			                <input type="submit" class="btn-hover color-9" value="查看該筆活動"/>
 		                </FORM>
 	                </div>
             	</div>
@@ -459,7 +426,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
 			                <input type="hidden" name="activityId" value="${actVO.activityId}">
 			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
+			                <input type="submit" class="btn-hover color-9" value="查看該筆活動"/>
 		                </FORM>
 	                </div>
             	</div>
@@ -482,7 +449,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
 			                <input type="hidden" name="activityId" value="${actVO.activityId}">
 			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
+			                <input type="submit" class="btn-hover color-9" value="查看該筆活動"/>
 		                </FORM>
 	                </div>
             	</div>

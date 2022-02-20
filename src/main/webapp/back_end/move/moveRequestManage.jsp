@@ -38,7 +38,13 @@
 					<%
 					// 傳入參數
 					MoveRequestService moveRequestService = new MoveRequestServiceImpl();
+					MemberServiceImpl memberService = new MemberServiceImpl();
 					List<MoveRequestVO> allRequests = moveRequestService.findAllRequests();
+					List<MemberVO> members = memberService.selectAll();
+					Map<Integer, MemberVO> memberMap = new HashMap<>();
+					for(MemberVO member : members) {
+						memberMap.put(member.getId(), member);
+					}
 					
 					// 顯示格式
 					SimpleDateFormat ymdtmFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
@@ -89,7 +95,7 @@
 											<td><%=vo.getHandled() == null ? "" : EHandled.parseCode(vo.getHandled()).getText()%></td>
 											<td><%=vo.getStatus() == null ? "" : EMoveRequestStatus.parseCode(vo.getStatus()).getText()%></td>
 											<td><%=vo.getEvaluateType() == null ? "" : EMoveRequestEvaType.parseCode(vo.getEvaluateType()).getText()%></td>
-											<td><%=vo.getMemberId()%></td>
+											<td><%=vo.getMemberId() == null ? "" : (memberMap.get(vo.getMemberId()) == null ? "" : memberMap.get(vo.getMemberId()).getName())%></td>
 											<td><%=vo.getMoveDate() == null ? "" : ymdFormat.format(vo.getMoveDate())%></td>
 											<td><%=vo.getEvaluateDate() == null ? "" : ymdFormat.format(vo.getEvaluateDate())%></td>
 											<td><%=vo.getRequestDate() == null ? "" : ymdtmFormat.format(vo.getRequestDate())%></td>
@@ -113,8 +119,8 @@
 	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> <i
-		class="fas fa-angle-up"></i>
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
 	</a>
 
 	<!-- Logout Modal-->

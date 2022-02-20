@@ -2,6 +2,8 @@ package com.server_manager.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -350,29 +352,23 @@ public class ServerManagerServlet extends HttpServlet {
 		}
 		
 	}
-	public static String DBPassword(String account){
-		// SELECT * FROM SERVERMANAGER WHERE SMGR_ACCOUNT='tomcat';
-		ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
-		ServerManagerVO smVO = smSvc.findByAccount(account);
-		String password = smVO.getSmgrPassword();
-		System.out.println("DBPassword: " + password);
-		return password;
-	}
 	
 	public boolean allowUser(String account, String password) {
 		
-			//【檢查使用者輸入的帳號(account) 密碼(password)是否有效】
-			// 應至資料庫搜尋比對
+		//【檢查使用者輸入的帳號(account) 密碼(password)是否有效】
+		// 應至資料庫搜尋比對
 		//DB
 		System.out.println("allowUser");
 		ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
 		System.out.println("產生smSvc: "+ smSvc);
 		ServerManagerVO smVO = smSvc.findByAccount(account); //DB的password
+		if (smVO == null) {
+			return false;
+		}
+		
 		String ans = smVO.getSmgrPassword();
 		System.out.println("ans: "+ ans);
 		
-		String allowUser_account = account;
-		String allowUser_password = password;
 		if(account.equals(account) && ans.equals(password))
 			return true;
 		else 
@@ -384,15 +380,6 @@ public class ServerManagerServlet extends HttpServlet {
 		ServerManagerVO smVO = smSvc.findByAccount(account); //DB的password
 		return smVO;
 	}
-	
-	public static void main(String[] args) {
-		String pwd = DBPassword("tomcat");
-		//System.out.println("password:" + pwd);
-		
-		// 測試時記得加上static
-		//System.out.println("allowuser: " + allowUser("tomcat", DBPassword("tomcat"))); 
-	}
-
 }
 
 

@@ -94,6 +94,7 @@
 <%-- 										</c:forEach> --%>
 <%-- 										</c:if> --%>
 									</th>
+
 									<th>						
 										<c:if test="${smVO.smgrId !=1}" var="varName" scope="session">										
 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/server_manager/ServerManagerServlet">								
@@ -161,6 +162,7 @@
 											<input type="submit" value="修改">
 								</FORM>
 										</c:if>												
+
 									</th>
 									<th>
 										<c:if test="${smVO.smgrId !=1}" var="varName" scope="session">

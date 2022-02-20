@@ -114,12 +114,23 @@
 			
 		</tr>
 	</table>
-	
+  <FORM METHOD="post" ACTION="moveorder.do">
+    <input type="hidden" name="action" value="insert">
+    <input type="hidden" name="productId">
+    <input type="submit" value="加入收藏">
+  </FORM>
+  <FORM METHOD="post" ACTION="moveorder.do">
+    <input type="hidden" name="action" value="delete_from_collection">
+    <input type="hidden" name="productId">
+    <input type="submit" value="取消收藏">
+  </FORM>
+
     <!-- Footer-->
    	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+
 </body>
 </html>

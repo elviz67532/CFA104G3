@@ -8,12 +8,13 @@ public class NotificationServiceImpl implements NotificationService {
 	private NotificationDAO moveRequestDAO = new NotificationDAOJDBCImpl();
 
 	@Override
-	public boolean addNotification(Integer memberId, String content, Integer type) {
+	public boolean addNotification(Integer memberId, String content, ENotificationType type) {
 		NotificationVO pojo = new NotificationVO();
 		pojo.setMemberId(memberId);
 		pojo.setNotifyTime(new Timestamp(System.currentTimeMillis()));
-		pojo.setType(type);
+		pojo.setType(type.getCode());
 		pojo.setContent(content);
+		pojo.setViewed(false);
 		int insert = moveRequestDAO.insert(pojo);
 		return insert > 0;
 	}
@@ -24,7 +25,17 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public List<NotificationVO> getMemberUnviewedNotification(Integer memberId) {
-		return moveRequestDAO.selectMemberUnviewNotifications(memberId);
+	public List<NotificationVO> getMemberLatestNotification(Integer memberId, Integer count) {
+		return moveRequestDAO.getMemberLatestNotification(memberId, count);
+	}
+
+	@Override
+	public int getUnviewNotificationCount(Integer memberId) {
+		return moveRequestDAO.getUnviewNotificationCount(memberId);
+	}
+
+	@Override
+	public int viewNotification(Integer notificationId) {
+		return moveRequestDAO.setViewNotification(notificationId);
 	}
 }

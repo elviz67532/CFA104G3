@@ -106,8 +106,7 @@
     </section>
 
 
-	<!-- tabs section-->
-   	<jsp:include page="/front_end/common/tabs.jsp"></jsp:include>
+
    	<!-- Related items section-->
    	<jsp:include page="/front_end/common/relatedItems.jsp"></jsp:include>
     <!-- Footer-->

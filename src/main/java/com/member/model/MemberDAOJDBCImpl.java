@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,21 +18,29 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 			+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String DELETE = "delete from MEMBER where MEM_ID = ?";
 	private static final String UPDATE = "update MEMBER set "
-			+ "MEM_EMAIL = ?, MEM_PASSWORD = ?, MEM_NICKNAME = ?, MEM_NAME = ?, MEM_PHONE = ?, MEM_CITY = ?, MEM_CITYAREA = ?, MEM_ADDRESS	 = ?, MEM_AVATAR = ?"
+			+ "MEM_EMAIL = ?, MEM_PASSWORD = ?, MEM_NICKNAME = ?, MEM_NAME = ?, MEM_PHONE = ?, MEM_CITY = ?, MEM_CITYAREA = ?, MEM_ADDRESS	 = ?, MEM_AVATAR = ? "
 			+ "where MEM_ID = ?";
-	private static final String LOGIN = "select * from MEMBER where MEM_ACCOUNT = ?and MEM_PASSWORD = ? ";
+	private static final String LOGIN = "select * from MEMBER where MEM_ACCOUNT = ? and MEM_PASSWORD = ? ";
 	public static final String FORGETPASSWORD = "SELECT * FROM MEMBER where MEM_EMAIL = ?";
 	public static final String GETONEBYNAME = "SELECT * FROM MEMBER where MEM_NAME=?";
+	private static final String VERIFTYCODE = "update MEMBER set "
+			+ "MEM_STATUS = ? "
+			+ "where MEM_ID  = ? OR  MEM_CODE = ?";
+	private static final String UPDATESTATUS = "update MEMBER set "
+			+ "MEM_STATUS = ? "
+			+ "where MEM_ID  = ? ";
+	
+			
 
 	@Override
 	public int insert(MemberVO vo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		int insertedRow;
+		int id = -1;
 
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
-			pstmt = con.prepareStatement(INSERT_STMT);
+			pstmt = con.prepareStatement(INSERT_STMT ,Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setString(1, vo.getEmail());
 			pstmt.setString(2, vo.getAccount());
@@ -47,15 +56,19 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 			pstmt.setBytes(12, vo.getAvatar());
 			pstmt.setTimestamp(13, vo.getRegisterDate());
 			pstmt.setInt(14, vo.getStatus());
-
-			insertedRow = pstmt.executeUpdate();
+			
+			int insertedRow = pstmt.executeUpdate();
+			if (insertedRow > 0) {
+				ResultSet rs = pstmt.getGeneratedKeys();
+				rs.next();
+				id = rs.getInt(1);}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			SQLUtil.closeResource(con, pstmt, null);
 		}
 
-		return insertedRow;
+		return id;
 	}
 
 	@Override
@@ -326,5 +339,54 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 
 		return vo;
 	}
+	@Override
+	public int veriftyCode(Integer id,String code) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int updateRow;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(VERIFTYCODE);
+
+			pstmt.setInt(1, id);
+			pstmt.setString(2, code);
+	
+			
+		
+			updateRow = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
+
+		return updateRow;
+	}
+	@Override
+	public int updateStatus(Integer id,Integer status) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int updateRow;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(VERIFTYCODE);
+
+			pstmt.setInt(1, id);
+			pstmt.setInt(2, status);
+	
+			
+		
+			updateRow = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
+
+		return updateRow;
+	}
+
 
 }

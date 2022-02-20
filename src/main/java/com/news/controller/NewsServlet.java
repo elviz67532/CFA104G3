@@ -66,6 +66,7 @@ public class NewsServlet extends HttpServlet {
 				/*************************** 2.開始查詢資料 *****************************************/
 				NewsServiceImpl newsSvc = new NewsServiceImpl();
 				NewsVO pojo = newsSvc.selectOneNews(id);
+				
 				if (pojo == null) {
 					errorMsgs.add("查無資料");
 				}
@@ -132,7 +133,7 @@ public class NewsServlet extends HttpServlet {
 					type = Integer.valueOf(req.getParameter("type").trim());
 				} catch (NumberFormatException e) {
 					type = 0;
-					errorMsgs.add("消息分類編號.");
+					errorMsgs.add("請輸入消息分類編號.");
 				}
 				
 				String title = req.getParameter("title").trim();

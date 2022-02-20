@@ -565,29 +565,27 @@ public class ActivityServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				HttpSession session = req.getSession();
-				MemberVO memVO = (MemberVO) session.getAttribute("memVO");
-
-				if (memVO == null) {
+				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+				if (memberVO == null) {
 //			     FrontEndMemberFilter.doFilter(req, res, gg);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/frontGetMoveOrder.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/activity/homePage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
-				int memberId = memVO.getId();
-				System.out.println(memberId);
+				int memberId = memberVO.getId();
 				/*************************** 2.開始查詢資料 ****************************************/
 				ActivityServiceImpl actSvc = new ActivityServiceImpl();
 				List<ActivityVO> actVO = actSvc.findByMemId(memberId);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("actVO", actVO); // 資料庫取出的empVO物件,存入req
-				RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/singleActPage.jsp");// 回到預覽頁面
+				RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/memPublishActivityOwnPage.jsp");// 回到預覽頁面
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.put("無法取得要修改的資料:", e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/activity/singleActPage.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/activity/homePage.jsp");
 				failureView.forward(req, res);
 			}
 		}

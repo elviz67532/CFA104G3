@@ -18,8 +18,10 @@ public class NotificationDAOJDBCImpl implements NotificationDAO {
 	private static final String UPDATE = "update NOTIFICATION set NOTIF_MEM_ID = ?, NOTIF_TIME = ?, NOTIF_CONTENT = ?, NOTIF_TYPE = ?, NOTIF_VIEWED = ? where NOTIF_ID = ?";
 	//------------------------------------------------------------------
 	private static final String GET_MEM_NOTIFY_STMT = "select * from NOTIFICATION where NOTIF_MEM_ID = ?";
-	private static final String GET_MEM_UNVIEWED_NOTIFY_STMT = "select * from NOTIFICATION where NOTIF_MEM_ID = ? OR NOTIF_VIEWED = ?";
-	
+	private static final String GET_MEM_NOTIFY_LIMIT_STMT = "select * from NOTIFICATION where NOTIF_MEM_ID = ? LIMIT ?";
+    private static final String GET_MEM_UNVIEWED_NOTIFY_CNT_STMT = "select COUNT(*) as COUNT from NOTIFICATION where NOTIF_MEM_ID = ? AND NOTIF_VIEWED = false";
+    private static final String UPDATE_NOTIFY_VIEWED_STATUS = "update NOTIFICATION set NOTIF_VIEWED = ? where NOTIF_ID = ?";
+    
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -169,8 +171,7 @@ public class NotificationDAOJDBCImpl implements NotificationDAO {
 		return list;
 	}
 	
-	//----------------------------------------------------------------------
-
+	//----------------------------------------------------------------------	
 	@Override
 	public List<NotificationVO> selectMemberNotifications(Integer memberId) {
 		List<NotificationVO> list = new ArrayList<>();
@@ -207,7 +208,7 @@ public class NotificationDAOJDBCImpl implements NotificationDAO {
 	}
 
 	@Override
-	public List<NotificationVO> selectMemberUnviewNotifications(Integer memberId) {
+	public List<NotificationVO> getMemberLatestNotification(Integer memberId, Integer count) {
 		List<NotificationVO> list = new ArrayList<>();
 		NotificationVO vo = null;
 		Connection con = null;
@@ -216,10 +217,10 @@ public class NotificationDAOJDBCImpl implements NotificationDAO {
 
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
-			pstmt = con.prepareStatement(GET_MEM_UNVIEWED_NOTIFY_STMT);
+			pstmt = con.prepareStatement(GET_MEM_NOTIFY_LIMIT_STMT);
 
 			pstmt.setInt(1, memberId);
-			pstmt.setBoolean(2, false);
+			pstmt.setInt(2, count);
 
 			rs = pstmt.executeQuery();
 			
@@ -241,31 +242,46 @@ public class NotificationDAOJDBCImpl implements NotificationDAO {
 
 		return list;
 	}
-	
+
 	@Override
-	public int updateNotificationsToView(List<Integer> ids) {
+	public int getUnviewNotificationCount(Integer memberId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		int updateRow = -1;
-		
-		StringBuffer sb = new StringBuffer();
-		sb.append("update NOTIFICATION set NOTIF_VIEWED = ? where "); 
-		
-		for (int i = 0; i < ids.size(); i++) {
-			sb.append("NOTIF_ID = ?");
-			if (i < ids.size() - 1) {
-				sb.append(" OR ");
-			}
-		}
+		ResultSet rs = null;
+		int count = -1;
 
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
-			pstmt = con.prepareStatement(sb.toString());
+			pstmt = con.prepareStatement(GET_MEM_UNVIEWED_NOTIFY_CNT_STMT);
+
+			pstmt.setInt(1, memberId);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count = rs.getInt("COUNT");
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+		
+		return count;
+	}
+	
+
+	@Override
+	public int setViewNotification(Integer notificationId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int updateRow;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(UPDATE_NOTIFY_VIEWED_STATUS);
 
 			pstmt.setBoolean(1, true);
-			for (int i = 0; i < ids.size(); i++) {
-				pstmt.setInt(i + 2, ids.get(i));
-			}
+			pstmt.setInt(2, notificationId);
 
 			updateRow = pstmt.executeUpdate();
 		} catch (SQLException se) {
