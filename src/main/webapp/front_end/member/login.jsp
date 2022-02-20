@@ -270,6 +270,7 @@ p {
 .text--center {
 	text-align: center;
 }
+
 </style>
 
 <script>
@@ -323,39 +324,39 @@ p {
 			method="POST" class="form login">
 
 			<div class="form__field">
-				<label for="login__username"><svg class="icon">
-            <use xlink:href="#icon-user"></use>
-          </svg><span class="hidden">Username</span></label> <input type="hidden"
-					name="action" value="login"> <input
-					value="<%=(memberVO == null) ? "wilfredo68" : memberVO.getAccount()%>"
+				<label for="login__username">
+					<svg class="icon"><use xlink:href="#icon-user"></use></svg>
+					<span class="hidden">Username</span>
+				</label> 
+				<input type="hidden" name="action" value="login">
+				<input value="<%=(memberVO == null) ? "wilfredo68" : memberVO.getAccount()%>"
 					id="account" type="text" autocomplete="off" name="account"
 					class="form__input" placeholder="Username">
 			</div>
-				<c:if test="${not empty account}">
-					<span style="color: red"> "${account}" </span>
-				</c:if>
+			<c:if test="${not empty account}">
+				<span style="color: red">"${account}"</span>
+			</c:if>
 
 			<div class="form__field">
-				<label for="login__password"><svg class="icon">
-            <use xlink:href="#icon-lock"></use>
-          </svg><span class="hidden">Password</span></label> <input type="hidden"
-					name="action" value="login"> <input
-					value="<%=(memberVO == null) ? "QlareSQw" : memberVO.getPassword()%>"
+				<label for="login__password">
+					<svg class="icon"><use xlink:href="#icon-lock"></use></svg>
+					<span class="hidden">Password</span>
+				</label> 
+				<input type="hidden" name="action" value="login"> 
+				<input value="<%=(memberVO == null) ? "QlareSQw" : memberVO.getPassword()%>"
 					id="login__password" type="password" name="password"
 					class="form__input" placeholder="Password">
 				<c:if test="${not empty getPassword}">
-					<label style="color: red"> "${getPassword}" </label>
+					<label style="color: red">"${getPassword}"</label>
 				</c:if>
 			</div>
-			<c:if test="${not empty account}">
-					<span style="color: red"> "${password}" </span>
-				</c:if>
+			<c:if test="${not empty password}">
+				<span style="color: red"> "${password}" </span>
+			</c:if>
 
 			<div class="form__field">
 				<input type="submit" type="hidden" name="action" value="登入">
 			</div>
-
-
 		</form>
 
 		<p class="text--center">

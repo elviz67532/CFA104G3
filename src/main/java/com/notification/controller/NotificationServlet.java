@@ -28,8 +28,6 @@ public class NotificationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("text/html; charset=UTF-8");
 		
-		System.out.println("------------");
-		
 		// 工具
 		Gson gson = new Gson();
 		
@@ -50,8 +48,6 @@ public class NotificationServlet extends HttpServlet {
 			return;
 		}
 		
-		System.out.println("------------3");
-		
 		//拆解json
 		String json = CommonUtil.jsonParse(req.getReader());
 		if (json == null || json.isEmpty()) {
@@ -69,8 +65,6 @@ public class NotificationServlet extends HttpServlet {
 		if ("viewedNotify".equals(action)) {
 			PrintWriter out = res.getWriter();
 
-			System.out.println("------------2");
-			
 			try {
 				NotificationService service = new NotificationServiceImpl();
 				service.viewNotification(notificationId);

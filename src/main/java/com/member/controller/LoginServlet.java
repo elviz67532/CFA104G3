@@ -190,48 +190,46 @@ public class LoginServlet extends HttpServlet {
 			}
 		}
 		if ("login".equals(action)) {// 登入
-//
-//			List<String> errorMsgs = new LinkedList<String>();
-//
-//			req.setAttribute("errorMsgs", errorMsgs);
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String account = req.getParameter("account");
 				String password = req.getParameter("password");
-				MemberServiceImpl memebrSVC = new MemberServiceImpl();
-				MemberVO memberVO = memebrSVC.login(account, password);
+				
+				// 檢查是否為空
+				boolean isAccAndPwdAllow = true;
 				if (account == null || account.trim().length() == 0) {
 					errorMsgs.put("account","請輸入帳號");
-				} else if (memberVO == null) {
-					errorMsgs.put("account","此帳號不存在");
+					isAccAndPwdAllow = false;
 				}
-	
-
 				if (password == null || password.trim().length() == 0) {
 					errorMsgs.put("password","請輸入密碼");
-				} else if (!password.equals(memberVO.getPassword())) {
-					errorMsgs.put("password","密碼錯誤");
+					isAccAndPwdAllow = false;
 				}
 
+				// 嘗試登入
+				MemberVO memberVO = null;
+				if (isAccAndPwdAllow) {
+					MemberServiceImpl memebrSVC = new MemberServiceImpl();
+					memberVO = memebrSVC.login(account, password);
+					if (memberVO == null) {
+						errorMsgs.put("account","此帳號不存在或密碼錯誤");
+					} 
+				}
+				
 				HttpSession session = req.getSession();
-				session.setAttribute("memberVO", memberVO);
 				if (!errorMsgs.isEmpty()) {
-
-					req.setAttribute("memberVO", memberVO);
+					req.setAttribute("errorMsgs", errorMsgs);
+					req.setAttribute("memberVO", null);
 					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/login.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "front_end_listOneMember.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				res.sendRedirect(url);
-//				successView.forward(req, res);
-
+				session.setAttribute("memberVO", memberVO);
+				res.sendRedirect(req.getContextPath() + "/index.jsp");
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				e.printStackTrace();

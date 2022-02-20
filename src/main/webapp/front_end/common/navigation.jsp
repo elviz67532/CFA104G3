@@ -19,7 +19,12 @@
 	}
 %>
 <link href="<%=request.getContextPath()%>/css/back_end/sb-admin-2.min.css" rel="stylesheet">
-
+<style>
+/* 重製label下方外距 */
+label {
+	margin-bottom: 0rem;
+}
+</style>
 <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 	<div class="container px-4 px-lg-5">
 	    <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">委域</a>
@@ -95,7 +100,7 @@
 											<span class="<c:if test='${notification.viewed eq false}'>font-weight-bold</c:if>" style="overflow: hidden">
 												<c:choose>
 													<c:when test="${fn:length(notification.content) gt 20}">
-															<c:out value="${fn:substring(notification.content, 0, 20)}..."></c:out>
+														<c:out value="${fn:substring(notification.content, 0, 20)}..."></c:out>
 													</c:when>
 													<c:otherwise>
 														<c:out value="${notification.content}"></c:out>
