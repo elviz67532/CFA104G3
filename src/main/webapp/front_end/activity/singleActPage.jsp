@@ -32,7 +32,7 @@
 		pageContext.setAttribute("list",list);
 %>
 <%
-	request.setAttribute("findActivityTypeString", new String[]{"活動","聚餐","講座","其他"});
+	request.setAttribute("findActivityType", new String[]{"活動","聚餐","講座","其他"});
 %>
 <!DOCTYPE html>
 <html>
@@ -464,15 +464,25 @@ textarea:focus{
 			       </FORM>
                </div>
 <%-- 		      <c:set var="typeNum" scope="request" value="${actVO.type}"/> --%>
-<%--              		<span class="actType">${findActivityTypeString[typeNum]}</span> --%>
+<%--              		<span class="actType">${findActivityType[typeNum]}</span> --%>
 		       <br>
+		       <c:set var="actType" scope="session" value="${actVO.type}"/>
 		       <span class="actType">
-				    <%	int type = actVO.getType();
-						if (type == 1){ out.println("活動"); 
-						} else if(type == 2){ out.println("聚餐");
- 						} else if(type == 3){ out.println("講座"); 
- 						} else { out.println("其他");} 
-					%> 
+		       <c:choose>
+		       		<c:when test="${actType == 1}">
+		       		活動
+		       		</c:when>
+		       		<c:when test="${actType == 2}">
+		       		聚餐
+		       		</c:when>
+		       		<c:when test="${actType == 3}">
+		       		講座
+		       		</c:when>
+		       		<c:when test="${actType == 4}">
+		       		其他
+		       		</c:when>	
+		       </c:choose>
+		       
 		       </span>
              		<button class="btn-hover color-11" style=" float:right; padding: 20px;">報名人數倒數: ${actVO.applyMemberExisting}</button>
              		</div>
@@ -655,8 +665,16 @@ textarea:focus{
 				                <button type="button" class="btn-hover color-8 btnFor${actqVO.memberId}" style="border-radius: 50px;">發問會員編號: ${actqVO.memberId}</button>
 			                </div>
 			                <div style="margin-left:50px;width: 90%;">
-								${actqVO.problem}
+								${actqVO.problem}<br>
+								<p class="launchedDate" style="text-align: center;">問題建立時間: <fmt:formatDate value="${actqVO.problemDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
 			                </div>
+			                <div style="padding:16px;margin-left:50px;width: 90%; background-color: lightgray; color: black; border-radius: 16px;">
+				                主辦方的回覆:
+									<br>
+									${actqVO.reply}
+			                </div>
+									<p class="launchedDate" style="text-align: center;">主辦回應時間: <fmt:formatDate value="${actqVO.replyDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
+									
 			                <div style="text-align: center">
 								<input id="answerInput${actqVO.memberId}" style="border-radius: 50px;" type="button" class="btn_modal5 btn-hover color-6" value="回答問題"/>
 			                </div>
@@ -675,7 +693,30 @@ textarea:focus{
 		   				document.getElementById('imgContact').style.left = "5%";
 		   				document.getElementById('spanContact').style.left = "4.3%";
 		   			})
-   				</script>
+		   			
+/*==============================================================================================*/
+   		var answerInput${actqVO.memberId} = document.getElementById('answerInput${actqVO.memberId}');
+   		answerInput${actqVO.memberId}.addEventListener('click',function(){
+   			var input${actqVO.memberId} = document.createElement('input');
+   			var inputB${actqVO.memberId} = document.createElement('input');
+   			var inputC${actqVO.memberId} = document.createElement('input');
+   			document.getElementById('appendChildDiv').prepend(inputB${actqVO.memberId});
+   			inputB${actqVO.memberId}.id = "inputB${actqVO.id}";
+   			inputB${actqVO.memberId}.value = "${actqVO.activityId}";
+   			inputB${actqVO.memberId}.name = "activityId";
+   			inputB${actqVO.memberId}.type = "hidden";
+   			document.getElementById('appendChildDiv').prepend(inputC${actqVO.memberId});
+   			inputC${actqVO.memberId}.id = "inputB${actqVO.id}";
+   			inputC${actqVO.memberId}.value = "${actqVO.memberId}";
+   			inputC${actqVO.memberId}.name = "id";
+   			inputC${actqVO.memberId}.type = "hidden";
+   			document.getElementById('appendChildDiv').prepend(input${actqVO.memberId});
+   			input${actqVO.memberId}.id = "input${actqVO.id}";
+   			input${actqVO.memberId}.value = "${actqVO.id}";
+   			input${actqVO.memberId}.name = "id";
+   			input${actqVO.memberId}.type = "hidden";
+   		})
+  </script>
    			</c:forEach>
    		</div>
  <!--  ==================== 最下方活動問答  ==================== -->  		
@@ -704,15 +745,14 @@ textarea:focus{
 			</ul>
 		</c:if>
 			<label class="formLabel" for="answer">輸入回應內容: <span style="color: red">${errorMsgs.reply}</span></label>
-			<textarea class="actFormInput actContentFormInput" cols="55" name="problem">"<%= (actqVO == null) ? 
+			<textarea class="actFormInput actContentFormInput" cols="55" name="reply">"<%= (actqVO == null) ? 
 					"空想食時間帶消費" : actqVO.getReply() %>"</textarea>
 			</div>
 			<!-- 內容從這裡結束 -->
-		       <input type="hidden" name="action" value="answer"/> 
-		       <input type="hidden" name="activityId" value="${actVO.activityId}">
-<!--                <input type="hidden" name="action" value="selectOneAct"/>  -->
-<%-- 		       <a style="text-decoration:none;" href="<%=request.getContextPath()%>/front_end/activity/singleActPage.jsp?action=selectOneAct"> --%>
-			       <input id="answerQuestion" type="submit" class="" value="回答問題"/>
+			<div id="appendChildDiv">
+		       <input  type="hidden" name="action" value="answer"/> 
+			   <input id="answerQuestion" type="submit" class="" value="回答問題"/>
+			</div>
 <!-- 		       </a> -->
 	        </FORM>
 	       	<button type="button" class="btn_modal_close5">取消回答</button>
@@ -720,6 +760,7 @@ textarea:focus{
        </div>
    </div>
   <script>
+  
 //============================= 回答區 =============================
 	 $(function(){
 	        // 開啟 Moda5 彈跳視窗
