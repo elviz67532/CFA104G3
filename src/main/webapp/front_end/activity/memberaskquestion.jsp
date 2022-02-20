@@ -23,6 +23,7 @@
 					"空想食時間帶消費" : actqVO.getProblem() %>"</textarea>
 			</div>
 			<!-- 內容從這裡結束 -->
+			   <input type="hidden" name="actqid" value="${actqVO.id}"/>
 		       <input type="hidden" name="action" value="question"/> 
 		       <input type="hidden" name="activityId" value="${actVO.activityId}">
 		       <input type="hidden" name="id" value="${memberVO.id}">

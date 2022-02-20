@@ -9,7 +9,7 @@ public interface ActivityQuestionService {
 	public ActivityQuestionVO addQuestion(Integer activityId, Integer memberId, String problem, Timestamp problemDate);
 
 	//回覆
-	public ActivityQuestionVO addAnswer(Integer activityId, String reply, Timestamp replyDate);
+	public ActivityQuestionVO addAnswer(Integer id, String reply, Timestamp replyDate);
 
 	// 後台巡邏可刪不當留言
 	public void deleteImproper(Integer activityId);

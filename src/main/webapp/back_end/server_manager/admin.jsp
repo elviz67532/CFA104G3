@@ -1,9 +1,11 @@
 <%@ page import="com.server_manager.model.*"%>
+<%@ page import="com.server_manager_auth.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.util.Map.Entry" %>
 <%@ page import="javax.servlet.http.*"%>
+
 <%
 	Object account = session.getAttribute("account");
 	if(account == null){
@@ -73,7 +75,6 @@
 											
 							<c:forEach var="smVO" items="${list}" begin="">
 							
-								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/server_manager/ServerManagerServlet">								
 								<tr>
 									<th>${smVO.smgrId}</th>
 									<th>${smVO.smgrAccount}</th>
@@ -93,116 +94,88 @@
 <%-- 										</c:forEach> --%>
 <%-- 										</c:if> --%>
 									</th>
-									<th>
-										<c:if test="${smVO.smgrId !=1}" var="varName" scope="session">
-										
-										<c:set var="rights" scope="session" value="${20}"/>
-										
-										
-										<%
-											Set<Entry<Integer, String>> entrySet = map.entrySet();
-											for(Entry<Integer, String> entry : entrySet){
-												Integer rightNum = entry.getKey(); // 10 20 30 
-												String right = entry.getValue(); // 活動 二手
-										%>
-										
-												<input type="checkbox" name="smgeAuthId" value=<%=rightNum%>>
-												<label><%=right %></label>	
-										<% 	} %>
-										
-										
-																	
-<%-- 											<c:forEach var="auth" items="${smVO.authList}"> --%>
-<%--  												<c:out value="${map[auth.smgeAuthId]}"></c:out> --%>
-<%-- 													<input type="checkbox" name="smgeAuthId" value=10 <c:if test="${auth.smgeAuthId==10}">checked</c:if>> --%>
-<!-- 													<label>活動</label> -->
-<%-- 													<input type="checkbox" name="smgeAuthId" value=20 <c:if test="${auth.smgeAuthId==20}">checked</c:if>> --%>
-<!-- 													<label>二手</label> -->
-<%-- 													<input type="checkbox" name="smgeAuthId" value=30 <c:if test="${auth.smgeAuthId==30}">checked</c:if>> --%>
-<!-- 													<label>搬家</label> -->
-<%-- 													<input type="checkbox" name="smgeAuthId" value=40 <c:if test="${auth.smgeAuthId==40}">checked</c:if>> --%>
-<!-- 													<label>會員</label>	 -->
-<%-- 													<input type="checkbox" name="smgeAuthId" value=50 <c:if test="${auth.smgeAuthId==50}">checked</c:if>> --%>
-<!-- 													<label>FAQ</label>																																														 -->
-												
-												
-												
-<%-- 												<c:if test="${auth.smgeAuthId==10}"> --%>
-<!-- 													<input type="checkbox" name="smgeAuthId" checked> -->
-<%-- 													<label>${map[auth.smgeAuthId]}</label> --%>
-<!-- 													<input type="checkbox" name="smgeAuthId" value=20> -->
-<!-- 													<label>二手</label> -->
-<!-- 													<input type="checkbox" name="smgeAuthId" value=30> -->
-<!-- 													<label>搬家</label> -->
-<!-- 													<input type="checkbox" name="smgeAuthId" value=40> -->
-<!-- 													<label>會員</label>	 -->
-<!-- 													<input type="checkbox" name="smgeAuthId" value=50> -->
-<!-- 													<label>FAQ</label>																																														 -->
-<%-- 												</c:if> --%>
-<%-- 												<c:if test="${auth.smgeAuthId==20}"> --%>
-<!-- 													<input type="checkbox" name="smgeAuthId" value=10> -->
-<!-- 													<label>活動</label> -->
-<!-- 													<input type="checkbox" name="smgeAuthId" checked> -->
-<%-- 													<label>${map[auth.smgeAuthId]}</label> --%>
-<!-- 													<input type="checkbox" name="smgeAuthId" value=30> -->
-<!-- 													<label>搬家</label> -->
-<!-- 													<input type="checkbox" name="smgeAuthId" value=40> -->
-<!-- 													<label>會員</label>	 -->
-<!-- 													<input type="checkbox" name="smgeAuthId" value=50> -->
-<!-- 													<label>FAQ</label>													 -->
-<%-- 												</c:if> --%>
-<%-- 												<c:if test="${auth.smgeAuthId==30}"> --%>
-<!-- 													<input type="checkbox" name="smgeAuthId" value=10> -->
-<!-- 													<label>活動</label>												 -->
-<!-- 													<input type="checkbox" name="smgeAuthId" value=20> -->
-<!-- 													<label>二手</label>												 -->
-<!-- 													<input type="checkbox" name="smgeAuthId" checked> -->
-<%-- 													<label>${map[auth.smgeAuthId]}</label> --%>
-<!-- 													<input type="checkbox" name="smgeAuthId" value=40> -->
-<!-- 													<label>會員</label> -->
-<!-- 													<input type="checkbox" name="smgeAuthId" value=50> -->
-<!-- 													<label>FAQ</label>													 -->
-<%-- 												</c:if> --%>
-<%-- 												<c:if test="${auth.smgeAuthId==40}"> --%>
-<!-- 													<input type="checkbox" name="smgeAuthId" value=10> -->
-<!-- 													<label>活動</label>												 -->
-<!-- 													<input type="checkbox" name="smgeAuthId" value=20> -->
-<!-- 													<label>二手</label>				 -->
-<!-- 													<input type="checkbox" name="smgeAuthId" value=30> -->
-<!-- 													<label>搬家</label>																				 -->
-<!-- 													<input type="checkbox" name="smgeAuthId" checked> -->
-<%-- 													<label>${map[auth.smgeAuthId]}</label> --%>
-<!-- 													<input type="checkbox" name="smgeAuthId" value=50> -->
-<!-- 													<label>FAQ</label>												 -->
-<%-- 												</c:if> --%>
-<%-- 												<c:if test="${auth.smgeAuthId==50}"> --%>
-<!-- 													<input type="checkbox" name="smgeAuthId" value=10> -->
-<!-- 													<label>活動</label>												 -->
-<!-- 													<input type="checkbox" name="smgeAuthId" value=20> -->
-<!-- 													<label>二手</label>				 -->
-<!-- 													<input type="checkbox" name="smgeAuthId" value=30> -->
-<!-- 													<label>搬家</label> -->
-<!-- 													<input type="checkbox" name="smgeAuthId" value=40> -->
-<!-- 													<label>會員</label>																								 -->
-<!-- 													<input type="checkbox" name="smgeAuthId" checked> -->
-<%-- 													<label>${map[auth.smgeAuthId]}</label> --%>
-<%-- 												</c:if>	 --%>																																									
-<%-- 											</c:forEach> --%>
-												<input type="hidden" name="smgrId" value="${smVO.smgrId}">
-												<input type="hidden" name="action" value="update">		
-												<input type="submit" value="修改">
-										</c:if>
+
+									<th>						
+										<c:if test="${smVO.smgrId !=1}" var="varName" scope="session">										
+								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/server_manager/ServerManagerServlet">								
+											<!-- 【產生該員工的五組計數器】 -->		
+											<% 
+												int act=0; int prod=0; int move=0; int mem=0; int faq=0; 
+											%>
+											<div style="display: none;">
+												<c:forEach var="auth" items="${smVO.authList}">
+													<c:if test="${auth.smgeAuthId==10}"><%=act++ %></c:if>
+													<c:if test="${auth.smgeAuthId==20}"><%=prod++ %></c:if>
+													<c:if test="${auth.smgeAuthId==30}"><%=move++ %></c:if>
+													<c:if test="${auth.smgeAuthId==40}"><%=mem++ %></c:if>
+													<c:if test="${auth.smgeAuthId==50}"><%=faq++ %></c:if>
+												</c:forEach>
+											</div>
+											<%if(act>0){%>
+													<input type="checkbox" name="smgeAuthId" value=10 checked>
+<!-- 													<input type="hidden" name="smgeAuthId" value=10> -->
+													<label>活動</label>
+											<% 	} else {%>
+													<input type="checkbox" name="smgeAuthId" value=10>
+<!-- 													<input type="hidden" name="smgeAuthId" value=10> -->
+													<label>活動</label>
+											<%	} %>
+											<%if(prod>0){%>
+													<input type="checkbox" name="smgeAuthId" value=20 checked>
+<!-- 													<input type="hidden" name="smgeAuthId" value=20> -->
+													<label>二手</label>
+											<% 	} else {%>
+													<input type="checkbox" name="smgeAuthId" value=20>
+<!-- 													<input type="hidden" name="smgeAuthId" value=20> -->
+													<label>二手</label>
+											<%	} %>
+											<%if(move>0){%>
+													<input type="checkbox" name="smgeAuthId" value=30 checked>
+<!-- 													<input type="hidden" name="smgeAuthId" value=30> -->
+													<label>搬家</label>
+											<% 	} else {%>
+													<input type="checkbox" name="smgeAuthId" value=30>
+<!-- 													<input type="hidden" name="smgeAuthId" value=30> -->
+													<label>搬家</label>
+											<%	} %>
+											<%if(mem>0){%>
+													<input type="checkbox" name="smgeAuthId" value=40 checked>
+<!-- 													<input type="hidden" name="smgeAuthId" value=40> -->
+													<label>會員</label>
+											<% 	} else {%>
+													<input type="checkbox" name="smgeAuthId" value=40>
+<!-- 													<input type="hidden" name="smgeAuthId" value=40> -->
+													<label>會員</label>
+											<%	} %>
+											<%if(faq>0){%>
+													<input type="checkbox" name="smgeAuthId" value=50 checked>
+<!-- 													<input type="hidden" name="smgeAuthId" value=50> -->
+													<label>FAQ</label>
+											<% 	} else {%>
+													<input type="checkbox" name="smgeAuthId" value=50>
+<!-- 													<input type="hidden" name="smgeAuthId" value=50> -->
+													<label>FAQ</label>
+											<%	} %>																																												
+								
+											<input type="hidden" name="smgrId" value="${smVO.smgrId}">
+											<input type="hidden" name="action" value="update">		
+											<input type="submit" value="修改">
+								</FORM>
+										</c:if>												
+
 									</th>
 									<th>
 										<c:if test="${smVO.smgrId !=1}" var="varName" scope="session">
-											<input type="submit" value="刪除">
 											<c:out value="${smVO.smgrId}"></c:out>
+								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/server_manager/ServerManagerServlet">								
+											
 											<input type="hidden" name="smgrId"  value="${smVO.smgrId}">
 											<input type="hidden" name="action" value="delete">
+											<input type="submit" value="刪除">
+								</FORM>
 										</c:if>
 									</th>
 								</tr>
-							</FORM>
 							</c:forEach>
 						
 						</tbody>

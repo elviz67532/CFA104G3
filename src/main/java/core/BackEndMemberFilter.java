@@ -25,6 +25,7 @@ public class BackEndMemberFilter implements Filter {
 	private final static Integer MOVE = 30;
 	private final static Integer MEMBER = 40;
 	private final static Integer FAQ = 50;
+	private final static Integer NEWS = 60;
 	
 	//【URL】
 	private final static String server_manager = "http://localhost:8081/CFA104G3/back_end/server_manager/serverManager.jsp";
@@ -112,12 +113,20 @@ public class BackEndMemberFilter implements Filter {
 		//【a tag 的連接】
 		urlAuths.put("/back_end/server_manager/admin.jsp", SERVER_MANAGER);
 		urlAuths.put("/back_end/server_manager/addManager.jsp", SERVER_MANAGER);
+		
 		urlAuths.put("/back_end/server_manager/activity.jsp", ACTIVITY);
+		
 		urlAuths.put("/back_end/server_manager/product.jsp", DOUBLE_PROD);
+		urlAuths.put("/back_end/product/productReportManage.jsp", DOUBLE_PROD);
+		
 		urlAuths.put("/back_end/move/moveRequestManage.jsp", MOVE); 
 		urlAuths.put("/back_end/move/readMoveOrder.jsp", MOVE);
+
 		urlAuths.put("/back_end/server_manager/manager.jsp",MEMBER);
+		
 		urlAuths.put("/back_end/server_manager/FAQ.jsp", FAQ);
+		
+		urlAuths.put("/back_end/news/listallnews.jsp", NEWS);
 	}
 }	
 

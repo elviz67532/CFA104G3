@@ -30,7 +30,7 @@
       }
     </style>
 </head>
-<body id="text-center">
+<body id="text-center" style="background: aliceblue;">
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errMsgs}">
@@ -44,8 +44,9 @@
 		<!-- main -->
 		<main class="form-signin">
 		  <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/server_manager/ServerManagerServlet">
-		    <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-		    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+<!-- 		    <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
+<!-- 			<h1 class="h2 mb-2 fw-normal">Entrust area</h1> -->
+		    <h1 class="h3 mb-3 fw-normal" style="text-align: center;">Please sign in</h1>
 			<!-- 帳號 -->
 		    <div class="form-floating">
 		      <input type="text" name="account" class="form-control" id="floatingInput" placeholder="">
@@ -58,7 +59,7 @@
 		    </div>
 		    <input type="submit" value="Sign in" class="w-100 btn btn-lg btn-primary" />
 		    <input type="hidden" value="loginhandler" name="action">
-		    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+		    <p class="mt-5 mb-3 text-muted" style="text-align: center;">&copy; 2022</p>
 		  </FORM>
 		</main>					
 
