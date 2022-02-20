@@ -83,42 +83,19 @@
       </div>
     </div>
 
-	<!-- 輪播 (Carousel) -->
-    <!-- 搭配圖片滿版 -->
-    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news1.jpg)"></div>
-        </div>
-        <div class="carousel-item">
-          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news2.jpg)"></div>
-        </div>
-        <div class="carousel-item">
-          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news3.jpg)"></div>
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
 	
 	<div class="container">
 		<div class="row">
 			<!-- 左邊3欄  list group 分類功能-->
 			<div class="col-12 col-md-3 list-group">
 				<FORM METHOD="post" ACTION="product/ProductServlet">
-				  <a href="homePage.jsp" class="list-group-item list-group-item-action active" aria-current="true">
+				  <a href="homePage.jsp" class="list-group-item list-group-item-action" aria-current="true">
 				    總覽
 				  </a>
 				  <a href="browseElec.jsp"  name="prodType" value=4 class="list-group-item list-group-item-action">電器類</a>
 				  <a href="browseFurniture.jsp" class="list-group-item list-group-item-action">寢具</a>
 				  <a href="browseOthers.jsp" class="list-group-item list-group-item-action">其他</a>
-				  <a href="vendor.jsp" class="list-group-item list-group-item-action">買賣家</a>
+				  <a href="vendor.jsp" class="list-group-item list-group-item-action active">買賣家</a>
 				</FORM>
 			</div>
 			<!-- 右邊9欄  card 卡片 & text-center -->
@@ -126,25 +103,58 @@
 				<div class="row">
 					<div class="col">
 					    <div class="col-12 row justify-content-center">
-						<c:forEach var="productVO" items="${list}">
 					        <div class="card text-center" style="width: 18rem;">
-					          <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top" 
-					          		alt="<%=request.getContextPath()%>/assets/img/home-bg.jpg"/>
+					          <img src="<%=request.getContextPath()%>/asset/img/product01.jpg" class="card-img-top" 
+					          		alt=""/>
 					          <div class="card-body">
-					            <h5 class="card-title">${productVO.name}</h5>
-					<%--             <p class="card-text">${productVO.prodDesc}</p> --%>
-					            <a href="#" class="btn btn-primary">查看詳情</a>
-					<%--             <a href="#" class="btn btn-primary">${productVO.prodName}</a> --%>
+					            <h5 class="card-title"></h5>
+					            <a href="#" class="btn btn-primary">收藏商品</a>
 					          </div>
 					        </div>	
-						</c:forEach>
 					    </div>					
 					</div>
+					<div class="col">
+					    <div class="col-12 row justify-content-center">
+					        <div class="card text-center" style="width: 18rem;">
+					          <img src="<%=request.getContextPath()%>/asset/img/product01.jpg" class="card-img-top" 
+					          		alt=""/>
+					          <div class="card-body">
+					            <h5 class="card-title"></h5>
+					            <a href="#" class="btn btn-primary">商品管理</a>
+					          </div>
+					        </div>	
+					    </div>					
+					</div>					
 				</div>
+				<div class="row">
+					<div class="col">
+					    <div class="col-12 row">
+					        <div class="card text-center" style="width: 18rem;">
+					          <img src="<%=request.getContextPath()%>/asset/img/product01.jpg" class="card-img-top" 
+					          		alt=""/>
+					          <div class="card-body">
+					            <h5 class="card-title"></h5>
+					            <a href="#" class="btn btn-primary">新增商品</a>
+					          </div>
+					        </div>	
+					    </div>					
+					</div>
+					<div class="col">
+					    <div class="col-12 row">
+					        <div class="card text-center" style="width: 18rem;">
+					          <img src="<%=request.getContextPath()%>/asset/img/product01.jpg" class="card-img-top" 
+					          		alt=""/>
+					          <div class="card-body">
+					            <h5 class="card-title"></h5>
+					            <a href="#" class="btn btn-primary">賣家訂單</a>
+					          </div>
+					        </div>	
+					    </div>					
+					</div>					
+				</div>					
 			</div>
 		</div>
-	</div>
-	
+	</div>	
 	<br>
 	<br>
 	
