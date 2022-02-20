@@ -69,7 +69,7 @@ public class BackEndMemberFilter implements Filter {
 		String account = (String) session.getAttribute("account");
 		if (account == null) {
 			System.out.println("尚未登入");
-			res.sendRedirect("/CFA104G3/back_end/server_manager/loginServer.jsp");
+			res.sendRedirect(req.getContextPath() + "/back_end/server_manager/loginServer.jsp");
 			return;
 		}
 

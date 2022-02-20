@@ -27,7 +27,6 @@ function parseDateString(date) {
 	return ymd;
 }
 
-
 if ($('#online').attr("checked")) {
 	$('#siteEvaDiv').hide();
 	$('#onlineEvaDiv').show();

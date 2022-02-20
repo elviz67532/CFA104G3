@@ -26,12 +26,14 @@ import com.move_request.model.MoveRequestServiceImpl;
 import com.move_request.model.MoveRequestTransReqVO;
 import com.move_request.model.MoveRequestTransResVO;
 import com.move_request.model.MoveRequestVO;
+import com.notification.model.ENotificationType;
+import com.notification.model.NotificationService;
+import com.notification.model.NotificationServiceImpl;
 import com.server_manager.model.ServerManagerVO;
 
 import core.CommonRes;
 import core.util.CommonUtil;
 
-//TODO
 public class MoveRequestManageServlet extends HttpServlet {
 	
 	@Override
@@ -56,15 +58,13 @@ public class MoveRequestManageServlet extends HttpServlet {
 		ServerManagerVO smVO = (ServerManagerVO) session.getAttribute("ServerManagerVO");
 		if (smVO == null) {
 			PrintWriter out = res.getWriter();
-			resVo.setHref("/CFA104G3/back_end/server_manager/loginServer.jsp");
+			resVo.setHref(req.getContextPath() + "/back_end/server_manager/loginServer.jsp");
 			commonRes = genCommonRes("login", "登入", resVo);
 			String jsonStr = gson.toJson(commonRes);
 			out.print(jsonStr);          
 			out.close();
 			return;
 		}
-		
-		Integer managerId = smVO.getSmgrId();
 		
 		//拆解json
 		String json = CommonUtil.jsonParse(req.getReader());
@@ -84,43 +84,20 @@ public class MoveRequestManageServlet extends HttpServlet {
 		if ("backManage".equals(action)) {
 			PrintWriter out = res.getWriter();
 			
+			// TODO 補取得MEMBER資料
 			try {
 				MoveRequestService moveRequestService = new  MoveRequestServiceImpl();
 				MovePhotoService movePhotoService = new MovePhotoServiceImpl();
 				MemberService memberService = new MemberServiceImpl();
-				// TODO 補取得MEMBER資料
 				
 				MoveRequestVO request = moveRequestService.getRequest(id);
 				Integer memberId = request.getMemberId();
 				MemberVO memberVo = memberService.selectById(memberId);
 				List<MovePhotoVO> photos = movePhotoService.findAllPhotosByRequestId(id);
-				
-				// TODO
-				resVo.setId(id);
-				resVo.setMemberName(memberVo.getName());
-				resVo.setFromAddress(request.getFromAddress());
-				resVo.setToAddress(request.getToAddress());
-				resVo.setItems(request.getItems());
-				resVo.setMoveDate(request.getMoveDate());
-				resVo.setEvaluateType(request.getEvaluateType());
-				resVo.setEvaluateDate(request.getEvaluateDate());
-				resVo.setEvaluatePrice(request.getEvaluatePrice());
-				resVo.setRequestDate(request.getRequestDate());
-				resVo.setHandled(request.getHandled());
-				resVo.setStatus(EMoveRequestStatus.parseCode(request.getStatus()).getText());
-				resVo.setEvaluatePrice(request.getEvaluatePrice());
-				MovePhotoTransVO[] photosArray = new MovePhotoTransVO[photos.size()]; 
-				for (int i = 0; i < photos.size(); i++) {
-					MovePhotoTransVO movePhotoTransVO = new MovePhotoTransVO();
-					MovePhotoVO movePhotoVO = photos.get(i);
-					movePhotoTransVO.setMoveRequestId(movePhotoVO.getMoveRequestId());
-					movePhotoTransVO.setPhoto(Base64.getEncoder().encodeToString(movePhotoVO.getPhoto()));
-					photosArray[i] = movePhotoTransVO;
-				}
-				resVo.setMovePhotoTransVOs(photosArray);
+				fillResVo(resVo, id, request, memberVo, photos);
 				commonRes = genCommonRes("success", "成功", resVo);
 			} catch (Exception e) {
-				resVo.setHref("/CFA104G3/back_end/server_manager/loginServer.jsp");
+				resVo.setHref(req.getContextPath() + "/back_end/server_manager/loginServer.jsp");
 				commonRes = genCommonRes("fail", "失敗", resVo);
 			}
 			
@@ -134,27 +111,30 @@ public class MoveRequestManageServlet extends HttpServlet {
 				
 			try {
 				MoveRequestService moveRequestService = new  MoveRequestServiceImpl();
+				NotificationService notificationService = new NotificationServiceImpl();
 				MoveRequestVO request = moveRequestService.getRequest(id);
+				Integer memberId = request.getMemberId();
 				EMoveRequestEvaType type = EMoveRequestEvaType.parseCode(request.getEvaluateType());
+				boolean ok;
 				switch(type) {
 					case ONLINE:
-						moveRequestService.verifyOnlineRequestOK(id, price);
+					    ok = moveRequestService.evaluatePrice(id, price);
+						if (ok) {
+							notificationService.addNotification(memberId, "搬家申請單估價完成, 請至申請單管理處進行付款作業", ENotificationType.MOVE);
+						}
 						break;
 					case SITE:
-						moveRequestService.verifySiteRequestOK(id);
+						ok = moveRequestService.verifySiteRequestOK(id);
+						if (ok) {
+							notificationService.addNotification(memberId, "搬家申請單審核成功, 請注意現場估價時間並等待人員與您電話聯絡" , ENotificationType.MOVE);
+						}
 						break;	
 					default:
 						break;	
 				}
-				request = moveRequestService.getRequest(id);
-				
-				resVo.setStatus(EMoveRequestStatus.parseCode(request.getStatus()).getText());
-				resVo.setEvaluatePrice(request.getEvaluatePrice());
-				resVo.setHref("/CFA104G3/back_end/server_manager/loginServer.jsp");
-				commonRes = genCommonRes("success", "成功", resVo);
+				commonRes = genCommonRes("success", "成功", null);
 			} catch (Exception e) {
-				resVo.setHref("/CFA104G3/back_end/server_manager/loginServer.jsp");
-				commonRes = genCommonRes("fail", "失敗", resVo);
+				commonRes = genCommonRes("fail", "失敗", null);
 			}
 			
 			String jsonStr = gson.toJson(commonRes);
@@ -167,22 +147,74 @@ public class MoveRequestManageServlet extends HttpServlet {
 			
 			try {
 				MoveRequestService moveRequestService = new  MoveRequestServiceImpl();
-				moveRequestService.verifyRequestNAK(id);
+				NotificationService notificationService = new NotificationServiceImpl();
 				MoveRequestVO request = moveRequestService.getRequest(id);
+				Integer memberId = request.getMemberId();
+				boolean ok = moveRequestService.verifyRequestNAK(id);
+				if (ok) {
+					notificationService.addNotification(memberId, "搬家申請單審核失敗, 如有需要請重送申請單", ENotificationType.MOVE);
+				}
 				
-				resVo.setStatus(EMoveRequestStatus.parseCode(request.getStatus()).getText());
-				resVo.setEvaluatePrice(request.getEvaluatePrice());
-				resVo.setHref("/CFA104G3/back_end/server_manager/loginServer.jsp");
-				commonRes = genCommonRes("success", "成功", resVo);
+				commonRes = genCommonRes("success", "成功", null);
 			} catch (Exception e) {
-				resVo.setHref("/CFA104G3/back_end/server_manager/loginServer.jsp");
-				commonRes = genCommonRes("fail", "失敗", resVo);
+				commonRes = genCommonRes("fail", "失敗", null);
 			}
 			
 			String jsonStr = gson.toJson(commonRes);
 			out.print(jsonStr);          
 			out.close();
 		}
+		
+		if (("siteEvaOk").equals(action)) {
+			PrintWriter out = res.getWriter();
+			
+			try {
+				MoveRequestService moveRequestService = new  MoveRequestServiceImpl();
+				NotificationService notificationService = new NotificationServiceImpl();
+				MoveRequestVO request = moveRequestService.getRequest(id);
+				Integer memberId = request.getMemberId();
+				
+				boolean evaluateOk = moveRequestService.evaluatePrice(id, price);
+				if(evaluateOk) {
+					notificationService.addNotification(memberId, "已完成現場估價, 請支付訂金以完成訂單", ENotificationType.MOVE);
+				}
+				
+				commonRes = genCommonRes("success", "成功", null);
+			} catch (Exception e) {
+				commonRes = genCommonRes("fail", "失敗", null);
+			}
+			
+			String jsonStr = gson.toJson(commonRes);
+			out.print(jsonStr);          
+			out.close();
+		}
+	}
+
+	private void fillResVo(MoveRequestTransResVO resVo, Integer id, MoveRequestVO request, MemberVO memberVo,
+			List<MovePhotoVO> photos) {
+		resVo.setId(id);
+		resVo.setMemberName(memberVo.getName());
+		resVo.setFromAddress(request.getFromAddress());
+		resVo.setToAddress(request.getToAddress());
+		resVo.setItems(request.getItems());
+		resVo.setMoveDate(request.getMoveDate());
+		resVo.setEvaluateType(request.getEvaluateType());
+		resVo.setEvaluateDate(request.getEvaluateDate());
+		resVo.setEvaluatePrice(request.getEvaluatePrice());
+		resVo.setRequestDate(request.getRequestDate());
+		resVo.setHandled(request.getHandled());
+		resVo.setStatusCode(request.getStatus());
+		resVo.setStatus(EMoveRequestStatus.parseCode(request.getStatus()).getText());
+		resVo.setEvaluatePrice(request.getEvaluatePrice());
+		MovePhotoTransVO[] photosArray = new MovePhotoTransVO[photos.size()]; 
+		for (int i = 0; i < photos.size(); i++) {
+			MovePhotoTransVO movePhotoTransVO = new MovePhotoTransVO();
+			MovePhotoVO movePhotoVO = photos.get(i);
+			movePhotoTransVO.setMoveRequestId(movePhotoVO.getMoveRequestId());
+			movePhotoTransVO.setPhoto(Base64.getEncoder().encodeToString(movePhotoVO.getPhoto()));
+			photosArray[i] = movePhotoTransVO;
+		}
+		resVo.setMovePhotoTransVOs(photosArray);
 	}
 	
 	private <T> CommonRes<T> genCommonRes(String errCode, String errMsg, T body) {

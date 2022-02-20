@@ -1,3 +1,4 @@
+<%@page import="java.util.stream.Collector"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -14,6 +15,24 @@
 		int count = service.getUnviewNotificationCount(memberId);
 		
 		List<NotificationVO> notificationVOs = service.getMemberLatestNotification(memberId, 5);
+		if (notificationVOs != null) {
+			Comparator notifyComparator = new Comparator<NotificationVO>() {
+				@Override
+				public int compare(NotificationVO o1, NotificationVO o2) {
+					if (o1.getNotifyTime() == null) {
+						return 1;
+					}
+					if (o2.getNotifyTime() == null) {
+						return -1;
+					}
+					if(o1.getNotifyTime().after(o2.getNotifyTime())) {
+						return -1;
+					}
+					return 1;
+				}
+			};
+			Collections.sort(notificationVOs, notifyComparator);		
+		}
 		pageContext.setAttribute("notificationsCnt", count);
 		pageContext.setAttribute("notifications", notificationVOs);
 	}
