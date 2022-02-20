@@ -35,7 +35,8 @@ public class MoveRequestDAOJDBCImpl implements MoveRequestDAO {
 	private static final String FIND_RESERVED_MOVEDATES = "select MS_MOVETIME from MOVE_REQUEST where MS_MOVETIME >= ?";  
 	private static final String FIND_RESERVED_EVADATES = "select MS_EVATIME from MOVE_REQUEST where MS_EVATIME >= ?";
 	private static final String CHANGE_PRICE = "update MOVE_REQUEST set MS_EVAPRICE = ? where MS_ID = ?"; 
-
+	private static final String CHANGE_HANDLED = "update MOVE_REQUEST set MS_HANDLE = ? where MS_ID = ?"; 
+	
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -326,6 +327,29 @@ public class MoveRequestDAOJDBCImpl implements MoveRequestDAO {
 			pstmt = con.prepareStatement(CHANGE_PRICE);
 
 			pstmt.setInt(1, price);
+			pstmt.setInt(2, requestId);
+
+			updateRow = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
+		
+		return updateRow;
+	}
+
+	@Override
+	public int changeHandled(int requestId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int updateRow;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(CHANGE_HANDLED);
+
+			pstmt.setBoolean(1, true);
 			pstmt.setInt(2, requestId);
 
 			updateRow = pstmt.executeUpdate();

@@ -17,7 +17,7 @@
 	<hr class="sidebar-divider">
 	<li class="nav-item">
 		<a class="nav-link" 
-		   href="/CFA104G3/back_end/server_manager/FAQ.jsp"
+		   href="<%=request.getContextPath()%>/back_end/server_manager/FAQ.jsp"
 		   onclick="this.parentNode.submit()">
 			<i class="fas fa-fw fa-table"></i> 
 			<span>FAQ</span>
@@ -28,7 +28,7 @@
 	<hr class="sidebar-divider">
 	<li class="nav-item">
 		<a class="nav-link" 
-		   href="/CFA104G3/back_end/news/listallnews.jsp"
+		   href="<%=request.getContextPath()%>/back_end/news/listallnews.jsp"
 		   onclick="this.parentNode.submit()">
 			<i class="fas fa-fw fa-table"></i> 
 			<span>最新消息</span>
@@ -47,7 +47,7 @@
 		</a>
 		<div id="collapseActivity" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="/CFA104G3/back_end/server_manager/activity.jsp">活動管理</a>
+				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/server_manager/activity.jsp">活動管理</a>
 			</div>
 		</div>
 	</li>
@@ -100,7 +100,7 @@
 		</a>
 		<div id="collapseMember" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="/CFA104G3/back_end/server_manager/manager.jsp">會員資料</a>
+				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/server_manager/manager.jsp">會員資料</a>
 			</div>
 		</div>
 	</li>
@@ -110,15 +110,15 @@
 	<div class="sidebar-heading">管理員權限</div>
 	<li class="nav-item">
 		<a class="nav-link collapsed" 
-		   href="/CFA104G3/back_end/server_manager/server.jsp" 
+		   href="<%=request.getContextPath()%>/back_end/server_manager/server.jsp" 
 		   data-toggle="collapse" data-target="#collapseManager" aria-expanded="true" aria-controls="collapseManager"> 
 			<i class="fas fa-fw fa-cog"></i> 
 			<span>管理員</span>
 		</a>
 		<div id="collapseManager" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="/CFA104G3/back_end/server_manager/admin.jsp">權限管理</a>
-				<a class="collapse-item" href="/CFA104G3/back_end/server_manager/addManager.jsp">新增管理員</a>				
+				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/server_manager/admin.jsp">權限管理</a>
+				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/server_manager/addManager.jsp">新增管理員</a>				
 			</div>
 		</div>
 	</li>

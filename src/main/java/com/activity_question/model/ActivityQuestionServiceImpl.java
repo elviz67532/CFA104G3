@@ -23,9 +23,9 @@ public class ActivityQuestionServiceImpl implements ActivityQuestionService{
 	}
 
 	@Override
-	public ActivityQuestionVO addAnswer(Integer activityId, String reply, Timestamp replyDate) {
+	public ActivityQuestionVO addAnswer(Integer id, String reply, Timestamp replyDate) {
 		ActivityQuestionVO vo = new ActivityQuestionVO();
-		vo.setActivityId(activityId);
+		vo.setId(id);
 		vo.setReply(reply);
 		vo.setReplyDate(replyDate);
 		dao.update(vo);
