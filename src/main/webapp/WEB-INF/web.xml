@@ -41,6 +41,8 @@
 	<filter-mapping>
 		<filter-name>frontEndMemberFilter</filter-name>
 		<url-pattern>/front_end/move/moveRequest.jsp</url-pattern>
+		<url-pattern>/front_end/move/moveRequestManage.jsp</url-pattern>	
+		<url-pattern>/front_end/notification/homePage.jsp</url-pattern>	
 		<url-pattern>/front_end/move/frontGetMoveOrder.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
@@ -179,7 +181,7 @@
 	<servlet-mapping>
 		<servlet-name>NewsImageReader</servlet-name>
 		<url-pattern>/news/newsimage.do</url-pattern>
-  </servlet-mapping>
+	</servlet-mapping>	
   
   <servlet>
 		<servlet-name>ProductReportServlet</servlet-name>
@@ -198,7 +200,7 @@
 		<url-pattern>/back_end/product/report/reportphoto.do</url-pattern>
 	</servlet-mapping>
   
-  <!-- 耀德 product和news 上-->
+ 	 <!-- 耀德 product和news 上-->
   
 	<!-- product -->
 	<servlet>

@@ -92,8 +92,7 @@ public class MoveOrderServiceImpl implements MoveOrderService {
 	public boolean getDataFromRequest(MoveRequestVO moveRequestVO, int deposit) {
 
 		MoveOrderVO vo = new MoveOrderVO();
-
-		vo.setId(moveRequestVO.getMemberId());
+		vo.setMemberId(moveRequestVO.getMemberId());
 		vo.setFromAddress(moveRequestVO.getFromAddress());
 		vo.setToAddress(moveRequestVO.getToAddress());
 		vo.setMoveDate(moveRequestVO.getMoveDate());

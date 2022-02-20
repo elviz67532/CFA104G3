@@ -40,7 +40,7 @@ public class NotificationServlet extends HttpServlet {
 		MemberVO memberVo = (MemberVO) session.getAttribute("memberVO");
 		if (memberVo == null) {
 			PrintWriter out = res.getWriter();
-			resVo.setHref("/CFA104G3/back_end/server_manager/loginServer.jsp");
+			resVo.setHref(req.getContextPath() + "/back_end/server_manager/loginServer.jsp");
 			commonRes = genCommonRes("login", "登入", resVo);
 			String jsonStr = gson.toJson(commonRes);
 			out.print(jsonStr);          
@@ -69,10 +69,10 @@ public class NotificationServlet extends HttpServlet {
 				NotificationService service = new NotificationServiceImpl();
 				service.viewNotification(notificationId);
 				
-				resVo.setHref("/CFA104G3/front_end/notification/homePage.jsp");
+				resVo.setHref(req.getContextPath() + "/front_end/notification/homePage.jsp");
 				commonRes = genCommonRes("success", "成功", resVo);
 			} catch (Exception e) {
-				resVo.setHref("/CFA104G3/front_end/notification/homePage.jsp");
+				resVo.setHref(req.getContextPath() + "/front_end/notification/homePage.jsp");
 				commonRes = genCommonRes("fail", "失敗", resVo);
 			}
 			String jsonStr = gson.toJson(commonRes);

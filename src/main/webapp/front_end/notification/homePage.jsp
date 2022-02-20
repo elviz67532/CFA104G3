@@ -115,7 +115,7 @@
 	</nav>
 	<div class="tab-content outter" id="nav-tabContent">
 		<div class="tab-pane fade <c:if test='${empty type}'>show active</c:if>" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
-<!-- view觸發 -->
+			<!-- view觸發 -->
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 				<c:forEach var="vo" items="${notifications}">
 					<div class="accordion-item <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
@@ -131,7 +131,7 @@
 				    		</c:choose>
 					    </button>
 					  </h2>
-					  <div id="panelsStayOpen-collapse-${vo.id}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-${vo.id}">
+					  <div id="panelsStayOpen-collapse-${vo.id}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-${vo.id}">
 					    <div class="accordion-body <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
 					    	${vo.content} 	
 					    </div>
@@ -155,7 +155,7 @@
 			    			</c:choose>
 				    	</button>
 				  	</h2>	
-				  	<div id="move-collapse-${vo.id}" class="accordion-collapse collapse show" aria-labelledby="move-${vo.id}">
+				  	<div id="move-collapse-${vo.id}" class="accordion-collapse collapse	" aria-labelledby="move-${vo.id}">
 					    <div class="accordion-body <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
 					    	${vo.content} 	
 					    </div>
@@ -178,7 +178,7 @@
 			    			</c:choose>
 				    	</button>
 				  	</h2>	
-				  	<div id="product-collapse-${vo.id}" class="accordion-collapse collapse show" aria-labelledby="product-${vo.id}">
+				  	<div id="product-collapse-${vo.id}" class="accordion-collapse collapse" aria-labelledby="product-${vo.id}">
 					    <div class="accordion-body <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
 					    	${vo.content} 	
 					    </div>
@@ -201,7 +201,7 @@
 			    			</c:choose>
 				    	</button>
 				  	</h2>	
-				  	<div id="activity-collapse-${vo.id}" class="accordion-collapse collapse show" aria-labelledby="activity-${vo.id}">
+				  	<div id="activity-collapse-${vo.id}" class="accordion-collapse collapse" aria-labelledby="activity-${vo.id}">
 					    <div class="accordion-body <c:if test='${vo.viewed eq false}'>font-weight-bold</c:if>">
 					    	${vo.content} 	
 					    </div>
@@ -248,11 +248,10 @@ $(".viewNotify").click(function(){
     let notifyId = self.value;
 		 	
     $.ajax({
-        url: "/CFA104G3/notification/notification.do",
+        url: "<%=request.getContextPath()%>/notification/notification.do",
         type: "POST",
         data: JSON.stringify({'action':'viewedNotify', 'id':notifyId}),
         success: function(data) {
-        	location.reload();
         }
 	});
 });
