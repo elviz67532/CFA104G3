@@ -72,4 +72,8 @@ public class ProductServiceImpl implements ProductService {
 		return dao.getCollection(productIds);
 	}
 	
+	public List<ProductVO> getFromMember(Integer sellerMemberId){
+		return dao.getProductsByMem(sellerMemberId);
+	}
+	
 }

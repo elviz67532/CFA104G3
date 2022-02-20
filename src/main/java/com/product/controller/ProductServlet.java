@@ -154,7 +154,7 @@ public class ProductServlet extends HttpServlet {
 				
 				/***************************3.查詢完成，準備轉交****************************************/
 				req.setAttribute("productVO", productVO);
-				String url = "/back_end/product/update_product_input.jsp";
+				String url = "/front_end/product/update_product_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
@@ -349,7 +349,7 @@ public class ProductServlet extends HttpServlet {
 				productSvc.delete(prodId);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)*************/	
-				String url = "/back_end/product/listAll.jsp";
+				String url = "/front_end/product/sellerAllProducts.jsp";
 				RequestDispatcher successview = req.getRequestDispatcher(url);
 				successview.forward(req, res);
 			} catch (Exception e) {

@@ -121,14 +121,12 @@
 			<!-- 左邊3欄  list group 分類功能-->
 			<div class="col-12 col-md-3 list-group">
 				<FORM METHOD="post" ACTION="product/ProductServlet">
-				  <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+				  <a href="homePage.jsp" class="list-group-item list-group-item-action active" aria-current="true">
 				    總覽
 				  </a>
 				  <a href="browseElec.jsp"  name="prodType" value=4 class="list-group-item list-group-item-action">電器類</a>
-				  
 				  <a href="browseFurniture.jsp" class="list-group-item list-group-item-action">寢具</a>
 				  <a href="browseOthers.jsp" class="list-group-item list-group-item-action">其他</a>
-				  <a href="#" class="list-group-item list-group-item-action" tabindex="-1" aria-disabled="true">A disabled link item</a>
 				</FORM>
 			</div>
 			<!-- 右邊9欄  card 卡片 & text-center -->

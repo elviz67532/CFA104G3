@@ -64,18 +64,18 @@
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
     <!-- Page Header-->
-<%--     <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/product01.jpg')"> --%>
-<!--         <div class="container position-relative px-4 px-lg-5"> -->
-<!--             <div class="row gx-4 gx-lg-5 justify-content-center"> -->
-<!--                 <div class="col-md-10 col-lg-8 col-xl-7"> -->
-<!--                     <div class="site-heading"> -->
-<!--                         <h1>二手商城</h1> -->
-<!--                         <span class="subheading">愛地球，資源再利用</span> -->
-<!--                     </div> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </div> -->
-<!--     </header> -->
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/product01.jpg')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>二手商城</h1>
+                        <span class="subheading">愛地球，資源再利用</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
    
    	<!-- 主體畫面設計  -->
    	<div class="row justify-content-center">
@@ -121,14 +121,12 @@
 			<!-- 左邊3欄  list group 分類功能-->
 			<div class="col-12 col-md-3 list-group">
 				<FORM METHOD="post" ACTION="product/ProductServlet">
-				  <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+				  <a href="homePage.jsp" class="list-group-item list-group-item-action" aria-current="true">
 				    總覽
 				  </a>
 				  <a href="browseElec.jsp"  name="prodType" value=4 class="list-group-item list-group-item-action">電器類</a>
-				  
 				  <a href="browseFurniture.jsp" class="list-group-item list-group-item-action">寢具</a>
-				  <a href="browseOthers.jsp" class="list-group-item list-group-item-action">其他</a>
-				  <a href="#" class="list-group-item list-group-item-action" tabindex="-1" aria-disabled="true">A disabled link item</a>
+				  <a href="browseOthers.jsp" class="list-group-item list-group-item-action active">其他</a>
 				</FORM>
 			</div>
 			<!-- 右邊9欄  card 卡片 & text-center -->

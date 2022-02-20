@@ -58,15 +58,15 @@
 	<c:forEach var="productVO" items="${list}">
 		<tr>
 			<td>${productVO.id}</td>
-			<td>${productVO.prodMemId}</td>
-			<td>${productVO.prodType}</td>
-			<td>${productVO.prodDesc}</td>	
-			<td>${productVO.prodPrice}</td>
-			<td>${productVO.prodName}</td>
+			<td>${productVO.sellerMemberId}</td>
+			<td>${productVO.type}</td>
+			<td>${productVO.description}</td>	
+			<td>${productVO.price}</td>
+			<td>${productVO.name}</td>
 			<td>圖片檔案</td>
-			<td>${productVO.prodUptime}</td>
-			<td>${productVO.prodLoc}</td>
-			<td>${productVO.prodStatus}</td>
+			<td>${productVO.launchedDate}</td>
+			<td>${productVO.location}</td>
+			<td>${productVO.status}</td>
 			<td>
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet">
 					<input type="submit" value="修改">
