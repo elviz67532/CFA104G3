@@ -91,13 +91,23 @@
 			</c:forEach>
 		</ul>
 	</c:if>
-
+	<br><br>
+	
+	<!-- 麵包屑 (Breadcrumb) -->
+	<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總攬</a></li>
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp">買賣家</a></li>
+	    <li class="breadcrumb-item active" aria-current="page">新增商品</li>
+	  </ol>
+	</nav>	
+		
 	<!-- nav -->
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 	<div class="container">
 		<main>
 			<div class="py-5 text-center">
-				<h2>商品新增</h2>
+				<h2>新增商品</h2>
 			</div>
 				<!-- 目前手動輸入 -->
 				<!-- 取得會員ID -->

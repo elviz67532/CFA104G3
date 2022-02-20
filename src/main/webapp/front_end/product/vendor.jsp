@@ -120,7 +120,7 @@
 					          		alt=""/>
 					          <div class="card-body">
 					            <h5 class="card-title"></h5>
-					            <a href="#" class="btn btn-primary">商品管理</a>
+					            <a href="<%=request.getContextPath() %>/front_end/product/sellerAllProducts.jsp" class="btn btn-primary">商品管理</a>
 					          </div>
 					        </div>	
 					    </div>					
@@ -134,7 +134,7 @@
 					          		alt=""/>
 					          <div class="card-body">
 					            <h5 class="card-title"></h5>
-					            <a href="#" class="btn btn-primary">新增商品</a>
+					            <a href="<%=request.getContextPath()%>/front_end/product/sellerProduct.jsp" class="btn btn-primary">新增商品</a>
 					          </div>
 					        </div>	
 					    </div>					

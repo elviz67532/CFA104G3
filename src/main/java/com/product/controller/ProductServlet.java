@@ -206,7 +206,7 @@ public class ProductServlet extends HttpServlet {
 
 			Timestamp prodUptime = null;
 			try {
-				prodUptime = Timestamp.valueOf(req.getParameter("prodUpdate").trim());
+				prodUptime = Timestamp.valueOf(req.getParameter("prodUpdate"));
 			} catch (IllegalArgumentException e) {
 				prodUptime = new Timestamp(System.currentTimeMillis());
 			}
