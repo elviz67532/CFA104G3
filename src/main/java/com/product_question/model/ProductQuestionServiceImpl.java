@@ -12,12 +12,12 @@ public class ProductQuestionServiceImpl implements ProductQuestionService {
 	}
 //12134567890
 	@Override
-	public ProductQuestionVO insert(Integer id, Integer memberId, Integer productId,
+	public ProductQuestionVO insert(Integer memberId, Integer productId,
 			String problem, String reply, Timestamp problemDate, Timestamp replyDate) {
 
 		ProductQuestionVO vo = new ProductQuestionVO();
 
-		vo.setId(id);
+		
 		vo.setMemberId(memberId);
 		vo.setProductId(productId);
 		vo.setProblem(problem);
@@ -62,5 +62,10 @@ public class ProductQuestionServiceImpl implements ProductQuestionService {
 	@Override
 	public List<ProductQuestionVO> selectAll() {
 		return dao.selectAll();
+	}
+	
+	@Override
+	public ProductQuestionVO selectByMemberId(Integer memberId) {
+		return dao.selectByMemberId(memberId);
 	}
 }

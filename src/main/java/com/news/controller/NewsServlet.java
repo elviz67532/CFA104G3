@@ -54,7 +54,7 @@ public class NewsServlet extends HttpServlet {
 					id = Integer.valueOf(str);
 					/***************************/
 				} catch (Exception e) {
-					errorMsgs.add("最新消息編號格式不正確");
+					errorMsgs.add("消息編號格式不正確");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -133,7 +133,7 @@ public class NewsServlet extends HttpServlet {
 					type = Integer.valueOf(req.getParameter("type").trim());
 				} catch (NumberFormatException e) {
 					type = 0;
-					errorMsgs.add("請輸入消息分類編號.");
+					errorMsgs.add("請輸入分類編號.");
 				}
 				
 				String title = req.getParameter("title").trim();

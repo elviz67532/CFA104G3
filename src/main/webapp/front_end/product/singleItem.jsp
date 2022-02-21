@@ -108,7 +108,7 @@
 
 
    	<!-- Related items section-->
-   	<jsp:include page="/front_end/common/relatedItems.jsp"></jsp:include>
+   	<jsp:include page="/front_end/product/relatedItems.jsp"></jsp:include>
     <!-- Footer-->
    	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
     <!-- Bootstrap core JS-->
