@@ -41,6 +41,8 @@
 		<url-pattern>/front_end/move/moveRequestManage.jsp</url-pattern>
 		<url-pattern>/front_end/move/moveRequestCManage.jsp</url-pattern>
 		<url-pattern>/front_end/notification/homePage.jsp</url-pattern>
+		<url-pattern>/front_end/product/sellerProduct.jsp</url-pattern>
+		<url-pattern>/front_end/product/sellerAllProducts.jsp</url-pattern>
 		
 		<!-- 處理中 -->
 		<url-pattern>/front_end/move/frontGetMoveOrder.jsp</url-pattern>

@@ -54,18 +54,16 @@ public class MoveRequestServlet extends HttpServlet {
 		Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 
+		HttpSession session = req.getSession();
+		MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
+		if (memberVo == null) {
+			res.sendRedirect(req.getContextPath() + "/front_end/member/login.jsp");
+			return;
+		}
+		
+		int memberId = memberVo.getId();
+		
 		if ("moveRequest".equals(action)) {
-			HttpSession session = req.getSession();
-			MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
-			if (memberVo == null) {
-				res.sendRedirect(req.getContextPath() + "/front_end/member/login.jsp");
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/homePage.jsp");
-				failureView.forward(req, res);
-				return;
-			}
-			
-			int memberId = memberVo.getId();
-			
 			String fromAddress = req.getParameter("fromAddress");
 			String toAddress = req.getParameter("toAddress");
 			String items = req.getParameter("items");
@@ -189,17 +187,6 @@ public class MoveRequestServlet extends HttpServlet {
 		}
 		
 		if ("moveRequestCtrl".equals(action)) {
-			HttpSession session = req.getSession();
-			MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
-			if (memberVo == null) {
-				res.sendRedirect(req.getContextPath() + "/front_end/member/login.jsp");
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/homePage.jsp");
-				failureView.forward(req, res);
-				return;
-			}
-			
-			Integer memberId = memberVo.getId();
-			
 			try {
 				String type = req.getParameter("type");
 				String id = req.getParameter("requestId");
@@ -234,20 +221,9 @@ public class MoveRequestServlet extends HttpServlet {
 		}
 		
 		if ("moveRequestView".equals(action)) {
-			HttpSession session = req.getSession();
-			MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
-			if (memberVo == null) {
-				res.sendRedirect(req.getContextPath() + "/front_end/member/login.jsp");
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/homePage.jsp");
-				failureView.forward(req, res);
-				return;
-			}
-			
 			String id = req.getParameter("requestId");
-			int memberId = memberVo.getId();
 			
 			try {
-					
 				int requestId = Integer.parseInt(id);
 				
 				MoveRequestService service = new MoveRequestServiceImpl();
