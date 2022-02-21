@@ -42,7 +42,7 @@ public class FaqServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/faq/listAllFaq.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/faq/listOneFaq.jsp");
 				failureView.forward(req, res);
 			}
 		}

@@ -124,7 +124,7 @@ th, td {
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
 						<h1>
-							訂單管理前台主頁
+							前台買家訂單管理主頁
 							<h1>
 								<span class="subheading">二手商城</span>
 					</div>
@@ -163,23 +163,10 @@ th, td {
 					<th class="text-nowrap">商品數量</th>
 					<th class="text-nowrap">訂單總金額</th>
 					<th class="text-nowrap">訂單狀態</th>
+					<th class="text-nowrap">修改訂單/退貨</th>
 				</tr>
 			</thead>
-			<tfoot>
-				<tr>
-					<th class="text-nowrap">訂單編號</th>
-					<th class="text-nowrap">商品編號</th>
 
-					<th class="text-nowrap">賣家編號</th>
-					<th class="text-nowrap">收件人姓名</th>
-					<th class="text-nowrap">收件人電話</th>
-					<th class="text-nowrap">收件人地址</th>
-					<th class="text-nowrap">訂單成立時間</th>
-					<th class="text-nowrap">商品數量</th>
-					<th class="text-nowrap">訂單總金額</th>
-					<th class="text-nowrap">訂單狀態</th>
-				</tr>
-			</tfoot>
 			<%@ include file="page1.jsp"%>
 			<c:forEach var="productOrderVO" items="${list}"
 				begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -198,26 +185,96 @@ th, td {
 						<td>${productOrderVO.amountOfPrice}</td>
 						<td>${productOrderVO.status}</td>
 						<td>
-							<FORM METHOD="post" ACTION="productorder.do">
 
+							<FORM METHOD="post" ACTION="productorder.do"
+								style="margin-bottom: 0px;">
 								<input type="submit" value="修改"> <input type="hidden"
 									name="id" value="${productOrderVO.id}"> <input
 									type="hidden" name="action"
 									value="getOne_For_Update_Order_Front">
 							</FORM>
-						</td>
-						<td>
+
 							<FORM METHOD="post" ACTION="productorder.do">
-								<input type="submit" value="取消"> <input type="hidden"
-									name="id" value="${productOrderVO.id}"> <input
-									type="hidden" name="action" value="delete_front">
+								<input type="hidden" name="action" value="updatestatusto5">
+								<input type="hidden" name="id" value="${productOrderVO.id}">
+								<input type="hidden" name="productId"
+									value="${productOrderVO.productId}"> <input
+									type="hidden" name="sellerMemberId"
+									value="${productOrderVO.sellerMemberId}"> <input
+									type="hidden" name="productName"
+									value="${productOrderVO.productName}"> <input
+									type="hidden" name="phone" value="${productOrderVO.phone}">
+								<input type="hidden" name="address"
+									value="${productOrderVO.address}"> <input type="hidden"
+									name="date" value="${productOrderVO.date}"> <input
+									type="hidden" name="amountOfProduct"
+									value="${productOrderVO.amountOfProduct}"> <input
+									type="hidden" name="amountOfPrice"
+									value="${productOrderVO.amountOfPrice}"> <input
+									type="hidden" name="status" value="${productOrderVO.status}">
+								<button type="submit" id="foo1" class="box1">退貨</button>
+							</FORM>
+
+
+							<FORM METHOD="post" ACTION="productorder.do">
+								<input type="hidden" name="action" value="updatestatusto2">
+								<input type="hidden" name="id" value="${productOrderVO.id}">
+								<input type="hidden" name="productId"
+									value="${productOrderVO.productId}"> <input
+									type="hidden" name="sellerMemberId"
+									value="${productOrderVO.sellerMemberId}"> <input
+									type="hidden" name="productName"
+									value="${productOrderVO.productName}"> <input
+									type="hidden" name="phone" value="${productOrderVO.phone}">
+								<input type="hidden" name="address"
+									value="${productOrderVO.address}"> <input type="hidden"
+									name="date" value="${productOrderVO.date}"> <input
+									type="hidden" name="amountOfProduct"
+									value="${productOrderVO.amountOfProduct}"> <input
+									type="hidden" name="amountOfPrice"
+									value="${productOrderVO.amountOfPrice}"> <input
+									type="hidden" name="status" value="${productOrderVO.status}">
+								<button type="submit" id="foo2" class="box2">完成訂單</button>
 							</FORM>
 						</td>
 					</tr>
 				</tbody>
 			</c:forEach>
 		</table> <%@ include file="page2.jsp"%> <!-- Footer-->
-		<jsp:include page="/front_end/common/footer.jsp"></jsp:include> <!-- Bootstrap core JS-->
+
+		<script>
+			function triggerAlert1() {
+				var box1 = document.querySelector('.box1');
+				box1.style.backgroundColor = "black";
+
+			}
+			var ele1 = document.getElementById('foo1');
+			ele1.onclick = triggerAlert1;
+
+			function triggerAlert2() {
+				var box2 = document.querySelector('.box2');
+				box2.style.backgroundColor = "green";
+
+			}
+			var ele2 = document.getElementById('foo2');
+			ele2.onclick = triggerAlert2;
+
+			function triggerAlert3() {
+				var box3 = document.querySelector('.box3');
+				box3.style.backgroundColor = "red";
+
+			}
+			var ele3 = document.getElementById('foo3');
+			ele3.onclick = triggerAlert3;
+
+			function triggerAlert4() {
+				var box4 = document.querySelector('.box4');
+				box4.style.backgroundColor = "blue";
+
+			}
+			var ele4 = document.getElementById('foo4');
+			ele4.onclick = triggerAlert4;
+		</script> <jsp:include page="/front_end/common/footer.jsp"></jsp:include> <!-- Bootstrap core JS-->
 
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -2,9 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.product_order.model.*"%>
 <%@ page import="java.util.*"%>
-
 <%
-ProductOrderVO vo = (ProductOrderVO) request.getAttribute("vo");
+ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+List<ProductOrderVO> list = poSvc.getAll();
+pageContext.setAttribute("list", list);
 %>
 
 <!DOCTYPE html>
@@ -100,8 +101,15 @@ table {
 	margin-bottom: 5px;
 }
 
+table {
+	width: 800px;
+	background-color: white;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
 table, th, td {
-	border: 1px solid #00C2C2;
+	border: 1px solid #CCCCFF;
 }
 
 th, td {
@@ -123,7 +131,7 @@ th, td {
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
 						<h1>
-							前台買家訂單資料修改
+							前台賣家訂單管理主頁
 							<h1>
 								<span class="subheading">二手商城</span>
 					</div>
@@ -132,13 +140,11 @@ th, td {
 		</div>
 	</header>
 
+	<!-- 成功顯示, disabled, 隱藏送出 -->
 
+	<!-- 主體畫面設計  -->
 
-	<a href="front_ProductOrder_Retrieve.jsp"><img
-		src="images/back1.gif" width="100" height="32" border="0"></a>
-	<h3>訂單修改:</h3>
-
-	<%-- 錯誤表列 --%>
+	<!-- 程式例外錯誤 -->
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
@@ -147,43 +153,69 @@ th, td {
 			</c:forEach>
 		</ul>
 	</c:if>
-
-	<FORM METHOD="post" ACTION="productorder.do">
+	<li><a href="front_ProductOrder_Retrieve.jsp"><input
+			type="submit" value="商品訂單查詢"></a>
+	<li>
 		<table>
-			<tr>
+			<thead>
+				<tr>
+					<th class="text-nowrap">訂單編號</th>
+					<th class="text-nowrap">商品編號</th>
 
-				<td>收件人姓名:</td>
-				<td><input type="TEXT" name="productName" size="45"
-					value="<%=vo.getProductName()%>" /></td>
-			</tr>
-			<tr>
-				<td>收件人電話:</td>
-				<td><input type="TEXT" name="phone" size="45"
-					value="<%=vo.getPhone()%>" /></td>
-			</tr>
-			<tr>
-				<td>收件人地址:</td>
-				<td><input type="TEXT" name="address" size="45"
-					value="<%=vo.getAddress()%>" /></td>
-			</tr>
+					<th class="text-nowrap">買家編號</th>
+					<th class="text-nowrap">收件人姓名</th>
+					<th class="text-nowrap">收件人電話</th>
+					<th class="text-nowrap">收件人地址</th>
+					<th class="text-nowrap">訂單成立時間</th>
+					<th class="text-nowrap">商品數量</th>
+					<th class="text-nowrap">訂單總金額</th>
+					<th class="text-nowrap">訂單狀態</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th class="text-nowrap">訂單編號</th>
+					<th class="text-nowrap">商品編號</th>
+
+					<th class="text-nowrap">買家編號</th>
+					<th class="text-nowrap">收件人姓名</th>
+					<th class="text-nowrap">收件人電話</th>
+					<th class="text-nowrap">收件人地址</th>
+					<th class="text-nowrap">訂單成立時間</th>
+					<th class="text-nowrap">商品數量</th>
+					<th class="text-nowrap">訂單總金額</th>
+					<th class="text-nowrap">訂單狀態</th>
+				</tr>
+			</tfoot>
+			<%@ include file="page1.jsp"%>
+			<c:forEach var="productOrderVO" items="${list}"
+				begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+
+				<tbody>
+					<tr>
+						<td>${productOrderVO.id}</td>
+						<td>${productOrderVO.productId}</td>
+
+						<td>${productOrderVO.customerMemberId}</td>
+						<td>${productOrderVO.productName}</td>
+						<td>${productOrderVO.phone}</td>
+						<td>${productOrderVO.address}</td>
+						<td>${productOrderVO.date}</td>
+						<td>${productOrderVO.amountOfProduct}</td>
+						<td>${productOrderVO.amountOfPrice}</td>
+						<td>${productOrderVO.status}</td>
 
 
-			<jsp:useBean id="poSvc" scope="page"
-				class="com.product_order.model.ProductOrderServiceImpl" />
+					</tr>
+				</tbody>
+			</c:forEach>
+		</table> <%@ include file="page2.jsp"%> <!-- Footer-->
+		<jsp:include page="/front_end/common/footer.jsp"></jsp:include> <!-- Bootstrap core JS-->
 
-
-		</table>
-		<br> <input type="hidden" name="action" value="Update_Front">
-		<input type="hidden" name="id" value="<%=vo.getId()%>"> <input
-			type="submit" value="送出修改">
-	</FORM>
-	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
-	<!-- Bootstrap core JS-->
-
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-	<!-- Core theme JS-->
-	<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- Core theme JS--> <script
+			src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
 </body>
 
 </html>

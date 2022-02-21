@@ -127,8 +127,8 @@ th, td {
 		<li>
 			<FORM METHOD="post" ACTION="productorder.do">
 				<b>輸入訂單編號 (如1):</b> <input type="text" name="id"> <input
-					type="hidden" name="action" value="getOne_For_Display"> <input
-					type="submit" value="送出">
+					type="hidden" name="action" value="getOne_For_Update_Order_Front">
+				<input type="submit" value="送出">
 			</FORM>
 		</li>
 
@@ -136,26 +136,18 @@ th, td {
 			class="com.product_order.model.ProductOrderServiceImpl" />
 
 		<li>
-			<FORM METHOD="post" ACTION="product.do">
+			<FORM METHOD="post" ACTION="productorder.do">
 				<b>選擇賣家編號:</b> <select size="1" name="id">
 					<c:forEach var="productVO" items="${proSvc.all}">
 						<option value="${productVO.id}">${productVO.id}
 					</c:forEach>
-				</select> <input type="hidden" name="action" value="getOne_For_Display">
-				<input type="submit" value="送出">
+				</select> <input type="hidden" name="action"
+					value="getOne_For_Update_Order_Front"> <input type="submit"
+					value="送出">
 			</FORM>
 		</li>
 
-		<li>
-			<FORM METHOD="post" ACTION="product.do">
-				<b>選擇買家編號:</b> <select size="1" name="id">
-					<c:forEach var="productVO" items="${proSvc.all}">
-						<option value="${productVO.id}">${productVO.productId}
-					</c:forEach>
-				</select> <input type="hidden" name="action" value="getOne_For_Display">
-				<input type="submit" value="送出">
-			</FORM>
-		</li>
+
 	</ul>
 
 	<!-- Footer-->

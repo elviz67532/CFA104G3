@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.faq.model.FaqService;
 import com.faq.model.FaqServiceImpl;
+import com.move_order.model.MoveOrderServiceImpl;
+import com.move_order.model.MoveOrderVO;
 import com.product_order.model.*;
 
 //@WebServlet("/Shop_OrderReturnServlet")
@@ -157,6 +159,8 @@ public class ProductOrderServlet extends HttpServlet {
 
 			req.setAttribute("errorMsgs", errorMsgs);
 
+			System.out.println(action);
+
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer id = Integer.valueOf(req.getParameter("id"));
@@ -167,7 +171,7 @@ public class ProductOrderServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("vo", vo);
-				String url = "/front-end/product/front_ProductOrder_Update.jsp";
+				String url = "/front_end/product/front_ProductOrder_Update.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -223,7 +227,7 @@ public class ProductOrderServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("vo", vo);
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+							.getRequestDispatcher("/front_end/product/front_ProductOrder_Update.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -243,7 +247,7 @@ public class ProductOrderServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+						.getRequestDispatcher("/front_end/product/front_ProductOrder_Update.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -305,6 +309,624 @@ public class ProductOrderServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/listAllproductOrder.jsp");
 				failureView.forward(req, res);
 
+			}
+		}
+		if ("updatestatusto1".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				Integer amountOfPrice = null;
+				try {
+					amountOfPrice = Integer.valueOf(req.getParameter("amountOfPrice").trim());
+				} catch (NumberFormatException e) {
+					amountOfPrice = 0;
+					errorMsgs.add("請輸入金額");
+				}
+
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer productId = Integer.valueOf(req.getParameter("productId"));
+				Integer customerMemberId = Integer.valueOf(req.getParameter("customerMemberId"));
+				Integer sellerMemberId = Integer.valueOf(req.getParameter("sellerMemberId"));
+				String productName = req.getParameter("productName");
+				String phone = req.getParameter("phone");
+				String address = req.getParameter("address");
+				Integer amountOfProduct = Integer.valueOf(req.getParameter("amountOfProduct"));
+				Timestamp date = java.sql.Timestamp.valueOf(req.getParameter("date"));
+				// 設定狀態變為0
+				Integer status = 0;
+
+				ProductOrderVO vo = new ProductOrderVO();
+				vo.setId(id);
+				vo.setProductId(productId);
+				vo.setCustomerMemberId(customerMemberId);
+				vo.setSellerMemberId(sellerMemberId);
+				vo.setProductName(productName);
+				vo.setPhone(phone);
+				vo.setAddress(address);
+				vo.setDate(date);
+				vo.setAmountOfProduct(amountOfProduct);
+				vo.setStatus(status);
+				vo.setAmountOfPrice(amountOfPrice);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("vo", vo);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始修改資料 *****************************************/
+				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+				vo = poSvc.updateProductOrder(id, productId, customerMemberId, sellerMemberId, productName, phone,
+						address, date, amountOfProduct, status, amountOfPrice);
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("vo", vo);
+				String url = "/front_end/product/front_ProductOrder_ListOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("updatestatusto1".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				Integer amountOfPrice = null;
+				try {
+					amountOfPrice = Integer.valueOf(req.getParameter("amountOfPrice").trim());
+				} catch (NumberFormatException e) {
+					amountOfPrice = 0;
+					errorMsgs.add("請輸入金額");
+				}
+
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer productId = Integer.valueOf(req.getParameter("productId"));
+				Integer customerMemberId = Integer.valueOf(req.getParameter("customerMemberId"));
+				Integer sellerMemberId = Integer.valueOf(req.getParameter("sellerMemberId"));
+				String productName = req.getParameter("productName");
+				String phone = req.getParameter("phone");
+				String address = req.getParameter("address");
+				Integer amountOfProduct = Integer.valueOf(req.getParameter("amountOfProduct"));
+				Timestamp date = java.sql.Timestamp.valueOf(req.getParameter("date"));
+				// 設定狀態變為1
+				Integer status = 1;
+
+				ProductOrderVO vo = new ProductOrderVO();
+				vo.setId(id);
+				vo.setProductId(productId);
+				vo.setCustomerMemberId(customerMemberId);
+				vo.setSellerMemberId(sellerMemberId);
+				vo.setProductName(productName);
+				vo.setPhone(phone);
+				vo.setAddress(address);
+				vo.setDate(date);
+				vo.setAmountOfProduct(amountOfProduct);
+				vo.setStatus(status);
+				vo.setAmountOfPrice(amountOfPrice);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("vo", vo);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始修改資料 *****************************************/
+				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+				vo = poSvc.updateProductOrder(id, productId, customerMemberId, sellerMemberId, productName, phone,
+						address, date, amountOfProduct, status, amountOfPrice);
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("vo", vo);
+				String url = "/front_end/product/front_ProductOrder_ListOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("updatestatusto2".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				Integer amountOfPrice = null;
+				try {
+					amountOfPrice = Integer.valueOf(req.getParameter("amountOfPrice").trim());
+				} catch (NumberFormatException e) {
+					amountOfPrice = 0;
+					errorMsgs.add("請輸入金額");
+				}
+
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer productId = Integer.valueOf(req.getParameter("productId"));
+				Integer customerMemberId = Integer.valueOf(req.getParameter("customerMemberId"));
+				Integer sellerMemberId = Integer.valueOf(req.getParameter("sellerMemberId"));
+				String productName = req.getParameter("productName");
+				String phone = req.getParameter("phone");
+				String address = req.getParameter("address");
+				Integer amountOfProduct = Integer.valueOf(req.getParameter("amountOfProduct"));
+				Timestamp date = java.sql.Timestamp.valueOf(req.getParameter("date"));
+				// 設定狀態變為2
+				Integer status = 2;
+
+				ProductOrderVO vo = new ProductOrderVO();
+				vo.setId(id);
+				vo.setProductId(productId);
+				vo.setCustomerMemberId(customerMemberId);
+				vo.setSellerMemberId(sellerMemberId);
+				vo.setProductName(productName);
+				vo.setPhone(phone);
+				vo.setAddress(address);
+				vo.setDate(date);
+				vo.setAmountOfProduct(amountOfProduct);
+				vo.setStatus(status);
+				vo.setAmountOfPrice(amountOfPrice);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("vo", vo);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/product/listAllproductOrder.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始修改資料 *****************************************/
+				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+				vo = poSvc.updateProductOrder(id, productId, customerMemberId, sellerMemberId, productName, phone,
+						address, date, amountOfProduct, status, amountOfPrice);
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("vo", vo);
+				String url = "/front_end/product/listAllproductOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/listAllproductOrder.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("updatestatusto3".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				Integer amountOfPrice = null;
+				try {
+					amountOfPrice = Integer.valueOf(req.getParameter("amountOfPrice").trim());
+				} catch (NumberFormatException e) {
+					amountOfPrice = 0;
+					errorMsgs.add("請輸入金額");
+				}
+
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer productId = Integer.valueOf(req.getParameter("productId"));
+				Integer customerMemberId = Integer.valueOf(req.getParameter("customerMemberId"));
+				Integer sellerMemberId = Integer.valueOf(req.getParameter("sellerMemberId"));
+				String productName = req.getParameter("productName");
+				String phone = req.getParameter("phone");
+				String address = req.getParameter("address");
+				Integer amountOfProduct = Integer.valueOf(req.getParameter("amountOfProduct"));
+				Timestamp date = java.sql.Timestamp.valueOf(req.getParameter("date"));
+				// 設定狀態變為3
+				Integer status = 3;
+
+				ProductOrderVO vo = new ProductOrderVO();
+				vo.setId(id);
+				vo.setProductId(productId);
+				vo.setCustomerMemberId(customerMemberId);
+				vo.setSellerMemberId(sellerMemberId);
+				vo.setProductName(productName);
+				vo.setPhone(phone);
+				vo.setAddress(address);
+				vo.setDate(date);
+				vo.setAmountOfProduct(amountOfProduct);
+				vo.setStatus(status);
+				vo.setAmountOfPrice(amountOfPrice);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("vo", vo);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始修改資料 *****************************************/
+				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+				vo = poSvc.updateProductOrder(id, productId, customerMemberId, sellerMemberId, productName, phone,
+						address, date, amountOfProduct, status, amountOfPrice);
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("vo", vo);
+				String url = "/front_end/product/front_ProductOrder_ListOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("updatestatusto4".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				Integer amountOfPrice = null;
+				try {
+					amountOfPrice = Integer.valueOf(req.getParameter("amountOfPrice").trim());
+				} catch (NumberFormatException e) {
+					amountOfPrice = 0;
+					errorMsgs.add("請輸入金額");
+				}
+
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer productId = Integer.valueOf(req.getParameter("productId"));
+				Integer customerMemberId = Integer.valueOf(req.getParameter("customerMemberId"));
+				Integer sellerMemberId = Integer.valueOf(req.getParameter("sellerMemberId"));
+				String productName = req.getParameter("productName");
+				String phone = req.getParameter("phone");
+				String address = req.getParameter("address");
+				Integer amountOfProduct = Integer.valueOf(req.getParameter("amountOfProduct"));
+				Timestamp date = java.sql.Timestamp.valueOf(req.getParameter("date"));
+				// 設定狀態變為4
+				Integer status = 4;
+
+				ProductOrderVO vo = new ProductOrderVO();
+				vo.setId(id);
+				vo.setProductId(productId);
+				vo.setCustomerMemberId(customerMemberId);
+				vo.setSellerMemberId(sellerMemberId);
+				vo.setProductName(productName);
+				vo.setPhone(phone);
+				vo.setAddress(address);
+				vo.setDate(date);
+				vo.setAmountOfProduct(amountOfProduct);
+				vo.setStatus(status);
+				vo.setAmountOfPrice(amountOfPrice);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("vo", vo);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始修改資料 *****************************************/
+				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+				vo = poSvc.updateProductOrder(id, productId, customerMemberId, sellerMemberId, productName, phone,
+						address, date, amountOfProduct, status, amountOfPrice);
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("vo", vo);
+				String url = "/front_end/product/front_ProductOrder_ListOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("updatestatusto5".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				Integer amountOfPrice = null;
+				try {
+					amountOfPrice = Integer.valueOf(req.getParameter("amountOfPrice").trim());
+				} catch (NumberFormatException e) {
+					amountOfPrice = 0;
+					errorMsgs.add("請輸入金額");
+				}
+
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer productId = Integer.valueOf(req.getParameter("productId"));
+				Integer customerMemberId = Integer.valueOf(req.getParameter("customerMemberId"));
+				Integer sellerMemberId = Integer.valueOf(req.getParameter("sellerMemberId"));
+				String productName = req.getParameter("productName");
+				String phone = req.getParameter("phone");
+				String address = req.getParameter("address");
+				Integer amountOfProduct = Integer.valueOf(req.getParameter("amountOfProduct"));
+				Timestamp date = java.sql.Timestamp.valueOf(req.getParameter("date"));
+				// 設定狀態變為5
+				Integer status = 5;
+
+				ProductOrderVO vo = new ProductOrderVO();
+				vo.setId(id);
+				vo.setProductId(productId);
+				vo.setCustomerMemberId(customerMemberId);
+				vo.setSellerMemberId(sellerMemberId);
+				vo.setProductName(productName);
+				vo.setPhone(phone);
+				vo.setAddress(address);
+				vo.setDate(date);
+				vo.setAmountOfProduct(amountOfProduct);
+				vo.setStatus(status);
+				vo.setAmountOfPrice(amountOfPrice);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("vo", vo);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/product/listAllproductOrder.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始修改資料 *****************************************/
+				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+				vo = poSvc.updateProductOrder(id, productId, customerMemberId, sellerMemberId, productName, phone,
+						address, date, amountOfProduct, status, amountOfPrice);
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("vo", vo);
+				String url = "/front_end/product/listAllproductOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/listAllproductOrder.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("updatestatusto6".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				Integer amountOfPrice = null;
+				try {
+					amountOfPrice = Integer.valueOf(req.getParameter("amountOfPrice").trim());
+				} catch (NumberFormatException e) {
+					amountOfPrice = 0;
+					errorMsgs.add("請輸入金額");
+				}
+
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer productId = Integer.valueOf(req.getParameter("productId"));
+				Integer customerMemberId = Integer.valueOf(req.getParameter("customerMemberId"));
+				Integer sellerMemberId = Integer.valueOf(req.getParameter("sellerMemberId"));
+				String productName = req.getParameter("productName");
+				String phone = req.getParameter("phone");
+				String address = req.getParameter("address");
+				Integer amountOfProduct = Integer.valueOf(req.getParameter("amountOfProduct"));
+				Timestamp date = java.sql.Timestamp.valueOf(req.getParameter("date"));
+				// 設定狀態變為6
+				Integer status = 6;
+
+				ProductOrderVO vo = new ProductOrderVO();
+				vo.setId(id);
+				vo.setProductId(productId);
+				vo.setCustomerMemberId(customerMemberId);
+				vo.setSellerMemberId(sellerMemberId);
+				vo.setProductName(productName);
+				vo.setPhone(phone);
+				vo.setAddress(address);
+				vo.setDate(date);
+				vo.setAmountOfProduct(amountOfProduct);
+				vo.setStatus(status);
+				vo.setAmountOfPrice(amountOfPrice);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("vo", vo);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始修改資料 *****************************************/
+				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+				vo = poSvc.updateProductOrder(id, productId, customerMemberId, sellerMemberId, productName, phone,
+						address, date, amountOfProduct, status, amountOfPrice);
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("vo", vo);
+				String url = "/front_end/product/front_ProductOrder_ListOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("updatestatusto7".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				Integer amountOfPrice = null;
+				try {
+					amountOfPrice = Integer.valueOf(req.getParameter("amountOfPrice").trim());
+				} catch (NumberFormatException e) {
+					amountOfPrice = 0;
+					errorMsgs.add("請輸入金額");
+				}
+
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer productId = Integer.valueOf(req.getParameter("productId"));
+				Integer customerMemberId = Integer.valueOf(req.getParameter("customerMemberId"));
+				Integer sellerMemberId = Integer.valueOf(req.getParameter("sellerMemberId"));
+				String productName = req.getParameter("productName");
+				String phone = req.getParameter("phone");
+				String address = req.getParameter("address");
+				Integer amountOfProduct = Integer.valueOf(req.getParameter("amountOfProduct"));
+				Timestamp date = java.sql.Timestamp.valueOf(req.getParameter("date"));
+				// 設定狀態變為7
+				Integer status = 7;
+
+				ProductOrderVO vo = new ProductOrderVO();
+				vo.setId(id);
+				vo.setProductId(productId);
+				vo.setCustomerMemberId(customerMemberId);
+				vo.setSellerMemberId(sellerMemberId);
+				vo.setProductName(productName);
+				vo.setPhone(phone);
+				vo.setAddress(address);
+				vo.setDate(date);
+				vo.setAmountOfProduct(amountOfProduct);
+				vo.setStatus(status);
+				vo.setAmountOfPrice(amountOfPrice);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("vo", vo);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始修改資料 *****************************************/
+				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+				vo = poSvc.updateProductOrder(id, productId, customerMemberId, sellerMemberId, productName, phone,
+						address, date, amountOfProduct, status, amountOfPrice);
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("vo", vo);
+				String url = "/front_end/product/front_ProductOrder_ListOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("updatestatusto8".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				Integer amountOfPrice = null;
+				try {
+					amountOfPrice = Integer.valueOf(req.getParameter("amountOfPrice").trim());
+				} catch (NumberFormatException e) {
+					amountOfPrice = 0;
+					errorMsgs.add("請輸入金額");
+				}
+
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer productId = Integer.valueOf(req.getParameter("productId"));
+				Integer customerMemberId = Integer.valueOf(req.getParameter("customerMemberId"));
+				Integer sellerMemberId = Integer.valueOf(req.getParameter("sellerMemberId"));
+				String productName = req.getParameter("productName");
+				String phone = req.getParameter("phone");
+				String address = req.getParameter("address");
+				Integer amountOfProduct = Integer.valueOf(req.getParameter("amountOfProduct"));
+				Timestamp date = java.sql.Timestamp.valueOf(req.getParameter("date"));
+				// 設定狀態變為8
+				Integer status = 8;
+
+				ProductOrderVO vo = new ProductOrderVO();
+				vo.setId(id);
+				vo.setProductId(productId);
+				vo.setCustomerMemberId(customerMemberId);
+				vo.setSellerMemberId(sellerMemberId);
+				vo.setProductName(productName);
+				vo.setPhone(phone);
+				vo.setAddress(address);
+				vo.setDate(date);
+				vo.setAmountOfProduct(amountOfProduct);
+				vo.setStatus(status);
+				vo.setAmountOfPrice(amountOfPrice);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("vo", vo);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始修改資料 *****************************************/
+				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+				vo = poSvc.updateProductOrder(id, productId, customerMemberId, sellerMemberId, productName, phone,
+						address, date, amountOfProduct, status, amountOfPrice);
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("vo", vo);
+				String url = "/front_end/product/front_ProductOrder_ListOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/product/front_ProductOrder_Update.jsp");
+				failureView.forward(req, res);
 			}
 		}
 	}
