@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.mysql.cj.protocol.Resultset;
+
 import core.util.SQLUtil;
 
 public class ProductDAOImpl implements ProductDAO {
@@ -22,6 +24,7 @@ public class ProductDAOImpl implements ProductDAO {
 //	public static final String GET_PRODUCT_BY_ID = "SELECT * FROM PRODUCT WHERE prodId=?"; // 唯一
 	public static final String GET_PRODUCT_BY_TYPE = "SELECT * FROM PRODUCT WHERE PROD_TYPE=?"; // 多個
 	public static final String GET_NAME_ID_BY_ID = "SELECT PROD_ID, PROD_PRICE, PROD_NAME FROM PRODUCT where PROD_ID = ? OR PROD_ID = ?...";
+	public static final String GET_PRODUCT_BY_MEM = "SELECT * FROM PRODUCT WHERE `PROD_MEM_ID`=?";
 	
 	static {
 		try {
@@ -352,6 +355,43 @@ public class ProductDAOImpl implements ProductDAO {
 
 		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+		return list;
+	}
+
+	@Override
+	public List<ProductVO> getProductsByMem(Integer sellerMemberId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ProductVO productVO = null;
+		List<ProductVO> list = new ArrayList<ProductVO>();		
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(GET_PRODUCT_BY_MEM);
+			pstmt.setInt(1,sellerMemberId);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				productVO = new ProductVO();
+				
+				productVO.setId(rs.getInt("PROD_ID"));
+				productVO.setSellerMemberId(rs.getInt("PROD_MEM_ID"));
+				productVO.setType(rs.getInt("PROD_TYPE"));
+				productVO.setDescription(rs.getString("PROD_DESC"));
+				productVO.setPrice(rs.getInt("PROD_PRICE"));
+				productVO.setName(rs.getString("PROD_NAME"));
+				productVO.setLaunchedDate(rs.getTimestamp("PROD_UPTIME"));
+				productVO.setLocation(rs.getString("PROD_LOC"));
+				productVO.setStatus(rs.getInt("PROD_STATUS"));
+				
+				list.add(productVO);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			SQLUtil.closeResource(con, pstmt, rs);
 		}

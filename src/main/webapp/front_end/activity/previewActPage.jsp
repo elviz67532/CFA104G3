@@ -24,7 +24,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="UTF-8">
 <title>活動預覽頁面previewActPage.jsp</title>
-<link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet">
+<%-- <link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet"> --%>
 
 <link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
 <!-- sweet -->
@@ -235,17 +235,12 @@
                	</span>
                		${actVO.minMember}  ~  ${actVO.maxMember}
                </p>
-               <input type="submit" class="btn btn-hover color-1" id="sweetBtnPreview" value="結束預覽"/>
-               <p class="launchedDate"><fmt:formatDate value="${actVO.launchedDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
+               <input type="submit" class="btn-hover color-1" id="sweetBtnPreview" value="結束預覽"/>
+               <p class="launchedDate" style="text-align:center;"><fmt:formatDate value="${actVO.launchedDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
  	</section>
  	<section class="section2">
- 		
  	</section>
    		</div>
-   	
-<!-- 			<td> -->
-<!-- 			</td> -->
-	
    
    
     <!-- Footer-->

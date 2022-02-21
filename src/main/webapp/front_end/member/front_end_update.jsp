@@ -88,18 +88,10 @@ td {
 	<main>
 
 
-		<div style="text-align: center;">
-			<h1>會員資料修改</h1>
-		</div>
-		<div style="text-align: center;"></div>
-		<h2 align="center" valign="center">
-			<a href="front_end_listOneMember.jsp"> 回會員中心</a>
-		</h2>
-		</div>
-
-
-
-
+				<div style="text-align: center;">
+						<h1>會員資料修改</h1>
+				</div>
+			
 		<%-- 錯誤表列 --%>
 		<c:if test="${not empty errorMsgs}">
 			<font style="color: red">請修正以下錯誤:</font>
@@ -109,10 +101,8 @@ td {
 				</c:forEach>
 			</ul>
 		</c:if>
-
-		<FORM METHOD="post" enctype="multipart/form-data"
-			ACTION="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"
-			name="form1">
+     <div style="text-align: center;" >
+		<FORM METHOD="post" enctype="multipart/form-data"ACTION="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"name="form1">
 			<table id="table-2">
 				<tr>
 					<td>會員編號:<font color=red><b>*</b></font></td>
@@ -122,72 +112,69 @@ td {
 
 				<tr>
 					<td>EMAIL:</td>
-					<td><input placeholder="請輸入EMAIL" name="email" maxlength="45"
-						autocomplete="off"
-						value="<%=(memberVO == null) ? "" : memberVO.getEmail()%>" /></td>
+					<td>
+					<input placeholder="請輸入EMAIL" name="email" maxlength="45"autocomplete="off"value="<%=(memberVO == null) ? "aaa" : memberVO.getEmail()%>" />
+					</td>
 				</tr>
 
 				<tr>
 					<td>密碼:</td>
-					<td><input type="TEXT" name="password" maxlength="10"
-						autocomplete="off"
-						value="<%=(memberVO == null) ? "" : memberVO.getPassword()%>" /></td>
+					<td>
+					<input type="TEXT" name="password" maxlength="10"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getPassword()%>" />
+					</td>
 				</tr>
 
 				<tr>
 					<td>暱稱:</td>
-					<td><input type="TEXT" name="nickname" maxlength="10"
-						autocomplete="off"
-						value="<%=(memberVO == null) ? "" : memberVO.getNickname()%>" /></td>
+					<td>
+					<input type="TEXT" name="nickname" maxlength="10"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getNickname()%>" />
+					</td>
 				</tr>
 				<tr>
 					<td>姓名:</td>
-					<td><input type="TEXT" name="name" maxlength="10"
-						autocomplete="off"
-						value="<%=(memberVO == null) ? "" : memberVO.getName()%>" /></td>
+					<td>
+					<input type="TEXT" name="name" maxlength="10"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getName()%>" />
+					</td>
 				</tr>
 				<tr>
 					<td>電話:</td>
-					<td><input placeholder="請輸入電話" name="phone" maxlength="10"
-						autocomplete="off"
-						value="<%=(memberVO == null) ? "" : memberVO.getPhone()%>" /></td>
+					<td>
+					<input placeholder="請輸入電話" name="phone" maxlength="10"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getPhone()%>" />
+					</td>
 				</tr>
-
-
-
 				<tr>
 					<td>居住城市:</td>
-					<td><input placeholder="請輸入居住城市" name="city" size="30"
-						autocomplete="off"
-						value="<%=(memberVO == null) ? "" : memberVO.getCity()%>" /></td>
+					<td>
+					<input placeholder="請輸入居住城市" name="city" size="30"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getCity()%>" />
+					</td>
 				</tr>
 				<tr>
 					<td>居住鄉鎮:</td>
-					<td><input placeholder="請輸入居住鄉鎮" name="cityArea" size="30"
-						autocomplete="off"
-						value="<%=(memberVO == null) ? "" : memberVO.getCityArea()%>" /></td>
+					<td>
+					<input placeholder="請輸入居住鄉鎮" name="cityArea" size="30"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getCityArea()%>" />
+					</td>
 				</tr>
 				<tr>
 					<td>地址:</td>
-					<td><input placeholder="請輸入地址" name="address" size="30"
-						autocomplete="off"
-						value="<%=(memberVO == null) ? "" : memberVO.getAddress()%>" /></td>
+					<td>
+					<input placeholder="請輸入地址" name="address" size="30"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getAddress()%>" />
+					</td>
 				</tr>
 				<tr>
 					<td>圖片:</td>
-					<td><input type="file" name="avatar" size="45"
-						value="<%=(memberVO == null) ? "" : memberVO.getAvatar()%>" /></td>
+					<td>
+					<input type="file" name="avatar" size="45"value="<%=(memberVO == null) ? "" : memberVO.getAvatar()%>" />
+					</td>
 				</tr>
-
-			</table>
-			<br> <input type="hidden" name="action"
-				value="front_end_member_update"> <input type="hidden"
-				name="account" value="<%=memberVO.getAccount()%>"> <input
-				type="hidden" name="id" value="<%=memberVO.getId()%>"> <input
-				type="hidden" name="account" value="${memberVO.account}"> <input
-				type="submit" value="送出">
+		</table>
+			<br> 
+			<input type="hidden" name="action"value="front_end_member_update"> 
+			<input type="hidden"name="account" value="<%=memberVO.getAccount()%>">
+			<input type="hidden" name="id" value="<%=memberVO.getId()%>"> 
+			<input type="hidden" name="account" value="${memberVO.account}"> 
+			<input type="submit" value="送出" >
 		</FORM>
-
+	</div>
 	</main>
 	<!-- Footer-->
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>

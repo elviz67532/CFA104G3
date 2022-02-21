@@ -52,7 +52,7 @@ th, td {
 </head>
 <body bgcolor='white'>
 
-	<h4>此頁暫練習採用 Script 的寫法取值:</h4>
+
 	<table id="table-1">
 		<tr>
 			<td>
@@ -80,17 +80,17 @@ th, td {
 			<th>訂單狀態</th>
 		</tr>
 		<tr>
-			<td>${productOrderVO.id}</td>
-			<td>${productOrderVO.productId}</td>
-			<td>${productOrderVO.customerMemberId}</td>
-			<td>${productOrderVO.sellerMemberId}</td>
-			<td>${productOrderVO.productName}</td>
-			<td>${productOrderVO.phone}</td>
-			<td>${productOrderVO.address}</td>
-			<td>${productOrderVO.date}</td>
-			<td>${productOrderVO.amountOfProduct}</td>
-			<td>${productOrderVO.status}</td>
-			<td>${productOrderVO.amountOfPrice}</td>
+			<td><%=productOrderVO.getId()%></td>
+			<td><%=productOrderVO.getProductId()%></td>
+			<td><%=productOrderVO.getCustomerMemberId()%></td>
+			<td><%=productOrderVO.getSellerMemberId()%></td>
+			<td><%=productOrderVO.getProductName()%></td>
+			<td><%=productOrderVO.getPhone()%></td>
+			<td><%=productOrderVO.getAddress()%></td>
+			<td><%=productOrderVO.getDate()%></td>
+			<td><%=productOrderVO.getAmountOfProduct()%></td>
+			<td><%=productOrderVO.getStatus()%></td>
+			<td><%=productOrderVO.getAmountOfPrice()%></td>
 		</tr>
 	</table>
 

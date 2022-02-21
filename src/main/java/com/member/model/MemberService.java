@@ -22,11 +22,12 @@ public interface MemberService {
 			String cityArea, String address, byte[] avatar, Integer id);
 
 
-	boolean veriftyCode(Integer id, String code);
-
+	
 	boolean banMember(Integer id);
 
 	boolean restoreMember(Integer id);
+
+	boolean veriftyCode(Integer status, Integer id, String code);
 
 
 }

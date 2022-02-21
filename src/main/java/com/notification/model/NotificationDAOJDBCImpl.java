@@ -18,7 +18,7 @@ public class NotificationDAOJDBCImpl implements NotificationDAO {
 	private static final String UPDATE = "update NOTIFICATION set NOTIF_MEM_ID = ?, NOTIF_TIME = ?, NOTIF_CONTENT = ?, NOTIF_TYPE = ?, NOTIF_VIEWED = ? where NOTIF_ID = ?";
 	//------------------------------------------------------------------
 	private static final String GET_MEM_NOTIFY_STMT = "select * from NOTIFICATION where NOTIF_MEM_ID = ?";
-	private static final String GET_MEM_NOTIFY_LIMIT_STMT = "select * from NOTIFICATION where NOTIF_MEM_ID = ? LIMIT ?";
+	private static final String GET_MEM_NOTIFY_LIMIT_STMT = "select * from NOTIFICATION where NOTIF_MEM_ID = ? order by NOTIF_TIME DESC LIMIT ?";
     private static final String GET_MEM_UNVIEWED_NOTIFY_CNT_STMT = "select COUNT(*) as COUNT from NOTIFICATION where NOTIF_MEM_ID = ? AND NOTIF_VIEWED = false";
     private static final String UPDATE_NOTIFY_VIEWED_STATUS = "update NOTIFICATION set NOTIF_VIEWED = ? where NOTIF_ID = ?";
     

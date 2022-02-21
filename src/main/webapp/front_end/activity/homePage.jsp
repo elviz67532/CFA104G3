@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.activity.model.*"%>
+<%@ page import="com.member.model.*"%>
 <!-- 改善時間用 -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%
@@ -20,15 +21,19 @@
 	
 	List<ActivityVO> typeList4 = actSvc.getActType(4);
 	pageContext.setAttribute("typeList4",typeList4);
+	
+	MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 %>
-
+<%
+	request.setAttribute("findActivityStatus", new String[]{"正常","取消","下架"});
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="UTF-8">
 <title>全部活動頁面homePage.jsp</title>
-<link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet">
+<%-- <link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet"> --%>
 <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
@@ -59,51 +64,6 @@
       font-size: 18px;
       margin: 8px 0;  
 }
-
-.btn{
-	width: 100%;
-    padding: 16px 40px;
-	margin: 8px 0 60px 0;
-}
-.btn-hover {
-    width: 200px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-    cursor: pointer;
-    margin: 20px;
-    height: 55px;
-    text-align:center;
-    border: none;
-    background-size: 300% 100%;
-
-    border-radius: 50px;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-}
-
-.btn-hover:hover {
-    background-position: 100% 0;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-}
-
-.btn-hover:focus {
-    outline: none;
-}
-.btn-hover.color-9 {
-margin: 0 20px;
-width: 200px;
-height: 50px;
-padding: 0;
-    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
-    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
-}
-
 
 .tab_container{
 /* 	border: 2px solid blue; */
@@ -257,7 +217,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
     margin: 20px;
     height: 55px;
     text-align:center;
-    border: none;
+/*     border: none; */
     background-size: 300% 100%;
 
     border-radius: 50px;
@@ -279,11 +239,26 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
     outline: none;
 }
 
+
 .btn-hover.color-5 {
     background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
     box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
 }
-
+.btn-hover.color-5:hover{
+    width: 300px;
+}
+.btn-hover.color-8 {
+    background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+    box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+}
+.btn-hover.color-9 {
+margin: 0 20px;
+width: 200px;
+height: 50px;
+padding: 0;
+    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
 /*msg*/
 .contact {
 	width: 50px;
@@ -316,6 +291,48 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
 	color: black;
 	transform: scale(1.02);
 }
+
+/*imgActivityManagement*/
+.contactActivityManagement{
+	width: 50px;
+	height: 50px;
+	position: fixed;
+	top: 73%;
+	left: 90%;
+	opacity: 0.5; /*透明度50%*/
+	transition: transform .3s;
+}
+.contactActivityManagement:hover { /*滑鼠滑過*/
+	opacity: 0.8;
+	transform: scale(1.02);
+}
+.contactActivityManagement2{
+	font-size: 12px;
+	width: 100px;
+	height: 20px;
+	position: fixed;
+	color: black;
+	top: 81%;
+	left: 89.3%;
+	opacity: 0.5; /*透明度50%*/
+	transition: transform .3s;
+}
+.contactActivityManagement2:hover { /*滑鼠滑過*/
+	opacity: 1;
+	color: black;
+	transform: scale(1.02);
+}
+.actStatus{
+	margin-left: 20px;
+ 	padding: 2px 12px;
+	background-color: #212121;
+	color: white;
+    border-radius: 16px;
+    font-size: 16px;
+/* 	background-color: #ff93c2; */
+    box-shadow: 0 2px 4px rgb(255 147 194 / 30%);
+    font-family: Courier, monospace;
+}
 </style>    
 </head>
 
@@ -337,14 +354,17 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
             </div>
         </div>
     </header>
-       <%@ include file="specialcard.jsp" %> 
-   
+  
    <!-- 上與中之間 -->
    <div>
-   	<a href="<%=request.getContextPath()%>/front_end/activity/publishActivity.jsp">
-   	<img id="imgContact" class="contact" src="<%=request.getContextPath()%>/asset/img/activityImage/leaf.png">
-   	<span id="spanContact" class="contact2"></span>
-   	</a>
+	   	<a id="aContact" href="<%=request.getContextPath()%>/front_end/activity/publishActivity.jsp">
+	   		<img id="imgContact" class="contact" src="<%=request.getContextPath()%>/asset/img/activityImage/leaf.png">
+	   		<span id="spanContact" class="contact2"></span>
+	   	</a>
+	   	<a id="aActivityManagement" href="<%=request.getContextPath()%>/front_end/activity/memPublishActivityOwnPage.jsp?action=selectActivityByMemId">
+	   		<img id="imgActivityManagement" class="contactActivityManagement" src="<%=request.getContextPath()%>/asset/img/activityImage/activities.png">
+	   		<span id="spanActivityManagement" class="contactActivityManagement2"></span>
+	   	</a>
    </div>
 	<script type="text/javascript">
 		var img = document.getElementById('imgContact');
@@ -352,10 +372,21 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
 		img.addEventListener("mouseover", function() {
 			span.innerHTML = "&nbsp;&nbsp;&nbsp;這是葉子";
 			setTimeout(function() {
-				span.innerHTML = "去辦活動了啦";
+				span.innerHTML = "去辦活動了啦 ${memberVO.id}";
 		  	}, 1500);
 			setTimeout(function() {
 				span.innerHTML = "";
+		  	}, 5000);
+	    });
+		var img2 = document.getElementById('imgActivityManagement');
+		var span2 = document.getElementById('spanActivityManagement');
+		img2.addEventListener("mouseover", function() {
+			span2.innerHTML = "這是活動管理";
+			setTimeout(function() {
+				span2.innerHTML = "去看活動了啦 ${memberVO.id}";
+		  	}, 1500);
+			setTimeout(function() {
+				span2.innerHTML = "";
 		  	}, 5000);
 	    });
 	</script>
@@ -376,24 +407,90 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
 <div class="tab tab1 -on">
 		<div class="wrap" >
 	<c:forEach var="actVO" items="${list}" >
-	        <div class="item">
+	        <div id="item${actVO.activityId}" class="item${actVO.activityId}">
 <%-- 	            <div class="act_tab">${actVO.type}</div> --%>
                 <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
             	<div class="div1">
 	            	<p class="time">開始時間: 
 	            	<fmt:formatDate value="${actVO.startDate}" pattern="yyyy-MM-dd hh:mm:ss"/>
+			            <c:set var="statusNum" scope="request" value="${actVO.status}"/>
+	             		<span class="actStatus">狀態:${findActivityStatus[statusNum]}</span>
 	            	</p>
-	                <h2 class="actName">${actVO.name}</h2>
+	                <h2 id="actName${actVO.activityId}" class="actName">${actVO.name}</h2>
 	                <p class="location ellipsis"><img style="width:18px; height:18px;margin-right:5px;" src="<%=request.getContextPath()%>/asset/img/activityImage/placeholder.png">${actVO.location}</p>
 	                <div style="margin: 0 50px;">
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
 			                <input type="hidden" name="activityId" value="${actVO.activityId}">
 			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
+			                <input id="input${actVO.activityId}" type="submit" class="btn-hover color-9" value="查看該筆活動"/>
 		                </FORM>
 	                </div>
             	</div>
             </div>
+            
+<!-- 	取消與下架 -->
+<style>
+.item${actVO.activityId}{
+    width: 30%;
+    margin: 10px;
+/*     border: 1px solid #aaa; */
+    position: relative;
+    display: inline-block;
+    transition: transform .3s;
+}
+.item${actVO.activityId}:hover{
+opacity: 0.8;
+background-color: white; 
+transform: scale(1.02); 
+border-radius: 16px;
+}
+.item${actVO.activityId} .div1{
+    padding: 8px 16px;
+    min-height: 149px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 0 16px 16px;
+    border: 1px solid gray;
+height:200px;
+}
+.item${actVO.activityId} .time{
+    color: #b5bac1;
+    font-size: 14px;
+    font-weight: 500;
+	margin: 4px 8px; 
+}
+.item${actVO.activityId} img{
+	box-shadow: none;
+    border-radius: 16px 16px 0 0;
+    width: 100%;
+height: 200px;
+transition: .5s; 
+}
+.item${actVO.activityId} .actName{
+overflow: hidden;
+white-space: normal;
+	height:auto;
+padding: 10px 0;
+	margin: 8px 0;  
+    color: #000;
+    line-height: 20px;
+	letter-spacing: -.16px; 
+}
+</style>
+
+<script>
+		var item${actVO.activityId} = document.getElementById('item${actVO.activityId}');
+		var actName${actVO.activityId} = document.getElementById('actName${actVO.activityId}');
+		if(${actVO.status} == 1 ){
+			item${actVO.activityId}.style.backgroundColor = "black";
+			item${actVO.activityId}.style.opacity = 0.5;
+			item${actVO.activityId}.style.borderRadius = '16px';
+			actName${actVO.activityId}.style.color = "white";
+		}
+		if(${actVO.status} == 2){
+			item${actVO.activityId}.remove();
+		}
+</script>
 	</c:forEach>
     </div>
 </div>
@@ -401,22 +498,38 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
      <div class="tab tab2">
          <div class="wrap" >
 	<c:forEach var="actVO" items="${typeList1}" >
-	        <div class="item">
+	        <div id="item1${actVO.activityId}" class="item${actVO.activityId}">
 <%-- 	            <div class="act_tab">${actVO.type}</div> --%>
                 <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
             	<div class="div1">
-	            	<p class="time">${actVO.startDate}</p>
-	                <h2 class="actName">${actVO.name}</h2>
+	            	<p class="time">開始時間: 
+	            	<fmt:formatDate value="${actVO.startDate}" pattern="yyyy-MM-dd hh:mm:ss"/>
+		            <c:set var="statusNum" scope="request" value="${actVO.status}"/>
+             		<span class="actStatus">狀態:${findActivityStatus[statusNum]}</span>
+	                <h2 id="actName1${actVO.activityId}" class="actName">${actVO.name}</h2>
 	                <p class="location ellipsis"><img style="width:18px; height:18px;margin-right:5px;" src="<%=request.getContextPath()%>/asset/img/activityImage/placeholder.png">${actVO.location}</p>
 	                <div style="margin: 0 50px;">
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
 			                <input type="hidden" name="activityId" value="${actVO.activityId}">
 			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
+			                <input type="submit" class="btn-hover color-9" value="查看該筆活動"/>
 		                </FORM>
 	                </div>
             	</div>
             </div>
+<script>
+		var item1${actVO.activityId} = document.getElementById('item1${actVO.activityId}');
+		var actName1${actVO.activityId} = document.getElementById('actName1${actVO.activityId}');
+		if(${actVO.status} == 1 ){
+			item1${actVO.activityId}.style.backgroundColor = "black";
+			item1${actVO.activityId}.style.opacity = 0.5;
+			item1${actVO.activityId}.style.borderRadius = '16px';
+			actName1${actVO.activityId}.style.color = "white";
+		}
+		if(${actVO.status} == 2){
+			item1${actVO.activityId}.remove();
+		}
+</script>
 		</c:forEach>
 	    </div>
 	</div>
@@ -425,22 +538,38 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
     <div class="tab tab3">
         <div class="wrap" >
 	<c:forEach var="actVO" items="${typeList2}" >
-	        <div class="item">
+	        <div id="item2${actVO.activityId}" class="item${actVO.activityId}">
 <%-- 	            <div class="act_tab">${actVO.type}</div> --%>
                 <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
             	<div class="div1">
-	            	<p class="time">${actVO.startDate}</p>
-	                <h2 class="actName">${actVO.name}</h2>
+	            	<p class="time">開始時間: 
+	            	<fmt:formatDate value="${actVO.startDate}" pattern="yyyy-MM-dd hh:mm:ss"/>
+		            <c:set var="statusNum" scope="request" value="${actVO.status}"/>
+             		<span class="actStatus">狀態:${findActivityStatus[statusNum]}</span>
+	                <h2 id="actName2${actVO.activityId}" class="actName">${actVO.name}</h2>
 	                <p class="location ellipsis"><img style="width:18px; height:18px;margin-right:5px;" src="<%=request.getContextPath()%>/asset/img/activityImage/placeholder.png">${actVO.location}</p>
 	                <div style="margin: 0 50px;">
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
 			                <input type="hidden" name="activityId" value="${actVO.activityId}">
 			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
+			                <input type="submit" class="btn-hover color-9" value="查看該筆活動"/>
 		                </FORM>
 	                </div>
             	</div>
             </div>
+<script>
+		var item2${actVO.activityId} = document.getElementById('item2${actVO.activityId}');
+		var actName2${actVO.activityId} = document.getElementById('actName2${actVO.activityId}');
+		if(${actVO.status} == 1 ){
+			item2${actVO.activityId}.style.backgroundColor = "black";
+			item2${actVO.activityId}.style.opacity = 0.5;
+			item2${actVO.activityId}.style.borderRadius = '16px';
+			actName2${actVO.activityId}.style.color = "white";
+		}
+		if(${actVO.status} == 2){
+			item2${actVO.activityId}.remove();
+		}
+</script>            
 		</c:forEach>
 	    </div>
     </div>
@@ -448,51 +577,82 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
          <div class="tab tab4">
              <div class="wrap" >
 	<c:forEach var="actVO" items="${typeList3}" >
-	        <div class="item">
+	        <div id="item3${actVO.activityId}" class="item${actVO.activityId}">
 <%-- 	            <div class="act_tab">${actVO.type}</div> --%>
                 <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
             	<div class="div1">
-	            	<p class="time">${actVO.startDate}</p>
-	                <h2 class="actName">${actVO.name}</h2>
+	            	<p class="time">開始時間: 
+	            	<fmt:formatDate value="${actVO.startDate}" pattern="yyyy-MM-dd hh:mm:ss"/>
+		            <c:set var="statusNum" scope="request" value="${actVO.status}"/>
+             		<span class="actStatus">狀態:${findActivityStatus[statusNum]}</span>
+	                <h2 id="actName3${actVO.activityId}" class="actName">${actVO.name}</h2>
 	                <p class="location ellipsis"><img style="width:18px; height:18px;margin-right:5px;" src="<%=request.getContextPath()%>/asset/img/activityImage/placeholder.png">${actVO.location}</p>
 	                <div style="margin: 0 50px;">
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
 			                <input type="hidden" name="activityId" value="${actVO.activityId}">
 			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
+			                <input type="submit" class="btn-hover color-9" value="查看該筆活動"/>
 		                </FORM>
 	                </div>
             	</div>
             </div>
+<script>
+		var item3${actVO.activityId} = document.getElementById('item3${actVO.activityId}');
+		var actName3${actVO.activityId} = document.getElementById('actName3${actVO.activityId}');
+		if(${actVO.status} == 1 ){
+			item3${actVO.activityId}.style.backgroundColor = "black";
+			item3${actVO.activityId}.style.opacity = 0.5;
+			item3${actVO.activityId}.style.borderRadius = '16px';
+			actName3${actVO.activityId}.style.color = "white";
+		}
+		if(${actVO.status} == 2){
+			item3${actVO.activityId}.remove();
+		}
+</script>           
 		</c:forEach>
 	   	</div>
   	</div>
-
          <div class="tab tab5">
             <div class="wrap" >
 	<c:forEach var="actVO" items="${typeList4}" >
-	        <div class="item">
+	        <div id="item4${actVO.activityId}" class="item${actVO.activityId}">
 <%-- 	            <div class="act_tab">${actVO.type}</div> --%>
                 <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
             	<div class="div1">
-	            	<p class="time">${actVO.startDate}</p>
-	                <h2 class="actName">${actVO.name}</h2>
+	            	<p class="time">開始時間: 
+	            	<fmt:formatDate value="${actVO.startDate}" pattern="yyyy-MM-dd hh:mm:ss"/>
+		            <c:set var="statusNum" scope="request" value="${actVO.status}"/>
+             		<span class="actStatus">狀態:${findActivityStatus[statusNum]}</span>
+	                <h2 id="actName4${actVO.activityId}" class="actName">${actVO.name}</h2>
 	                <p class="location ellipsis"><img style="width:18px; height:18px;margin-right:5px;" src="<%=request.getContextPath()%>/asset/img/activityImage/placeholder.png">${actVO.location}</p>
 	                <div style="margin: 0 50px;">
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
 			                <input type="hidden" name="activityId" value="${actVO.activityId}">
 			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
+			                <input type="submit" class="btn-hover color-9" value="查看該筆活動"/>
 		                </FORM>
 	                </div>
             	</div>
             </div>
+<script>
+		var item4${actVO.activityId} = document.getElementById('item4${actVO.activityId}');
+		var actName4${actVO.activityId} = document.getElementById('actName4${actVO.activityId}');
+		if(${actVO.status} == 1 ){
+			item4${actVO.activityId}.style.backgroundColor = "black";
+			item4${actVO.activityId}.style.opacity = 0.5;
+			item4${actVO.activityId}.style.borderRadius = '16px';
+			actName4${actVO.activityId}.style.color = "white";
+		}
+		if(${actVO.status} == 2){
+			item4${actVO.activityId}.remove();
+		}
+</script>            
 		</c:forEach>
          </div>
 		</div>
 	</div>
 	</div> <!-- tab_container -->
- 
+	
     <!-- Footer-->
    	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
     <!-- Bootstrap core JS-->

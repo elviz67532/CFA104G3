@@ -16,4 +16,6 @@ public interface MoveRequestDAO extends CoreDao<MoveRequestVO, Integer> {
 	List<Date> getUnavaliableMoveDates(Date today);
 
 	int changePrice(int requestId, int price);
+
+	int changeHandled(int requestId);
 }

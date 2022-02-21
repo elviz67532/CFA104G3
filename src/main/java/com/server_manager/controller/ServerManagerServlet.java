@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,13 +36,9 @@ public class ServerManagerServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		String atag = req.getParameter("atag");
 		if ("loginhandler".equals(action)) {
-			
-//			System.out.println("我進來loginhandler");
-			List<String> errMsgs = new LinkedList<String>();
+			Map<String, String> errMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errMsgs", errMsgs);
-
 			
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/	
@@ -50,69 +48,62 @@ public class ServerManagerServlet extends HttpServlet {
 				
 				// 【用戶登入失敗】
 				if(account == null || account.trim().length() == 0) {
-					errMsgs.add("用戶名不可為空，請您輸入");
-				}
-				if(!errMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
-					failureView.forward(req, res);
-					return;					
+					errMsgs.put("account", "用戶名不可為空，請您輸入");
 				}
 				if(password == null || (password.trim()).length() == 0) {
-					errMsgs.add("請輸入密碼");
+					errMsgs.put("password", "請輸入密碼");
 				}
+				
+				req.setAttribute("inputAccount", account);
+				req.setAttribute("inputPassword", password);
+				
 				if(!errMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
 					failureView.forward(req, res);
 					return;					
 				}	
 				
 				// 【檢查該帳號 , 密碼是否有效】
-				System.out.println("開始檢查該帳號");
 				if (!allowUser(account, password)) { // 【帳號 , 密碼無效時】
-					errMsgs.add("你的帳號 , 密碼無效!");
-				} else { // 【帳號 , 密碼有效時, 才做以下工作】
-					ServerManagerVO smVO = aquireVO(account);
-					//【取得 & 設定 session】
-					HttpSession session = req.getSession();
-					session.setAttribute("ServerManagerVO", smVO);
-					session.setAttribute("account", account);
-							//session.setAttribute("account", account); // *工作1: 才在session內做已經登入過的標識
-							//System.out.println("取得session了"); // session.getAttribute => 登入的資訊
+					errMsgs.put("account", "你的帳號 , 密碼無效!");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
+					failureView.forward(req, res);
+					return;	
+				} 
 
-					
-					//【取得角色】 DB 撈資料
-					ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
-					ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
-					Integer smgrId = smSvc.getId(account);
-					List<ServerManagerAuthVO> list = smaSvc.selectByManager(smgrId); //【取得smaId】
-						System.out.println("list" + list); 
-					session.setAttribute("auth", list);
-						System.out.println("auth " + session.getAttribute("auth"));
-					try {
-						String location = (String) session.getAttribute("location");
-						if (location != null) { 
-							session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
-							res.sendRedirect(location);
-							return;
-						}
-					} catch (Exception ignored) {
-					}
-					res.sendRedirect(req.getContextPath() + "/back_end/server_manager/serverManagerHom.jsp"); // *工作3:
-																					// (-->如無來源網頁:則重導至login_success.jsp)
+				// 【帳號 , 密碼有效時, 才做以下工作】
+				ServerManagerVO smVO = aquireVO(account);
+				//【取得 & 設定 session】
+				HttpSession session = req.getSession();
+				session.setAttribute("ServerManagerVO", smVO);
+				session.setAttribute("account", account);
+				
+				//【取得角色】 DB 撈資料
+				ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
+				ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
+				Integer smgrId = smSvc.getId(account);
+				List<ServerManagerAuthVO> list = smaSvc.selectByManager(smgrId); //【取得smaId】
+				session.setAttribute("auth", list);
+				
+				// 來源頁面跳轉
+				String location = (String) session.getAttribute("beforeLoginURL");
+				if (location != null) { 
+					session.removeAttribute("beforeLoginURL"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+					res.sendRedirect(location);
+					return;
 				}
+				res.sendRedirect(req.getContextPath() + "/back_end/server_manager/serverManagerHom.jsp"); // *工作3:
 			} catch (IOException e) {
-				errMsgs.add("例外錯誤");
 				e.printStackTrace();
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
+				failureView.forward(req, res);
 			}
 		}
 		
-		if("logout".equals(atag)) {
+		if("logout".equals(action)) {
 			HttpSession session = req.getSession();
 			session.invalidate();
-			RequestDispatcher view = req.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
-			view.forward(req, res);
+			res.sendRedirect(req.getContextPath() + "/back_end/server_manager/serverManagerHom.jsp");
 		}
 		
 		if("insert".equals(action)) {
@@ -177,9 +168,9 @@ public class ServerManagerServlet extends HttpServlet {
 				
 				/***************************2.開始新增資料***************************************/
 				ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
-				smVO = smSvc.insert(smgrId, smgrEmail, smgrAccount, 
+				smVO = smSvc.insert(smgrEmail, smgrAccount, 
 						smgrPassword, smgrName, smgrPhone, smgrGender, smgrAddress);
-				
+				smVO.setSmgrId(smgrId);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/back_end/server_manager/listAllServerManager.jsp";
@@ -191,25 +182,27 @@ public class ServerManagerServlet extends HttpServlet {
 			} catch (Exception e) {
 				errMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back_end/server_manager/addServerManager.jsp");
+						.getRequestDispatcher("/back_end/server_manager/addManager.jsp");
 				failureView.forward(req, res);
 			} 
 		}
 		if("update".equals(action)) {
 			Integer smgrId = Integer.valueOf(req.getParameter("smgrId"));
 			String[] smgeAuthIds = req.getParameterValues("smgeAuthId");
+			System.out.println(smgeAuthIds);
 			System.out.println("update smgrId: " + smgrId);
 			for(String smgeAuthId : smgeAuthIds) {
 				System.out.println("update smgeAuthId: " + smgeAuthId.toString());
 			}
 			//【delete】
 			ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
-			for(String smgeAuthId : smgeAuthIds) {
-				Integer smgeAuthId_ = Integer.valueOf(smgeAuthId);
-				DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId_, smgrId);
-				smaSvc.deleteById(dual);
-				//System.out.println("update smgeAuthId: " + smgeAuthId.toString());
-			}
+			smaSvc.deleteById(smgrId);
+//			for(String smgeAuthId : smgeAuthIds) {
+//				Integer smgeAuthId_ = Integer.valueOf(smgeAuthId);
+//				DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId_, smgrId);
+//				smaSvc.deleteById(dual);
+//				//System.out.println("update smgeAuthId: " + smgeAuthId.toString());
+//			}
 			//【insert】
 			for(String smgsAuthId : smgeAuthIds) {
 				ServerManagerAuthVO smaVO = new ServerManagerAuthVO();
@@ -223,16 +216,19 @@ public class ServerManagerServlet extends HttpServlet {
 					.getRequestDispatcher("/back_end/server_manager/admin.jsp");
 			view.forward(req, res);
 		}
+		
+		System.out.println("action=" + action);
 		if("delete".equals(action)) {
-			
+			System.out.println("action");
 			try {
 				Integer smgrId = Integer.valueOf(req.getParameter("smgrId"));
-				Integer smgeAuthId = Integer.valueOf(req.getParameter("smgeAuthId"));
 				ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
-				DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId, smgrId);
-				smaSvc.deleteById(dual);				
+				smaSvc.deleteById(smgrId);				
 				ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
 				smSvc.delete(smgrId);
+				//Integer smgeAuthId = Integer.valueOf(req.getParameter("smgeAuthId"));
+				//System.out.println("delete smgeAuthId: " + smgeAuthId);
+				//DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId, smgrId);
 //				try {
 //					ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
 //					DualKey<Integer, Integer> dual = new DualKey<Integer, Integer>(smgeAuthId, smgrId);
@@ -248,6 +244,102 @@ public class ServerManagerServlet extends HttpServlet {
 				System.out.println("刪除後臺管理員失敗");
 				e.printStackTrace();
 			}
+		}
+		
+		if("insert_manager_and_auth".equals(action)) {
+			
+			List<String> errMsgs = new LinkedList<String>();
+			req.setAttribute("errMsgs", errMsgs);			
+			
+			try {
+				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+				//Integer smgrId = Integer.valueOf(req.getParameter("smgrId")); // 自增主鍵
+				Integer smgrId = null;
+				
+				//【勾取的權限】
+				String[] smgeAuthIds = req.getParameterValues("smgeAuthId");
+				System.out.println(smgeAuthIds);
+				System.out.println("update smgrId: " + smgrId);
+				for(String smgeAuthId : smgeAuthIds) {
+					System.out.println("update smgeAuthId: " + smgeAuthId.toString());
+				}
+				
+				String smgrEmail = req.getParameter("smgrEmail");
+				if(smgrEmail == null || smgrEmail.trim().length() == 0) {
+					errMsgs.add("email 請勿空白");
+				}
+				
+				String smgrAccount = req.getParameter("smgrAccount");
+				if(smgrAccount == null || smgrAccount.trim().length() == 0) {
+					errMsgs.add("帳號 請勿空白");
+				}
+				
+				String smgrPassword = req.getParameter("smgrPassword");
+				if(smgrPassword == null || smgrPassword.trim().length() == 0) {
+					errMsgs.add("密碼 請勿空白");
+				}
+				
+				String smgrName = req.getParameter("smgrName");
+				if(smgrName == null || smgrName.trim().length() == 0) {
+					errMsgs.add("管理員名稱 請勿空白");
+				}
+				
+				String smgrPhone = req.getParameter("smgrPhone");
+				if(smgrPhone == null || smgrPhone.trim().length() == 0) {
+					errMsgs.add("聯絡電話 請勿空白");
+				}
+				
+				Integer smgrGender = Integer.valueOf(req.getParameter("smgrGender"));
+				
+				String smgrAddress = req.getParameter("smgrAddress");
+				if(smgrAddress == null || smgrAddress.trim().length() == 0) {
+					errMsgs.add("詳細地址 請勿空白");
+				}
+				
+				ServerManagerVO smVO = new ServerManagerVO();
+				
+				//smVO.setSmgrId(smgrId);
+				smVO.setSmgrEmail(smgrEmail);
+				smVO.setSmgrAccount(smgrAccount);
+				smVO.setSmgrPassword(smgrPassword);
+				smVO.setSmgrName(smgrName);
+				smVO.setSmgrPhone(smgrPhone);
+				smVO.setSmgrGender(smgrGender);
+				smVO.setSmgrAddress(smgrAddress);
+				
+				if(!errMsgs.isEmpty()) {
+					req.setAttribute("smVO", smVO);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/server_manager/addManager.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				/***************************2.開始新增資料 先新增manager 再新增auth*****************************/
+				ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
+				smVO = smSvc.insert(smgrEmail, smgrAccount, smgrPassword, smgrName, smgrPhone, smgrGender, smgrAddress);
+				// 取得smgrId
+				smgrId = smSvc.getId(smgrAccount);
+				smVO.setSmgrId(smgrId);
+				
+				// 新增權限
+				ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
+				for(String smgeAuthId : smgeAuthIds) {
+					ServerManagerAuthVO smaVO = new ServerManagerAuthVO();
+					Integer smgeAuthId_ = Integer.valueOf(smgeAuthId);
+					smaVO.setSmgeAuthId(smgeAuthId_);
+					smaVO.setSmgrId(smgrId);
+					smaSvc.insert(smaVO);
+				}
+				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+				RequestDispatcher view = req
+						.getRequestDispatcher("/back_end/server_manager/admin.jsp");
+				view.forward(req, res);
+			} catch (Exception e) {
+				errMsgs.add("新增管理員失敗" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back_end/server_manager/addManager.jsp");
+				failureView.forward(req, res);
+			}			
 		}
 		
 	}

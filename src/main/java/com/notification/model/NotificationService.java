@@ -1,11 +1,10 @@
 package com.notification.model;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 public interface NotificationService {
 
-	boolean addNotification(Integer memberId, String content, Integer type);
+	boolean addNotification(Integer memberId, String content, ENotificationType type);
 
 	List<NotificationVO> getMemberAllNotification(Integer memberId);
 
