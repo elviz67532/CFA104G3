@@ -35,11 +35,8 @@ public class FaqServiceImpl implements FaqService {
 		vo.setQuestion(question);
 		vo.setAnswer(answer);
 
-		int row = dao.update(vo);
-
-		System.out.println("FAQ " + row);
-
-		System.out.println("FAQ已更新");
+		dao.update(vo);
+		System.out.println("更新完成");
 		return vo;
 	}
 

@@ -58,8 +58,8 @@ th, td {
 			<td>
 				<h3>訂單資料</h3>
 				<h4>
-					<a href="productOrderMain.jsp"><img src="images/back1.gif"
-						width="100" height="32" border="0">回首頁</a>
+					<a href="front_ProductOrder_Retrieve"><img
+						src="images/back1.gif" width="100" height="32" border="0">回首頁</a>
 				</h4>
 			</td>
 		</tr>
@@ -67,32 +67,47 @@ th, td {
 
 	<table>
 		<tr>
-			<th>訂單編號</th>
-			<th>商品編號</th>
-			<th>買家編號</th>
-			<th>賣家編號</th>
+
 			<th>收件人姓名</th>
 			<th>收件人電話</th>
 			<th>收件人地址</th>
-			<th>訂單成立時間</th>
-			<th>商品數量</th>
-			<th>訂單總金額</th>
-			<th>訂單狀態</th>
+
 		</tr>
 		<tr>
-			<td><%=productOrderVO.getId()%></td>
-			<td><%=productOrderVO.getProductId()%></td>
-			<td><%=productOrderVO.getCustomerMemberId()%></td>
-			<td><%=productOrderVO.getSellerMemberId()%></td>
+
 			<td><%=productOrderVO.getProductName()%></td>
 			<td><%=productOrderVO.getPhone()%></td>
 			<td><%=productOrderVO.getAddress()%></td>
-			<td><%=productOrderVO.getDate()%></td>
-			<td><%=productOrderVO.getAmountOfProduct()%></td>
-			<td><%=productOrderVO.getStatus()%></td>
-			<td><%=productOrderVO.getAmountOfPrice()%></td>
+
+
 		</tr>
 	</table>
+	<!-- 	<tr> -->
+	<!-- 			<th>訂單編號</th> -->
+	<!-- 			<th>商品編號</th> -->
+	<!-- 			<th>買家編號</th> -->
+	<!-- 			<th>賣家編號</th> -->
+	<!-- 			<th>收件人姓名</th> -->
+	<!-- 			<th>收件人電話</th> -->
+	<!-- 			<th>收件人地址</th> -->
+	<!-- 			<th>訂單成立時間</th> -->
+	<!-- 			<th>商品數量</th> -->
+	<!-- 			<th>訂單總金額</th> -->
+	<!-- 			<th>訂單狀態</th> -->
+	<!-- 		</tr> -->
+	<!-- 		<tr> -->
+	<%-- 			<td><%=productOrderVO.getId()%></td> --%>
+	<%-- 			<td><%=productOrderVO.getProductId()%></td> --%>
+	<%-- 			<td><%=productOrderVO.getCustomerMemberId()%></td> --%>
+	<%-- 			<td><%=productOrderVO.getSellerMemberId()%></td> --%>
+	<%-- 			<td><%=productOrderVO.getProductName()%></td> --%>
+	<%-- 			<td><%=productOrderVO.getPhone()%></td> --%>
+	<%-- 			<td><%=productOrderVO.getAddress()%></td> --%>
+	<%-- 			<td><%=productOrderVO.getDate()%></td> --%>
+	<%-- 			<td><%=productOrderVO.getAmountOfProduct()%></td> --%>
+	<%-- 			<td><%=productOrderVO.getStatus()%></td> --%>
+	<%-- 			<td><%=productOrderVO.getAmountOfPrice()%></td> --%>
+	<!-- 		</tr> -->
 
 </body>
 </html>

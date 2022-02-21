@@ -223,7 +223,27 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>FaqServlet</servlet-name>
-		<url-pattern>/back_end/faq/faq</url-pattern>
+		<url-pattern>/back_end/faq/faq.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProductOrderServlet</servlet-name>
+		<servlet-class>com.product_order.controller.ProductOrderServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductOrderServlet</servlet-name>
+		<url-pattern>/front_end/product/productorder.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProductOrderServlet</servlet-name>
+		<servlet-class>com.product_order.controller.ProductOrderServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductOrderServlet</servlet-name>
+		<url-pattern>/back_end/product/productorderback.do</url-pattern>
 	</servlet-mapping>
 
 </web-app>

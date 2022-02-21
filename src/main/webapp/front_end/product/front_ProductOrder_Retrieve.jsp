@@ -90,7 +90,7 @@ th, td {
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
 						<h1>
-							訂單管理前台主頁
+							前台訂單查詢
 							<h1>
 								<span class="subheading">二手商城</span>
 					</div>
@@ -125,7 +125,7 @@ th, td {
 		<li><a href="listAllproductOrder.jsp"><input type="submit"
 				value="所有二手商品訂單"></a>
 		<li>
-			<FORM METHOD="post" ACTION="product.do">
+			<FORM METHOD="post" ACTION="productorder.do">
 				<b>輸入訂單編號 (如1):</b> <input type="text" name="id"> <input
 					type="hidden" name="action" value="getOne_For_Display"> <input
 					type="submit" value="送出">
@@ -157,17 +157,6 @@ th, td {
 			</FORM>
 		</li>
 	</ul>
-
-
-	<h3>訂單管理</h3>
-
-	<ul>
-		<li><a href="listAllproductOrder.jsp"><input type="submit"
-				value="新增二手商品訂單"></a>
-	</ul>
-
-
-
 
 	<!-- Footer-->
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>

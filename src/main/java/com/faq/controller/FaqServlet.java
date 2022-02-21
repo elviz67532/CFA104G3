@@ -18,7 +18,7 @@ public class FaqServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-		if ("getOne_For_Update".equals(action)) { // 來自listAllFaq.jsp的請求
+		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -30,7 +30,7 @@ public class FaqServlet extends HttpServlet {
 				Integer id = Integer.valueOf(req.getParameter("id"));
 
 				/*************************** 2.開始查詢資料 ****************************************/
-				FaqService faqSvc = new FaqServiceImpl();
+				FaqServiceImpl faqSvc = new FaqServiceImpl();
 				FaqVO faqVO = faqSvc.getOneFaq(id);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
@@ -47,7 +47,7 @@ public class FaqServlet extends HttpServlet {
 			}
 		}
 
-		if ("update".equals(action)) { // 來自update_faq_input.jsp的請求
+		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -56,6 +56,7 @@ public class FaqServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+
 				Integer id = Integer.valueOf(req.getParameter("id").trim());
 
 				String question = req.getParameter("question").trim();
@@ -82,7 +83,7 @@ public class FaqServlet extends HttpServlet {
 				}
 
 				/*************************** 2.開始修改資料 *****************************************/
-				FaqService faqSvc = new FaqServiceImpl();
+				FaqServiceImpl faqSvc = new FaqServiceImpl();
 				faqVO = faqSvc.updateFaq(id, question, answer);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
@@ -90,7 +91,6 @@ public class FaqServlet extends HttpServlet {
 				String url = "/back_end/faq/listOneFaq.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
-
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
