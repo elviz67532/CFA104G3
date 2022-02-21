@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@	page import="com.product.model.ProductVO"%>
 
-
+<% 
+	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
+	System.out.println("productVO: " + productVO);
+%>
 
 
 
@@ -50,38 +54,32 @@
     </header>  
    	<!-- 主體畫面設計  -->
    	
-    <!-- Product section-->
-    <section class="py-5">
-        <div class="container px-5 px-lg-6 my-6">
+    <!-- 商品簡述 section-->
+    <section class="py-5 bg-light">
+        <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-start">
                 <div class="col-md-6">
-                    <img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x400/000000/fff.jpg"
+                    <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}"
                         alt="..." />
                 </div>
-                <div class="col-md-6 align-items-start">
-                    <div class="mb-1">
-                        <h1 class="fw-bolder">鬼滅之刃1-23【套書】</h1>
+                
+                <div class="col-md-6 gy-3">
+                    
+                    <div class="mb-2">
+                        <h1 class="fw-bolder text-dark"><%=productVO.getName()%></h1>
                     </div>
-                    <div class="small mb-1">商品編號: BST-498</div>
-
-                    <div class="small mb-1">會員編號:
-
+                    
+                    <div class="fs-5 mb-2 fw-bold text-dark">上架時間: <%=productVO.getLaunchedDate()%></div>
+                    
+                    <div class="fs-5 mb-2 fw-bold text-dark">商品地點: <%=productVO.getLocation()%></div>
+                    
+                    <div class="fs-5 mb-2 fw-bold text-dark">商品狀態: <%=productVO.getStatus()%></div>                     
+                                        
+                    <div class="fs-4 mb-4 fw-bold text-dark">商品金額:                    
+                        <span class="text-decoration-line-through">$3999.00</span>
+                        <span class="text-danger">$<%=productVO.getPrice()%>.00</span>
                     </div>
-                    <div class="small mb-1">上架時間:
-
-                    </div>
-                    <div class="small mb-1">商品地點:
-
-                    </div>
-                    <div class="small mb-1">商品描述:
-                        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem
-                            quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius
-                            blanditiis delectus ipsam minima ea iste laborum vero?</p>
-                    </div>
-                    <div class="fs-4 mb-4">
-                        <span class="text-decoration-line-through">$45.00</span>
-                        <span>$40.00</span>
-                    </div>
+                    
                     <!--按鈕 "me-間隔" "<i>按鈕" "readonly 只看不可改" 下方-->
                     <div class="d-flex">
                         <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1"
@@ -103,8 +101,26 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section >
+    
+	<!-- 商品詳情 section-->
+	<section class="py-5">
+    <div class="container my-5 d-grid gap-5">
+       <div class="p-5 border border-dark rounded">     	
+		   <div class="fs-4 mb-2 fw-bold text-dark">商品名稱: <%=productVO.getName()%></div>
+		   
+           <div class="fs-4 mb-2 fw-bold text-dark">商品編號: <%=productVO.getId()%></div>
 
+           <div class="fs-4 mb-2 fw-bold text-dark">會員編號: <%=productVO.getSellerMemberId()%></div>
+                    
+           <div class="fs-4 mb-2 fw-bold text-dark">上架時間: <%=productVO.getLaunchedDate()%></div>
+                    
+           <div class="fs-4 mb-2 fw-bold text-dark">商品地點: <%=productVO.getLocation()%></div>
+                                                           
+           <div class="fs-4 mb-2 fw-bold text-dark">商品描述: <p class=" fs-5 mb-2 text-dark"><%=productVO.getDescription()%></p></div>                                           
+       </div>
+    </div>         
+	</section>
 
 
    	<!-- Related items section-->

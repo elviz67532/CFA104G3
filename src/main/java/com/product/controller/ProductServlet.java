@@ -91,7 +91,7 @@ public class ProductServlet extends HttpServlet {
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("productVO", prodVo);
-				String url = "/front_end/product/listOneProduct.jsp";
+				String url = "/front_end/product/singleItem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 			} catch (Exception e) {
@@ -491,6 +491,8 @@ public class ProductServlet extends HttpServlet {
 				failureView.forward(req, res);
 			} 			
 		}
+		
+		
 
 	}
 
