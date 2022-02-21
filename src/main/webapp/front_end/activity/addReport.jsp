@@ -99,12 +99,13 @@ ActivityReportVO actrVO = (ActivityReportVO) request.getAttribute("actrVO");
 			
 		</table>
 		<br> 
-		<input type="hidden" name="activityId" 
-					value="<%=actrVO.getActivityId()%>" />
-			<input type="hidden" name="memberId"
-					value="<%=actrVO.getMemberId()%>" />
-		<input type="hidden" name="action" value="insert">
-		 <input	type="submit" value="送出新增">
+		
+		 		<input	type="submit" value="送出新增">		
+		 		<input type="hidden" name="action" value="insert">
+		 		<input type="hidden" name="memberId"  value="${actrVO.memberId}"> 
+  			    <input type="hidden" name="activityId"  value="${actrVO.activityId}"> 
+  			    <input type="hidden" name="status"  value="1"> 
+  			     
 	</FORM>
  
    			</div>
