@@ -318,10 +318,7 @@ p {
 <%-- 	</c:if> --%>
 	<div class="grid">
 
-		<form
-			action="${pageContext.request.contextPath}/front_end/member/MemberServlet.do"
-			method="POST" class="form login">
-
+		<form action="${pageContext.request.contextPath}/front_end/member/MemberServlet.do"method="POST" class="form login">
 			<div class="form__field">
 				<label for="login__username">
 					<svg class="icon"><use xlink:href="#icon-user"></use></svg>
@@ -340,6 +337,7 @@ p {
 
 			<div class="form__field">
 				<label for="login__password">
+
 					<svg class="icon"><use xlink:href="#icon-lock"></use></svg>
 					<span class="hidden">Password</span>
 				</label> 
@@ -353,26 +351,22 @@ p {
 			<c:if test="${not empty password}">
 				<span style="color: red"> "${password}" </span>
 			</c:if>
-
 			<div class="form__field">
 				<input type="submit" type="hidden" name="action" value="登入">
 			</div>
 		</form>
-
-		<p class="text--center">
-			<a href="register.jsp">會員註冊</a>
-			<svg class="icon">
-        <use xlink:href="#icon-arrow-right"></use>
-      </svg>
-		</p>
-
-		<p class="text--center">
-			<a href="forgetpassword.jsp">忘記密碼</a>
-			<svg class="icon">
-        <use xlink:href="#icon-arrow-right"></use>
-      </svg>
-		</p>
-
+			<p class="text--center">
+				<a href="register.jsp">會員註冊</a>
+					<svg class="icon">
+        				<use xlink:href="#icon-arrow-right"></use>
+      				</svg>
+	   		</p>
+				<p class="text--center">
+					<a href="forgetpassword.jsp">忘記密碼</a>
+						<svg class="icon">
+        					<use xlink:href="#icon-arrow-right"></use>
+      				    </svg>
+			</p>
 	</div>
 
 	<svg xmlns="http://www.w3.org/2000/svg" class="icons">
