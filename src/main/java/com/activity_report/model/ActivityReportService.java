@@ -9,4 +9,7 @@ public interface ActivityReportService {
 	ActivityReportVO getOneActr(Integer id);
 
 	List<ActivityReportVO> getAll();
+
+	ActivityReportVO updateActr(Integer Id, Integer activityId, Integer memberId, String content, Integer status,
+			byte[] photo);
 }
