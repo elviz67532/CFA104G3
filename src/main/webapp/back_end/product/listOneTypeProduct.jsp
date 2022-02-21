@@ -1,19 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@	taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@	page import ="java.util.List"%>
-<%@	page import="com.product.model.ProductServiceImpl"%>
-<%@	page import="com.product.model.ProductVO"%>
-<%@	page import="com.product.model.ProductDAOImpl"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@	page import="java.util.*"%>
+<%@	page import="java.util.HashMap"%>
+
 <!DOCTYPE html>
-
-
-<%
-	ProductServiceImpl productService = new ProductServiceImpl();
-	List<ProductVO> list = productService.getAll();
-	pageContext.setAttribute("list", list);
-%>
-
 <html lang="zh-TW">
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,16 +14,17 @@
     <link href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 	<title>委域</title>
-	<style>
-	  table, th, td {
-	    border: 1px solid #CCCCFF;
-	  }
-	  th, td {
-	    padding: 5px;
-	    text-align: center;
-	  }
-	</style>
+<style>
+  table, th, td {
+    border: 1px solid #CCCCFF;
+  }
+  th, td {
+    padding: 5px;
+    text-align: center;
+  }
+</style>
 </head>
+<body>
 <body id="page-top">
 	<div id="wrapper">
 		<!-- Sidebar -->
@@ -41,15 +34,7 @@
 				<!-- Topbar -->
 				<jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
 				<div class="container-fluid">
-				
-				<!-- Bread toast -->
-				<nav aria-label="breadcrumb">
-				  <ol class="breadcrumb">
-				    <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back_end/product/seller.jsp">商品管理</a></li>
-				    <li class="breadcrumb-item active" aria-current="page">ListAll</li>
-				  </ol>
-				</nav>		
-						
+
 				<%-- 錯誤表列 --%>
 				<c:if test="${not empty errMsgs}">
 					<font style="color:red">請修正以下錯誤:</font>
@@ -60,21 +45,26 @@
 					</ul>
 				</c:if>
 				
+				<!-- 麵包屑 (Breadcrumb) -->
+				<nav aria-label="breadcrumb">
+				  <ol class="breadcrumb">
+				    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/back_end/product/seller.jsp">商品管理</a></li>
+				    <li class="breadcrumb-item active" aria-current="page">查詢結果</li>
+				  </ol>
+				</nav>					
 				<table>
-					<tr>
-						<th>商品編號</th>
-						<th>會員編號_賣家</th>
-						<th>商品類型</th>
-						<th>商品敘述</th>
-						<th>商品價格</th>
-						<th>商品名稱</th>
-						<th>圖片</th>
-						<th>上架時間</th>
-						<th>商品所在</th>
-						<th>商品狀態</th>
-						<th>刪除</th>
-<!-- 						<th>修改</th> -->
-					</tr>
+						<tr>
+							<th>商品編號</th>
+							<th>會員編號_賣家</th>
+							<th>商品類型</th>
+							<th>商品敘述</th>
+							<th>商品價格</th>
+							<th>商品名稱</th>
+							<th>圖片</th>
+							<th>上架時間</th>
+							<th>商品所在</th>
+							<th>商品狀態</th>
+						</tr>
 					<c:forEach var="productVO" items="${list}">
 						<tr>
 							<td>${productVO.id}</td>
@@ -84,30 +74,16 @@
 							<td>${productVO.price}</td>
 							<td>${productVO.name}</td>
 							<td>
-								<img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" 
-								class="card-img-top" />
+								<img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top">			
 							</td>
 							<td>${productVO.launchedDate}</td>
 							<td>${productVO.location}</td>
 							<td>${productVO.status}</td>
-							<td>
-								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet">
-									<input type="submit" value="刪除">
-									<input type="hidden" value="${productVO.id}" name="prodId">
-									<input type="hidden" value="delete_backend" name="action"> 
-								</FORM>
-							</td>			
-						</tr>		
+						</tr>
+						
 					</c:forEach>
 				</table>
-
-					
-				</div>
-			</div>
-			<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
-		</div>
-	</div>
-
+				
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top">
 		<i class="fas fa-angle-up"></i>
@@ -123,13 +99,5 @@
 	<script src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
 	<script src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
 	<script src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>	
-<!-- 							<td> -->
-<%-- 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet"> --%>
-<!-- 									<input type="submit" value="修改"> -->
-<%-- 									<input type="hidden" value="${productVO.id}" name="prodId"> --%>
-<%-- 									--${productVO.id}-- --%>
-<!-- 									<input type="hidden" value="getOne_For_Update" name="action">  -->
-<!-- 								</FORM> -->
-<!-- 							</td> -->
 </body>
 </html>
