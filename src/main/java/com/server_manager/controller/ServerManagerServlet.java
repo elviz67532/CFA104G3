@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,13 +36,9 @@ public class ServerManagerServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		String atag = req.getParameter("atag");
 		if ("loginhandler".equals(action)) {
-			
-//			System.out.println("我進來loginhandler");
-			List<String> errMsgs = new LinkedList<String>();
+			Map<String, String> errMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errMsgs", errMsgs);
-
 			
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/	
@@ -50,69 +48,62 @@ public class ServerManagerServlet extends HttpServlet {
 				
 				// 【用戶登入失敗】
 				if(account == null || account.trim().length() == 0) {
-					errMsgs.add("用戶名不可為空，請您輸入");
-				}
-				if(!errMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
-					failureView.forward(req, res);
-					return;					
+					errMsgs.put("account", "用戶名不可為空，請您輸入");
 				}
 				if(password == null || (password.trim()).length() == 0) {
-					errMsgs.add("請輸入密碼");
+					errMsgs.put("password", "請輸入密碼");
 				}
+				
+				req.setAttribute("inputAccount", account);
+				req.setAttribute("inputPassword", password);
+				
 				if(!errMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
 					failureView.forward(req, res);
 					return;					
 				}	
 				
 				// 【檢查該帳號 , 密碼是否有效】
-				System.out.println("開始檢查該帳號");
 				if (!allowUser(account, password)) { // 【帳號 , 密碼無效時】
-					errMsgs.add("你的帳號 , 密碼無效!");
-				} else { // 【帳號 , 密碼有效時, 才做以下工作】
-					ServerManagerVO smVO = aquireVO(account);
-					//【取得 & 設定 session】
-					HttpSession session = req.getSession();
-					session.setAttribute("ServerManagerVO", smVO);
-					session.setAttribute("account", account);
-							//session.setAttribute("account", account); // *工作1: 才在session內做已經登入過的標識
-							//System.out.println("取得session了"); // session.getAttribute => 登入的資訊
+					errMsgs.put("account", "你的帳號 , 密碼無效!");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
+					failureView.forward(req, res);
+					return;	
+				} 
 
-					
-					//【取得角色】 DB 撈資料
-					ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
-					ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
-					Integer smgrId = smSvc.getId(account);
-					List<ServerManagerAuthVO> list = smaSvc.selectByManager(smgrId); //【取得smaId】
-						System.out.println("list" + list); 
-					session.setAttribute("auth", list);
-						System.out.println("auth " + session.getAttribute("auth"));
-					try {
-						String location = (String) session.getAttribute("location");
-						if (location != null) { 
-							session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
-							res.sendRedirect(location);
-							return;
-						}
-					} catch (Exception ignored) {
-					}
-					res.sendRedirect(req.getContextPath() + "/back_end/server_manager/serverManagerHom.jsp"); // *工作3:
-																					// (-->如無來源網頁:則重導至login_success.jsp)
+				// 【帳號 , 密碼有效時, 才做以下工作】
+				ServerManagerVO smVO = aquireVO(account);
+				//【取得 & 設定 session】
+				HttpSession session = req.getSession();
+				session.setAttribute("ServerManagerVO", smVO);
+				session.setAttribute("account", account);
+				
+				//【取得角色】 DB 撈資料
+				ServerManagerAuthServiceImpl smaSvc = new ServerManagerAuthServiceImpl();
+				ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
+				Integer smgrId = smSvc.getId(account);
+				List<ServerManagerAuthVO> list = smaSvc.selectByManager(smgrId); //【取得smaId】
+				session.setAttribute("auth", list);
+				
+				// 來源頁面跳轉
+				String location = (String) session.getAttribute("beforeLoginURL");
+				if (location != null) { 
+					session.removeAttribute("beforeLoginURL"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+					res.sendRedirect(location);
+					return;
 				}
+				res.sendRedirect(req.getContextPath() + "/back_end/server_manager/serverManagerHom.jsp"); // *工作3:
 			} catch (IOException e) {
-				errMsgs.add("例外錯誤");
 				e.printStackTrace();
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
+				failureView.forward(req, res);
 			}
 		}
 		
-		if("logout".equals(atag)) {
+		if("logout".equals(action)) {
 			HttpSession session = req.getSession();
 			session.invalidate();
-			RequestDispatcher view = req.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
-			view.forward(req, res);
+			res.sendRedirect(req.getContextPath() + "/back_end/server_manager/serverManagerHom.jsp");
 		}
 		
 		if("insert".equals(action)) {

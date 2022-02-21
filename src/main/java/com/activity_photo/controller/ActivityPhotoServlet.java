@@ -27,6 +27,9 @@ public class ActivityPhotoServlet extends HttpServlet {
 		res.setContentType("image/*");
 		ServletOutputStream out = res.getOutputStream();
 //		System.out.println("test1");
+		
+		String pathInfo = req.getPathInfo();
+		System.out.println(pathInfo );
 		try {
 			Statement stmt = con.createStatement();
 			String id = req.getParameter("ACTP_ACT_ID");
