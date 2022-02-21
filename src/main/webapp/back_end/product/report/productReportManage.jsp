@@ -6,8 +6,8 @@
 
 
 <% 
-ProductReportServiceImpl reportscv = new ProductReportServiceImpl(); 
-List<ProductReportVO> list = reportscv.selectAll();
+ProductReportServiceImpl reportSvc = new ProductReportServiceImpl(); 
+List<ProductReportVO> list = reportSvc.selectAll();
 pageContext.setAttribute("list", list);
 ProductReportVO productReportVO = (ProductReportVO) request.getAttribute("productReportVO");
 %>
@@ -40,25 +40,25 @@ ProductReportVO productReportVO = (ProductReportVO) request.getAttribute("produc
             <div id="content">
 
                 <!-- Topbar -->
-                <jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
+                <jsp:include page="/back_end/product/report/reportnavbar.jsp"></jsp:include>
                 <div class="container-fluid">
 					
                     <!-- main -->
-                    <div class="mb-4">
-                    <ul>
-                    <h3 class="m-0 font-weight-bold text-primary">單一查詢:</h3>
+<!--                     <div class="mb-4"> -->
+<!--                     <ul> -->
+<!--                     <h3 class="m-0 font-weight-bold text-primary">單一查詢:</h3> -->
                     
-                    <FORM METHOD="post" ACTION="report.do">
-                    	<li class="text-danger">提示:請同時輸入兩個編號</li>
-                        <li>輸入商品編號:</li>
-                        <input type="text" name="k2">              
-                        <li>輸入會員編號:</li>
-                        <input type="text" name="k1">
-                        <input type="hidden" name="action" value="getOne_For_Display"><br><br>
-                        <input type="submit" value="送出" class="btn btn-outline-primary">
-                    </FORM>
-                    </ul>
-                    </div>
+<!--                     <FORM METHOD="post" ACTION="report.do"> -->
+<!--                     	<li class="text-danger">提示:請同時輸入兩個編號</li> -->
+<!--                         <li>輸入商品編號:</li> -->
+<!--                         <input type="text" name="k2">               -->
+<!--                         <li>輸入會員編號:</li> -->
+<!--                         <input type="text" name="k1"> -->
+<!--                         <input type="hidden" name="action" value="getOne_For_Display"><br><br> -->
+<!--                         <input type="submit" value="送出" class="btn btn-outline-primary"> -->
+<!--                     </FORM> -->
+<!--                     </ul> -->
+<!--                     </div> -->
                     <!-- DataTales Example 表格(注意vo import)-->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -126,9 +126,9 @@ ProductReportVO productReportVO = (ProductReportVO) request.getAttribute("produc
                                                                             data-bs-dismiss="modal">取消</button>
                                                                         <input type="submit" value="確認"
                                                                             class="btn btn-outline-danger">
-                                                                        <input type="hidden" name="k1"
-                                                                            value="${productReportVO.productId}">
                                                                         <input type="hidden" name="k2"
+                                                                            value="${productReportVO.productId}">
+                                                                        <input type="hidden" name="k1"
                                                                             value="${productReportVO.memberId}">
                                                                         <input type="hidden" name="action"
                                                                             value="delete">

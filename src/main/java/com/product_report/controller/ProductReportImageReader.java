@@ -38,7 +38,7 @@ public class ProductReportImageReader extends HttpServlet {
 			
 			ResultSet rs = stmt.executeQuery(
 //					雙主見有夠麻煩
-			    "SELECT PRODRP_PHOTO FROM PRODCUT_REPORT WHERE PRODRP_PROD_ID =\'+productId' and PRODRP_MEM_ID = \'+memberId'");
+			    "SELECT PRODRP_PHOTO FROM PRODCUT_REPORT WHERE PRODRP_PROD_ID = ? and PRODRP_MEM_ID = ?");
 			if (rs.next()) {
 				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("PRODRP_PHOTO"));
 				byte[] buf = new byte[4 * 1024]; // 4K buffer
