@@ -3,17 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
-
 <%
-MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
-//<!--錯誤訊息 -->
-Map<String, String> errorMsgs = (Map<String, String>) request.getAttribute("errorMsgs");
-if (errorMsgs != null) {
-	if (errorMsgs.get("account") != null)
-		request.setAttribute("account", errorMsgs.get("account"));
-	if (errorMsgs.get("password") != null)
-		request.setAttribute("password", errorMsgs.get("password"));
-}
+	MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+	//<!--錯誤訊息 -->
+	Map<String, String> errorMsgs = (Map<String, String>) request.getAttribute("errorMsgs");
+	if (errorMsgs != null) {
+		if (errorMsgs.get("account") != null)
+			request.setAttribute("account", errorMsgs.get("account"));
+		if (errorMsgs.get("password") != null)
+			request.setAttribute("password", errorMsgs.get("password"));
+	}
 %>
 
 <!DOCTYPE html>
@@ -329,7 +328,9 @@ p {
 					<span class="hidden">Username</span>
 				</label> 
 				<input type="hidden" name="action" value="login">
-				<input value="<%=(memberVO == null) ? "wilfredo68" : memberVO.getAccount()%>"
+				<input 
+<%-- 					value="${requestScope.inputAccount}" --%>
+					value="wilfredo68"
 					id="account" type="text" autocomplete="off" name="account"
 					class="form__input" placeholder="Username">
 			</div>
@@ -343,12 +344,11 @@ p {
 					<span class="hidden">Password</span>
 				</label> 
 				<input type="hidden" name="action" value="login"> 
-				<input value="<%=(memberVO == null) ? "QlareSQw" : memberVO.getPassword()%>"
+				<input 
+<%-- 					value="${requestScope.inputPassword}" --%>
+					value="QlareSQw"
 					id="login__password" type="password" name="password"
 					class="form__input" placeholder="Password">
-				<c:if test="${not empty getPassword}">
-					<label style="color: red">"${getPassword}"</label>
-				</c:if>
 			</div>
 			<c:if test="${not empty password}">
 				<span style="color: red"> "${password}" </span>

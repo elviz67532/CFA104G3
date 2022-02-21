@@ -44,6 +44,7 @@ public class FrontEndMemberFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 
 		HttpSession session = req.getSession();
+		req.setAttribute("beforeLoginURL", req.getRequestURI());
 		MemberVO memberVo = (MemberVO) session.getAttribute("memberVO");
 		if (memberVo == null) {
 			System.out.println("尚未登入");
