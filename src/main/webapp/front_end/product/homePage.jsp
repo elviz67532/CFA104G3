@@ -64,31 +64,22 @@
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
     <!-- Page Header-->
-<%--     <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/product01.jpg')"> --%>
-<!--         <div class="container position-relative px-4 px-lg-5"> -->
-<!--             <div class="row gx-4 gx-lg-5 justify-content-center"> -->
-<!--                 <div class="col-md-10 col-lg-8 col-xl-7"> -->
-<!--                     <div class="site-heading"> -->
-<!--                         <h1>二手商城</h1> -->
-<!--                         <span class="subheading">愛地球，資源再利用</span> -->
-<!--                     </div> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </div> -->
-<!--     </header> -->
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/product01.jpg')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>二手商城</h1>
+                        <span class="subheading">愛地球，資源再利用</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
    
    	<!-- 主體畫面設計  -->
    	<div class="row justify-content-center">
       <div class="col-lg-6 SEARCHFOR">
-        <div class="input-group">
-        
-		<!-- search  複合查詢-->
-          <input type="text" class="form-control" placeholder="Search for...">
-          <input type="hidden" name="action" value="">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Go!</button>
-          </span>
-        </div>
       </div>
     </div>
 
@@ -121,14 +112,13 @@
 			<!-- 左邊3欄  list group 分類功能-->
 			<div class="col-12 col-md-3 list-group">
 				<FORM METHOD="post" ACTION="product/ProductServlet">
-				  <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+				  <a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp" class="list-group-item list-group-item-action active" aria-current="true">
 				    總覽
 				  </a>
-				  <a href="browseElec.jsp"  name="prodType" value=4 class="list-group-item list-group-item-action">電器類</a>
-				  
-				  <a href="browseFurniture.jsp" class="list-group-item list-group-item-action">寢具</a>
-				  <a href="browseOthers.jsp" class="list-group-item list-group-item-action">其他</a>
-				  <a href="#" class="list-group-item list-group-item-action" tabindex="-1" aria-disabled="true">A disabled link item</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/browseElec.jsp"  name="prodType" value=4 class="list-group-item list-group-item-action">電器類</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/browseFurniture.jsp" class="list-group-item list-group-item-action">寢具</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/browseOthers.jsp" class="list-group-item list-group-item-action">其他</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp" class="list-group-item list-group-item-action">買賣家</a>
 				</FORM>
 			</div>
 			<!-- 右邊9欄  card 卡片 & text-center -->
@@ -160,15 +150,15 @@
 	
 	<!-- card 卡片 & text-center-->
 	<!-- Pages-->
-	<nav aria-label="Page navigation example">
-	  <ul class="pagination justify-content-center">
-	    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-	    <li class="page-item"><a class="page-link" href="#">1</a></li>
-	    <li class="page-item"><a class="page-link" href="#">2</a></li>
-	    <li class="page-item"><a class="page-link" href="#">3</a></li>
-	    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-	  </ul>
-	</nav>
+<!-- 	<nav aria-label="Page navigation example"> -->
+<!-- 	  <ul class="pagination justify-content-center"> -->
+<!-- 	    <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+<!-- 	    <li class="page-item"><a class="page-link" href="#">1</a></li> -->
+<!-- 	    <li class="page-item"><a class="page-link" href="#">2</a></li> -->
+<!-- 	    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+<!-- 	    <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+<!-- 	  </ul> -->
+<!-- 	</nav> -->
 	
    
     <!-- Footer-->

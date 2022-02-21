@@ -1,5 +1,6 @@
 package com.product_report.model;
 
+import java.lang.reflect.Member;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -32,14 +33,12 @@ public class ProductReportServiceImpl implements ProductReportService {
 	}
 
 	@Override
-	public void deleteById() {
-		DualKey<Integer, Integer> id = new DualKey<Integer, Integer>(null, null);
+	public  void deleteById(DualKey<Integer, Integer>id) {				
 		dao.deleteById(id);
 	}
-
+	
 	@Override
-	public ProductReportVO selectById() {
-		DualKey<Integer, Integer> id = new DualKey<Integer, Integer>(null, null);
+	public ProductReportVO selectById(DualKey<Integer, Integer> id) {		
 		return dao.selectById(id);
 	}
 
@@ -47,4 +46,11 @@ public class ProductReportServiceImpl implements ProductReportService {
 	public List<ProductReportVO> selectAll() {
 		return dao.selectAll();
 	}
-}
+	
+	@Override
+	public ProductReportVO getOneById(int memberId) {		
+		return dao. getOneById(memberId);
+	}
+	
+	}
+

@@ -2,6 +2,19 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%
+	Map<String, String> errMsgs = (Map<String, String>) request.getAttribute("errMsgs");
+	//<!--錯誤訊息 -->	
+	if (errMsgs != null) {
+		if (errMsgs.get("account") != null)
+			request.setAttribute("account", errMsgs.get("account"));
+		if (errMsgs.get("password") != null)
+			request.setAttribute("password", errMsgs.get("password"));
+	}
+
+
+%>
+
 <!doctype html>
 <html lang="zh-TW">
 <head>
@@ -30,35 +43,40 @@
       }
     </style>
 </head>
-<body id="text-center">
-
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errMsgs}">
-		<font style="color:red">請修正以下錯誤</font>
-		<ul>
-			<c:forEach var="msg" items="${errMsgs}">
-				<li style="color:red">${msg}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
+<body id="text-center" style="background: aliceblue;">
 		<!-- main -->
 		<main class="form-signin">
 		  <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/server_manager/ServerManagerServlet">
-		    <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-		    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+<!-- 		    <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
+<!-- 			<h1 class="h2 mb-2 fw-normal">Entrust area</h1> -->
+		    <h1 class="h3 mb-3 fw-normal" style="text-align: center;">Please sign in</h1>
 			<!-- 帳號 -->
 		    <div class="form-floating">
-		      <input type="text" name="account" class="form-control" id="floatingInput" placeholder="">
+		      <input 
+<%--		        value="${requestScope.inputAccount}" --%>
+		        value="GrT85h4E" 
+		      	type="text" name="account" class="form-control" id="floatingInput" placeholder="">
 		      <label for="floatingInput">Account</label>
 		    </div>
+   			<c:if test="${not empty account}">
+				<span style="color: red">"${account}"</span>
+			</c:if>
+			
 		    <!-- 密碼 -->
 		    <div class="form-floating">
-		      <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+		      <input 
+<%--		     	value="${requestScope.inputPassword}" --%>
+ 		     	value="V3uWPzYp" 
+		      	type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
 		      <label for="floatingPassword">Password</label>
 		    </div>
+   			<c:if test="${not empty password}">
+				<span style="color: red"> "${password}" </span>
+			</c:if>
+			
 		    <input type="submit" value="Sign in" class="w-100 btn btn-lg btn-primary" />
 		    <input type="hidden" value="loginhandler" name="action">
-		    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+		    <p class="mt-5 mb-3 text-muted" style="text-align: center;">&copy; 2022</p>
 		  </FORM>
 		</main>					
 

@@ -35,22 +35,63 @@ List<MoveOrderVO> moveOrderVO = (List<MoveOrderVO>) request.getAttribute("moveOr
 	rel="stylesheet" />
 
 <style>
-table {
-	width: 500px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
+table{
+  width: 100%;
+  border-collapse: collapse;
 }
 
-table, td {
-	border: 1px solid #CCCCFF;
+table tr{
+  border-bottom: solid 2px white;
 }
 
-td {
-	padding: 5px;
-	text-align: center;
+table tr:last-child{
+  border-bottom: none;
+}
+
+table th{
+  position: relative;
+  width: 30%;
+  background-color: #7d7d7d;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+table th:after{
+  display: block;
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  top:calc(50% - 10px);
+  right:-10px;
+  border-left: 10px solid #7d7d7d;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+
+table td{
+  text-align: left;
+  width: 70%;
+  text-align: center;
+  background-color: #eee;
+  padding: 10px 0;
+}
+
+.main {
+  margin: 20px auto;
+  item-align: center;
+  width: 80%;
+}
+body {
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
 }
 </style>
+<script>
+$('#button1').click(function() {
+	 alert('Hello World!');
+});
+</script>
 </head>
 
 <body>
@@ -84,36 +125,55 @@ td {
 		</ul>
 	</c:if>
 
-	<h2>搬家訂單</h2>
+	<h2>搬家訂單管理</h2>
+<div class="main">
 
-		<table>
+		<c:forEach var="moveOrderVO" items="${moveOrderVO}">
+		<table>		
 			<tr>
 				<th class="text-nowrap">訂單編號:</th>
-				<th class="text-nowrap">客戶姓名:</th>
-				<th class="text-nowrap">客戶電話:</th>
-				<th class="text-nowrap">搬家目前地址:</th>
-				<th class="text-nowrap">搬家目的地地址:</th>
-				<th class="text-nowrap">搬家時間:</th>
-				<th class="text-nowrap">估價金額:</th>
-				<th class="text-nowrap">訂金:</th>
-				<th class="text-nowrap">最終付款金額:</th>
-				<th class="text-nowrap">訂單成立時間:</th>
-			</tr>
-			<c:forEach var="moveOrderVO" items="${moveOrderVO}">
-			<tr>
 				<td>${moveOrderVO.id}</td>
+			</tr>
+			<tr>	
+				<th class="text-nowrap">客戶姓名:</th>
 				<td>${moveOrderVO.customer}</td>
+			</tr>
+			<tr>
+				<th class="text-nowrap">客戶電話:</th>
 				<td>${moveOrderVO.phone}</td>
+			</tr>
+			<tr>
+				<th class="text-nowrap">搬家目前地址:</th>
 				<td>${moveOrderVO.fromAddress}</td>
+			</tr>
+			<tr>
+				<th class="text-nowrap">搬家目的地地址:</th>
 				<td>${moveOrderVO.toAddress}</td>
+			</tr>
+			<tr>
+				<th class="text-nowrap">搬家時間:</th>
 				<td>${moveOrderVO.moveDate}</td>
-				<td>${moveOrderVO.amountFirst}</td>
-				<td>${moveOrderVO.deposit}</td>
-				<td>${moveOrderVO.amountTotal}</td>
+			</tr>
+			<tr>
+				<th class="text-nowrap">估價金額:</th>
+				<td>${moveOrderVO.amountFirst}元</td>
+			</tr>
+			<tr>
+				<th class="text-nowrap">訂金:</th>
+				<td>${moveOrderVO.deposit}元</td>
+			</tr>
+			<tr>
+				<th class="text-nowrap">最終付款金額:</th>
+				<td>${moveOrderVO.amountTotal}元</td>
+			</tr>
+			<tr>
+				<th class="text-nowrap">訂單成立時間:</th>
 				<td>${moveOrderVO.orderDate}</td>
+			</tr>
+			<tr>
+				<th>給我們一點評論吧</th>
 				<td>
 					<FORM METHOD="post" ACTION="moveorder.do">
-						<b>給我們一點評論吧>>></b> 
 						<input type="hidden" name="action" value="updatecomment"> 
 						<input type="hidden" name="id" value="${moveOrderVO.id}"> 
 						<input type="hidden" name="memberId" value="${moveOrderVO.memberId}"> 
@@ -128,14 +188,14 @@ td {
 						<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}">
 						<textarea style="height: 300px; width: 500px;" name="comment">${moveOrderVO.comment}</textarea>
 						<input type="hidden" name="status" value="${moveOrderVO.status}">
-						<input type="submit" value="送出">
-
+						<button id="button1" >送出</button>
 					</FORM>
 				</td>
 			</tr>
-			</c:forEach>
 		</table>
-
+		<hr>
+		</c:forEach>	
+</div>
 
 
 	<!-- Footer-->

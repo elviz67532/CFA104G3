@@ -25,7 +25,7 @@ public class ServerManagerAuthServiceImpl implements ServerManagerAuthService{
 		return list;
 	}
 	
-	public void deleteById(DualKey<Integer, Integer> id) {
+	public void deleteById(Integer id) {
 		dao.deleteById(id);
 	}
 	

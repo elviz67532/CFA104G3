@@ -51,66 +51,63 @@
 
 	<!-- 主體畫面設計  -->
 	<!-- card -->
-	<section id="service">
-		<div class="specialcontainer px-5 my-5">
-			<h2 class="pb-2 border-bottom">搬家服務</h2>
-			<div class="row">
-				<div class="col-md-4 col-sm-6 ">
-					<a href="aboutUs.jsp">
-						<div class="specialcard">
-							<img src="<%=request.getContextPath()%>/asset/img/default.jpeg"
-								style="background-color: red" alt="關於我們">
-							<div class="specialcard-text">
-								<h3>關於我們</h3>
-							</div>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-4 col-sm-6 ">
-					<a href="moveRequest.jsp">
-						<div class="specialcard">
-							<img src="<%=request.getContextPath()%>/asset/img/default.jpeg"
-								style="background-color: red" alt="申請搬家">
-							<div class="specialcard-text">
-								<h3>申請搬家</h3>
-							</div>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-4 col-sm-6">
-					<a href="#">
-						<div class="specialcard">
-							<img src="<%=request.getContextPath()%>/asset/img/default.jpeg"
-								style="background-color: red" alt="申請單">
-							<div class="specialcard-text">
-								<h3>申請單管理</h3>
-							</div>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-4 col-sm-6">
-					<a href="<%=request.getContextPath()%>/front_end/move/moveorder.do?action=get_By_Mem">
-						<div class="specialcard">
-							<img src="<%=request.getContextPath()%>/asset/img/default.jpeg"
-								style="background-color: red" alt="訂單">
-							<div class="specialcard-text">
-								<h3>訂單管理</h3>
-							</div>
-						</div>
-					</a>
-				</div>
-			</div>
-		</div>
-	</section>
-
-
-	<!-- Footer-->
-	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
-	<!-- Bootstrap core JS-->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-	<!-- Core theme JS-->
-	<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+    <section  id="service">
+        <div class="specialcontainer px-5 my-5">
+            <h2 class="pb-2 border-bottom">搬家服務</h2>
+            <div class="row">
+            	<div class="col-md-4 col-sm-6 ">
+                    <a href="aboutUs.jsp">
+                        <div class="specialcard">
+                            <img src="<%=request.getContextPath()%>/asset/img/moverequestmanage.jpg" style="background-color:red" alt="關於我們">
+                            <div class="specialcard-text">
+                                <h3>關於我們</h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6 ">
+                    <a href="moveRequest.jsp">
+                        <div class="specialcard">
+                            <img src="<%=request.getContextPath()%>/asset/img/moveorderpic.jpg" style="background-color:red" alt="申請搬家">
+                            <div class="specialcard-text">
+                                <h3>申請搬家</h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+				<!-- 以jsp語法去產生 -->
+                <div class="col-md-4 col-sm-6">
+                    <a href="moveRequestManage.jsp">
+                        <div class="specialcard">
+                            <img src="<%=request.getContextPath()%>/asset/img/moveorderpic.jpg" style="background-color:red" alt="申請單">
+                            <div class="specialcard-text">
+                                <h3>申請單管理</h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <a href="<%=request.getContextPath()%>/front_end/move/moveorder.do?action=get_By_Mem">
+                        <div class="specialcard">
+                            <img src="<%=request.getContextPath()%>/asset/img/moveorderpic.jpg" style="background-color:red" alt="訂單">
+                            <div class="specialcard-text">
+                                <h3>訂單管理</h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+   
+    <!-- Footer-->
+   	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
 </body>
 
 </html>

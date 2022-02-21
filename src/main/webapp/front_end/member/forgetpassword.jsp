@@ -2,6 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%
+
+//<!--錯誤訊息 -->
+Map<String, String> errorMsgs = (Map<String, String>) request.getAttribute("errorMsgs");
+if (errorMsgs != null) {
+	if (errorMsgs.get("email") != null)
+		request.setAttribute("email", errorMsgs.get("email"));	
+}
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,14 +58,14 @@
    
    	<!-- 主體畫面設計  -->
    
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
+<%-- 	<c:if test="${not empty errorMsgs}"> --%>
+<!-- 		<font style="color: red">請修正以下錯誤:</font> -->
+<!-- 		<ul> -->
+<%-- 			<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 				<li style="color: red">${message}</li> --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</ul> -->
+<%-- 	</c:if> --%>
 
 	<div  class="align" style="text-align: center;">
 		<div class="grid">
@@ -73,6 +82,9 @@
 						type="text" autocomplete="off" name="email" class="form__input"
 						placeholder="E-mail">
 				</div>
+				<c:if test="${not empty email}">
+					<span style="color: red"> "${email}" </span>
+				</c:if>
 	
 				<footer class="forget">
 					<button type="submit" type="hidden" name="action"
@@ -97,7 +109,7 @@
 					d="M1600 1405q0 120-73 189.5t-194 69.5H459q-121 0-194-69.5T192 1405q0-53 3.5-103.5t14-109T236 1084t43-97.5 62-81 85.5-53.5T538 832q9 0 42 21.5t74.5 48 108 48T896 971t133.5-21.5 108-48 74.5-48 42-21.5q61 0 111.5 20t85.5 53.5 62 81 43 97.5 26.5 108.5 14 109 3.5 103.5zm-320-893q0 159-112.5 271.5T896 896 624.5 783.5 512 512t112.5-271.5T896 128t271.5 112.5T1280 512z" />
 		    </symbol>
 	  	</svg>
-   </div>>
+   </div>
    
    
     <!-- Footer-->

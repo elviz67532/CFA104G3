@@ -13,7 +13,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="UTF-8">
 <title>委域刊登活動publishActivity.jsp</title>
-<link href="${pageContext.request.contextPath}/css/activity/publishActivity.css" rel="stylesheet">
+<%-- <link href="<%=request.getContextPath()%>/css/activity/publishActivity.css" rel="stylesheet"> --%>
 
 <!-- sweet -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
@@ -78,6 +78,11 @@
     font-size: 16px;
     border-radius: 0;
 }
+.actSelect:hover{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
 .actPhoto{
 	width: 100%;
     flex: 1;
@@ -98,6 +103,35 @@
     font-size: 16px;
     border-radius: 0;
 }
+
+/*input hover*/
+input[type="text"]:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+
+input[type="number"]:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+input[type="date"]:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+input[type="datetime-local"]:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+textarea:focus{
+	border: 2px solid black;
+	opacity: 0.8;
+    background-color: #30dd8a;
+}
+
 /* .btn{ */
 /* 	width: 100%; */
 /* 	color: #fff; */
@@ -203,7 +237,8 @@
 		 	
 		 	<label class="formLabel" for="photo">活動照片: <span style="color: red">${errorMsgs.photo}</span></label>
            	<input class="actPhoto" name="actp" type="file" accept="image/*" value=""><br>
-<!--       	多張 multiple     -->
+<!--       	多張照片 multiple     -->
+
 			<label class="formLabel" for="content">活動內容: <span style="color: red">${errorMsgs.content}</span></label>
 			<textarea class="actFormInput actContentFormInput" cols="55" name="content">"<%= (actVO == null) ? 
 					"空想食境Fantasy MEALity 為 Manga'Z 所打造出的獨特餐飲體驗，將餐飲結合虛擬實境，用120分鐘的時間帶消費者走入空想王國體驗超乎想像的美食饗宴。" 
@@ -215,19 +250,19 @@
 				value="<%= (actVO == null) ? "2000" : actVO.getCost() %>"/><br>
 	
 			<label class="formLabel" for="applyStartDate">報名開始時間: <span style="color: red">${errorMsgs.applyStartDate}</span></label>
-			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" value="${actVO.applyStartDate}"/><br>
+			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" value="<%= (actVO == null) ? "2022-03-05T08:30" : actVO.getApplyStartDate()%>"/><br>
 <%-- 			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" value="<%= (actVO == null)? "2022-03-04T08:30": actVO.getApplyStartDate()%>"/><br> --%>
 	
 			<label class="formLabel" for="applyEndDate">報名截止時間: <span style="color: red">${errorMsgs.applyEndDate}</span></label>
-			<input class="actTimeFormInput" step="1" type="datetime-local" name="applyEndDate" value="${actVO.applyEndDate}"/><br>
+			<input class="actTimeFormInput" step="1" type="datetime-local" name="applyEndDate" value="<%= (actVO == null) ? "2022-03-09T16:30" : actVO.getApplyEndDate()%>"/><br>
 <%-- 			<input class="actTimeFormInput" step="1" type="datetime-local" name="applyEndDate" value="<%= (actVO == null)? "2022-03-05T10:40": actVO.getApplyEndDate()%>"/><br> --%>
 	
 			<label class="formLabel" for="startDate">活動開始時間: <span style="color: red">${errorMsgs.startDate}</span></label>
-			<input class="actTimeFormInput" step="1" type="datetime-local" name="startDate" value="${actVO.startDate}"/><br> 
+			<input class="actTimeFormInput" step="1" type="datetime-local" name="startDate" value="<%= (actVO == null) ? "2022-03-10T12:30" : actVO.getStartDate()%>"/><br> 
 <%-- 			<input class="actTimeFormInput" step="1" type="datetime-local" name="startDate" value="<%= (actVO == null)? "2022-03-06T12:50": actVO.getStartDate()%>"/><br>  --%>
 			
 			<label class="formLabel" for="endDate">活動結束時間: <span style="color: red">${errorMsgs.endDate}</span></label>
-			<input class="actTimeFormInput" step="1" type="datetime-local" name="endDate" value="${actVO.endDate}"/><br> 
+			<input class="actTimeFormInput" step="1" type="datetime-local" name="endDate" value="<%= (actVO == null) ? "2022-03-12T21:30" : actVO.getEndDate()%>"/><br> 
 <%-- 			<input class="actTimeFormInput" step="1" type="datetime-local" name="endDate" value="<%= (actVO == null)? "2022-03-07T15:00": actVO.getEndDate()%>"/><br>  --%>
 				
 <!-- 			<label class="formLabel" for="applyMemberExisting">報名人數倒數: <span style="color: red"></span></label> -->
@@ -261,18 +296,6 @@
     <!-- Core theme JS-->
     <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
     <script>
-    var btn1 = document.getElementById('sweetBtnInsert');
-	btn1.addEventListener('click', function() {
-        swal('幹得漂亮！', '你的活動刊登完成了！', 'success');
-    });
-	$('#sweetBtnInsert').click (function (e) {
-	   e.preventDefault(); //will stop the link href to call the blog page
-
-	   setTimeout(function () {
-	       window.location.href = "http://localhost:8081/CFA104G3/front_end/activity/previewActPage.jsp"; //will redirect to your blog page (an ex: blog.html)
-	    }, 1000); //will call the function after 2 secs.
-
-	});
     </script>
 </body>
 

@@ -38,8 +38,13 @@
 					<%
 					// 傳入參數
 					MoveRequestService moveRequestService = new MoveRequestServiceImpl();
+					MemberServiceImpl memberService = new MemberServiceImpl();
 					List<MoveRequestVO> allRequests = moveRequestService.findAllRequests();
-					
+					List<MemberVO> members = memberService.selectAll();
+					Map<Integer, MemberVO> memberMap = new HashMap<>();
+					for(MemberVO member : members) {
+						memberMap.put(member.getId(), member);
+					}
 					
 					// 顯示格式
 					SimpleDateFormat ymdtmFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
@@ -65,7 +70,7 @@
 											<th>估價方式</th>
 											<th>會員</th>
 											<th>搬家日期</th>
-											<th>估價日期</th>
+											<th>現場估價日期</th>
 											<th>申請日期</th>
 											<th>細節</th>
 										</tr>
@@ -77,7 +82,7 @@
 											<th>估價方式</th>
 											<th>會員</th>
 											<th>搬家日期</th>
-											<th>估價日期</th>
+											<th>現場估價日期</th>
 											<th>申請日期</th>
 											<th>細節</th>
 										</tr>
@@ -87,16 +92,15 @@
                                     	for (MoveRequestVO vo : allRequests) {
                                        	%>
 										<tr>
-											<td><%=vo.getHandled() == null ? "" : EHandled.parseCode(vo.getHandled()).getText()%></td>
-											<td><%=vo.getStatus() == null ? "" : EMoveRequestStatus.parseCode(vo.getStatus()).getText()%></td>
-											<td><%=vo.getEvaluateType() == null ? "" : EMoveRequestEvaType.parseCode(vo.getEvaluateType()).getText()%></td>
-											<td><%=vo.getMemberId()%></td>
-											<td><%=vo.getMoveDate() == null ? "" : ymdFormat.format(vo.getMoveDate())%></td>
-											<td><%=vo.getEvaluateDate() == null ? "" : ymdFormat.format(vo.getEvaluateDate())%></td>
-											<td><%=vo.getRequestDate() == null ? "" : ymdtmFormat.format(vo.getRequestDate())%></td>
+											<td class="align-middle"><%=vo.getHandled() == null ? "" : EHandled.parseCode(vo.getHandled()).getText()%></td>
+											<td class="align-middle"><%=vo.getStatus() == null ? "" : EMoveRequestStatus.parseCode(vo.getStatus()).getText()%></td>
+											<td class="align-middle"><%=vo.getEvaluateType() == null ? "" : EMoveRequestEvaType.parseCode(vo.getEvaluateType()).getText()%></td>
+											<td class="align-middle"><%=vo.getMemberId() == null ? "" : (memberMap.get(vo.getMemberId()) == null ? "" : memberMap.get(vo.getMemberId()).getName())%></td>
+											<td class="align-middle"><%=vo.getMoveDate() == null ? "" : ymdFormat.format(vo.getMoveDate())%></td>
+											<td class="align-middle"><%=vo.getEvaluateDate() == null ? "" : ymdFormat.format(vo.getEvaluateDate())%></td>
+											<td class="align-middle"><%=vo.getRequestDate() == null ? "" : ymdtmFormat.format(vo.getRequestDate())%></td>
 											<!-- 跳轉 -->
-											<td><button type="button" class="viewRequest"
-													value="<%=vo.getId()%>">查看</button></td>
+											<td><button type="button" class="btn btn-primary viewRequest" value="<%=vo.getId()%>">查看</button></td>
 										</tr>
 										<%
                                     	}
@@ -114,8 +118,8 @@
 	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> <i
-		class="fas fa-angle-up"></i>
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
 	</a>
 
 	<!-- Logout Modal-->
@@ -145,11 +149,11 @@
 	
 	<!--  -->	
 	<script>
-		$("button[class='viewRequest']").click(function(){
+		$("button[class*='viewRequest']").click(function(){
 	        let self = this;
 	        let requestId = self.value;
 			
-	        document.cookie = 'requestId='+requestId;
+	        document.cookie = 'requestId=' + requestId;
 
 	        window.location.href='moveRequest.jsp';
 		});

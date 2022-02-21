@@ -33,14 +33,20 @@
 	<filter>
 		<filter-name>frontEndMemberFilter</filter-name>
 		<filter-class>core.FrontEndMemberFilter</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>frontEndMemberFilter</filter-name>
+		<!-- 完成 -->
 		<url-pattern>/front_end/move/moveRequest.jsp</url-pattern>
+		<url-pattern>/front_end/move/moveRequestManage.jsp</url-pattern>
+		<url-pattern>/front_end/move/moveRequestCManage.jsp</url-pattern>
+		<url-pattern>/front_end/notification/homePage.jsp</url-pattern>
+		<url-pattern>/front_end/product/sellerProduct.jsp</url-pattern>
+		<url-pattern>/front_end/product/sellerAllProducts.jsp</url-pattern>
+		
+		<!-- 處理中 -->
+		<url-pattern>/front_end/move/frontGetMoveOrder.jsp</url-pattern>
+		
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -48,19 +54,48 @@
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
 	<!-- 後台會員登入管理 -->
+	<!-- 	SERVER_MANAGER = 1	-->
+	<!-- 	ACTIVITY = 10		-->
+	<!-- 	DOUBLE_PROD = 20	-->
+	<!-- 	MOVE = 30 			-->
+	<!-- 	MEMBER = 40 		-->
+	<!-- 	FAQ = 50 			-->
+	<!-- 	NEWS = 60 			-->
 	<filter>
 		<filter-name>backEndMemberFilter</filter-name>
 		<filter-class>core.BackEndMemberFilter</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
+			<!-- 完成 -->
+		    <init-param><param-name>/back_end/move/moveRequestManage.jsp</param-name><param-value>30</param-value></init-param>
+		    <init-param><param-name>/back_end/move/moveRequest.jsp</param-name><param-value>30</param-value></init-param>
+		    <init-param><param-name>/back_end/move/readMoveOrder.jsp</param-name><param-value>30</param-value></init-param>
+		    
+		    <!-- 處理中 -->
+		    <init-param><param-name>/back_end/product/report/productReportManage.jsp</param-name><param-value>20</param-value></init-param>
+		    
+		    <!-- 測試用 -->
+		    <init-param><param-name>/back_end/server_manager/admin.jsp</param-name><param-value>1</param-value></init-param>
+		    <init-param><param-name>/back_end/server_manager/addManager.jsp</param-name><param-value>1</param-value></init-param>
+		    <init-param><param-name>/back_end/server_manager/activity.jsp</param-name><param-value>10</param-value></init-param>
+		    <init-param><param-name>/back_end/server_manager/product.jsp</param-name><param-value>20</param-value></init-param>
+		    <init-param><param-name>/back_end/product/productReportManage.jsp</param-name><param-value>20</param-value></init-param>
+		    <init-param><param-name>/back_end/move/readMoveOrder.jsp</param-name><param-value>30</param-value></init-param>
+		    <init-param><param-name>/back_end/server_manager/manager.jsp</param-name><param-value>40</param-value></init-param>
+		    <init-param><param-name>/back_end/server_manager/FAQ.jsp</param-name><param-value>50</param-value></init-param>
+		    <init-param><param-name>/back_end/news/listallnews.jsp</param-name><param-value>60</param-value></init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>backEndMemberFilter</filter-name>
+		<!-- 完成 -->
 		<url-pattern>/back_end/move/moveRequestManage.jsp</url-pattern>
+		<url-pattern>/back_end/move/moveRequest.jsp</url-pattern>
+		<url-pattern>/back_end/move/readMoveOrder.jsp</url-pattern>
+		
+		<!-- 處理中 -->
+		<url-pattern>/back_end/product/report/productReportManage.jsp</url-pattern>
+		
+		<!-- 測試用 -->
 		<url-pattern>/back_end/server_manager/activity.jsp</url-pattern>
-		<url-pattern>/back_end/server_manager/product.jsp</url-pattern>
+		<url-pattern>/back_end/product/seller.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/manager.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/FAQ.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/server.jsp</url-pattern>
@@ -76,8 +111,7 @@
 	<!-- move -->
 	<servlet>
 		<servlet-name>MoveRequestServlet</servlet-name>
-		<servlet-class>com.move_request.controller.MoveRequestServlet
-		</servlet-class>
+		<servlet-class>com.move_request.controller.MoveRequestServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MoveRequestServlet</servlet-name>
@@ -85,8 +119,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>MoveRequestManageServlet</servlet-name>
-		<servlet-class>com.move_request.controller.MoveRequestManageServlet
-		</servlet-class>
+		<servlet-class>com.move_request.controller.MoveRequestManageServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MoveRequestManageServlet</servlet-name>
@@ -94,8 +127,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>MoveOrderServlet</servlet-name>
-		<servlet-class>com.move_order.controller.MoveOrderServlet
-		</servlet-class>
+		<servlet-class>com.move_order.controller.MoveOrderServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MoveOrderServlet</servlet-name>
@@ -103,22 +135,30 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>MoveOrderServlet</servlet-name>
-		<servlet-class>com.move_order.controller.MoveOrderServlet
-		</servlet-class>
+		<servlet-class>com.move_order.controller.MoveOrderServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MoveOrderServlet</servlet-name>
 		<url-pattern>/back_end/move/moveorder.do</url-pattern>
 	</servlet-mapping>
+	
 	<!-- activity -->
 	<servlet>
 		<servlet-name>ActaServlet</servlet-name>
-		<servlet-class>com.activity_attend.controller.ActivityAttendServlet
-		</servlet-class>
+		<servlet-class>com.activity_attend.controller.ActivityAttendServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ActaServlet</servlet-name>
 		<url-pattern>/activity/acta.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ActrServlet</servlet-name>
+		<servlet-class>com.activity_report.controller.ActivityReportServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActrServlet</servlet-name>
+		<url-pattern>/activity/actr.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>ActivityServlet</servlet-name>
@@ -129,15 +169,34 @@
 		<url-pattern>/activity/act.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>ActivityPhotoServlet</servlet-name>
-		<servlet-class>com.activity.controller.ActivityPhotoServlet
+		<servlet-name>ActrImage</servlet-name>
+		<servlet-class>com.activity_report.controller.DBGifReader4
 		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActrImage</servlet-name>
+		<url-pattern>/activity/ActrImage.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ActivityPhotoServlet</servlet-name>
+		<servlet-class>com.activity_photo.controller.ActivityPhotoServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ActivityPhotoServlet</servlet-name>
 		<url-pattern>/activity/actp.do</url-pattern>
 	</servlet-mapping>
-	<!-- product -->
+	<servlet>
+		<servlet-name>ActivityQuestionServlet</servlet-name>
+		<servlet-class>com.activity_question.controller.ActivityQuestionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActivityQuestionServlet</servlet-name>
+		<url-pattern>/activity/actq.do</url-pattern>
+	</servlet-mapping>  
+
+	<!-- 耀德 product和news 下-->
+  <!-- news -->
 	<servlet>
 		<servlet-name>NewsServlet</servlet-name>
 		<servlet-class>com.news.controller.NewsServlet</servlet-class>
@@ -145,6 +204,59 @@
 	<servlet-mapping>
 		<servlet-name>NewsServlet</servlet-name>
 		<url-pattern>/back_end/news/NewsServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>NewsImageReader</servlet-name>
+		<servlet-class>com.news.controller.NewsImageReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NewsImageReader</servlet-name>
+		<url-pattern>/news/newsimage.do</url-pattern>
+	</servlet-mapping>	
+  
+  <servlet>
+		<servlet-name>ProductReportServlet</servlet-name>
+		<servlet-class>com.product_report.controller.ProductReportServlet</servlet-class>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>ProductReportServlet</servlet-name>
+		<url-pattern>/back_end/product/report/report.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ProductReportImageReader</servlet-name>
+		<servlet-class>com.product_report.controller.ProductReportImageReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductReportImageReader</servlet-name>
+		<url-pattern>/back_end/product/report/reportphoto.do</url-pattern>
+	</servlet-mapping>
+  
+ 	 <!-- 耀德 product和news 上-->
+  
+	<!-- product -->
+	<servlet>
+		<servlet-name>ProductServlet</servlet-name>
+		<servlet-class>com.product.controller.ProductServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductServlet</servlet-name>
+		<url-pattern>/product/ProductServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ProductPhotoServlet</servlet-name>
+		<servlet-class>com.product_photo.controller.ProductPhotoServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductPhotoServlet</servlet-name>
+		<url-pattern>/product_photo/ProductPhotoServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>DBGifReader2</servlet-name>
+		<servlet-class>com.product_photo.controller.DBGifReader2</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBGifReader2</servlet-name>
+		<url-pattern>/product_photo/DBGifReader2</url-pattern>
 	</servlet-mapping>
 
 	<!-- MEMBER -->
@@ -164,34 +276,6 @@
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/front_end/member/MemberServlet.do</url-pattern>
 	</servlet-mapping>
-	<servlet>
-		<servlet-name>ProductServlet</servlet-name>
-		<servlet-class>com.product.controller.ProductServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ProductServlet</servlet-name>
-		<url-pattern>/product/ProductServlet</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>ProductPhotoServlet</servlet-name>
-		<servlet-class>com.product_photo.controller.ProductPhotoServlet
-		</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ProductPhotoServlet</servlet-name>
-		<url-pattern>/product_photo/ProductPhotoServlet</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>DBGifReader2</servlet-name>
-		<servlet-class>com.product_photo.controller.DBGifReader2
-		</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DBGifReader2</servlet-name>
-		<url-pattern>/product_photo/DBGifReader2</url-pattern>
-	</servlet-mapping>
 
 	<!-- server manager -->
 	<servlet>
@@ -203,7 +287,6 @@
 		<servlet-name>ServerManagerServlet</servlet-name>
 		<url-pattern>/server_manager/ServerManagerServlet</url-pattern>
 	</servlet-mapping>
-
 	<servlet>
 		<servlet-name>ServerManageFunctionServlet</servlet-name>
 		<servlet-class>com.server_manager_function.controller.ServerManageFunctionServlet
@@ -245,5 +328,15 @@
 		<servlet-name>ProductOrderServlet</servlet-name>
 		<url-pattern>/back_end/product/productorderback.do</url-pattern>
 	</servlet-mapping>
-
+	
+	<!-- notification -->
+		<servlet>
+		<servlet-name>NotificationServlet</servlet-name>
+		<servlet-class>com.notification.controller.NotificationServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NotificationServlet</servlet-name>
+		<url-pattern>/notification/notification.do</url-pattern>
+	</servlet-mapping>
 </web-app>

@@ -5,8 +5,8 @@
 
 
 <% 
-NewsServiceImpl newsServiceImpl=new NewsServiceImpl(); List<NewsVO> list =
-newsServiceImpl.selectAllNews();
+NewsServiceImpl newsServiceImpl=new NewsServiceImpl(); 
+List<NewsVO> list = newsServiceImpl.selectAllNews();
 pageContext.setAttribute("list", list);
 %>
 
@@ -38,7 +38,7 @@ pageContext.setAttribute("list", list);
     <jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
     <!-- Page Header-->
-    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/default.jpg')">
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/news.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
@@ -88,20 +88,26 @@ pageContext.setAttribute("list", list);
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">#</th>
                                             <th scope="col" class="text-nowrap">類別</th>
                                             <th scope="col" class="text-nowrap">標題</th>
                                             <th scope="col" class="text-nowrap">時間</th>
                                         </tr>
                                     </thead>
                                     <tbody>
- 									<c:forEach var="newsVO" items="${list}">
-										<tr>
-											<td>${newsVO.id}</td>
-											<td>${newsVO.type}</td>
+ 									<c:forEach var="newsVO" items="${list}"> 																			
+										<tr>																										
+											<td>
+												<c:choose>
+   															<c:when test="${newsVO.type==0}">活動</c:when>  														  														   														
+   															<c:when test="${newsVO.type==1}">二手</c:when>
+   															<c:when test="${newsVO.type==2}">搬家</c:when>
+   															<c:when test="${newsVO.type==3}">其他</c:when>													
+   															<c:otherwise>系統</c:otherwise>
+												</c:choose>
+											</td>							
 											<td>${newsVO.title}</td>			
 											<td>${newsVO.date}</td>		
-										</tr>
+										</tr>											 									
 									</c:forEach>
                                     </tbody>
                                 </table>
@@ -109,8 +115,7 @@ pageContext.setAttribute("list", list);
                             <div class="tab-pane fade" id="pills-act" role="tabpanel" aria-labelledby="pills-move-tab">
                                 <table class="table">
                                     <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
+                                        <tr>                                            
                                             <th scope="col" class="text-nowrap">類別</th>
                                             <th scope="col" class="text-nowrap">標題</th>
                                             <th scope="col" class="text-nowrap">時間</th>
@@ -119,8 +124,15 @@ pageContext.setAttribute("list", list);
                                     <tbody>
  									<c:forEach var="newsVO" items="${list}">
 										<tr>
-											<td>${newsVO.id}</td>
-											<td>${newsVO.type}</td>
+											<td>
+												<c:choose>
+   															<c:when test="${newsVO.type==0}">活動</c:when>  														  														   														
+   															<c:when test="${newsVO.type==1}">二手</c:when>
+   															<c:when test="${newsVO.type==2}">搬家</c:when>
+   															<c:when test="${newsVO.type==3}">其他</c:when>													
+   															<c:otherwise>系統</c:otherwise>
+												</c:choose>
+											</td>
 											<td>${newsVO.title}</td>			
 											<td>${newsVO.date}</td>		
 										</tr>
@@ -131,8 +143,7 @@ pageContext.setAttribute("list", list);
                             <div class="tab-pane fade" id="pills-move" role="tabpanel" aria-labelledby="pills-sec-tab">
                                 <table class="table">
                                     <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
+                                        <tr>                                           
                                             <th scope="col" class="text-nowrap">類別</th>
                                             <th scope="col" class="text-nowrap">標題</th>
                                             <th scope="col" class="text-nowrap">時間</th>
@@ -141,8 +152,15 @@ pageContext.setAttribute("list", list);
                                     <tbody>
   									<c:forEach var="newsVO" items="${list}">
 										<tr>
-											<td>${newsVO.id}</td>
-											<td>${newsVO.type}</td>
+											<td>
+												<c:choose>
+   															<c:when test="${newsVO.type==0}">活動</c:when>  														  														   														
+   															<c:when test="${newsVO.type==1}">二手</c:when>
+   															<c:when test="${newsVO.type==2}">搬家</c:when>
+   															<c:when test="${newsVO.type==3}">其他</c:when>													
+   															<c:otherwise>系統</c:otherwise>
+												</c:choose>
+											</td>
 											<td>${newsVO.title}</td>			
 											<td>${newsVO.date}</td>		
 										</tr>
@@ -153,8 +171,7 @@ pageContext.setAttribute("list", list);
                             <div class="tab-pane fade" id="pills-sec" role="tabpanel" aria-labelledby="pills-sec-tab">
                                 <table class="table">
                                     <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
+                                        <tr>                                            
                                             <th scope="col" class="text-nowrap">類別</th>
                                             <th scope="col" class="text-nowrap">標題</th>
                                             <th scope="col" class="text-nowrap">時間</th>
@@ -163,8 +180,15 @@ pageContext.setAttribute("list", list);
                                     <tbody>
  									<c:forEach var="newsVO" items="${list}">
 										<tr>
-											<td>${newsVO.id}</td>
-											<td>${newsVO.type}</td>
+											<td>
+												<c:choose>
+   															<c:when test="${newsVO.type==0}">活動</c:when>  														  														   														
+   															<c:when test="${newsVO.type==1}">二手</c:when>
+   															<c:when test="${newsVO.type==2}">搬家</c:when>
+   															<c:when test="${newsVO.type==3}">其他</c:when>													
+   															<c:otherwise>系統</c:otherwise>
+												</c:choose>
+											</td>
 											<td>${newsVO.title}</td>			
 											<td>${newsVO.date}</td>		
 										</tr>

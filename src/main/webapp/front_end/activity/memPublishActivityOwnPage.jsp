@@ -1,15 +1,22 @@
+<%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
+<%@page import="org.apache.catalina.tribes.Member"%>
 <%@page import="com.mysql.cj.conf.ConnectionUrl.Type"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.activity.model.*"%>
+
+<%@ page import="com.member.model.*"%>
+
 <!-- 改善時間用 -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<%
-// 	ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");
-// 	actVO.getOrganizerMemberId()
+<%	
+// 	HttpSession session = Request.getSession();
+// 	List<ActivityVO> list = actSvc.findByMemId(memberId);
+
+	MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 	ActivityServiceImpl actSvc = new ActivityServiceImpl();
-	List<ActivityVO> list = actSvc.findByMemId(2);
+	List<ActivityVO> list = actSvc.findByMemId(memberVO.getId());
 	pageContext.setAttribute("list",list);
 	
 // 	List<ActivityVO> typeList1 = actSvc.getActType(1);
@@ -30,7 +37,7 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="UTF-8">
-<title>全部活動頁面appearActPage.jsp</title>
+<title>會員管理活動頁面memPublishActivityOwnPage.jsp</title>
 <link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet">
 <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -53,7 +60,7 @@
 .ellipsis {
 	  display: -webkit-box;
 	  text-overflow: ellipsis;
-	  -webkit-line-clamp: 1; /*行數*/
+	  -webkit-line-clamp: 2; /*行數*/
 	  -webkit-box-orient: vertical;
 	  overflow: hidden;
 	  white-space: normal;
@@ -63,49 +70,6 @@
       margin: 8px 0;  
 }
 
-.btn{
-	width: 100%;
-    padding: 16px 40px;
-	margin: 8px 0 60px 0;
-}
-.btn-hover {
-    width: 200px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-    cursor: pointer;
-    margin: 20px;
-    height: 55px;
-    text-align:center;
-    border: none;
-    background-size: 300% 100%;
-
-    border-radius: 50px;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-}
-
-.btn-hover:hover {
-    background-position: 100% 0;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-}
-
-.btn-hover:focus {
-    outline: none;
-}
-.btn-hover.color-9 {
-margin: 0 20px;
-width: 200px;
-height: 50px;
-padding: 0;
-    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
-    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
-}
 
 
 .tab_container{
@@ -128,34 +92,39 @@ div.tab_container div.tab_contents div.tab.-on{
     text-decoration: none;
 }
 .wrap{
-    width: 1260px;
+    width: 940px;
 	margin: auto;
 /* 	margin-right: 30px;  */
 /* 	border: 1px solid #aaa;  */
 /*     display: fixed; */
 }
 .item{
-    width: 30%;
-    margin: 10px;
-/*     border: 1px solid #aaa; */
-    position: relative;
-    display: inline-block;
+/*      border: 1px solid #aaa;  */
+    width: 96%;
+    height: 200px;
+    border-radius: 16px;
+/*      display: inline-block;  */
     transition: transform .3s;
 }
 .item:hover{
 opacity: 0.8;
 background-color: white; 
 transform: scale(1.02); 
-border-radius: 16px;
+border-radius: 32px;
 }
 .item .div1{
-    padding: 8px 16px;
-    min-height: 149px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 0 0 16px 16px;
-    border: 1px solid gray;
-height:200px;
+    height: 100%;
+    max-width: 65%;
+    border-radius: 0  16px 16px 0;
+    border: none;
+/* 	border: 1px solid gray;   */
+/* 	border-left: none; */
+}
+.div1 , .div2{
+vertical-align: top;
+}
+.div2{
+	width: 300px;
 }
 .item .time{
     color: #b5bac1;
@@ -165,9 +134,8 @@ height:200px;
 }
 .item img{
 	box-shadow: none;
-    border-radius: 16px 16px 0 0;
+    border-radius: 16px 0 0 16px  ;
     width: 100%;
-height: 200px;
 transition: .5s; 
 }
 /* .item img:hover{  */
@@ -200,18 +168,18 @@ padding: 10px 0;
 
 /* 頁籤區塊 */
 div.tab_container div.tab_list_block{
-    padding-left: 20px;
+/*     padding-left: 20px; */
 }
 
 /* 頁籤列表 */
 div.tab_container div.tab_list_block ul.tab_list{
     list-style: none;
-    display: inline-block;
+/*     display: inline-block; */
     margin: 0;
     padding: 0;
 margin-top: -20px;
 margin-left: -40px;
-text-align: center;
+/* text-align: center; */
 width: 100%;
 }
 div.tab_container div.tab_list_block ul.tab_list > li{
@@ -276,17 +244,34 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
     -o-transition: all .4s ease-in-out;
     -webkit-transition: all .4s ease-in-out;
     transition: all .4s ease-in-out;
+    
 }
 
 .btn-hover:focus {
     outline: none;
 }
-
 .btn-hover.color-5 {
     background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
     box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
 }
-
+.btn-hover.color-5:hover{
+    width: 300px;
+}
+.btn-hover.color-11 {
+       background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);
+        box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
+height: 35px;
+border-radius: 32px;
+margin:5px ;
+}
+.btn-hover.color-9 {
+margin:5px auto;
+width: 100%;
+height: 35px;
+padding: 0;
+    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
 /*msg*/
 .contact {
 	width: 50px;
@@ -324,44 +309,121 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
             </div>
         </div>
     </header>
-   
+<%--    <p>id=${memberVO.id}</p> --%>
    <!-- 上與中之間 -->
-    <%@ include file="specialcard.file" %> 
-   	<img class="contact" src="<%=request.getContextPath()%>/asset/img/activityImage/message.png">
-		
+<%--     <%@ include file="specialcard2.jsp" %>  --%>
+<%--    	<img class="contact" src="<%=request.getContextPath()%>/asset/img/activityImage/message.png"> --%>
    	<!-- 主體畫面設計  -->
+   	
 <div class="tab_container">
 			<div class="tab_list_block">
                 <ul class="tab_list">
-                    <li><a data-target="tab1" class="tab -on btn-hover color-5">全部類別</a></li>
-                    <li><a data-target="tab2" class="tab btn-hover color-5" >活動</a></li>
-                    <li><a data-target="tab3" class="tab btn-hover color-5">聚餐</a></li>
-                    <li><a data-target="tab4" class="tab btn-hover color-5">講座</a></li>
-                    <li><a data-target="tab5" class="tab btn-hover color-5">其他</a></li>
+                    <li><a data-target="tab1" class="tab -on btn-hover color-5">我所舉辦的活動</a></li>
+                    <li><a data-target="tab2" class="tab btn-hover color-5" >我所參與的活動</a></li>
                 </ul>
            </div>
 <div class="tab_contents">
 <div class="tab tab1 -on">
 		<div class="wrap" >
 	<c:forEach var="actVO" items="${list}" >
-	        <div class="item">
+	        <div id="item${actVO.activityId}" class="item">
 <%-- 	            <div class="act_tab">${actVO.type}</div> --%>
-	            <img class="" src="http://picsum.photos/300/200?random=?" alt="">
-            	<div class="div1">
+	            <div class="div2" style="display: inline-block;">
+                <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
+	            </div>
+            	<div class="div1" style="display:inline-block;">
+	            	<button id="applyMemberExisting${actVO.activityId}" class="btn-hover color-11" style="float:right;">報名人數倒數: ${actVO.applyMemberExisting}</button>
 	            	<p class="time">開始時間: 
 	            	<fmt:formatDate value="${actVO.startDate}" pattern="yyyy-MM-dd hh:mm:ss"/>
 	            	</p>
-	                <h2 class="actName">${actVO.name}</h2>
-	                <p class="location ellipsis"><img style="width:18px; height:18px;margin-right:5px;" src="<%=request.getContextPath()%>/asset/img/activityImage/placeholder.png">${actVO.location}</p>
+             		
+	                <h2 id="actName${actVO.activityId}" class="actName">${actVO.name} </h2>
+<%-- 	                <p class="location ellipsis">${actVO.location}</p> --%>
+	                <p class="ellipsis">${actVO.content} </p>
 	                <div style="margin: 0 50px;">
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
-<%-- 			                <input type="hidden" name="organizerMemberId" value="${actVO.organizerMemberId}"> --%>
-<!-- 			                <input type="hidden" name="action" value="xxx"/>  -->
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
+              			  	 <input type="hidden" name="activityId" value="${actVO.activityId}">
+			                <input type="hidden" name="action" value="selectOneAct"/> 
+			                <input type="submit" class="btn-hover color-9" value="查看該筆活動"/>
 		                </FORM>
 	                </div>
             	</div>
             </div>
+<style>
+.item${actVO.activityId}{
+/*      border: 1px solid #aaa;  */
+    width: 96%;
+    height: 200px;
+    border-radius: 16px;
+/*      display: inline-block;  */
+    transition: transform .3s;
+}
+.item${actVO.activityId}:hover{
+opacity: 0.8;
+background-color: white; 
+transform: scale(1.02); 
+border-radius: 32px;
+}
+.item${actVO.activityId} .div1{
+    height: 100%;
+    max-width: 65%;
+    border-radius: 0  16px 16px 0;
+    border: none;
+/* 	border: 1px solid gray;   */
+/* 	border-left: none; */
+}
+.item${actVO.activityId} .time{
+    color: #b5bac1;
+    font-size: 14px;
+    font-weight: 500;
+	margin: 4px 8px; 
+}
+.item${actVO.activityId} img{
+	box-shadow: none;
+    border-radius: 16px 0 0 16px  ;
+    width: 100%;
+transition: .5s; 
+}
+/* .item img:hover{  */
+/* 	transform: scale(1.02);  */
+/* 	border-radius: 16px; */
+/* }  */
+.item${actVO.activityId} .actName{
+overflow: hidden;
+white-space: normal;
+/* border: 2px solid red; */
+	height:auto;
+padding: 10px 0;
+	margin: 8px 0;  
+    color: #000;
+    line-height: 20px;
+	letter-spacing: -.16px; 
+/*     font-weight: 700; */
+/*     overflow: hidden; */
+/*     display: -webkit-box; */
+/*     -webkit-box-orient: vertical; */
+/*     -webkit-line-clamp: 2; */
+}
+</style>
+<script>
+	var item${actVO.activityId} = document.getElementById('item${actVO.activityId}');
+	var actName${actVO.activityId} = document.getElementById('actName${actVO.activityId}');
+	var applyMemberExisting${actVO.activityId} = document.getElementById('applyMemberExisting${actVO.activityId}');
+	if(${actVO.status} == 1 ){
+		item${actVO.activityId}.style.backgroundColor = "black";
+		item${actVO.activityId}.style.opacity = 0.5;
+		item${actVO.activityId}.style.borderRadius = '16px';
+		actName${actVO.activityId}.style.color = "white";
+		applyMemberExisting${actVO.activityId}.innerHTML = "你已經將該活動取消";
+	}
+	if(${actVO.status} == 2){
+		item${actVO.activityId}.style.backgroundColor = "gray";
+		item${actVO.activityId}.style.opacity = 0.5;
+		item${actVO.activityId}.style.borderRadius = '16px';
+		applyMemberExisting${actVO.activityId}.innerHTML = "你已經將該活動下架";
+// 		item4${actVO.activityId}.remove();
+	}
+</script>
 	</c:forEach>
     </div>
 </div>
@@ -369,7 +431,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
      <div class="tab tab2">
          <div class="wrap" >
 	<c:forEach var="actVO" items="${typeList1}" >
-	        <div class="item">
+	        <div id="item2${actVO.activityId}" class="item">
 <%-- 	            <div class="act_tab">${actVO.type}</div> --%>
 	            <img class="" src="http://picsum.photos/300/200?random=?" alt="">
             	<div class="div1">
@@ -388,76 +450,7 @@ div.tab_container div.tab_list_block ul.tab_list > li > a.-on::after{
 		</c:forEach>
 	    </div>
 	</div>
-
          
-    <div class="tab tab3">
-        <div class="wrap" >
-	<c:forEach var="actVO" items="${typeList2}" >
-	        <div class="item">
-<%-- 	            <div class="act_tab">${actVO.type}</div> --%>
-	            <img class="" src="http://picsum.photos/300/200?random=?" alt="">
-            	<div class="div1">
-	            	<p class="time">${actVO.startDate}</p>
-	                <h2 class="actName">${actVO.name}</h2>
-	                <p class="location ellipsis"><img style="width:18px; height:18px;margin-right:5px;" src="<%=request.getContextPath()%>/asset/img/activityImage/placeholder.png">${actVO.location}</p>
-	                <div style="margin: 0 50px;">
-              			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
-			                <input type="hidden" name="activityId" value="${actVO.activityId}">
-			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
-		                </FORM>
-	                </div>
-            	</div>
-            </div>
-		</c:forEach>
-	    </div>
-    </div>
-
-         <div class="tab tab4">
-             <div class="wrap" >
-	<c:forEach var="actVO" items="${typeList3}" >
-	        <div class="item">
-<%-- 	            <div class="act_tab">${actVO.type}</div> --%>
-	            <img class="" src="http://picsum.photos/300/200?random=?" alt="">
-            	<div class="div1">
-	            	<p class="time">${actVO.startDate}</p>
-	                <h2 class="actName">${actVO.name}</h2>
-	                <p class="location ellipsis"><img style="width:18px; height:18px;margin-right:5px;" src="<%=request.getContextPath()%>/asset/img/activityImage/placeholder.png">${actVO.location}</p>
-	                <div style="margin: 0 50px;">
-              			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
-			                <input type="hidden" name="activityId" value="${actVO.activityId}">
-			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
-		                </FORM>
-	                </div>
-            	</div>
-            </div>
-		</c:forEach>
-	   	</div>
-  	</div>
-
-         <div class="tab tab5">
-            <div class="wrap" >
-	<c:forEach var="actVO" items="${typeList4}" >
-	        <div class="item">
-<%-- 	            <div class="act_tab">${actVO.type}</div> --%>
-	            <img class="" src="http://picsum.photos/300/200?random=?" alt="">
-            	<div class="div1">
-	            	<p class="time">${actVO.startDate}</p>
-	                <h2 class="actName">${actVO.name}</h2>
-	                <p class="location ellipsis"><img style="width:18px; height:18px;margin-right:5px;" src="<%=request.getContextPath()%>/asset/img/activityImage/placeholder.png">${actVO.location}</p>
-	                <div style="margin: 0 50px;">
-              			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
-			                <input type="hidden" name="activityId" value="${actVO.activityId}">
-			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
-		                </FORM>
-	                </div>
-            	</div>
-            </div>
-		</c:forEach>
-         </div>
-		</div>
 	</div>
 	</div> <!-- tab_container -->
  

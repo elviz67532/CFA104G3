@@ -14,8 +14,11 @@ import com.move_order.model.MoveOrderServiceImpl;
 import com.move_order.model.MoveOrderVO;
 import com.product.model.ProductServiceImpl;
 import com.product.model.ProductVO;
+import com.product_collection.model.ProductCollectionDAOJDBCImpl;
 import com.product_collection.model.ProductCollectionServiceImpl;
 import com.product_collection.model.ProductCollectionVO;
+
+import core.DualKey;
 
 public class ProductCollectionServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -55,7 +58,7 @@ public class ProductCollectionServlet {
 					productCollectionVO = proCollectionSvc.insert(memberId, productId);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-					String url = "/front_end/product/商品列表畫面.jsp";
+					String url = "/front_end/product/listOneProduct.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); 
 					successView.forward(req, res);				
 				}
@@ -63,7 +66,7 @@ public class ProductCollectionServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/addEmp.jsp");
+						.getRequestDispatcher("/front_end/product/listOneProduct.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -89,11 +92,15 @@ public class ProductCollectionServlet {
 				int memberId = memberVO.getId();
 				ProductCollectionServiceImpl pcSvc = new ProductCollectionServiceImpl();
 				List<ProductCollectionVO> productCollectionVO = pcSvc.getByMemId(memberId);
-				productCollectionVO.get(memberId);
+				List<Integer> productIdList = new ArrayList<Integer>();
+				for(ProductCollectionVO pId: productCollectionVO) {
+					
+					productIdList.add(pId.getProductId());
+				}
 				ProductServiceImpl prodSvc = new ProductServiceImpl();
 				List<ProductVO> productVOs = prodSvc.getIdForCollection(productIdList);
 			/***************************2.開始查詢資料*****************************************/
-				if (productCollectionVO.isEmpty()) {
+				if (productVOs.isEmpty()) {
 					errorMsgs.add("收藏是空的喔");
 				}
 				// Send the use back to the form, if there were errors
@@ -105,12 +112,47 @@ public class ProductCollectionServlet {
 				}
 			
 			/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("productCollectionVO", productCollectionVO); // 資料庫取出的empVO物件,存入req
+				req.setAttribute("productVOs", productVOs); // 資料庫取出的empVO物件,存入req
 				String url = "/front_end/product/收藏畫面.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 				
 				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front_end/product/點進去收藏畫面的按鈕所在的畫面.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		if("delete_from_collection".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				HttpSession session = req.getSession();
+				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+				if(memberVO == null) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/product/去登入會員畫面");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				Integer memberId = memberVO.getId();
+				
+				String str = req.getParameter("productId");
+				Integer productId;
+				productId = Integer.valueOf(str);
+				
+				ProductCollectionDAOJDBCImpl dao = new ProductCollectionDAOJDBCImpl();
+				DualKey<Integer, Integer> key = new DualKey<Integer, Integer>(memberId, productId);
+				dao.deleteById(key);
+				
+				String url = "/front_end/product/商品列表畫面.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);				
+				
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req

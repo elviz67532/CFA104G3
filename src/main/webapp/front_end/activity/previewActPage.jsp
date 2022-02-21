@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.activity.model.*"%>
+<%@ page import="com.activity_photo.model.*"%>
 <!-- 改善時間用 -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <!-- switch -->
@@ -11,6 +12,7 @@
 	ActivityServiceImpl actSvc = new ActivityServiceImpl();
 	List<ActivityVO> list = actSvc.getAllAct();
 	pageContext.setAttribute("list",list);
+	ActivityPhotoVO actpVO = new ActivityPhotoVO();
 %>
 <%
 	request.setAttribute("findActivityTypeString", new String[]{"活動","聚餐","講座","其他"});
@@ -22,7 +24,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="UTF-8">
 <title>活動預覽頁面previewActPage.jsp</title>
-<link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet">
+<%-- <link href="${pageContext.request.contextPath}/css/activity/appearActPage.css" rel="stylesheet"> --%>
 
 <link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
 <!-- sweet -->
@@ -189,7 +191,7 @@
 <!--                活動預覽頁面 -->
    		<div style="border: 2px white groove; width: 70%; margin: 0 auto 60px auto;">
 <!-- 				<img class="showImage" src="http://picsum.photos/300/200?random=?" alt=""> -->
-        <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?activityId=${actVO.activityId}" >
+        <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
    	<section class="section1">
                <div style="display: block;margin-right:20px; padding: 4px;">
              		<c:set var="typeNum" scope="request" value="${actVO.type}"/>
@@ -233,17 +235,12 @@
                	</span>
                		${actVO.minMember}  ~  ${actVO.maxMember}
                </p>
-               <input type="submit" class="btn btn-hover color-1" id="sweetBtnPreview" value="結束預覽"/>
-               <p class="launchedDate"><fmt:formatDate value="${actVO.launchedDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
+               <input type="submit" class="btn-hover color-1" id="sweetBtnPreview" value="結束預覽"/>
+               <p class="launchedDate" style="text-align:center;"><fmt:formatDate value="${actVO.launchedDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
  	</section>
  	<section class="section2">
- 		
  	</section>
    		</div>
-   	
-<!-- 			<td> -->
-<!-- 			</td> -->
-	
    
    
     <!-- Footer-->
@@ -261,8 +258,8 @@
    		   e.preventDefault(); //will stop the link href to call the blog page
 
    		   setTimeout(function () {
-   		       window.location.href = "http://localhost:8081/CFA104G3/front_end/activity/appearActPage.jsp"; //will redirect to your blog page (an ex: blog.html)
-   		    }, 2000); //will call the function after 2 secs.
+   		       window.location.href = "http://localhost:8081/CFA104G3/front_end/activity/homePage.jsp"; //will redirect to your blog page (an ex: blog.html)
+   		    }, 1000); //will call the function after 2 secs.
 
    		});
     </script>

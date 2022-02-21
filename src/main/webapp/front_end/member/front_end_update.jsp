@@ -1,16 +1,38 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
 
 <%
 MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 %>
 
-<html>
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>·|­û¸ê®Æ­×§ï</title>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>å§”åŸŸ</title>
+<link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+	crossorigin="anonymous"></script>
+<!-- Google fonts-->
+<link
+	href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+	rel="stylesheet" type="text/css" />
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+	rel="stylesheet" type="text/css" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link
+	href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css"
+	rel="stylesheet" />
 <style>
 * {
 	box-sizing: border-box;
@@ -18,171 +40,163 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 	line-height: 150%;
 }
 
-img {
-	max-width: 100%;
-}
-
-body {
-	margin: 0;
-}
-
-table#table-1 {
-	text-align: center;
-	width: 55%;
-	height: 100px;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-
-table {
-	width: 450px;
-	margin-top: 5px;
-	margin-bottom: 1px;
-}
-
-table, th, td {
+table#table-2 {
+	font-size: 10 vmin;
+	margin: 0 auto;
 	white-space: nowrap;
 }
 
-th, td {
-	padding: 1px;
-	line-height: 35px;
-}
-
 h2 {
-	margin: 0 auto;
+	margin-top: 40px;
 }
 
 table {
-	width: 450px;
-	margin-top: 1px;
-	margin-bottom: 1px;
+	width: 400px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	color: black;
 }
 
-th, td {
-	padding: 1px;
+td {
+	padding: 7px;
+	font-weight: bold;
+	/* 	text-align: center; */
 }
 </style>
-
 </head>
-<center>
 
-	<body>
-		<main>
-			<table id="table-1">
+<body>
+	<!-- Navigation-->
+	<!-- nav -->
+	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
+
+	<!-- Page Header-->
+	<header class="masthead"
+		style="background-image: url('<%=request.getContextPath()%>/asset/img/move01.jpg')">
+		<div class="container position-relative px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<div class="site-heading">
+						<h1>New Life</h1>
+						<span class="subheading">è¿ æ¥ å…¨ æ–° çš„ äºº ç”Ÿ</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<main>
+
+
+		<div style="text-align: center;">
+			<h1>æœƒå“¡è³‡æ–™ä¿®æ”¹</h1>
+		</div>
+		<div style="text-align: center;"></div>
+		<h2 align="center" valign="center">
+			<a href="front_end_listOneMember.jsp"> å›æœƒå“¡ä¸­å¿ƒ</a>
+		</h2>
+		</div>
+
+
+
+
+		<%-- éŒ¯èª¤è¡¨åˆ— --%>
+		<c:if test="${not empty errorMsgs}">
+			<font style="color: red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red">${message}</li>
+				</c:forEach>
+			</ul>
+		</c:if>
+
+		<FORM METHOD="post" enctype="multipart/form-data"
+			ACTION="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"
+			name="form1">
+			<table id="table-2">
 				<tr>
-					<td>
-						<h3>·|­û¸ê®Æ­×§ï</h3>
-						<h4>
-							<a href="front_end_listOneMember.jsp"> ¦^·|­û¤¤¤ß</a>
-						</h4>
-					</td>
+					<td>æœƒå“¡ç·¨è™Ÿ:<font color=red><b>*</b></font></td>
+					<td><%=memberVO.getId()%></td>
 				</tr>
+
+
+				<tr>
+					<td>EMAIL:</td>
+					<td><input placeholder="è«‹è¼¸å…¥EMAIL" name="email" maxlength="45"
+						autocomplete="off"
+						value="<%=(memberVO == null) ? "" : memberVO.getEmail()%>" /></td>
+				</tr>
+
+				<tr>
+					<td>å¯†ç¢¼:</td>
+					<td><input type="TEXT" name="password" maxlength="10"
+						autocomplete="off"
+						value="<%=(memberVO == null) ? "" : memberVO.getPassword()%>" /></td>
+				</tr>
+
+				<tr>
+					<td>æš±ç¨±:</td>
+					<td><input type="TEXT" name="nickname" maxlength="10"
+						autocomplete="off"
+						value="<%=(memberVO == null) ? "" : memberVO.getNickname()%>" /></td>
+				</tr>
+				<tr>
+					<td>å§“å:</td>
+					<td><input type="TEXT" name="name" maxlength="10"
+						autocomplete="off"
+						value="<%=(memberVO == null) ? "" : memberVO.getName()%>" /></td>
+				</tr>
+				<tr>
+					<td>é›»è©±:</td>
+					<td><input placeholder="è«‹è¼¸å…¥é›»è©±" name="phone" maxlength="10"
+						autocomplete="off"
+						value="<%=(memberVO == null) ? "" : memberVO.getPhone()%>" /></td>
+				</tr>
+
+
+
+				<tr>
+					<td>å±…ä½åŸå¸‚:</td>
+					<td><input placeholder="è«‹è¼¸å…¥å±…ä½åŸå¸‚" name="city" size="30"
+						autocomplete="off"
+						value="<%=(memberVO == null) ? "" : memberVO.getCity()%>" /></td>
+				</tr>
+				<tr>
+					<td>å±…ä½é„‰é®:</td>
+					<td><input placeholder="è«‹è¼¸å…¥å±…ä½é„‰é®" name="cityArea" size="30"
+						autocomplete="off"
+						value="<%=(memberVO == null) ? "" : memberVO.getCityArea()%>" /></td>
+				</tr>
+				<tr>
+					<td>åœ°å€:</td>
+					<td><input placeholder="è«‹è¼¸å…¥åœ°å€" name="address" size="30"
+						autocomplete="off"
+						value="<%=(memberVO == null) ? "" : memberVO.getAddress()%>" /></td>
+				</tr>
+				<tr>
+					<td>åœ–ç‰‡:</td>
+					<td><input type="file" name="avatar" size="45"
+						value="<%=(memberVO == null) ? "" : memberVO.getAvatar()%>" /></td>
+				</tr>
+
 			</table>
+			<br> <input type="hidden" name="action"
+				value="front_end_member_update"> <input type="hidden"
+				name="account" value="<%=memberVO.getAccount()%>"> <input
+				type="hidden" name="id" value="<%=memberVO.getId()%>"> <input
+				type="hidden" name="account" value="${memberVO.account}"> <input
+				type="submit" value="é€å‡º">
+		</FORM>
 
-			<%-- ¿ù»~ªí¦C --%>
-			<c:if test="${not empty errorMsgs}">
-				<font style="color: red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
-				<ul>
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color: red">${message}</li>
-					</c:forEach>
-				</ul>
-			</c:if>
+	</main>
+	<!-- Footer-->
+	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+    <script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+	<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+	
 
-			<FORM METHOD="post"
-				enctype ="multipart/form-data"
-				ACTION="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"
-				name="form1">
-				<table>
-					<tr>
-						<td>·|­û½s¸¹:<font color=red><b>*</b></font></td>
-						<td><%=memberVO.getId()%></td>
-					</tr>
-					
-					
-					<tr>
-						<td>EMAIL:</td>
-						<td><input placeholder="½Ğ¿é¤JEMAIL" name="email" maxlength="45"
-							autocomplete="off"
-							value="<%=(memberVO == null) ? "" : memberVO.getEmail()%>" /></td>
-					</tr>
+</body>
 
-					<tr>
-						<td>±K½X:</td>
-						<td><input type="TEXT" name="password" maxlength="10"
-							autocomplete="off"
-							value="<%=(memberVO == null) ? "" : memberVO.getPassword()%>" /></td>
-					</tr>
-
-					<tr>
-						<td>¼ÊºÙ:</td>
-						<td><input type="TEXT" name="nickname" maxlength="10"
-							autocomplete="off"
-							value="<%=(memberVO == null) ? "" : memberVO.getNickname()%>" /></td>
-					</tr>
-					<tr>
-						<td>©m¦W:</td>
-						<td><input type="TEXT" name="name" maxlength="10"
-							autocomplete="off"
-							value="<%=(memberVO == null) ? "" : memberVO.getName()%>" /></td>
-					</tr>
-					<tr>
-						<td>¹q¸Ü:</td>
-						<td><input placeholder="½Ğ¿é¤J¹q¸Ü" name="phone" maxlength="10"
-							autocomplete="off"
-							value="<%=(memberVO == null) ? "" : memberVO.getPhone()%>" /></td>
-					</tr>
-
-
-
-					<tr>
-						<td>©~¦í«°¥«:</td>
-						<td><input placeholder="½Ğ¿é¤J©~¦í«°¥«" name="city" size="30"
-							autocomplete="off"
-							value="<%=(memberVO == null) ? "" : memberVO.getCity()%>" /></td>
-					</tr>
-					<tr>
-						<td>©~¦í¶mÂí:</td>
-						<td><input placeholder="½Ğ¿é¤J©~¦í¶mÂí" name="cityArea" size="30"
-							autocomplete="off"
-							value="<%=(memberVO == null) ? "" : memberVO.getCityArea()%>" /></td>
-					</tr>
-					<tr>
-						<td>¦a§}:</td>
-						<td><input placeholder="½Ğ¿é¤J¦a§}" name="address" size="30"
-							autocomplete="off"
-							value="<%=(memberVO == null) ? "" : memberVO.getAddress()%>" /></td>
-					</tr>
-					<tr>
-						<td>¹Ï¤ù:</td>
-						<td><input type="file" name="avatar" size="45"
-							value="<%=(memberVO == null) ? "" : memberVO.getAvatar()%>" /></td>
-					</tr>
-
-
-
-
-
-
-				</table>
-				<br> <input type="hidden" name="action"
-					value="front_end_member_update"> 
-					<input type="hidden" name="account" value="<%=memberVO.getAccount()%>">
-					<input type="hidden" name="id" value="<%=memberVO.getId()%>"> <input
-					type="hidden" name="account" value="${memberVO.account}"> <input
-					type="submit" value="°e¥X">
-			</FORM>
-			<br> <br>
-		</main>
-	</body>
 </html>

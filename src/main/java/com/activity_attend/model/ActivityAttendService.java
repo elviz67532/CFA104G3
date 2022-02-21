@@ -8,10 +8,9 @@ public interface ActivityAttendService {
 
 	List<ActivityAttendVO> getAll();
 
-	ActivityAttendVO getOneActa(DualKey<Integer, Integer> id);
+	ActivityAttendVO getOneActa(Integer memberId, Integer activityId);
 
 	ActivityAttendVO updateActa(Integer memberId, Integer activityId, String comment, String note, Integer status);
 
 	ActivityAttendVO addActa(Integer memberId, Integer activityId, String comment, String note, Integer status);
-
 }
