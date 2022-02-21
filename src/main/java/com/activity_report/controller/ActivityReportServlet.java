@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.activity_attend.model.ActivityAttendServiceImpl;
+import com.activity_attend.model.ActivityAttendVO;
 import com.activity_report.*;
 import com.activity_report.model.ActivityReportServiceImpl;
 import com.activity_report.model.ActivityReportVO;
@@ -43,14 +45,10 @@ public class ActivityReportServlet extends HttpServlet {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 //檢舉活動編號
 					int activityId = Integer.valueOf(req.getParameter("activityId"));
-					if(activityId==0) {
-						errorMsgs.add("檢舉活動編號請勿空白");
-					}
+					
 //檢舉會員編號					
 					int memberId = Integer.valueOf(req.getParameter("memberId"));
-					if(memberId==0) {
-						errorMsgs.add("檢舉會員編號請勿空白");
-					}
+					
 //檢舉內容					
 					String content = req.getParameter("content").trim();
 					if (content == null || content.trim().length() == 0) {
@@ -78,14 +76,14 @@ public class ActivityReportServlet extends HttpServlet {
 					actrVO.setActivityId(activityId);
 					actrVO.setMemberId(memberId);
 					actrVO.setContent(content);
-					actrVO.setStatus(status);
+					actrVO.setStatus(0);
 					actrVO.setPhoto(photo);
 
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("actrVO", actrVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back_end/activity/addReport.jsp");
+								.getRequestDispatcher("/front_end/activity/addReport.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -95,7 +93,7 @@ public class ActivityReportServlet extends HttpServlet {
 					actrVO = actrSvc.addActr(activityId,memberId,content,status,photo);
 					
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
-					String url = "/back_end/activity/listAllActr.jsp";
+					String url = "/front_end/activity/listAllActr.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllActa.jsp
 					successView.forward(req, res);				
 					
@@ -103,10 +101,42 @@ public class ActivityReportServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add(e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/activity/addReport.jsp");
+							.getRequestDispatcher("/front_end/activity/addReport.jsp");
 					failureView.forward(req, res);
 				}
 		 }
+		 if ("getOne_For_Insert".equals(action)) { // 來自listAllActa.jsp的請求
+			 
+			 				List<String> errorMsgs = new LinkedList<String>();
+			 				// Store this set in the request scope, in case we need to
+			 				// send the ErrorPage view.
+			 				req.setAttribute("errorMsgs", errorMsgs);
+			 				
+			 				try {
+			 					/***************************1.接收請求參數****************************************/
+			 					int memberId =Integer.valueOf(req.getParameter("memberId"));
+			 					int activityId = Integer.valueOf(req.getParameter("activityId"));
+			 					
+			 					/***************************2.開始查詢資料****************************************/
+			 					ActivityAttendServiceImpl actaSvc = new ActivityAttendServiceImpl();
+			 					ActivityReportVO actrVO =new ActivityReportVO();
+			 					actrVO.setMemberId(memberId);
+			 					actrVO.setActivityId(activityId);
+			 					actrVO.setContent("不好玩");
+			 					/***************************3.查詢完成,準備轉交(Send the Success view)************/
+			 					req.setAttribute("actrVO", actrVO);         // 資料庫取出的empVO物件,存入req
+			 					String url = "/front_end/activity/addReport.jsp";
+			 					RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+			 					successView.forward(req, res);
+			 
+			 					/***************************其他可能的錯誤處理**********************************/
+			 				} catch (Exception e) {
+			 					errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+			 					RequestDispatcher failureView = req
+			 							.getRequestDispatcher("/front_end/activity/addReport.jsp");
+			 					failureView.forward(req, res);
+			 				}
+			 			}
 	}
 }
 		

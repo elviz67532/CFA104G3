@@ -2,6 +2,8 @@ package com.activity_attend.model;
 
 import java.util.List;
 
+import com.activity.model.ActivityVO;
+
 import core.DualKey;
 
 public class ActivityAttendServiceImpl implements ActivityAttendService {
@@ -58,4 +60,7 @@ public class ActivityAttendServiceImpl implements ActivityAttendService {
 			
 		return dao.selectAll();
 	}
+	
+	
+		
 }
