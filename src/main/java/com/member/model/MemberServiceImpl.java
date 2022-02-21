@@ -144,9 +144,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public boolean veriftyCode(Integer id, String code) {
+	public boolean veriftyCode(Integer status,Integer id, String code) {
 
-		return dao.veriftyCode(id, code) > 0;
+		return dao.veriftyCode(1,id, code) > 0;
 
 	}
 

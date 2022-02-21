@@ -26,9 +26,7 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 	private static final String VERIFTYCODE = "update MEMBER set "
 			+ "MEM_STATUS = ? "
 			+ "where MEM_ID  = ? OR  MEM_CODE = ?";
-	private static final String UPDATESTATUS = "update MEMBER set "
-			+ "MEM_STATUS = ? "
-			+ "where MEM_ID  = ? ";
+	private static final String UPDATESTATUS = "update MEMBER set "+ "MEM_STATUS = ? "+ "where MEM_ID  = ? ";
 	
 			
 
@@ -112,12 +110,7 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 			pstmt.setString(7, vo.getCityArea());
 			pstmt.setString(8, vo.getAddress());
 			pstmt.setBytes(9, vo.getAvatar());
-			pstmt.setInt(10, vo.getId());
-
-//			"update MEMBER set "
-//			+ "MEM_EMAIL = ?, MEM_PASSWORD = ?, MEM_NICKNAME = ?, MEM_NAME = ?, MEM_PHONE = ?, MEM_CITY = ?, MEM_CITYAREA = ?, MEM_ADDRESS	 = ?, MEM_AVATAR = ?"
-//			+ "where MEM_ID = ?";
-//			
+			pstmt.setInt(10, vo.getId());			
 			updateRow = pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -340,7 +333,7 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 		return vo;
 	}
 	@Override
-	public int veriftyCode(Integer id,String code) {
+	public int veriftyCode(Integer status,Integer id,String code) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int updateRow;
@@ -348,9 +341,9 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(VERIFTYCODE);
-
-			pstmt.setInt(1, id);
-			pstmt.setString(2, code);
+			pstmt.setInt(1, status);
+			pstmt.setInt(2, id);
+			pstmt.setString(3, code);
 	
 			
 		
@@ -371,13 +364,11 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
-			pstmt = con.prepareStatement(VERIFTYCODE);
+			pstmt = con.prepareStatement(UPDATESTATUS);
 
 			pstmt.setInt(1, id);
 			pstmt.setInt(2, status);
 	
-			
-		
 			updateRow = pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());

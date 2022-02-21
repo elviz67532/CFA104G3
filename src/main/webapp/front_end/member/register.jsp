@@ -6,7 +6,6 @@
 
 <%
 MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
-
 //<!--錯誤訊息 -->
 Map<String, String> errorMsgs = (Map<String, String>) request.getAttribute("errorMsgs");
 if (errorMsgs != null) {
@@ -24,7 +23,6 @@ if (errorMsgs != null) {
 		request.setAttribute("phone", errorMsgs.get("phone"));
 	if (errorMsgs.get("gender") != null)
 		request.setAttribute("gender", errorMsgs.get("gender"));
-
 }
 %>
 
@@ -64,6 +62,7 @@ table#table-2 {
 	font-size: 10 vmin;
 	margin: 0 auto;
 	white-space: nowrap;
+	text-align: center; 
 }
 
 h2 {
@@ -80,7 +79,12 @@ table {
 td {
 	padding: 7px;
 	font-weight: bold;
-	/* 	text-align: center; */
+ 	text-align: center; 
+}
+tr {
+	padding: 7px;
+	font-weight: bold;
+ 	text-align: center; 
 }
 </style>
 </head>
@@ -106,18 +110,17 @@ td {
 				</div>
 			</div>
 		</header>
-		<div style="text-align: center;">
+		<div style="text-align: center;" >
 			<body bgcolor='white'>
 				<table id="table-1">
 					<tr>
 
-
 						<td>
-							<h4>會員資料註冊</h4>
+							<h1>會員資料註冊</h1>
 						</td>
 					</tr>
 				</table>
-		</div>
+		
 
 		<%-- 錯誤表列 --%>
 		<%-- 		<c:if test="${not empty errorMsgs}"> --%>
@@ -135,53 +138,60 @@ td {
 			<table>
 				<tr>
 					<td>郵件:</td>
-					<td><input placeholder="請輸入郵件" name="email" size="10"
-						value="<%=(memberVO == null) ? "encored98931@gmail.com" : memberVO.getEmail()%>" /></td>
+					<td><input placeholder="請輸入郵件" name="email" size="10"value="<%=(memberVO == null) ? "" : memberVO.getEmail()%>" /></td>
 				</tr>
-				<span style="color: red"> "${email}" </span>
+				 <c:if test="${not empty email}">
+					<span style="color: red"> "${email}" </span>
+				</c:if>
 
-				<tr id=account>
+				<tr >
 					<td>帳號:</td>
-					<td><input placeholder="請輸入帳號" name="account" maxlength="10"
-						value="<%=(memberVO == null) ? "Encored989" : memberVO.getAccount()%>" /></td>
+					<td><input placeholder="請輸入帳號" name="account" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getAccount()%>" /></td>
 				</tr>
-				<span style="color: red"> "${account}" </span>
+				 <c:if test="${not empty account}">
+					<span style="color: red"> "${account}" </span>
+				</c:if>
 
-				<tr id=password>
+				<tr >
 					<td>密碼:</td>
-					<td><input placeholder="請輸入密碼" name="password" maxlength="10"
-						value="<%=(memberVO == null) ? "A123456" : memberVO.getPassword()%>" /></td>
+					<td><input placeholder="請輸入密碼" name="password" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getPassword()%>" /></td>
 				</tr>
-				<span style="color: red"> "${password}" </span>
+				 <c:if test="${not empty password}">
+					<span style="color: red"> "${password}" </span>
+				</c:if>
 
-				<tr id=nickname>
+				<tr >
 					<td>暱稱:</td>
-					<td><input placeholder="請輸入暱稱" name="nickname" maxlength="10"
-						value="<%=(memberVO == null) ? "小名" : memberVO.getNickname()%>" /></td>
+					<td><input placeholder="請輸入暱稱" name="nickname" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getNickname()%>" /></td>
 				</tr>
-				<span style="color: red"> "${nickname}" </span>
-
-				<tr id=name>
+                   <c:if test="${not empty nickname}">
+					<span style="color: red"> "${nickname}" </span>
+				</c:if>
+				<tr >
 					<td>姓名:</td>
-					<td><input placeholder="請輸入名字" name="name" maxlength="10"
-						value="<%=(memberVO == null) ? "曾令名" : memberVO.getName()%>" /></td>
+					<td><input placeholder="請輸入名字" name="name" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getName()%>" /></td>
 				</tr>
-				<span style="color: red"> "${name}" </span>
+				 <c:if test="${not empty name}">
+					<span style="color: red"> "${name}" </span>
+				</c:if>
 				<tr>
 					<td>電話:</td>
-					<td><input placeholder="請輸入電話" name="phone" maxlength="10"
-						value="<%=(memberVO == null) ? "0930911283" : memberVO.getPhone()%>" /></td>
+					<td><input placeholder="請輸入電話" name="phone" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getPhone()%>" /></td>
 				</tr>
-				<span style="color: red"> "${phone}" </span>
-
-
+				 <c:if test="${not empty phone}">
+					<span style="color: red"> "${phone}" </span>
+				</c:if>
 				<tr>
 					<td>性別:</td>
-					<td><lable> <input type="radio" name="gender"
-							value="1" checked>男</lable> <input type="radio" name="gender"
-						value="0" checked>女</lable></td>
+					<td>
+					<input type="radio" name="gender"value="0" checked>不透漏</lable> 
+					<input type="radio" name="gender" value="1" checked>男</lable>
+					<input type="radio" name="gender" value="2" checked>女</lable>
+					</td>
 				</tr>
-				<span style="color: red"> "${gender}" </span>
+				 <c:if test="${not empty gender}">
+					<span style="color: red"> "${gender}" </span>
+				</c:if>
 
 				<!-- 				<tr> -->
 				<!-- 					<td>城市:</td> -->
@@ -207,12 +217,11 @@ td {
 				<%-- 						value="<%=(memberVO == null) ? "" : memberVO.getAvatar()%>" /></td> --%>
 				<!-- 				</tr> -->
 			</table>
-			<br> <input type="hidden" name="action" value="register"><input
-				type="submit" value="送出新增">
+			<br> <input type="hidden" name="action" value="register"><input type="submit" value="送出新增">
 		</FORM>
 		</main>
 	</body>
-
+</div>
 
 	<!-- Footer-->
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
