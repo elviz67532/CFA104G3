@@ -3,7 +3,7 @@
 <%@ page import="java.util.*"%>
 
 
-
+ProductCollectionVO vo = (ProductCollectionVO) request.getAttribute("");
 
 
 
@@ -90,10 +90,12 @@
                             <i class="bi-cart-fill me-1"></i>
                             購買
                         </button>
-                        <button class="btn btn-outline-dark flex-shrink-0 me-1" type="button">
-                            <i class="bi bi-bookmarks-fill"></i>
+                        <FORM METHOD="post" ACTION="productcollection.do">
+                        <input type="hidden" name="action" value="insert">
+                        <button type="button"> 
                             收藏
                         </button>
+                        </FORM>
                         <button class="btn btn-outline-dark flex-shrink-0 me-1" type="button">
                             <i class="bi bi-people-fill"></i>
                             回報

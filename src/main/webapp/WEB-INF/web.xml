@@ -211,6 +211,14 @@
 		<url-pattern>/product/ProductServlet</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>ProductCollectionServlet</servlet-name>
+		<servlet-class>com.product_collection.controller.ProductCollectionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductCollectionServlet</servlet-name>
+		<url-pattern>/front_end/product/productcollection.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>ProductPhotoServlet</servlet-name>
 		<servlet-class>com.product_photo.controller.ProductPhotoServlet</servlet-class>
 	</servlet>
