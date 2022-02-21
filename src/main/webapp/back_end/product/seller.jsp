@@ -50,7 +50,7 @@
 										  <div class="input-group-append">
 										    <input type="text" name="prodId" class="form-control" placeholder="輸入商品編號" aria-label="Recipient's username" aria-describedby="button-addon2">
 										    <input type="submit" value="送出" class="btn btn-outline-secondary" id="button-addon2"></button>
-										    <input type="hidden" name="action" value="getOne_For_Display">
+										    <input type="hidden" name="action" value="getOne_For_Display_Backend">
 										  </div>
 										</FORM>
 									</div>									
@@ -67,7 +67,7 @@
 											</c:forEach>
 										  </select>
 										  <div class="input-group-append">
-										    <input type="hidden" name="action" value="getOne_For_Display">
+										    <input type="hidden" name="action" value="getOne_For_Display_Backend">
 							        		<input type="submit" value="送出" class="btn btn-outline-secondary">   
 										  </div>
 										</div>
@@ -83,7 +83,7 @@
 											</c:forEach>
 										  </select>
 										  <div class="input-group-append">
-										    <input type="hidden" name="action" value="getOne_For_Display">
+										    <input type="hidden" name="action" value="getOne_For_Display_Backend">
 							        		<input type="submit" value="送出" class="btn btn-outline-secondary">   
 										  </div>
 										</div>
@@ -109,7 +109,7 @@
 											<option value=4> 電器類
 										  </select>
 										  <div class="input-group-append">
-										    <input type="hidden" name="action" value="get_Display_From_Type">
+										    <input type="hidden" name="action" value="get_Display_From_Type_Backend">
 							        		<input type="submit" value="送出" class="btn btn-outline-secondary">    
 										  </div>
 										</div>
@@ -122,12 +122,12 @@
 							</ul>
 						</div>
 					</div>
-					<div style="text-align:center;">
-						<div style="width: 720px;display: inline-block;text-align: left;">
-							<h3>商品管理</h3>
-							<a href='addProduct.jsp'><h5>新增商品</h5></a>
-						</div>
-					</div>
+<!-- 					<div style="text-align:center;"> -->
+<!-- 						<div style="width: 720px;display: inline-block;text-align: left;"> -->
+<!-- 							<h3>商品管理</h3> -->
+<!-- 							<a href='addProduct.jsp'><h5>新增商品</h5></a> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 					<!-- end of main -->
 					
 				</div>

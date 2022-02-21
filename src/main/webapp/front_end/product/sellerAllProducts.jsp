@@ -16,7 +16,7 @@
 // 	MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
 // 	Integer account = memberVo.getId();
 // 	List<ProductVO> list = productService.getFromMember(account);
-	List<ProductVO> list = productService.getFromMember(17);
+	List<ProductVO> list = productService.getFromMember(2);
 	pageContext.setAttribute("list", list);
 %>
 
