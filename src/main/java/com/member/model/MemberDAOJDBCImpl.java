@@ -20,7 +20,7 @@ public class MemberDAOJDBCImpl implements MemberDAO {
 	private static final String UPDATE = "update MEMBER set "
 			+ "MEM_EMAIL = ?, MEM_PASSWORD = ?, MEM_NICKNAME = ?, MEM_NAME = ?, MEM_PHONE = ?, MEM_CITY = ?, MEM_CITYAREA = ?, MEM_ADDRESS	 = ?, MEM_AVATAR = ? "
 			+ "where MEM_ID = ?";
-	private static final String LOGIN = "select * from MEMBER where MEM_ACCOUNT = ?and MEM_PASSWORD = ? ";
+	private static final String LOGIN = "select * from MEMBER where MEM_ACCOUNT = ? and MEM_PASSWORD = ? ";
 	public static final String FORGETPASSWORD = "SELECT * FROM MEMBER where MEM_EMAIL = ?";
 	public static final String GETONEBYNAME = "SELECT * FROM MEMBER where MEM_NAME=?";
 	private static final String VERIFTYCODE = "update MEMBER set "

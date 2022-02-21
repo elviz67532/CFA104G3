@@ -42,18 +42,36 @@
 
 	<!-- 全域錯誤、傳入參數 -->
 	<%
-// 		MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
-// 		if (memberVo == null) {
-// 			RequestDispatcher failureView = request.getRequestDispatcher("/front_end/move/homePage.jsp");
-// 			failureView.forward(request, response);
-// 			return;
-// 		}
-// 		Integer memberId = memberVo.getId();
-
-		Integer memberId = 1;
+		MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
+		if (memberVo == null) {
+			RequestDispatcher failureView = request.getRequestDispatcher("/front_end/move/homePage.jsp");
+			failureView.forward(request, response);
+			return;
+		}
+		Integer memberId = memberVo.getId();
 
 		MoveRequestService moveRequestService = new MoveRequestServiceImpl(); 
 		List<MoveRequestVO> moveRequestVOs = moveRequestService.findMemberRequests(memberId);
+		if (moveRequestVOs != null) {
+			Comparator<MoveRequestVO> notifyComparator = new Comparator<MoveRequestVO>() {
+				@Override
+				public int compare(MoveRequestVO o1, MoveRequestVO o2) {
+					if (o1.getRequestDate() == null) {
+						return 1;
+					}
+					if (o2.getRequestDate() == null) {
+						return -1;
+					}
+					if(o1.getRequestDate().after(o2.getRequestDate())) {
+						return -1;
+					}
+					return 1;
+				}
+			};
+			
+			Collections.sort(moveRequestVOs , notifyComparator);
+			
+		}
 		pageContext.setAttribute("moveRequestVOs", moveRequestVOs);
 
 		// 文字比對
@@ -79,9 +97,9 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">單號</th>
-					<th>已處理</th>
-					<th>狀態</th>
+					<th scope="col"></th>
+					<th>處理狀態</th>
+					<th>申請單狀態</th>
 					<th>估價方式</th>
 					<th>估價日期</th>
 					<th>搬家日期</th>
@@ -94,15 +112,24 @@
 					varStatus="status">
 					<tr>
 						<!-- TODO 內容調整 -->
-						<th scope="row">${moveRequestVO.id}</th>
-<%-- 						<td>${moveRequestVO.handled}</td> --%>
-						<td><c:out value="${handledMap[moveRequestVO.handled]}"/></td>
-						<td>${moveRequestStatusMap[moveRequestVO.status]}</td>
-						<td>${moveRequestEvaTypeMap[moveRequestVO.evaluateType]}</td>
-						<td><fmt:formatDate value="${moveRequestVO.evaluateDate}" pattern="yyyy-M-dd"/></td>
-						<td><fmt:formatDate value="${moveRequestVO.moveDate}" pattern="yyyy-M-dd"/></td>
-						<td><fmt:formatDate value="${moveRequestVO.requestDate}" pattern="yyyy-M-dd"/></td>
-						<td><button type="button" class="viewRequest" value="${status.count}">查看</button></td>
+						<th class="align-middle" scope="row">${status.count}</th>
+						<td class="align-middle"><c:out value="${handledMap[moveRequestVO.handled]}"/></td>
+						<td class="align-middle">${moveRequestStatusMap[moveRequestVO.status]}</td>
+						<td class="align-middle">${moveRequestEvaTypeMap[moveRequestVO.evaluateType]}</td>
+						<td class="align-middle"><fmt:formatDate value="${moveRequestVO.evaluateDate}" pattern="yyyy-M-dd"/></td>
+						<td class="align-middle"><fmt:formatDate value="${moveRequestVO.moveDate}" pattern="yyyy-M-dd"/></td>
+						<td class="align-middle"><fmt:formatDate value="${moveRequestVO.requestDate}" pattern="yyyy-M-dd"/></td>
+						<td>
+							<div class="align-middle">
+							<form class="row g-3" method="POST"
+								action="${pageContext.request.contextPath}/move/moveRequest.do"
+								name="moveRequestView">
+								<input type="hidden" name="action" value="moveRequestView">
+								<input type="hidden" name="requestId" value="${moveRequestVO.id}">
+								<input type="submit" class="btn btn-primary" value="查看"></button>
+							</form>
+							</div>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -111,18 +138,6 @@
 	
 	<!-- Bootstrap core JavaScript-->
 	<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
-	
-	<script>
-		$("button[class='viewRequest']").click(function(){
-	        let self = this;
-	        let requestId = self.value;
-			
-	        document.cookie = 'requestId=' + requestId;
-
-	        // TODO 編輯用申請單
-	        window.location.href='moveRequest.jsp';
-		});
-	</script>
 
 	<!-- Footer -->
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>

@@ -1,3 +1,4 @@
+<%@page import="java.util.stream.Collector"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -14,12 +15,35 @@
 		int count = service.getUnviewNotificationCount(memberId);
 		
 		List<NotificationVO> notificationVOs = service.getMemberLatestNotification(memberId, 5);
+		if (notificationVOs != null) {
+			Comparator notifyComparator = new Comparator<NotificationVO>() {
+				@Override
+				public int compare(NotificationVO o1, NotificationVO o2) {
+					if (o1.getNotifyTime() == null) {
+						return 1;
+					}
+					if (o2.getNotifyTime() == null) {
+						return -1;
+					}
+					if(o1.getNotifyTime().after(o2.getNotifyTime())) {
+						return -1;
+					}
+					return 1;
+				}
+			};
+			Collections.sort(notificationVOs, notifyComparator);		
+		}
 		pageContext.setAttribute("notificationsCnt", count);
 		pageContext.setAttribute("notifications", notificationVOs);
 	}
 %>
 <link href="<%=request.getContextPath()%>/css/back_end/sb-admin-2.min.css" rel="stylesheet">
-
+<style>
+/* 重製label下方外距 */
+label {
+	margin-bottom: 0rem;
+}
+</style>
 <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 	<div class="container px-4 px-lg-5">
 	    <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">委域</a>
@@ -95,7 +119,7 @@
 											<span class="<c:if test='${notification.viewed eq false}'>font-weight-bold</c:if>" style="overflow: hidden">
 												<c:choose>
 													<c:when test="${fn:length(notification.content) gt 20}">
-															<c:out value="${fn:substring(notification.content, 0, 20)}..."></c:out>
+														<c:out value="${fn:substring(notification.content, 0, 20)}..."></c:out>
 													</c:when>
 													<c:otherwise>
 														<c:out value="${notification.content}"></c:out>

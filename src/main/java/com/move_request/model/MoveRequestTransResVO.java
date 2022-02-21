@@ -27,6 +27,7 @@ public class MoveRequestTransResVO {
 	private Timestamp requestDate;
 	private Boolean handled;
 	private MovePhotoTransVO[] movePhotoTransVOs;
+	private Integer statusCode;
 	private String status;
 	
 	// 跳轉頁面

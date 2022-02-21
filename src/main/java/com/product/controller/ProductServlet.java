@@ -24,6 +24,7 @@ import org.eclipse.jdt.internal.compiler.ast.WhileStatement;
 import com.product.model.ProductDAOImpl;
 import com.product.model.ProductServiceImpl;
 import com.product.model.ProductVO;
+import com.product_photo.model.ProductPhotoServiceImpl;
 
 
 public class ProductServlet extends HttpServlet {
@@ -103,6 +104,68 @@ public class ProductServlet extends HttpServlet {
 			
 		}
 		
+		if("getOne_For_Display_Backend".equals(action)) {
+
+			
+			List<String> errMsgs = new LinkedList<String>();
+			req.setAttribute("errMsgs", errMsgs);
+			
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/			
+				String str = req.getParameter("prodId");
+				if(str == null || (str.trim()).length() == 0) { // 沒有輸入資料 或 僅輸入空格
+					errMsgs.add("請輸入商品編號");
+				}
+				if (!errMsgs.isEmpty()) { // errorMsgs有內容
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/product/Seller.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				// 格式不正確
+				Integer prodno = null;
+				try {
+					prodno = new Integer(str);
+				} catch (NumberFormatException e) {
+					errMsgs.add("商品編號格是不正確");
+				}
+				
+				if(!errMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/product/Seller.jsp");
+					failureView.forward(req, res);
+					return;		
+				}
+				
+				/***************************2.開始查詢資料*****************************************/	
+				ProductServiceImpl productSvc = new ProductServiceImpl();
+				ProductVO prodVo = productSvc.getOneProduct(prodno);
+				if(prodVo == null) {
+					errMsgs.add("查無資料");
+				}
+				
+				if(!errMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/product/seller.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷				
+				}
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("productVO", prodVo);
+				String url = "/back_end/product/listOneProduct.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+			} catch (Exception e) {
+				errMsgs.add("無法取得資料" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front_end/product/Seller.jsp");
+				failureView.forward(req, res);
+				return;				
+			}				
+		}
+		
 		if("get_Display_From_Type".equals(action)) {
 			
 			List<String> errMsgs = new LinkedList<String>();
@@ -138,6 +201,41 @@ public class ProductServlet extends HttpServlet {
 			}
 			
 		}
+		
+		if("get_Display_From_Type_Backend".equals(action)) {
+			
+			List<String> errMsgs = new LinkedList<String>();
+			req.setAttribute("errMsgs", errMsgs);
+			
+			try {
+				/***************************1.接收請求參數**********************/
+				Integer prodType = Integer.valueOf(req.getParameter("prodType"));
+				
+				/***************************2.開始查詢資料*****************************************/	
+				ProductServiceImpl productSvc = new ProductServiceImpl();
+				List<ProductVO> list = productSvc.getProductsByType(prodType);
+				
+				if(list == null) {
+					errMsgs.add("目前無這類商品");
+				}
+				if(!errMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/seller.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("list", list);
+				String url = "/back_end/product/listOneTypeProduct.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
+			} catch (Exception e) {
+				errMsgs.add("無法取得資料" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/seller.jsp");
+				failureView.forward(req, res);
+				return;
+			}			
+		}
 
 		if("getOne_For_Update".equals(action)) {
 			
@@ -154,7 +252,7 @@ public class ProductServlet extends HttpServlet {
 				
 				/***************************3.查詢完成，準備轉交****************************************/
 				req.setAttribute("productVO", productVO);
-				String url = "/back_end/product/update_product_input.jsp";
+				String url = "/front_end/product/update_product_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
@@ -206,7 +304,7 @@ public class ProductServlet extends HttpServlet {
 
 			Timestamp prodUptime = null;
 			try {
-				prodUptime = Timestamp.valueOf(req.getParameter("prodUpdate").trim());
+				prodUptime = Timestamp.valueOf(req.getParameter("prodUpdate"));
 			} catch (IllegalArgumentException e) {
 				prodUptime = new Timestamp(System.currentTimeMillis());
 			}
@@ -335,7 +433,7 @@ public class ProductServlet extends HttpServlet {
 		}
 		
 
-		if("delete".equals(action)) {
+		if("delete".equals(action)) { // 前台賣家的delete
 			
 			List<String> errMsgs = new LinkedList<String>();
 			req.setAttribute("errMsgs", errMsgs);
@@ -345,11 +443,15 @@ public class ProductServlet extends HttpServlet {
 				Integer prodId = Integer.valueOf(req.getParameter("prodId"));
 
 				/***************************2.開始刪除資料*****************************************/
+				// 刪除圖片
+				ProductPhotoServiceImpl prodphotoSvc = new ProductPhotoServiceImpl();
+				prodphotoSvc.deleteByProd(prodId);
+				// 刪除商品資訊				
 				ProductServiceImpl productSvc = new ProductServiceImpl();
 				productSvc.delete(prodId);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)*************/	
-				String url = "/back_end/product/listAll.jsp";
+				String url = "/front_end/product/sellerAllProducts.jsp";
 				RequestDispatcher successview = req.getRequestDispatcher(url);
 				successview.forward(req, res);
 			} catch (Exception e) {
@@ -360,38 +462,36 @@ public class ProductServlet extends HttpServlet {
 			} 
 			
 		}
+		
+		if("delete_backend".equals(action)) { // 後台的delete
+			
+			List<String> errMsgs = new LinkedList<String>();
+			req.setAttribute("errMsgs", errMsgs);
+			
+			try {
+				/***************************1.接收請求參數*****************************************/
+				Integer prodId = Integer.valueOf(req.getParameter("prodId"));
 
-//		單一欄位的複合查詢???
-//		if("listProd_ByCompositeQuery".equals(action)) {
-//			List<String> errMsgs = new LinkedList<String>();
-//			// Store this set in the request scope, in case we need to
-//			// send the ErrorPage view.
-//			req.setAttribute("errMsgs", errMsgs);
-//			
-//			try {
-//				
-//				/***************************1.將輸入資料轉為Map**********************************/ 
-//				//採用Map<String,String[]> getParameterMap()的方法 
-//				//注意:an immutable java.util.Map 
-//				Map<String, String[]> map = req.getParameterMap();
-//				
-//				/***************************2.開始複合查詢***************************************/
-//				ProductServiceImpl prodSvc = new ProductServiceImpl();
-//				List<EmpVO> list  = prodSvc.getAll(map);
-//				
-//				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-//				req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
-//				RequestDispatcher successView = req.getRequestDispatcher("/emp/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
-//				successView.forward(req, res);
-//				
-//				/***************************其他可能的錯誤處理**********************************/
-//			} catch (Exception e) {
-//				errMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/select_page.jsp");
-//				failureView.forward(req, res);
-//			}			
-//		}
+				/***************************2.開始刪除資料*****************************************/
+				// 刪除圖片
+				ProductPhotoServiceImpl prodphotoSvc = new ProductPhotoServiceImpl();
+				prodphotoSvc.deleteByProd(prodId);
+				// 刪除商品資訊
+				ProductServiceImpl productSvc = new ProductServiceImpl();
+				productSvc.delete(prodId);
+				
+				/***************************3.刪除完成,準備轉交(Send the Success view)*************/	
+				String url = "/back_end/product/listAll.jsp";
+				RequestDispatcher successview = req.getRequestDispatcher(url);
+				successview.forward(req, res);
+			} catch (Exception e) {
+				errMsgs.add("刪除資料失敗" + e.getMessage());
+				String url = "/back_end/product/listAll.jsp";				
+				RequestDispatcher failureView = req.getRequestDispatcher(url);
+				failureView.forward(req, res);
+			} 			
+		}
+
 	}
 
 

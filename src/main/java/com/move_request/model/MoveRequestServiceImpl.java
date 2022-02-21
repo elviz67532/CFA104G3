@@ -9,27 +9,24 @@ import java.util.List;
 
 import javax.servlet.http.Part;
 
+import com.move_order.model.MoveOrderService;
+import com.move_order.model.MoveOrderServiceImpl;
 import com.move_photo.model.MovePhotoDAO;
 import com.move_photo.model.MovePhotoDAOJDBCImpl;
 import com.move_photo.model.MovePhotoService;
 import com.move_photo.model.MovePhotoServiceImpl;
 import com.move_photo.model.MovePhotoVO;
+import com.notification.model.ENotificationType;
+import com.notification.model.NotificationService;
+import com.notification.model.NotificationServiceImpl;
 
 // NOTE 不提供申請單修改
 public class MoveRequestServiceImpl implements MoveRequestService {
 
 	private MoveRequestDAO moveRequestDAO = new MoveRequestDAOJDBCImpl(); 
 	private MovePhotoService movePhotoService = new MovePhotoServiceImpl();
+	private MoveOrderService orderService = new MoveOrderServiceImpl();
 	
-	@Override
-	public List<Date> getUnavaliableEvaDates(Date today) {
-		return moveRequestDAO.getUnAvaliableEvaDates(today);
-	}
-	
-	@Override
-	public List<Date> getUnavaliableMoveDates(Date today) {
-		return moveRequestDAO.getUnavaliableMoveDates(today);
-	}
 	
 	@Override
 	public boolean addRequest(int memberId, String fromAddress, String toAddress, String items, Timestamp moveDate,
@@ -67,9 +64,22 @@ public class MoveRequestServiceImpl implements MoveRequestService {
 	}
 	
 	@Override
+	public List<Date> getUnavaliableEvaDates(Date today) {
+		return moveRequestDAO.getUnAvaliableEvaDates(today);
+	}
+	
+	@Override
+	public List<Date> getUnavaliableMoveDates(Date today) {
+		return moveRequestDAO.getUnavaliableMoveDates(today);
+	}
+	
+	@Override
 	public boolean cancelRequest(int requestId) {
 		int row = moveRequestDAO.changeStatus(requestId, EMoveRequestStatus.CANCEL_REQUEST.getStatusCode());
 		boolean cancelOk = row > 0;
+		if (cancelOk) {
+			handled(requestId);
+		}
 		return cancelOk;
 	}
 	
@@ -86,47 +96,58 @@ public class MoveRequestServiceImpl implements MoveRequestService {
 	@Override
 	public boolean verifyRequestNAK(int requestId) {
 		int row = moveRequestDAO.changeStatus(requestId, EMoveRequestStatus.VERIFY_NAK.getStatusCode());
-		boolean OK = row > 0;
-
-		// TODO 通知失敗
-
-		return OK;
+		if (row > 0) {
+			handled(requestId);
+		}
+		return row > 0;
 	}
 	
 	@Override
-	public boolean verifyOnlineRequestOK(int requestId, int price) {
+	public boolean evaluatePrice(int requestId, int price) {
 		boolean evaluate = evaluate(requestId, price);
 		int row = moveRequestDAO.changeStatus(requestId, EMoveRequestStatus.WAIT_PAY.getStatusCode());
-		boolean cancelOk = row > 0;
-
-		// TODO 通知成功
-		return false;
+		return row > 0;
 	}
-	
+
 	@Override
 	public boolean verifySiteRequestOK(int requestId) {
 		int row = moveRequestDAO.changeStatus(requestId, EMoveRequestStatus.WAIT_SITE_EVA.getStatusCode());
-		boolean cancelOk = row > 0;
-		
-		// TODO 通知成功
-		return false;
+		return  row > 0;
 	}
-
-	@Override
-	public boolean evaluate(int requestId, int price) {
-		return moveRequestDAO.changePrice(requestId, price) > 0;
-	}
-
+	
 	@Override
 	public boolean pay(int requestId) {
-		// TODO 預設為結帳成功
-		// TODO 產生訂單
-		// TODO 
-		return true;
+		MoveRequestVO request = getRequest(requestId);
+		int deposit = calDeposit(request.getEvaluatePrice());
+		boolean payok = orderService.getDataFromRequest(request, deposit);
+		if (payok) {
+			moveRequestDAO.changeStatus(requestId, EMoveRequestStatus.PAY_DONE.getStatusCode());
+			handled(requestId);
+		}
+		return payok;
 	}
 
 	@Override
 	public MoveRequestVO getRequest(int requestId) {
 		return moveRequestDAO.selectById(requestId);
+	}
+
+	private boolean handled(int requestId) {
+		int row = moveRequestDAO.changeHandled(requestId);
+		return  row > 0;
+	}
+	
+	private boolean evaluate(int requestId, int price) {
+		return moveRequestDAO.changePrice(requestId, price) > 0;
+	}
+	
+	private int calDeposit(int oriPrice) {
+		if (oriPrice <= 200) {
+			return oriPrice;
+		} else if (oriPrice > 200 && oriPrice <= 500) {
+			return 200;
+		} else {
+			return 500;
+		}
 	}
 }

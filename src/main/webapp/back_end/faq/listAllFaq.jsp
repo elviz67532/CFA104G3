@@ -129,7 +129,7 @@ th, td {
 							<td>${faqVO.answer}</td>
 
 							<td>
-								<FORM METHOD="post" ACTION="faq">
+								<FORM METHOD="post" ACTION="faq.do">
 
 									<input type="submit" value="修改"> <input type="hidden"
 										name="id" value="${faqVO.id}"> <input type="hidden"
@@ -137,7 +137,7 @@ th, td {
 								</FORM>
 							</td>
 							<td>
-								<FORM METHOD="post" ACTION="faq">
+								<FORM METHOD="post" ACTION="faq.do">
 									<input type="submit" value="刪除"> <input type="hidden"
 										name="id" value="${faqVO.id}"> <input type="hidden"
 										name="action" value="delete">

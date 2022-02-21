@@ -263,8 +263,15 @@ public class ActivityServlet extends HttpServlet {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
 				/* ========================= 會員id ========================= */
-				MemberVO memVO = new MemberVO();
-				int organizerMemberId = memVO.getId();
+				HttpSession session = req.getSession();
+				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+				if (memberVO == null) {
+//			     FrontEndMemberFilter.doFilter(req, res, gg);
+					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/activity/homePage.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				int organizerMemberId = memberVO.getId();
 				/* ========================= 狀態 ========================= */
 				int status = 0;
 				/* ========================= 活動名稱 ========================= */
@@ -565,29 +572,27 @@ public class ActivityServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				HttpSession session = req.getSession();
-				MemberVO memVO = (MemberVO) session.getAttribute("memVO");
-
-				if (memVO == null) {
+				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+				if (memberVO == null) {
 //			     FrontEndMemberFilter.doFilter(req, res, gg);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/move/frontGetMoveOrder.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/activity/homePage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
-				int memberId = memVO.getId();
-				System.out.println(memberId);
+				int memberId = memberVO.getId();
 				/*************************** 2.開始查詢資料 ****************************************/
 				ActivityServiceImpl actSvc = new ActivityServiceImpl();
 				List<ActivityVO> actVO = actSvc.findByMemId(memberId);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("actVO", actVO); // 資料庫取出的empVO物件,存入req
-				RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/singleActPage.jsp");// 回到預覽頁面
+				RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/memPublishActivityOwnPage.jsp");// 回到預覽頁面
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.put("無法取得要修改的資料:", e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/activity/singleActPage.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/activity/homePage.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -599,13 +604,13 @@ public class ActivityServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer activityId = Integer.valueOf(req.getParameter("activityId"));
-
 				/*************************** 2.開始查詢資料 ****************************************/
 				ActivityServiceImpl actSvc = new ActivityServiceImpl();
 				ActivityVO actVO = actSvc.findByActivityId(activityId);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("actVO", actVO); // 資料庫取出的empVO物件,存入req
+//				跳轉頁面 遊客/會員
 				RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/singleActPage.jsp");// 回到預覽頁面
 				successView.forward(req, res);
 
@@ -706,28 +711,6 @@ public class ActivityServlet extends HttpServlet {
 				/* ========================= activityId ========================= */
 
 				int activityId = Integer.valueOf(req.getParameter("activityId").trim());
-//				try {
-//					activityId = Integer.valueOf(req.getParameter("activityId").trim());
-//				} catch (NumberFormatException e) {
-//					errorMsgs.put("activityId", "id錯誤");
-//				}
-				/* ========================= organizerMemberId ========================= */
-
-//				int organizerMemberId = Integer.valueOf(req.getParameter("organizerMemberId"));
-//				try {
-//					organizerMemberId = Integer.valueOf(req.getParameter("organizerMemberId").trim());
-//				} catch (NumberFormatException e) {
-//					errorMsgs.put("organizerMemberId", "memId錯誤");
-//				}
-				/* ========================= 狀態 ========================= */
-
-//				int status = Integer.valueOf(req.getParameter("status"));
-//				try {
-//					status = Integer.valueOf(req.getParameter("status").trim());
-//				} catch (NumberFormatException e) {
-//					errorMsgs.put("status", "status錯誤");
-//				}
-
 				/* ========================= 活動名稱 ========================= */
 // 正則最後處理
 //String actNameReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{2,20}$";
@@ -996,7 +979,7 @@ public class ActivityServlet extends HttpServlet {
 				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
 				// 新增成功後轉交previewActPage.jsp
 				req.setAttribute("actVO", actVO);
-				RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/previewActPage.jsp");
+				RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/previewActPage2.jsp");
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/

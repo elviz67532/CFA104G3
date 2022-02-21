@@ -28,8 +28,6 @@ public class NotificationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("text/html; charset=UTF-8");
 		
-		System.out.println("------------");
-		
 		// 工具
 		Gson gson = new Gson();
 		
@@ -42,15 +40,13 @@ public class NotificationServlet extends HttpServlet {
 		MemberVO memberVo = (MemberVO) session.getAttribute("memberVO");
 		if (memberVo == null) {
 			PrintWriter out = res.getWriter();
-			resVo.setHref("/CFA104G3/back_end/server_manager/loginServer.jsp");
+			resVo.setHref(req.getContextPath() + "/back_end/server_manager/loginServer.jsp");
 			commonRes = genCommonRes("login", "登入", resVo);
 			String jsonStr = gson.toJson(commonRes);
 			out.print(jsonStr);          
 			out.close();
 			return;
 		}
-		
-		System.out.println("------------3");
 		
 		//拆解json
 		String json = CommonUtil.jsonParse(req.getReader());
@@ -69,16 +65,14 @@ public class NotificationServlet extends HttpServlet {
 		if ("viewedNotify".equals(action)) {
 			PrintWriter out = res.getWriter();
 
-			System.out.println("------------2");
-			
 			try {
 				NotificationService service = new NotificationServiceImpl();
 				service.viewNotification(notificationId);
 				
-				resVo.setHref("/CFA104G3/front_end/notification/homePage.jsp");
+				resVo.setHref(req.getContextPath() + "/front_end/notification/homePage.jsp");
 				commonRes = genCommonRes("success", "成功", resVo);
 			} catch (Exception e) {
-				resVo.setHref("/CFA104G3/front_end/notification/homePage.jsp");
+				resVo.setHref(req.getContextPath() + "/front_end/notification/homePage.jsp");
 				commonRes = genCommonRes("fail", "失敗", resVo);
 			}
 			String jsonStr = gson.toJson(commonRes);

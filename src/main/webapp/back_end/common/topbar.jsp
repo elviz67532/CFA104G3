@@ -2,11 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.server_manager.model.*"%>
-
-<%
-	ServerManagerVO serverManagerVO = (ServerManagerVO)session.getAttribute("ServerManagerVO");
-	System.err.println(session.getAttribute("account"));
-%>
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
 	<!-- Sidebar Toggle (Topbar) -->
@@ -193,7 +188,7 @@
 			</a> <!-- Dropdown - User Information -->
 			<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 				aria-labelledby="userDropdown">
-				<a class="dropdown-item" href="#"> 
+				<a class="dropdown-item" href="<%=request.getContextPath()%>/server_manager/profile.jsp"> 
 					<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
 				</a> 
 <!-- 				<a class="dropdown-item" href="#">  -->

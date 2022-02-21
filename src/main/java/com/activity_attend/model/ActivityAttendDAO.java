@@ -1,5 +1,7 @@
 package com.activity_attend.model;
 
+import com.activity.model.ActivityVO;
+
 import core.DualKey;
 import core.dao.CoreDao;
 

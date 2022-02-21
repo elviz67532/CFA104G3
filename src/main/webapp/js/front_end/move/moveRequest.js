@@ -1,30 +1,38 @@
 // -----------預設值設定-----------
 // 取得今日日期
 var today = new Date();
-
-var dd = today.getDate();
-var mm = today.getMonth() + 1;
-var yyyy = today.getFullYear();
-
-// 轉換型態
-if (dd < 10) {
-   dd = '0' + dd;
-}
-if (mm < 10) {
-   mm = '0' + mm;
-} 
-var ymd = yyyy + '-' + mm + '-' + dd;
+var dueDay = new Date();
+dueDay.setDate(today.getDate() + 90);
+var ymdToday = parseDateString(today);
+var ymdDueDay = parseDateString(dueDay);
 
 // 設值
-document.getElementById("moveDate").setAttribute("min", ymd);
-document.getElementById("evaDate").setAttribute("min", ymd);
+document.getElementById("moveDate").setAttribute("min", ymdToday);
+document.getElementById("evaDate").setAttribute("min", ymdToday);
+document.getElementById("moveDate").setAttribute("max", ymdDueDay);
+document.getElementById("evaDate").setAttribute("max", ymdDueDay);
 
-if ($('#online').val()) {
+function parseDateString(date) {
+	var dd = date.getDate();
+	var mm = date.getMonth() + 1;
+	var yyyy = date.getFullYear();
+	
+	if (dd < 10) {
+	   dd = '0' + dd;
+	}
+	if (mm < 10) {
+	   mm = '0' + mm;
+	} 
+	var ymd = yyyy + '-' + mm + '-' + dd;
+	return ymd;
+}
+
+if ($('#online').attr("checked")) {
 	$('#siteEvaDiv').hide();
 	$('#onlineEvaDiv').show();
 } else {
-	$('#siteEvaDiv').show();
 	$('#onlineEvaDiv').hide();
+	$('#siteEvaDiv').show();
 }
 
 // -----------監聽器設定-----------

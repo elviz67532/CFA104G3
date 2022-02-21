@@ -3,6 +3,10 @@
 <%@ page import="com.product_order.model.*"%>
 <%@ page import="java.util.*"%>
 
+<%
+ProductOrderVO vo = (ProductOrderVO) request.getAttribute("vo");
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,48 +36,77 @@
 
 </head>
 <style>
+.section {
+	/* 	border:2px black solid; */
+	text-align: center;
+	background-color: rgba(196, 220, 179, 0.2);
+	font-size: 0;
+	z-index: -100;
+	top: 50px;
+	bottom: 100px;
+}
+
+.titleh1 h1 {
+	text-align: center;
+	font-size: 25px;
+	line-height: 50px;;
+}
+
+.buttondiv {
+	position: absolute;
+	top: 125px;
+	display: inline;
+	right: 120px;
+}
+
+.btn {
+	box-sizing: border-box;
+	appearance: none;
+	background-color: transparent;
+	border: 2px solid #3498db;
+	border-radius: 0.6em;
+	color: #3498db;
+	cursor: pointer;
+	align-self: center;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1;
+	margin: 20px;
+	padding: 1.2em 2.8em;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+}
+
+.btn {
+	border-color: #3498db;
+	color: #fff;
+	box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+	transition: all 150ms ease-in-out;
+}
+
+.btn:hover {
+	color: black;
+	outline: 0;
+	box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
+}
+
 table {
 	width: 800px;
-	background-color: white;
+	background-color: #DEFFFF;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
 table, th, td {
-	border: 1px solid #CCCCFF;
+	border: 1px solid #00C2C2;
 }
 
 th, td {
 	padding: 5px;
 	text-align: center;
-}
-
-.box1 {
-	width: 200px;
-	background-color: black;
-	margin-top: auto;
-	margin-right: 0px;
-}
-
-.box2 {
-	width: 200px;
-	background-color: black;
-	margin-top: auto;
-	margin-right: 0px;
-}
-
-.box3 {
-	width: 200px;
-	background-color: black;
-	margin-top: auto;
-	margin-right: 0px;
-}
-
-.box4 {
-	width: 200px;
-	background-color: black;
-	margin-top: auto;
-	margin-right: 0px;
 }
 </style>
 <body>
@@ -90,7 +123,7 @@ th, td {
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
 						<h1>
-							訂單管理前台主頁
+							前台買家訂單資料修改
 							<h1>
 								<span class="subheading">二手商城</span>
 					</div>
@@ -99,17 +132,11 @@ th, td {
 		</div>
 	</header>
 
-	<!-- 成功顯示, disabled, 隱藏送出 -->
 
-	<!-- 主體畫面設計  -->
 
-	<!-- 程式例外錯誤 -->
-	<c:if test="${not empty exception}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<li style="color: red">${exception}</li>
-	</c:if>
-
-	<h3>訂單查詢:</h3>
+	<a href="front_ProductOrder_Retrieve.jsp"><img
+		src="images/back1.gif" width="100" height="32" border="0"></a>
+	<h3>訂單修改:</h3>
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -121,55 +148,35 @@ th, td {
 		</ul>
 	</c:if>
 
-	<ul>
-		<li><a href="listAllproductOrder.jsp"><input type="submit"
-				value="所有二手商品訂單"></a>
-		<li>
-			<FORM METHOD="post" ACTION="product.do">
-				<b>輸入訂單編號 (如1):</b> <input type="text" name="id"> <input
-					type="hidden" name="action" value="getOne_For_Display"> <input
-					type="submit" value="送出">
-			</FORM>
-		</li>
+	<FORM METHOD="post" ACTION="productorder.do">
+		<table>
+			<tr>
 
-		<jsp:useBean id="proSvc" scope="page"
-			class="com.product_order.model.ProductOrderServiceImpl" />
-
-		<li>
-			<FORM METHOD="post" ACTION="product.do">
-				<b>選擇賣家編號:</b> <select size="1" name="id">
-					<c:forEach var="productVO" items="${proSvc.all}">
-						<option value="${productVO.id}">${productVO.id}
-					</c:forEach>
-				</select> <input type="hidden" name="action" value="getOne_For_Display">
-				<input type="submit" value="送出">
-			</FORM>
-		</li>
-
-		<li>
-			<FORM METHOD="post" ACTION="product.do">
-				<b>選擇買家編號:</b> <select size="1" name="id">
-					<c:forEach var="productVO" items="${proSvc.all}">
-						<option value="${productVO.id}">${productVO.productId}
-					</c:forEach>
-				</select> <input type="hidden" name="action" value="getOne_For_Display">
-				<input type="submit" value="送出">
-			</FORM>
-		</li>
-	</ul>
+				<td>收件人姓名:</td>
+				<td><input type="TEXT" name="productName" size="45"
+					value="<%=vo.getProductName()%>" /></td>
+			</tr>
+			<tr>
+				<td>收件人電話:</td>
+				<td><input type="TEXT" name="phone" size="45"
+					value="<%=vo.getPhone()%>" /></td>
+			</tr>
+			<tr>
+				<td>收件人地址:</td>
+				<td><input type="TEXT" name="address" size="45"
+					value="<%=vo.getAddress()%>" /></td>
+			</tr>
 
 
-	<h3>訂單管理</h3>
-
-	<ul>
-		<li><a href="listAllproductOrder.jsp"><input type="submit"
-				value="新增二手商品訂單"></a>
-	</ul>
+			<jsp:useBean id="poSvc" scope="page"
+				class="com.product_order.model.ProductOrderServiceImpl" />
 
 
-
-
-	<!-- Footer-->
+		</table>
+		<br> <input type="hidden" name="action" value="Update_Front">
+		<input type="hidden" name="id" value="<%=vo.getId()%>"> <input
+			type="submit" value="送出修改">
+	</FORM>
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
 	<!-- Bootstrap core JS-->
 
