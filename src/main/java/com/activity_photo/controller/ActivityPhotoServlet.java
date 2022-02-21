@@ -40,6 +40,9 @@ public class ActivityPhotoServlet extends HttpServlet {
 				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("ACTP_PHOTO"));
 				byte[] buf = new byte[4 * 1024]; // 4K buffer
 				int len;
+				// 開始讀取
+			    // 以 read() 將串流資料讀入 buffer，回傳值 len 則為讀取的位元數
+			    // 當讀取的位元數為 0 時，表示串流讀取完成
 				while ((len = in.read(buf)) != -1) {
 					out.write(buf, 0, len);
 				}
