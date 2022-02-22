@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@	page import="com.product.model.ProductVO"%>
-
 <% 
 	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
 	System.out.println("productVO: " + productVO);
@@ -88,10 +87,12 @@
                             <i class="bi-cart-fill me-1"></i>
                             購買
                         </button>
-                        <button class="btn btn-outline-dark flex-shrink-0 me-1" type="button">
-                            <i class="bi bi-bookmarks-fill"></i>
+                        <FORM METHOD="post" ACTION="productcollection.do">
+                        <input type="hidden" name="action" value="insert">
+                        <button type="button"> 
                             收藏
                         </button>
+                        </FORM>
                         <button class="btn btn-outline-dark flex-shrink-0 me-1" type="button">
                             <i class="bi bi-people-fill"></i>
                             回報
