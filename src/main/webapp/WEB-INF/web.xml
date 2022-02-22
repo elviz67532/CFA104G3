@@ -286,12 +286,12 @@
 	</servlet-mapping>
 	<!-- MEMBER -->
 	<servlet>
-		<servlet-name>MemberServlet</servlet-name>
-		<servlet-class>com.member.controller.MemberServlet</servlet-class>
+		<servlet-name>BackMemberServlet</servlet-name>
+		<servlet-class>com.member.controller.BackMemberServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>MemberServlet</servlet-name>
-		<url-pattern>/back_end/member/MemberServlet.do</url-pattern>
+		<servlet-name>BackMemberServlet</servlet-name>
+		<url-pattern>/back_end/member/BackMemberServlet.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>

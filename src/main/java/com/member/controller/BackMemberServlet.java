@@ -227,6 +227,44 @@ public class BackMemberServlet extends HttpServlet {
 			}
 		}
 
+		if ("updateStatus".equals(action)) { 
+			
 
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				Integer id = new Integer(req.getParameter("id").trim());
+				Integer status = null;
+			    try {
+			    	status = new Integer(req.getParameter("status").trim());
+			    } catch (NumberFormatException e) {
+			 
+			    }
+			    
+
+				/*************************** 2.開始修改資料 *****************************************/
+				MemberServiceImpl memberServiceImpl = new MemberServiceImpl();
+
+				if (status == 1) {
+					memberServiceImpl.restoreMember(id);
+			    } else if (status == 2) {
+			    	memberServiceImpl.banMember(id);
+			    }
+				
+				MemberVO memberVO = memberServiceImpl.selectById(id);
+				
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("memberVO", memberVO);
+				String url = "/back_end/member/memberlistonestatus.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back_end/member/memberstate.jsp");
+				failureView.forward(req, res);
+			}
+		}
 	}
 }
