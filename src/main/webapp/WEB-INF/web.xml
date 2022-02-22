@@ -33,19 +33,20 @@
 	<filter>
 		<filter-name>frontEndMemberFilter</filter-name>
 		<filter-class>core.FrontEndMemberFilter</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>frontEndMemberFilter</filter-name>
+		<!-- 完成 -->
 		<url-pattern>/front_end/move/moveRequest.jsp</url-pattern>
-		<url-pattern>/front_end/move/moveRequestManage.jsp</url-pattern>	
-		<url-pattern>/front_end/notification/homePage.jsp</url-pattern>	
+		<url-pattern>/front_end/move/moveRequestManage.jsp</url-pattern>
+		<url-pattern>/front_end/move/moveRequestCManage.jsp</url-pattern>
+		<url-pattern>/front_end/notification/homePage.jsp</url-pattern>
+		<url-pattern>/front_end/product/sellerProduct.jsp</url-pattern>
+		<url-pattern>/front_end/product/sellerAllProducts.jsp</url-pattern>
+		
+		<!-- 處理中 -->
 		<url-pattern>/front_end/move/frontGetMoveOrder.jsp</url-pattern>
-  		<url-pattern>/front_end/product/sellerProduct.jsp</url-pattern>
-  		<url-pattern>/front_end/product/sellerAllProducts.jsp</url-pattern>
+
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -53,18 +54,46 @@
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
 	<!-- 後台會員登入管理 -->
+	<!-- 	SERVER_MANAGER = 1	-->
+	<!-- 	ACTIVITY = 10		-->
+	<!-- 	DOUBLE_PROD = 20	-->
+	<!-- 	MOVE = 30 			-->
+	<!-- 	MEMBER = 40 		-->
+	<!-- 	FAQ = 50 			-->
+	<!-- 	NEWS = 60 			-->
 	<filter>
 		<filter-name>backEndMemberFilter</filter-name>
 		<filter-class>core.BackEndMemberFilter</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
+			<!-- 完成 -->
+		    <init-param><param-name>/back_end/move/moveRequestManage.jsp</param-name><param-value>30</param-value></init-param>
+		    <init-param><param-name>/back_end/move/moveRequest.jsp</param-name><param-value>30</param-value></init-param>
+		    <init-param><param-name>/back_end/move/readMoveOrder.jsp</param-name><param-value>30</param-value></init-param>
+		    
+		    <!-- 處理中 -->
+		    <init-param><param-name>/back_end/product/report/productReportManage.jsp</param-name><param-value>20</param-value></init-param>
+		    
+		    <!-- 測試用 -->
+		    <init-param><param-name>/back_end/server_manager/admin.jsp</param-name><param-value>1</param-value></init-param>
+		    <init-param><param-name>/back_end/server_manager/addManager.jsp</param-name><param-value>1</param-value></init-param>
+		    <init-param><param-name>/back_end/server_manager/activity.jsp</param-name><param-value>10</param-value></init-param>
+		    <init-param><param-name>/back_end/server_manager/product.jsp</param-name><param-value>20</param-value></init-param>
+		    <init-param><param-name>/back_end/product/productReportManage.jsp</param-name><param-value>20</param-value></init-param>
+		    <init-param><param-name>/back_end/move/readMoveOrder.jsp</param-name><param-value>30</param-value></init-param>
+		    <init-param><param-name>/back_end/server_manager/manager.jsp</param-name><param-value>40</param-value></init-param>
+		    <init-param><param-name>/back_end/server_manager/FAQ.jsp</param-name><param-value>50</param-value></init-param>
+		    <init-param><param-name>/back_end/news/listallnews.jsp</param-name><param-value>60</param-value></init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>backEndMemberFilter</filter-name>
+		<!-- 完成 -->
 		<url-pattern>/back_end/move/moveRequestManage.jsp</url-pattern>
+		<url-pattern>/back_end/move/moveRequest.jsp</url-pattern>
 		<url-pattern>/back_end/move/readMoveOrder.jsp</url-pattern>
+		
+		<!-- 處理中 -->
+		<url-pattern>/back_end/product/report/productReportManage.jsp</url-pattern>
+		
+		<!-- 測試用 -->
 		<url-pattern>/back_end/server_manager/activity.jsp</url-pattern>
 		<url-pattern>/back_end/product/seller.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/manager.jsp</url-pattern>
@@ -284,7 +313,27 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>FaqServlet</servlet-name>
-		<url-pattern>/back_end/faq/faq</url-pattern>
+		<url-pattern>/back_end/faq/faq.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProductOrderServlet</servlet-name>
+		<servlet-class>com.product_order.controller.ProductOrderServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductOrderServlet</servlet-name>
+		<url-pattern>/front_end/product/productorder.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProductOrderServlet</servlet-name>
+		<servlet-class>com.product_order.controller.ProductOrderServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductOrderServlet</servlet-name>
+		<url-pattern>/back_end/product/productorderback.do</url-pattern>
 	</servlet-mapping>
 	
 	<!-- notification -->

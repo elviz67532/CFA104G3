@@ -138,7 +138,10 @@
 					          <div class="card-body">
 					            <h5 class="card-title">${productVO.name}</h5>
 					<%--             <p class="card-text">${productVO.prodDesc}</p> --%>
-					            <a href="#" class="btn btn-primary">查看詳情</a>
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet" ">
+			     					<input type="submit" value="前往">
+			     					<input type="hidden" name="prodId"  value="${productVO.id}">
+			     					<input type="hidden" name="action"	value="getOne_For_Display"></FORM>
 					<%--             <a href="#" class="btn btn-primary">${productVO.prodName}</a> --%>
 					          </div>
 					        </div>	

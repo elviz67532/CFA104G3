@@ -75,7 +75,7 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="faq" name="form1">
+	<FORM METHOD="post" ACTION="faq.do">
 		<table>
 			<tr>
 				<td>FAQ編號:<font color=red><b>*</b></font></td>
@@ -100,10 +100,5 @@ th, td {
 			type="submit" value="送出修改">
 	</FORM>
 </body>
-
-
-
-<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
-
 
 </html>

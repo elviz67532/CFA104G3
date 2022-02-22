@@ -8,19 +8,6 @@
 NewsServiceImpl newsServiceImpl=new NewsServiceImpl(); 
 List<NewsVO> list = newsServiceImpl.selectAllNews();
 pageContext.setAttribute("list", list);
-
-
-HashMap<Integer, String> type1 = new HashMap<>();
-type1.put(1,"系統");
-type1.put(2,"活動");
-type1.put(3,"搬家");
-type1.put(4,"二手");
-
-HashMap<Integer, List<NewsVO>> newVOs = new HashMap<>();
-type1.get(1);
-type1.get(2);
-type1.get(3);
-type1.get(4);
 %>
 
 <!DOCTYPE html>
@@ -101,7 +88,6 @@ type1.get(4);
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">#</th>
                                             <th scope="col" class="text-nowrap">類別</th>
                                             <th scope="col" class="text-nowrap">標題</th>
                                             <th scope="col" class="text-nowrap">時間</th>
@@ -109,9 +95,16 @@ type1.get(4);
                                     </thead>
                                     <tbody>
  									<c:forEach var="newsVO" items="${list}"> 																			
-										<tr>
-											<td>${newsVO.id}</td>															
-											<td>${newsVO.type}</td>							
+										<tr>																										
+											<td>
+												<c:choose>
+   															<c:when test="${newsVO.type==0}">活動</c:when>  														  														   														
+   															<c:when test="${newsVO.type==1}">二手</c:when>
+   															<c:when test="${newsVO.type==2}">搬家</c:when>
+   															<c:when test="${newsVO.type==3}">其他</c:when>													
+   															<c:otherwise>系統</c:otherwise>
+												</c:choose>
+											</td>							
 											<td>${newsVO.title}</td>			
 											<td>${newsVO.date}</td>		
 										</tr>											 									
@@ -122,8 +115,7 @@ type1.get(4);
                             <div class="tab-pane fade" id="pills-act" role="tabpanel" aria-labelledby="pills-move-tab">
                                 <table class="table">
                                     <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
+                                        <tr>                                            
                                             <th scope="col" class="text-nowrap">類別</th>
                                             <th scope="col" class="text-nowrap">標題</th>
                                             <th scope="col" class="text-nowrap">時間</th>
@@ -132,8 +124,15 @@ type1.get(4);
                                     <tbody>
  									<c:forEach var="newsVO" items="${list}">
 										<tr>
-											<td>${newsVO.id}</td>
-											<td>${newsVO.type}</td>
+											<td>
+												<c:choose>
+   															<c:when test="${newsVO.type==0}">活動</c:when>  														  														   														
+   															<c:when test="${newsVO.type==1}">二手</c:when>
+   															<c:when test="${newsVO.type==2}">搬家</c:when>
+   															<c:when test="${newsVO.type==3}">其他</c:when>													
+   															<c:otherwise>系統</c:otherwise>
+												</c:choose>
+											</td>
 											<td>${newsVO.title}</td>			
 											<td>${newsVO.date}</td>		
 										</tr>
@@ -144,8 +143,7 @@ type1.get(4);
                             <div class="tab-pane fade" id="pills-move" role="tabpanel" aria-labelledby="pills-sec-tab">
                                 <table class="table">
                                     <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
+                                        <tr>                                           
                                             <th scope="col" class="text-nowrap">類別</th>
                                             <th scope="col" class="text-nowrap">標題</th>
                                             <th scope="col" class="text-nowrap">時間</th>
@@ -154,8 +152,15 @@ type1.get(4);
                                     <tbody>
   									<c:forEach var="newsVO" items="${list}">
 										<tr>
-											<td>${newsVO.id}</td>
-											<td>${newsVO.type}</td>
+											<td>
+												<c:choose>
+   															<c:when test="${newsVO.type==0}">活動</c:when>  														  														   														
+   															<c:when test="${newsVO.type==1}">二手</c:when>
+   															<c:when test="${newsVO.type==2}">搬家</c:when>
+   															<c:when test="${newsVO.type==3}">其他</c:when>													
+   															<c:otherwise>系統</c:otherwise>
+												</c:choose>
+											</td>
 											<td>${newsVO.title}</td>			
 											<td>${newsVO.date}</td>		
 										</tr>
@@ -166,8 +171,7 @@ type1.get(4);
                             <div class="tab-pane fade" id="pills-sec" role="tabpanel" aria-labelledby="pills-sec-tab">
                                 <table class="table">
                                     <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
+                                        <tr>                                            
                                             <th scope="col" class="text-nowrap">類別</th>
                                             <th scope="col" class="text-nowrap">標題</th>
                                             <th scope="col" class="text-nowrap">時間</th>
@@ -176,8 +180,15 @@ type1.get(4);
                                     <tbody>
  									<c:forEach var="newsVO" items="${list}">
 										<tr>
-											<td>${newsVO.id}</td>
-											<td>${newsVO.type}</td>
+											<td>
+												<c:choose>
+   															<c:when test="${newsVO.type==0}">活動</c:when>  														  														   														
+   															<c:when test="${newsVO.type==1}">二手</c:when>
+   															<c:when test="${newsVO.type==2}">搬家</c:when>
+   															<c:when test="${newsVO.type==3}">其他</c:when>													
+   															<c:otherwise>系統</c:otherwise>
+												</c:choose>
+											</td>
 											<td>${newsVO.title}</td>			
 											<td>${newsVO.date}</td>		
 										</tr>
