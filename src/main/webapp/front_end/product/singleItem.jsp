@@ -11,12 +11,6 @@
 %>
 
 
-
-
-<% 	
-ProductVO productVO = (ProductVO)request.getAttribute("productVO");
-%>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -177,23 +171,17 @@ ProductVO productVO = (ProductVO)request.getAttribute("productVO");
                         </button>
                         <br>
                       
-                        <button class="btn2Collect" type="button">
-                            <i class="bi bi-bookmarks-fill"></i>
-                            加入收藏
-                        </button>
-                        <br>
-                        <button class="btn3Return" type="button">
                         <FORM METHOD="post" ACTION="productcollection.do">
                         <input type="hidden" name="action" value="insert">
-                        <button type="button"> 
-                            收藏
+                        <button class="btn2Collect" type="button">
+                         <i class="bi bi-bookmarks-fill"></i>
+                            加入收藏
                         </button>
-                        </FORM>
+                        </FORM>                        
                         
-                        <a href="<%=request.getContextPath()%>/front_end/product/productReport.jsp">
-                        <button class="btn btn-outline-dark flex-shrink-0 me-1" type="button">
-
-                            <i class="bi bi-people-fill"></i>
+                        <a href="<%=request.getContextPath()%>/front_end/product/productReport.jsp?prodId=<%=productVO.getId()%>">
+                        <button class="btn3Return" type="button">                       
+                        <i class="bi bi-people-fill"></i>
                             問題回報                       
                         </button></a>
                         

@@ -80,14 +80,13 @@
 			<init-param><param-name>/back_end/faq/listAllFaq.jsp</param-name><param-value>50</param-value></init-param>
 			<init-param><param-name>/back_end/news/listallnews.jsp</param-name><param-value>60</param-value></init-param>
 			<init-param><param-name>/back_end/activity/listAllActr.jsp</param-name><param-value>10</param-value></init-param>
-		    <init-param><param-name>/back_end/product/report/productReportManage.jsp</param-name><param-value>20</param-value></init-param>
+		    <init-param><param-name>/back_end/product/productReportManage.jsp</param-name><param-value>20</param-value></init-param>
 		    <init-param><param-name>/back_end/product/seller.jsp</param-name><param-value>20</param-value></init-param>
- 			  <init-param><param-name>/back_end/product/listAllproductOrder.jsp</param-name><param-value>20</param-value></init-param>
+ 			<init-param><param-name>/back_end/product/listAllproductOrder.jsp</param-name><param-value>20</param-value></init-param>
 		    <init-param><param-name>/back_end/server_manager/admin.jsp</param-name><param-value>1</param-value></init-param>
 		    <init-param><param-name>/back_end/server_manager/addManager.jsp</param-name><param-value>1</param-value></init-param>
 		    <init-param><param-name>/back_end/server_manager/activity.jsp</param-name><param-value>10</param-value></init-param>
-		    <init-param><param-name>/back_end/product/seller.jsp</param-name><param-value>20</param-value></init-param>
-		    <init-param><param-name>/back_end/product/productReportManage.jsp</param-name><param-value>20</param-value></init-param>
+		    <init-param><param-name>/back_end/product/seller.jsp</param-name><param-value>20</param-value></init-param>		    
 		    <init-param><param-name>/back_end/product/listAllproductOrder.jsp</param-name><param-value>20</param-value></init-param>
 		    <init-param><param-name>/back_end/move/readMoveOrder.jsp</param-name><param-value>30</param-value></init-param>
 		    <init-param><param-name>/back_end/server_manager/manager.jsp</param-name><param-value>40</param-value></init-param>
@@ -114,7 +113,7 @@
 		<url-pattern>/back_end/faq/listAllFaq.jsp</url-pattern>
 		<url-pattern>/back_end/news/listallnews.jsp</url-pattern>
 		<url-pattern>/back_end/activity/listAllActr.jsp</url-pattern>
-		<url-pattern>/back_end/product/report/productReportManage.jsp</url-pattern>
+		<url-pattern>/back_end/product/productReportManage.jsp</url-pattern>
    		<url-pattern>/back_end/product/seller.jsp</url-pattern>
  		<url-pattern>/back_end/product/listAllproductOrder.jsp</url-pattern>
 
