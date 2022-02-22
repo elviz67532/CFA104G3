@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat"%>
@@ -10,10 +9,6 @@
 ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
 List<ProductOrderVO> list = poSvc.getAll();
 pageContext.setAttribute("list", list);
-
-// 顯示格式
-SimpleDateFormat ymdtmFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy/MM/dd");
 %>
 <!doctype html>
 <html lang="zh-TW">
@@ -21,8 +16,7 @@ SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy/MM/dd");
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link
-	href="<%=request.getContextPath()%>/css/back_end/sb-admin-2.min.css"
+<link href="<%=request.getContextPath()%>/css/activity/backNewFile.css"
 	rel="stylesheet">
 <link
 	href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.css"
@@ -33,53 +27,30 @@ SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy/MM/dd");
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
-<title>委域-Entrust area</title>
-</head>
+<title>委域後台商品訂單ㄋ管理主頁</title>
 <style>
-table {
-	width: 800px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
+form {
+	display: inline;
+	border-radius: 16px;
 }
 
-table, th, td {
-	border: 1px solid #CCCCFF;
+form:hover {
+	cursor: pointer;
+	border-radius: 16px;
+	margin-bottom: 0px;
 }
 
-th, td {
-	padding: 5px;
+table th {
+	color: black;
+	padding: 5px 10px;
 	text-align: center;
 }
 
-.box1 {
-	width: 200px;
-	background-color: black;
-	margin-top: auto;
-	margin-right: 0px;
-}
-
-.box2 {
-	width: 200px;
-	background-color: black;
-	margin-top: auto;
-	margin-right: 0px;
-}
-
-.box3 {
-	width: 200px;
-	background-color: black;
-	margin-top: auto;
-	margin-right: 0px;
-}
-
-.box4 {
-	width: 200px;
-	background-color: black;
-	margin-top: auto;
-	margin-right: 0px;
+td {
+	text-align: center;
 }
 </style>
+</head>
 <body id="page-top">
 	<div id="wrapper">
 		<!-- Sidebar -->
@@ -91,23 +62,15 @@ th, td {
 				<div class="container-fluid">
 
 					<!-- main -->
-					<h2>後台商品訂單</h2>
+					<h1>後台商品訂單管理主頁</h1>
+					<!-- 					<FORM METHOD="post" -->
+					<%-- 						ACTION="<%=request.getContextPath()%>/back_end/faq/faq.do"> --%>
+					<!-- 						<b>FAQ編號檢索:</b> <input type="text" name="id"> <input -->
+					<!-- 							type="hidden" name="action" value="getOne_For_Display"> <input -->
+					<!-- 							type="submit" value="Search"> -->
+					<!-- 					</FORM> -->
 
-					<%-- 錯誤表列 --%>
-					<c:if test="${not empty errorMsgs}">
-						<font style="color: red">請修正以下錯誤:</font>
-						<ul>
-							<c:forEach var="message" items="${errorMsgs}">
-								<li style="color: red">${message}</li>
-							</c:forEach>
-						</ul>
-					</c:if>
-					<li>
-						<a href="productOrderMain.jsp">
-							<input type="submit" value="後台商品訂單查詢">
-						</a>
-					</li>
-					<table>
+					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
 								<th class="text-nowrap">訂單編號</th>
@@ -121,6 +84,7 @@ th, td {
 								<th class="text-nowrap">商品數量</th>
 								<th class="text-nowrap">訂單總金額</th>
 								<th class="text-nowrap">訂單狀態</th>
+								<th class="text-nowrap">取消</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -136,6 +100,7 @@ th, td {
 								<th class="text-nowrap">商品數量</th>
 								<th class="text-nowrap">訂單總金額</th>
 								<th class="text-nowrap">訂單狀態</th>
+								<th class="text-nowrap">取消</th>
 							</tr>
 						</tfoot>
 						<%@ include file="page1.jsp"%>
@@ -157,23 +122,25 @@ th, td {
 									<td>${productOrderVO.status}</td>
 
 									<td>
-										<FORM METHOD="post" ACTION="productorderback.do">
-											<input type="submit" value="取消"> <input
-												type="hidden" name="id" value="${productOrderVO.id}">
-											<input type="hidden" name="action" value="delete_back">
+										<FORM METHOD="post"
+											ACTION="<%=request.getContextPath()%>/back_end/product/productorderback.do">
+											<input type="submit" value="取消"> <input type="hidden"
+												name="id" value="${productOrderVO.id}"> <input
+												type="hidden" name="action" value="delete_back">
 										</FORM>
 									</td>
 								</tr>
 						</c:forEach>
-					</table> <%@ include file="page2.jsp"%>
+					</table>
+					<%@ include file="page2.jsp"%>
+					<!-- end of main -->
 				</div>
 			</div>
 			<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
 		</div>
 	</div>
-	
-	
 	<!-- End of Page Wrapper -->
+
 
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i
@@ -184,6 +151,7 @@ th, td {
 	<jsp:include page="/back_end/common/logoutModal.jsp"></jsp:include>
 
 	<!-- custom script -->
+
 	
 	<!-- Bootstrap core JavaScript-->
 	<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>

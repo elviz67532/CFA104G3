@@ -6,6 +6,17 @@
 ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
 List<ProductOrderVO> list = poSvc.getAll();
 pageContext.setAttribute("list", list);
+
+Map<Integer, String> statusMap = new HashMap<>();
+statusMap.put(0, "待出貨");
+statusMap.put(1, "已出貨");
+statusMap.put(2, "完成訂單");
+statusMap.put(3, "待撥款");
+statusMap.put(4, "已撥款");
+statusMap.put(5, "待退款1");
+statusMap.put(6, "待退款2");
+statusMap.put(7, "已退款1");
+statusMap.put(8, "已退款2");
 %>
 
 <!DOCTYPE html>

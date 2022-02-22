@@ -1,9 +1,6 @@
 package com.faq.model;
 
-
-
 import java.util.*;
-
 
 public class FaqServiceImpl implements FaqService {
 
@@ -14,11 +11,10 @@ public class FaqServiceImpl implements FaqService {
 	}
 
 	@Override
-	public FaqVO addFaq(Integer id, String question, String answer) {
+	public FaqVO addFaq(String question, String answer) {
 
 		FaqVO vo = new FaqVO();
 
-		vo.setId(id);
 		vo.setQuestion(question);
 		vo.setAnswer(answer);
 
