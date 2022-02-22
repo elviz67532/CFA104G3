@@ -80,7 +80,16 @@
             </div>
         </div>
     </header>
-   
+
+	<!-- 麵包屑 (Breadcrumb) -->
+	<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總攬</a></li>
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/update_product_input.jsp">買賣家</a></li>
+	    <li class="breadcrumb-item active" aria-current="page">照片</li>
+	  </ol>
+	</nav>	
+
    	<!-- 主體畫面設計  -->
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errMsgs}">
@@ -94,23 +103,26 @@
 
 	<!-- nav -->
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
+	<%
+	Integer prodId = Integer.valueOf(request.getParameter("prodId")); 
+	
+	%>
 	<div class="container">
 		<main>
 			<div class="row py-5 text-center">
 				<h2>商品圖片</h2>
-				<FORM ACTION="<%=request.getContextPath()%>/product_photo/ProductPhotoServlet" METHOD="post" enctype="multipart/form-data">				
+				<FORM ACTION="<%=request.getContextPath()%>/product_photo/UpdatePhoto" METHOD="post" enctype="multipart/form-data">				
 					<!-- 圖片 -->
-				    <div class="card" style="width: 18rem; display: inline-flex;">
-<!-- 					  <label for="country" class="form-label">圖片</label>		       -->
-				      <input type="file" name="upImg" class="form-control">
-<!-- 				      <img class="form-control" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
-					  <!-- <input type="hidden" name="action" value="insert"> -->	
+					<div class="card " style="width: 18rem; display: inline-flex;">
+					  <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=<%=prodId%>" class="card-img-top" alt="...">
+					  <input type="file" name="upImg" class="form-control">
+					  <input type="hidden" name="prodId" value="<%=prodId%>" class="form-control">
 					  <input class="btn btn-outline-info" type="submit" value="上傳圖片">
-				    </div>
+					</div>				    
 			    </FORM>					
 			</div>
-			</div>
 		</main>
+	</div>
 
 	<footer class="my-5 pt-5 text-muted text-center text-small">
 		<p class="mb-1">&copy; 2017–2021 Company Name</p>

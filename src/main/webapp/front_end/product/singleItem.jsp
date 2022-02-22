@@ -1,7 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+
 <%@	page import="com.product.model.*"%>
+
+
+<% 
+	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
+	System.out.println("productVO: " + productVO);
+%>
+
+
 
 
 <% 	
@@ -167,14 +176,23 @@ ProductVO productVO = (ProductVO)request.getAttribute("productVO");
                             直接購買
                         </button>
                         <br>
+                      
                         <button class="btn2Collect" type="button">
                             <i class="bi bi-bookmarks-fill"></i>
                             加入收藏
                         </button>
                         <br>
-                        
-						<a href="<%=request.getContextPath()%>/front_end/product/productReport.jsp">
                         <button class="btn3Return" type="button">
+                        <FORM METHOD="post" ACTION="productcollection.do">
+                        <input type="hidden" name="action" value="insert">
+                        <button type="button"> 
+                            收藏
+                        </button>
+                        </FORM>
+                        
+                        <a href="<%=request.getContextPath()%>/front_end/product/productReport.jsp">
+                        <button class="btn btn-outline-dark flex-shrink-0 me-1" type="button">
+
                             <i class="bi bi-people-fill"></i>
                             問題回報                       
                         </button></a>

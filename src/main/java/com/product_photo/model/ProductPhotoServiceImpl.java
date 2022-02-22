@@ -20,7 +20,7 @@ public class ProductPhotoServiceImpl implements ProductPhotoService{
 		return blob;
 	}
 	
-	public void deleteByProd(Integer prodPhProdId) {
-		dao.deleteByProd(prodPhProdId);
+	public void deleteByProdId(Integer prodId) {
+		dao.deleteByProdId(prodId);
 	}
 }

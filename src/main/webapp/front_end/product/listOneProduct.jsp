@@ -63,14 +63,28 @@
 	  table, th, td {
 	    border: 1px solid #CCCCFF;
 	  }
-	  th, td {
+	  th {
 	    padding: 5px;
 	    text-align: center;
+	  	font-size : 15px;
+	  	 text-align: center;
 	  }
+	  td {
+	  	font-size : 13px;
+	  	padding : 0px;
+	  	text-align: center;
+	  }
+		img {
+		    max-width:128px;
+		    max-height:128px;
+		    width:auto;
+		    height:auto;
+		    padding:0px;
+		}	  
 	</style>
 
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100" style="">
     <!-- Navigation-->
     <!-- nav -->
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
@@ -108,6 +122,7 @@
 			<th>商品敘述</th>
 			<th>商品價格</th>
 			<th>商品名稱</th>
+			<th>圖片</th>
 			<th>上架時間</th>
 			<th>商品所在</th>
 			<th>商品狀態</th>
@@ -119,6 +134,9 @@
 			<td><%=productVO.getDescription()%></td>
 			<td><%=productVO.getPrice()%></td>
 			<td><%=productVO.getName()%></td>
+			<td style="padding: 0;">
+				<img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top">			
+			</td>
 			<td><%=productVO.getLaunchedDate()%></td>
 			<td><%=productVO.getLocation()%></td>
 			<td><%=productVO.getStatus()%></td> 

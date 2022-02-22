@@ -6,8 +6,20 @@
 	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
 	System.out.println("productVO: " + productVO);
 %>
-
-
+<%
+	Map<Integer, String> map = new HashMap<>();
+	map.put(0,"其他");
+	map.put(1,"桌椅");
+	map.put(2,"寢具");
+	map.put(3,"服飾");
+	map.put(4, "電器");
+	pageContext.setAttribute("map", map);
+%>
+<%
+	Map<Integer, String> statusMap = new HashMap<>();
+	statusMap.put(0,"販售");
+	statusMap.put(1,"完售");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +41,18 @@
 	.d-block{
 	  height: 30%;
 	}
+	th {
+		font-size:16px;
+	}
+	td {
+		font-size:15px;
+	}
+	img{
+	   max-width:64px;
+	   max-height:64px;
+	   width:auto;
+	   height:auto;	  	
+	}	
 	.myImg {
 	  height:  400px;
 	  background-repeat: no-repeat;
@@ -104,7 +128,17 @@
 			</td>
 			<td><%=productVO.getLaunchedDate()%></td>
 			<td><%=productVO.getLocation()%></td>
-			<td><%=productVO.getStatus()%></td> 
+			<td>
+				<c:set var="product" scope="session" value="${productVO.status}"/>
+			         <c:choose>
+				           <c:when test="${product == 0}">
+				           		販售
+				           </c:when>
+				           <c:when test="${product == 1}">
+				           		完售
+				           </c:when>
+			         </c:choose>
+			</td> 
 	<%-- 		${(empVO.deptno==deptVO.deptno)?'selected':'' } --%>
 			
 		</tr>
