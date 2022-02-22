@@ -6,6 +6,18 @@
 ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
 List<ProductOrderVO> list = poSvc.getAll();
 pageContext.setAttribute("list", list);
+
+Map<Integer, String> statusMap = new HashMap<>();
+statusMap.put(0, "待出貨");
+statusMap.put(1, "已出貨");
+statusMap.put(2, "完成訂單");
+statusMap.put(3, "待撥款");
+statusMap.put(4, "已撥款");
+statusMap.put(5, "待退款1");
+statusMap.put(6, "待退款2");
+statusMap.put(7, "已退款1");
+statusMap.put(8, "已退款2");
+
 %>
 
 <!DOCTYPE html>
@@ -19,21 +31,18 @@ pageContext.setAttribute("list", list);
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>委域</title>
-<link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
-<!-- Font Awesome icons (free version)-->
-<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
-	crossorigin="anonymous"></script>
-<!-- Google fonts-->
 <link
-	href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
-	rel="stylesheet" type="text/css" />
+	href="<%=request.getContextPath()%>/css/back_end/sb-admin-2.min.css"
+	rel="stylesheet">
 <link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
-	rel="stylesheet" type="text/css" />
-<!-- Core theme CSS (includes Bootstrap)-->
+	href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
 <link
-	href="${pageContext.request.contextPath}/vendor/bootstrap/css/styles.css"
-	rel="stylesheet" type="text/css" />
+	href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
 
 </head>
 <style>
@@ -213,9 +222,20 @@ th, td {
 		<jsp:include page="/front_end/common/footer.jsp"></jsp:include> <!-- Bootstrap core JS-->
 
 		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-		<!-- Core theme JS--> <script
-			src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+			src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
+		<script
+			src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
+		<script
+			src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+		<script
+			src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
+		<script
+			src="<%=request.getContextPath()%>/vendor/datatables/jquery.dataTables.min.js"></script>
+		<script
+			src="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+		<!-- Page level custom scripts --> <script
+			src="<%=request.getContextPath()%>/js/demo/datatables-demo.js"></script>
 </body>
 
 </html>

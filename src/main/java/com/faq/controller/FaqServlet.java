@@ -7,6 +7,9 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import com.faq.model.*;
+import com.product_order.model.ProductOrderService;
+import com.product_order.model.ProductOrderServiceImpl;
+import com.product_order.model.ProductOrderVO;
 
 public class FaqServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -35,7 +38,7 @@ public class FaqServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("faqVO", faqVO); // 資料庫取出的FaqVO物件,存入req
-				String url = "back_end/faq/update_Faq_input.jsp";
+				String url = "/back_end/faq/update_Faq_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_Faq_input.jsp
 				successView.forward(req, res);
 
@@ -108,7 +111,6 @@ public class FaqServlet extends HttpServlet {
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				Integer id = Integer.valueOf(req.getParameter("id").trim());
 
 				String question = req.getParameter("question").trim();
 				if (question == null || question.trim().length() == 0) {
@@ -121,7 +123,7 @@ public class FaqServlet extends HttpServlet {
 				}
 
 				FaqVO faqVO = new FaqVO();
-				faqVO.setId(id);
+
 				faqVO.setQuestion(question);
 				faqVO.setAnswer(answer);
 
@@ -135,7 +137,7 @@ public class FaqServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 				FaqService faqSvc = new FaqServiceImpl();
-				faqVO = faqSvc.addFaq(id, question, answer);
+				faqVO = faqSvc.addFaq(question, answer);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/back_end/faq/listAllFaq.jsp";
@@ -144,8 +146,9 @@ public class FaqServlet extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("back_end/faq/listAllFaq.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/faq/listAllFaq.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -179,5 +182,64 @@ public class FaqServlet extends HttpServlet {
 
 			}
 		}
+		if ("getOne_For_Display".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String str = req.getParameter("id");
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("請輸入FAQ編號");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/faq/listAllFaq.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				Integer id = null;
+				try {
+					id = Integer.valueOf(str);
+				} catch (Exception e) {
+					errorMsgs.add("FAQ編號格式不正確");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/faq/listAllFaq.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始查詢資料 *****************************************/
+				FaqServiceImpl faqSvc = new FaqServiceImpl();
+				FaqVO vo = faqSvc.getOneFaq(id);
+
+				if (vo == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/faq/listAllFaq.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("vo", vo); // 資料庫取出的empVO物件,存入req
+				String url = "/back_end/faq/listOneFaq.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理s *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/faq/listAllFaq.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
 	}
 }

@@ -7,7 +7,7 @@ import com.product.model.ProductVO;
 
 public interface ProductOrderService {
 
-	ProductOrderVO addProductOrder(Integer productId, Integer customerMemberId, Integer sellerMemberId,
+	ProductOrderVO addProductOrder(Integer customerMemberId, Integer sellerMemberId,
 			String productName, String phone, String address, Timestamp date, Integer amountOfProduct, Integer status,
 			Integer amountOfPrice);
 

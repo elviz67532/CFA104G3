@@ -339,4 +339,13 @@
 		<servlet-name>NotificationServlet</servlet-name>
 		<url-pattern>/notification/notification.do</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>ContactServlet</servlet-name>
+		<servlet-class>com.contact.controller.ContactServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ContactServlet</servlet-name>
+		<url-pattern>/contact.do</url-pattern>
+	</servlet-mapping>
 </web-app>

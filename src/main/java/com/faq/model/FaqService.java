@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface FaqService {
 
-	FaqVO addFaq(Integer id, String question, String answer);
+	FaqVO addFaq(String question, String answer);
 
 	FaqVO updateFaq(Integer id, String question, String answer);
 
