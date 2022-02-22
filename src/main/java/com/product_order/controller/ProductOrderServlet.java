@@ -457,41 +457,14 @@ public class ProductOrderServlet extends HttpServlet {
 
 			try {
 
-				Integer amountOfPrice = null;
-				try {
-					amountOfPrice = Integer.valueOf(req.getParameter("amountOfPrice").trim());
-				} catch (NumberFormatException e) {
-					amountOfPrice = 0;
-					errorMsgs.add("請輸入金額");
-				}
-
 				Integer id = Integer.valueOf(req.getParameter("id"));
-				Integer productId = Integer.valueOf(req.getParameter("productId"));
-				Integer customerMemberId = Integer.valueOf(req.getParameter("customerMemberId"));
-				Integer sellerMemberId = Integer.valueOf(req.getParameter("sellerMemberId"));
-				String productName = req.getParameter("productName");
-				String phone = req.getParameter("phone");
-				String address = req.getParameter("address");
-				Integer amountOfProduct = Integer.valueOf(req.getParameter("amountOfProduct"));
-				Timestamp date = java.sql.Timestamp.valueOf(req.getParameter("date"));
+
+				System.out.println("id=" + id);
 				// 設定狀態變為2
 				Integer status = 2;
 
-				ProductOrderVO vo = new ProductOrderVO();
-				vo.setId(id);
-				vo.setProductId(productId);
-				vo.setCustomerMemberId(customerMemberId);
-				vo.setSellerMemberId(sellerMemberId);
-				vo.setProductName(productName);
-				vo.setPhone(phone);
-				vo.setAddress(address);
-				vo.setDate(date);
-				vo.setAmountOfProduct(amountOfProduct);
-				vo.setStatus(status);
-				vo.setAmountOfPrice(amountOfPrice);
 
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("vo", vo);
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/front_end/product/listAllproductOrder.jsp");
 					failureView.forward(req, res);
@@ -500,17 +473,16 @@ public class ProductOrderServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 *****************************************/
 				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
-				vo = poSvc.updateProductOrder(id, productId, customerMemberId, sellerMemberId, productName, phone,
-						address, date, amountOfProduct, status, amountOfPrice);
+				boolean success = poSvc.changeStatus(id, status);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("vo", vo);
 				String url = "/front_end/product/listAllproductOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/listAllproductOrder.jsp");
 				failureView.forward(req, res);

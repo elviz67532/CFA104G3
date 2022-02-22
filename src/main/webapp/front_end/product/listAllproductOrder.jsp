@@ -6,17 +6,20 @@
 ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
 List<ProductOrderVO> list = poSvc.getAll();
 pageContext.setAttribute("list", list);
+%>
 
-Map<Integer, String> statusMap = new HashMap<>();
-statusMap.put(0, "待出貨");
-statusMap.put(1, "已出貨");
-statusMap.put(2, "完成訂單");
-statusMap.put(3, "待撥款");
-statusMap.put(4, "已撥款");
-statusMap.put(5, "待退款1");
-statusMap.put(6, "待退款2");
-statusMap.put(7, "已退款1");
-statusMap.put(8, "已退款2");
+<%
+Map<Integer, String> map = new HashMap<>();
+map.put(0, "待出貨");
+map.put(1, "已出貨");
+map.put(2, "完成訂單");
+map.put(3, "待撥款");
+map.put(4, "已撥款");
+map.put(5, "待退款(取消訂單)");
+map.put(6, "待退款(退貨訂單)");
+map.put(7, "已退款(取消訂單)");
+map.put(8, "已退款(退貨訂單)");
+pageContext.setAttribute("map", map);
 %>
 
 <!DOCTYPE html>
@@ -194,10 +197,11 @@ th, td {
 						<td>${productOrderVO.date}</td>
 						<td>${productOrderVO.amountOfProduct}</td>
 						<td>${productOrderVO.amountOfPrice}</td>
-						<td>${productOrderVO.status}</td>
+						<td>${map[productOrderVO.status]}</td>
 						<td>
 
-							<FORM METHOD="post" ACTION="productorder.do"
+							<FORM METHOD="post"
+								ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do"
 								style="margin-bottom: 0px;">
 								<input type="submit" value="修改"> <input type="hidden"
 									name="id" value="${productOrderVO.id}"> <input
@@ -205,7 +209,8 @@ th, td {
 									value="getOne_For_Update_Order_Front">
 							</FORM>
 
-							<FORM METHOD="post" ACTION="productorder.do">
+							<FORM METHOD="post"
+								ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do">
 								<input type="hidden" name="action" value="updatestatusto5">
 								<input type="hidden" name="id" value="${productOrderVO.id}">
 								<input type="hidden" name="productId"
@@ -227,25 +232,14 @@ th, td {
 							</FORM>
 
 
-							<FORM METHOD="post" ACTION="productorder.do">
+							<FORM METHOD="post"
+								ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do">
 								<input type="hidden" name="action" value="updatestatusto2">
 								<input type="hidden" name="id" value="${productOrderVO.id}">
-								<input type="hidden" name="productId"
-									value="${productOrderVO.productId}"> <input
-									type="hidden" name="sellerMemberId"
-									value="${productOrderVO.sellerMemberId}"> <input
-									type="hidden" name="productName"
-									value="${productOrderVO.productName}"> <input
-									type="hidden" name="phone" value="${productOrderVO.phone}">
-								<input type="hidden" name="address"
-									value="${productOrderVO.address}"> <input type="hidden"
-									name="date" value="${productOrderVO.date}"> <input
-									type="hidden" name="amountOfProduct"
-									value="${productOrderVO.amountOfProduct}"> <input
-									type="hidden" name="amountOfPrice"
-									value="${productOrderVO.amountOfPrice}"> <input
-									type="hidden" name="status" value="${productOrderVO.status}">
-								<button type="submit" id="foo2" class="box2">完成訂單</button>
+
+								<input type="hidden" name="status"
+									value="${productOrderVO.status}">
+								<button type="submit">完成訂單</button>
 							</FORM>
 						</td>
 					</tr>
