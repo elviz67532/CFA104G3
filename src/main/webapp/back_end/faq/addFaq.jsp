@@ -64,7 +64,7 @@ FaqVO faqVO = (FaqVO) request.getAttribute("faqVO");
 						<li style="color: red">${exception}</li>
 					</c:if>
 
-					<FORM METHOD="post" ACTION="faq" name="form1">
+					<FORM METHOD="post" ACTION="faq.do">
 						<table>
 							<tr>
 								<td>FAQ編號:</td>

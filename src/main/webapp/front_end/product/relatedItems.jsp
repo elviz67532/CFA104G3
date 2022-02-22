@@ -12,14 +12,24 @@
                     <div class="card-body p-4">
                         <div class="text-center">
                             <!-- Product name-->
-                            <h5 class="fw-bolder">Fancy Product</h5>
+                            <h6 class="fw-bolder">鬼滅之刃1-23【套書】</h6>
+                            <!-- Product reviews-->
+                            <div class="d-flex justify-content-center small text-warning mb-2">
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                            </div>
                             <!-- Product price-->
-                            $40.00 - $80.00
+                            $1964.00
                         </div>
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">查看</a></div>
+                        <div class="text-center">
+                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet" ">
+			     		<input type="submit" class="btn btn-outline-dark mt-auto" value="前往">
+			     		<input type="hidden" name="prodId"  value="1">
+			     		<input type="hidden" name="action"	value="getOne_For_Display"></FORM>
+                        </div>
                     </div>
                 </div>
             </div>	
@@ -50,7 +60,12 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">查看</a></div>
+                        <div class="text-center">
+                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet" ">
+			     		<input type="submit" class="btn btn-outline-dark mt-auto" value="前往">
+			     		<input type="hidden" name="prodId"  value="2">
+			     		<input type="hidden" name="action"	value="getOne_For_Display"></FORM>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -66,6 +81,13 @@
                         <div class="text-center">
                             <!-- Product name-->
                             <h5 class="fw-bolder">Sale Item</h5>
+                            <!-- Product reviews-->
+                            <div class="d-flex justify-content-center small text-warning mb-2">
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>                                
+                            </div>
                             <!-- Product price-->
                             <span class="text-muted text-decoration-line-through">$50.00</span>
                             $25.00
@@ -73,7 +95,12 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">查看</a></div>
+                        <div class="text-center">
+                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet" ">
+			     		<input type="submit" class="btn btn-outline-dark mt-auto" value="前往">
+			     		<input type="hidden" name="prodId"  value="3">
+			     		<input type="hidden" name="action"	value="getOne_For_Display"></FORM>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,7 +127,12 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">查看</a></div>
+                        <div class="text-center">
+                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet" ">
+			     		<input type="submit" class="btn btn-outline-dark mt-auto" value="前往">
+			     		<input type="hidden" name="prodId"  value="1">
+			     		<input type="hidden" name="action"	value="getOne_For_Display"></FORM>
+                        </div>
                     </div>
                 </div>
             </div>

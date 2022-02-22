@@ -41,10 +41,12 @@
 		<url-pattern>/front_end/move/moveRequestManage.jsp</url-pattern>
 		<url-pattern>/front_end/move/moveRequestCManage.jsp</url-pattern>
 		<url-pattern>/front_end/notification/homePage.jsp</url-pattern>
+		<url-pattern>/front_end/product/sellerProduct.jsp</url-pattern>
+		<url-pattern>/front_end/product/sellerAllProducts.jsp</url-pattern>
 		
 		<!-- 處理中 -->
 		<url-pattern>/front_end/move/frontGetMoveOrder.jsp</url-pattern>
-		
+
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -246,7 +248,14 @@
 		<servlet-name>DBGifReader2</servlet-name>
 		<url-pattern>/product_photo/DBGifReader2</url-pattern>
 	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>UpdatePhoto</servlet-name>
+		<servlet-class>com.product_photo.controller.UpdatePhoto</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdatePhoto</servlet-name>
+		<url-pattern>/product_photo/UpdatePhoto</url-pattern>
+	</servlet-mapping>
 	<!-- MEMBER -->
 	<servlet>
 		<servlet-name>MemberServlet</servlet-name>
@@ -294,7 +303,27 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>FaqServlet</servlet-name>
-		<url-pattern>/back_end/faq/faq</url-pattern>
+		<url-pattern>/back_end/faq/faq.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProductOrderServlet</servlet-name>
+		<servlet-class>com.product_order.controller.ProductOrderServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductOrderServlet</servlet-name>
+		<url-pattern>/front_end/product/productorder.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProductOrderServlet</servlet-name>
+		<servlet-class>com.product_order.controller.ProductOrderServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductOrderServlet</servlet-name>
+		<url-pattern>/back_end/product/productorderback.do</url-pattern>
 	</servlet-mapping>
 	
 	<!-- notification -->

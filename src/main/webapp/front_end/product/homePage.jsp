@@ -32,29 +32,34 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
     <style>
-	  .SEARCHFOR{
-	  padding:10px;
-	  margin-bottom: 30px;
-	}
-	#pagination{
-	  bottom: 0;
-	}
-	.d-block{
-	  height: 30%;
-	}
-	.myImg {
-	  height:  400px;
-	  background-repeat: no-repeat;
-	  background-attachment: fixed;
-	  background-position: center;
-	  background-size: cover;
-	}
-	.pagination{
-		margin: 10px
-	}
-	.card{
-		margin: 5px
-	}
+		  .SEARCHFOR{
+		  padding:10px;
+		  margin-bottom: 30px;
+		}
+		#pagination{
+		  bottom: 0;
+		}
+		.d-block{
+		  height: 30%;
+		}
+		.myImg {
+		  height:  400px;
+		  background-repeat: no-repeat;
+		  background-attachment: fixed;
+		  background-position: center;
+		  background-size: cover;
+		}
+		.pagination{
+			margin: 10px
+		}
+		.card{
+			margin: 5px
+		}
+		img{
+		    max-height:256px;
+		    width:auto;
+		    height:auto;
+		}
 	</style>
 </head>
 
@@ -133,7 +138,10 @@
 					          <div class="card-body">
 					            <h5 class="card-title">${productVO.name}</h5>
 					<%--             <p class="card-text">${productVO.prodDesc}</p> --%>
-					            <a href="#" class="btn btn-primary">查看詳情</a>
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet" ">
+			     					<input type="submit" value="前往">
+			     					<input type="hidden" name="prodId"  value="${productVO.id}">
+			     					<input type="hidden" name="action"	value="getOne_For_Display"></FORM>
 					<%--             <a href="#" class="btn btn-primary">${productVO.prodName}</a> --%>
 					          </div>
 					        </div>	
