@@ -1,3 +1,4 @@
+<%@page import="com.news.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,6 +9,11 @@
 	ProductServiceImpl productService = new ProductServiceImpl();
 	List<ProductVO> list = productService.getAll();
 	pageContext.setAttribute("list", list);
+%>
+<%
+	NewsServiceImpl newsSvc = new NewsServiceImpl();
+	List<NewsVO> newslist = newsSvc.selectAllNews();
+	pageContext.setAttribute("newslist", newslist);
 %>
 <jsp:useBean id="photoSvc" scope="page" class="com.product_photo.model.ProductPhotoServiceImpl" />
 
@@ -91,17 +97,19 @@
 	<!-- 輪播 (Carousel) -->
     <!-- 搭配圖片滿版 -->
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+      <c:forEach var="newsVO" items="${newslist}">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news1.jpg)"></div>
+          <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/NewsImageReader?id=${newsVO.id})"></div>
         </div>
-        <div class="carousel-item">
-          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news2.jpg)"></div>
-        </div>
-        <div class="carousel-item">
-          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news3.jpg)"></div>
-        </div>
+<!-- 	        <div class="carousel-item"> -->
+<!-- 	          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news2.jpg)"></div> -->
+<!-- 	        </div> -->
+<!-- 	        <div class="carousel-item"> -->
+<!-- 	          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news3.jpg)"></div> -->
+<!-- 	        </div> -->
       </div>
+      </c:forEach>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>

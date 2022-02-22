@@ -3,6 +3,8 @@
 <%@ page import="com.product.model.ProductVO"%>
 <%@ page import="com.member.model.*"%>
 <%@ page import ="java.util.List"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.util.Map.Entry" %>
 <%@ page import="com.product.model.ProductDAOImpl"%>
 <%-- <%@ page language="java" contentType="text/html; charset=BIG5" pageEncoding="BIG5"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -19,7 +21,21 @@
 // 	List<ProductVO> list = productService.getFromMember(17);
 	pageContext.setAttribute("list", list);
 %>
-
+<%
+	Map<Integer, String> map = new HashMap<>();
+	map.put(0,"其他");
+	map.put(1,"桌椅");
+	map.put(2,"寢具");
+	map.put(3,"服飾");
+	map.put(4, "電器");
+	pageContext.setAttribute("map", map);
+%>
+<%
+	Map<Integer, String> status = new HashMap<>();
+	status.put(0,"販售");
+	status.put(1,"完售");
+	pageContext.setAttribute("status", status);	
+%>
 <html>
 <head>
 	<title>所有商品資料 - listAll.jsp</title>
@@ -125,13 +141,13 @@
 				<tr>
 					<th scope="row" class="align-middle" style="text-align:center;">${productVO.id}</th>
 					<td class="align-middle">${productVO.sellerMemberId}</td>
-					<td class="align-middle">${productVO.type}</td>
+					<td class="align-middle">${map[productVO.type]}</td>
 					<td class="align-middle">${productVO.description}</td>	
 					<td class="align-middle">${productVO.price}</td>
 					<td class="align-middle">${productVO.name}</td>
 					<td class="align-middle">${productVO.launchedDate}</td>
 					<td class="align-middle">${productVO.location}</td>
-					<td class="align-middle">${productVO.status}</td>
+					<td class="align-middle">${status[productVO.status]}</td>
 					<td class="align-middle" style="padding:0px">
 						<img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top">
 					</td>
