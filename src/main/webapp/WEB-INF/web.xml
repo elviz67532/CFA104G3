@@ -76,12 +76,31 @@
  			<init-param><param-name>/back_end/product/listAllproductOrder.jsp</param-name><param-value>20</param-value></init-param>
 		    <init-param><param-name>/back_end/server_manager/admin.jsp</param-name><param-value>1</param-value></init-param>
 		    <init-param><param-name>/back_end/server_manager/addManager.jsp</param-name><param-value>1</param-value></init-param>
+		    <init-param><param-name>/back_end/server_manager/activity.jsp</param-name><param-value>10</param-value></init-param>
+		    <init-param><param-name>/back_end/product/seller.jsp</param-name><param-value>20</param-value></init-param>
+		    <init-param><param-name>/back_end/product/productReportManage.jsp</param-name><param-value>20</param-value></init-param>
+		    <init-param><param-name>/back_end/product/listAllproductOrder.jsp</param-name><param-value>20</param-value></init-param>
+		    <init-param><param-name>/back_end/move/readMoveOrder.jsp</param-name><param-value>30</param-value></init-param>
+		    <init-param><param-name>/back_end/server_manager/manager.jsp</param-name><param-value>40</param-value></init-param>
+		    <init-param><param-name>/back_end/server_manager/FAQ.jsp</param-name><param-value>50</param-value></init-param>
+		    <init-param><param-name>/back_end/news/listallnews.jsp</param-name><param-value>60</param-value></init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>backEndMemberFilter</filter-name>
 		<url-pattern>/back_end/move/moveRequestManage.jsp</url-pattern>
 		<url-pattern>/back_end/move/moveRequest.jsp</url-pattern>
 		<url-pattern>/back_end/move/readMoveOrder.jsp</url-pattern>
+		<url-pattern>/back_end/product/seller.jsp</url-pattern>
+		<url-pattern>/back_end/product/listAllproductOrder.jsp</url-pattern>
+		
+		<!-- 處理中 -->
+		<url-pattern>/back_end/product/report/productReportManage.jsp</url-pattern>
+		
+		<!-- 測試用 -->
+		<url-pattern>/back_end/server_manager/activity.jsp</url-pattern>
+		<url-pattern>/back_end/server_manager/manager.jsp</url-pattern>
+		<url-pattern>/back_end/server_manager/FAQ.jsp</url-pattern>
+		<url-pattern>/back_end/server_manager/server.jsp</url-pattern>
 		<url-pattern>/back_end/member/memberstate.jsp</url-pattern>
 		<url-pattern>/back_end/faq/listAllFaq.jsp</url-pattern>
 		<url-pattern>/back_end/news/listallnews.jsp</url-pattern>
@@ -89,6 +108,7 @@
 		<url-pattern>/back_end/product/report/productReportManage.jsp</url-pattern>
    		<url-pattern>/back_end/product/seller.jsp</url-pattern>
  		<url-pattern>/back_end/product/listAllproductOrder.jsp</url-pattern>
+
 		<url-pattern>/back_end/server_manager/admin.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/addManager.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
