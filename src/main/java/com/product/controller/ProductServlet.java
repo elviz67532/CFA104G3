@@ -536,7 +536,7 @@ public class ProductServlet extends HttpServlet {
 				/***************************2.開始刪除資料*****************************************/
 				// 刪除圖片
 				ProductPhotoServiceImpl prodphotoSvc = new ProductPhotoServiceImpl();
-				prodphotoSvc.deleteByProd(prodId);
+				prodphotoSvc.deleteByProdId(prodId);
 				// 刪除商品資訊				
 				ProductServiceImpl productSvc = new ProductServiceImpl();
 				productSvc.delete(prodId);
@@ -566,7 +566,7 @@ public class ProductServlet extends HttpServlet {
 				/***************************2.開始刪除資料*****************************************/
 				// 刪除圖片
 				ProductPhotoServiceImpl prodphotoSvc = new ProductPhotoServiceImpl();
-				prodphotoSvc.deleteByProd(prodId);
+				prodphotoSvc.deleteByProdId(prodId);
 				// 刪除商品資訊
 				ProductServiceImpl productSvc = new ProductServiceImpl();
 				productSvc.delete(prodId);

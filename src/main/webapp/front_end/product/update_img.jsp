@@ -102,20 +102,9 @@
 			<div class="row align-items-center justify-align-center">
 				<FORM ACTION="<%=request.getContextPath()%>/product_photo/UpdatePhoto" METHOD="post" enctype="multipart/form-data">				
 					<!-- 圖片 -->
-<!-- 				    <div class="col-md-5"> -->
-<!-- 					  <label for="country" class="form-label">圖片</label>		       -->
-<!-- 				      <input type="file" name="upImg" class="form-control"> -->
-<%-- 				      <img class="form-control" src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" alt="" width="72" height="57"> --%>
-<!-- 					  <input type="hidden" name="action" value="insert">	 -->
-<!-- 					  <input class="w-100 btn btn-primary btn-lg" type="submit" value="上傳圖片"> -->
-<!-- 				    </div> -->
 					<div class="card" style="width: 18rem;">
 					  <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top" alt="...">
-<!-- 					  <div class="card-body"> -->
-<!-- 					    <h5 class="card-title" style="text-align:center">圖片</h5> -->
-<!-- 					  </div> -->
 					  <input type="file" name="upImg" class="form-control">
-<!-- 					  <input type="hidden" name="action" value="updateImg"> -->
 					  <input type="hidden" name="prodId" value="${productVO.id}" class="form-control">
 					  <input class="btn btn-outline-info" type="submit" value="上傳圖片">
 					</div>				    

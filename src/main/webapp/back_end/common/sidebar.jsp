@@ -54,7 +54,7 @@
 				<a class="collapse-item"
 					href="/CFA104G3/back_end/server_manager/product.jsp">檢舉管理</a> <a
 					class="collapse-item"
-					href="/CFA104G3/back_end/server_manager/product.jsp">商品管理</a> <a
+					href="/CFA104G3/back_end/product/seller.jsp">商品管理</a> <a
 					class="collapse-item"
 					href="/CFA104G3/back_end/product/listAllproductOrder.jsp">訂單管理</a>
 			</div>

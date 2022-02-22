@@ -76,8 +76,9 @@
 		    <init-param><param-name>/back_end/server_manager/admin.jsp</param-name><param-value>1</param-value></init-param>
 		    <init-param><param-name>/back_end/server_manager/addManager.jsp</param-name><param-value>1</param-value></init-param>
 		    <init-param><param-name>/back_end/server_manager/activity.jsp</param-name><param-value>10</param-value></init-param>
-		    <init-param><param-name>/back_end/server_manager/product.jsp</param-name><param-value>20</param-value></init-param>
+		    <init-param><param-name>/back_end/product/seller.jsp</param-name><param-value>20</param-value></init-param>
 		    <init-param><param-name>/back_end/product/productReportManage.jsp</param-name><param-value>20</param-value></init-param>
+		    <init-param><param-name>/back_end/product/listAllproductOrder.jsp</param-name><param-value>20</param-value></init-param>
 		    <init-param><param-name>/back_end/move/readMoveOrder.jsp</param-name><param-value>30</param-value></init-param>
 		    <init-param><param-name>/back_end/server_manager/manager.jsp</param-name><param-value>40</param-value></init-param>
 		    <init-param><param-name>/back_end/server_manager/FAQ.jsp</param-name><param-value>50</param-value></init-param>
@@ -89,13 +90,14 @@
 		<url-pattern>/back_end/move/moveRequestManage.jsp</url-pattern>
 		<url-pattern>/back_end/move/moveRequest.jsp</url-pattern>
 		<url-pattern>/back_end/move/readMoveOrder.jsp</url-pattern>
+		<url-pattern>/back_end/product/seller.jsp</url-pattern>
+		<url-pattern>/back_end/product/listAllproductOrder.jsp</url-pattern>
 		
 		<!-- 處理中 -->
 		<url-pattern>/back_end/product/report/productReportManage.jsp</url-pattern>
 		
 		<!-- 測試用 -->
 		<url-pattern>/back_end/server_manager/activity.jsp</url-pattern>
-		<url-pattern>/back_end/product/seller.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/manager.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/FAQ.jsp</url-pattern>
 		<url-pattern>/back_end/server_manager/server.jsp</url-pattern>
