@@ -4,6 +4,8 @@
 <%@	page import="com.product.model.ProductServiceImpl"%>
 <%@	page import="com.product.model.ProductVO"%>
 <%@	page import="com.product.model.ProductDAOImpl"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.util.Map.Entry" %>
 <!DOCTYPE html>
 
 
@@ -12,7 +14,21 @@
 	List<ProductVO> list = productService.getAll();
 	pageContext.setAttribute("list", list);
 %>
-
+<%
+	Map<Integer, String> map = new HashMap<>();
+	map.put(0,"其他");
+	map.put(1,"桌椅");
+	map.put(2,"寢具");
+	map.put(3,"服飾");
+	map.put(4, "電器");
+	pageContext.setAttribute("map", map);
+%>
+<%
+	Map<Integer, String> status = new HashMap<>();
+	status.put(0,"販售");
+	status.put(1,"完售");
+	pageContext.setAttribute("status", status);	
+%>
 <html lang="zh-TW">
 <head>
 	<meta charset="utf-8">
@@ -29,6 +45,18 @@
 	  th, td {
 	    padding: 5px;
 	    text-align: center;
+	  }
+	  th {
+	  	font-size:16px;
+	  }
+	  td {
+	  	font-size:15px;
+	  }
+	  img{
+		    max-width:64px;
+		    max-height:64px;
+		    width:auto;
+		    height:auto;	  	
 	  }
 	</style>
 </head>
@@ -79,7 +107,7 @@
 						<tr>
 							<td>${productVO.id}</td>
 							<td>${productVO.sellerMemberId}</td>
-							<td>${productVO.type}</td>
+							<td>${map[productVO.type]}</td>
 							<td>${productVO.description}</td>	
 							<td>${productVO.price}</td>
 							<td>${productVO.name}</td>
@@ -89,7 +117,7 @@
 							</td>
 							<td>${productVO.launchedDate}</td>
 							<td>${productVO.location}</td>
-							<td>${productVO.status}</td>
+							<td>${status[productVO.status]}</td>
 							<td>
 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet">
 									<input type="submit" value="刪除">

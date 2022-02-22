@@ -53,7 +53,7 @@ public class ProductPhotoServlet extends HttpServlet {
 			if(row>0)
 				System.out.println("圖片存到DB了");
 			RequestDispatcher view = req
-					.getRequestDispatcher("/front_end/product/homePage.jsp");
+					.getRequestDispatcher("/front_end/product/sellerAllProducts.jsp");
 			view.forward(req, res);
 			} 
 			catch (Exception e) {
