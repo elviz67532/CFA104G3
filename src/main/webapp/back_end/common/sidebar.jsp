@@ -1,3 +1,4 @@
+<%@page import="com.product.model.ProductServiceImpl"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -17,9 +18,11 @@
 
 	<!-- 幫助中心管理	 -->
 	<hr class="sidebar-divider">
-	<li class="nav-item"><a class="nav-link"
-		href="/CFA104G3/back_end/faq/listAllFaq.jsp"
-		onclick="this.parentNode.submit()"> <i class="fas fa-fw fa-table"></i>
+	<li class="nav-item">
+		<a class="nav-link" 
+		   href="<%=request.getContextPath()%>/back_end/faq/listAllFaq.jsp"
+		   onclick="this.parentNode.submit()">
+			<i class="fas fa-fw fa-table"></i> 
 			<span>FAQ</span>
 	</a></li>
 
@@ -34,8 +37,7 @@
 		<div id="collapseActivity" class="collapse"
 			aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item"
-					href="/CFA104G3/back_end/server_manager/activity.jsp">活動管理</a>
+				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/activity/listAllActr.jsp">活動管理</a>
 			</div>
 		</div></li>
 
@@ -51,12 +53,9 @@
 		<div id="collapseProduct" class="collapse"
 			aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item"
-					href="/CFA104G3/back_end/server_manager/product.jsp">檢舉管理</a> <a
-					class="collapse-item"
-					href="/CFA104G3/back_end/server_manager/product.jsp">商品管理</a> <a
-					class="collapse-item"
-					href="/CFA104G3/back_end/product/listAllproductOrder.jsp">訂單管理</a>
+				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/product/report/productReportManage.jsp">檢舉管理</a>				
+				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/product/seller.jsp">商品管理</a>
+				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/product/listAllproductOrder.jsp">訂單管理</a>
 			</div>
 		</div></li>
 
@@ -89,8 +88,7 @@
 		<div id="collapseMember" class="collapse" aria-labelledby="headingTwo"
 			data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item"
-					href="/CFA104G3/back_end/server_manager/manager.jsp">會員資料</a>
+				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/member/memberstate.jsp">會員資料</a>
 			</div>
 		</div></li>
 
