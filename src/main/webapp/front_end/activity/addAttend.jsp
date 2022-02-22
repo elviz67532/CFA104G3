@@ -78,13 +78,13 @@
 <!-- 			</tr> -->
 
 			<tr>
-		<td>付款狀態:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="status">
-				<option value="-1">請選擇付款狀態</option>
-				<option value="0" >未付款</option>
-   				<option value="1">已付款</option>
+<!-- 		<td>付款狀態:<font color=red><b>*</b></font></td> -->
+<!-- 		<td><select size="1" name="status"> -->
+<!-- 				<option value="-1">請選擇付款狀態</option> -->
+<!-- 				<option value="0" >未付款</option> -->
+<!--    				<option value="1">已付款</option> -->
 					
-		</select></td>
+<!-- 		</select></td> -->
 		</tr>
 			
 			

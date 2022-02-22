@@ -62,7 +62,6 @@ td {
 				<div class="container-fluid">
 
 					<!-- main -->
-
 					<h1>後台商品訂單管理主頁</h1>
 					<!-- 					<FORM METHOD="post" -->
 					<%-- 						ACTION="<%=request.getContextPath()%>/back_end/faq/faq.do"> --%>
@@ -135,12 +134,14 @@ td {
 					</table>
 					<%@ include file="page2.jsp"%>
 					<!-- end of main -->
-
 				</div>
 			</div>
 			<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
 		</div>
 	</div>
+	<!-- End of Page Wrapper -->
+
+
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
@@ -151,12 +152,17 @@ td {
 
 	<!-- custom script -->
 
+	
 	<!-- Bootstrap core JavaScript-->
 	<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
+
+	<!-- 註冊按鈕觸發功能  -->
+	<script>
+		
+	</script>
+</body>
+
 </html>

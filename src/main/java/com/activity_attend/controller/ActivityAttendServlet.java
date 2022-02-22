@@ -61,11 +61,8 @@ public class ActivityAttendServlet extends HttpServlet {
 						errorMsgs.add("活動內容備註請勿空白");
 					}
 //付款狀態					
-					int status = Integer.valueOf(req.getParameter("status"));
-					if(status==-1) {
-						errorMsgs.add("請選擇付款狀態");
-					}
-
+					int status = 1;
+					
 					ActivityAttendVO actaVO = new ActivityAttendVO();
 					actaVO.setMemberId(memberId);
 					actaVO.setActivityId(activityId);

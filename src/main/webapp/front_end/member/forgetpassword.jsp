@@ -70,27 +70,19 @@ if (errorMsgs != null) {
 	<div  class="align" style="text-align: center;">
 		<div class="grid">
 	
-			<form
-				action="${pageContext.request.contextPath}/front_end/member/MemberServlet.do"
-				method="POST" class="form login">
-	
+			<form action="${pageContext.request.contextPath}/front_end/member/MemberServlet.do"method="POST" class="form login">
 				<div class="form__field">
-					<label for="login__username"><svg class="icon">
-	            <use xlink:href="#icon-user"></use>
-	          </svg><span class="hidden">E-mail</span></label> <input type="hidden"
-						name="action" value="forgetpassword"> <input id="email"
-						type="text" autocomplete="off" name="email" class="form__input"
-						placeholder="E-mail">
+					<label for="login__username">
+					<svg class="icon">
+	                  <use xlink:href="#icon-user"></use>
+	                </svg><span class="hidden">E-mail</span></label> <input type="hidden"name="action" value="forgetpassword"> <input id="email"type="text" autocomplete="off" name="email" class="form__input"placeholder="E-mail">
 				</div>
 				<c:if test="${not empty email}">
 					<span style="color: red"> "${email}" </span>
 				</c:if>
 	
 				<footer class="forget">
-					<button type="submit" type="hidden" name="action"
-						value="forgetpassword" />
-					發送密碼
-					</button>
+					<button type="submit" type="hidden" name="action"value="forgetpassword" />發送密碼</button>
 				</footer>
 			</form>
 		</div>

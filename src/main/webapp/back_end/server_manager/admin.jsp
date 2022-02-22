@@ -99,7 +99,7 @@
 									<th>						
 										<c:if test="${smVO.smgrId !=1}" var="varName" scope="session">										
 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/server_manager/ServerManagerServlet">								
-											<!-- 【產生該員工的五組計數器】 -->		
+											<!-- 【產生該員工的六組計數器】 -->		
 											<% 
 												int act=0; int prod=0; int move=0; int mem=0; int faq=0; int news=0; 
 											%>

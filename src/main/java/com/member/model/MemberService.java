@@ -11,8 +11,6 @@ public interface MemberService {
 
 	MemberVO updateMember(MemberVO memberVO);
 
-
-
 	MemberVO selectById(Integer id);
 	
 	MemberVO register(String email, String account, String password, String nickname, String name, String phone,
@@ -22,11 +20,16 @@ public interface MemberService {
 			String cityArea, String address, byte[] avatar, Integer id);
 
 
-	boolean veriftyCode(Integer id, String code);
-
 	boolean banMember(Integer id);
 
 	boolean restoreMember(Integer id);
+
+	boolean veriftyCode(Integer status, Integer id, String code);
+
+
+	MemberVO status(Integer id, Integer status);
+
+	
 
 
 }
