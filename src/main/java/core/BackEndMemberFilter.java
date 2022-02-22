@@ -100,7 +100,7 @@ public class BackEndMemberFilter implements Filter {
 			String initParameterName = initParameterNames.nextElement();
 			String initParameter = config.getInitParameter(initParameterName);
 			Integer valueOf = Integer.valueOf(initParameter);
-			urlAuths.put(initParameter, valueOf);
+			urlAuths.put(initParameterName, valueOf);
 		}
 	}
 }	
