@@ -89,25 +89,25 @@
     </header>
    
    	<!-- 主體畫面設計  -->
-   	<div class="row justify-content-center">
-      <div class="col-lg-6 SEARCHFOR">
-      </div>
-    </div>
+<!--    	<div class="row justify-content-center"> -->
+<!--       <div class="col-lg-6 SEARCHFOR"> -->
+<!--       </div> -->
+<!--     </div> -->
 
 	<!-- 輪播 (Carousel) -->
     <!-- 搭配圖片滿版 -->
+   <c:forEach var="newsVO" items="${newslist}">
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-      <c:forEach var="newsVO" items="${newslist}">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/NewsImageReader?id=${newsVO.id})"></div>
+          <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id})"></div>
         </div>
-<!-- 	        <div class="carousel-item"> -->
-<!-- 	          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news2.jpg)"></div> -->
-<!-- 	        </div> -->
-<!-- 	        <div class="carousel-item"> -->
-<!-- 	          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news3.jpg)"></div> -->
-<!-- 	        </div> -->
+<!--         <div class="carousel-item"> -->
+<%--           <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id+1})"></div> --%>
+<!--         </div> -->
+<!--         <div class="carousel-item"> -->
+<%--           <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id+2})"></div> --%>
+<!--         </div> -->
       </div>
       </c:forEach>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -119,7 +119,7 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-	
+	<br><br>
 	<div class="container">
 		<div class="row">
 			<!-- 左邊3欄  list group 分類功能-->
