@@ -75,14 +75,15 @@ public class LoginServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				MemberServiceImpl memSvc = new MemberServiceImpl();
 				String email = req.getParameter("email");
 				String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
 				if (email == null || email.trim().length() == 0) {
 					errorMsgs.put("email", "請輸入郵箱");
 				} else if (!email.trim().matches(emailReg)) {
 					errorMsgs.put("email", "請輸入正確的郵箱格式");
-//				}else if (MemberServiceImpl.forgetpassword(email) != null) {
-//					errorMsgs.put("email","此信箱已使用");
+			}else if (memSvc.forgetpassword(email) != null) {
+					errorMsgs.put("email","此信箱已使用");
 				}
 				String account = req.getParameter("account");
 				String accountReg = "^[A-Za-z0-9]{6,24}$";
@@ -90,7 +91,7 @@ public class LoginServlet extends HttpServlet {
 					errorMsgs.put("account", "請輸入帳號");
 				} else if (!account.trim().matches(accountReg)) {
 					errorMsgs.put("account", "請輸入正確的帳號格式");
-//				} else if (MemberDAO.login(account,password) != null) {
+//		 	     } else if (memSvc.login(account,password) != null) {
 //					errorMsgs.put("account","此帳號已存在");
 				}
 				String password = req.getParameter("password");
@@ -420,8 +421,8 @@ public class LoginServlet extends HttpServlet {
 			}
 
 		}
+		System.out.println("validate".equals(action));		
 		if ("validate".equals(action)) {
-
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -434,11 +435,11 @@ public class LoginServlet extends HttpServlet {
 				}
 				String code = req.getParameter("code");
 
+				System.out.println(id);
 				/*************************** 2.開始查詢資料 *****************************************/
 				MemberServiceImpl memberSvc = new MemberServiceImpl();
 				memberSvc.veriftyCode(null, id, code);
 				String url = "/CFA104G3/index.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
 				res.sendRedirect(url);
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
@@ -477,7 +478,7 @@ public class LoginServlet extends HttpServlet {
 	private String generateForm(HttpServletRequest req, int id, String code) {// 信箱連結
 		StringBuffer form = new StringBuffer();
 		form.append("<form action=\"" + req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort()
-				+ req.getContextPath() + "/front_end/member/mem_verify.jsp\" method=\"POST\">");
+				+ req.getContextPath() + "/front_end/member/MemberServlet.do\" method=\"POST\">");
 		form.append("	<input type=\"hidden\" name=\"action\" value=\"validate\">");
 		form.append("	<input type=\"hidden\" name=\"id\" value=\"" + id + "\">");
 		form.append("	<input type=\"hidden\" name=\"code\" value=\"" + code + "\">");

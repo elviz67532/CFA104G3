@@ -4,7 +4,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
 <%
-System.out.print("jsp首頁");
+
 MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 
 Map<Integer, String> statusMap = new HashMap<>();
@@ -121,6 +121,10 @@ button {
 						<h2>會員資訊狀態</h2>
 						<div class="" main>
 							<table>
+								<tr>
+									<td>會員狀態:</td>
+									<td>${requestScope.status}</td>
+								</tr>
 
 								<tr>
 									<td>會員編號:</td>
@@ -153,7 +157,6 @@ button {
 								<tr>
 									<td>會員性別:</td>
 									<c:if test="${memberVO.gender==0}">
-
 										<td>不透漏</td>
 									</c:if>
 									<c:if test="${memberVO.gender==1}">
@@ -182,39 +185,23 @@ button {
 								</tr>
 								<tr>
 									<td>頭像:</td>
-									<td><img
-										src="<%=request.getContextPath()%>/front_end/member/MemberServlet.do?action=getImage&MEM_ID=${memberVO.id}"></td>
+									<td><img src="<%=request.getContextPath()%>/front_end/member/MemberServlet.do?action=getImage&MEM_ID=${memberVO.id}"></td>
 								</tr>
 								<tr>
 									<td>註冊日期:</td>
 									<td>${memberVO.registerDate}</td>
 								</tr>
-								<tr>
-									<td>會員狀態:</td>
-									<td>${requestScope.status}</td>
-								</tr>
-								<tr>
-									<td>更改會員狀態:</td>
-									<td>
-
 										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/member/BackMemberServlet.do">
-											<input type="submit" value="復權"> 
+       										<input type="radio" value="1" name="status" />恢復權限
+       										<input type="radio" value="2" name="status" />會員停權
 											<input type="hidden" name="id" value="${memberVO.id}"> 
-											<input type="hidden" name="action"value="updateStatusTo1ForOne"> 
+											<input type="hidden" name="action"value="updateStatus"> 
+										    <input type="submit" value="送出"> 
 										</FORM>
-
-										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/member/BackMemberServlet.do">
-											<input type="submit" value="停權"> 
-											<input type="hidden" name="id" value="${memberVO.id}">  
-											<input type="hidden" name="action"value="updateStatusTo1ForTwo">
-										</FORM>
-									</td>
-								</tr>
+								</td>								
 							</table>
 						</div>
 					</div>
-					
-
 				</div>
 			</div>
 			<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
