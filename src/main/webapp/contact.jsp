@@ -83,6 +83,7 @@
                                 </div>
                                 <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
                                 <!-- Submit Button-->
+                                
                                 <button class="btn btn-primary text-uppercase disabled" id="submitButton" type="submit">Send</button>
                             </form>
                         </div>
