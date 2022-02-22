@@ -455,7 +455,7 @@ public class ProductServlet extends HttpServlet {
 			
 			/***************************3.修改完成,準備轉交(Send the Success view)*************/		
 			req.setAttribute("productVO", productVO);
-			String successUrl = "/front_end/product/update_img.jsp";
+			String successUrl = "/front_end/product/sellerAllProducts.jsp";
 			RequestDispatcher successDispatcher = req.getRequestDispatcher(successUrl);
 			System.out.println("修改完成,準備轉交");
 			successDispatcher.forward(req, res);
