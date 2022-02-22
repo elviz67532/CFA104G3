@@ -22,7 +22,7 @@ public class ProductPhotoDAOJDBCImpl implements ProductPhotoDAO {
 	private static final String UPDATE = "update PRODUCT_PHOTO set PRODPH_PHOTO = ? where PRODPH_ID = ?";
 	private final String INSERT = "INSERT INTO PRODUCT_PHOTO(PRODPH_PROD_ID, PRODPH_PHOTO) VALUES (?, ?)";
 	private final String GET_BLOB = "SELECT * FROM PRODUCT_PHOTO WHERE PRODPH_PROD_ID=?";
-	
+	private static final String DELETE_BY_PRODID = "delete from PRODUCT_PHOTO where PRODPH_PROD_ID = ?";
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -206,6 +206,26 @@ public class ProductPhotoDAOJDBCImpl implements ProductPhotoDAO {
 			e.printStackTrace();
 		}
 		return (Blob) blob;
+	}
+
+	@Override
+	public void deleteByProdId(Integer prodPhProdId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int deleteRow;
+		
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(DELETE_BY_PRODID);
+
+			pstmt.setInt(1, prodPhProdId);
+
+			deleteRow = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
 	}
 
 }

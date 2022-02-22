@@ -9,4 +9,6 @@ public interface ProductPhotoDAO extends CoreDao<ProductPhotoVO, Integer> {
 	int insertId(Integer prodPhProdId, String photoPath);
 	
 	Blob getBlob(Integer prodPhProdId);
+	
+	void deleteByProdId(Integer prodPhProdId);
 }

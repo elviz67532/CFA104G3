@@ -13,10 +13,10 @@
 <%
 
 	ProductServiceImpl productService = new ProductServiceImpl();
-// 	MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
-// 	Integer account = memberVo.getId();
-// 	List<ProductVO> list = productService.getFromMember(account);
-	List<ProductVO> list = productService.getFromMember(17);
+	MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
+	Integer account = memberVo.getId();
+	List<ProductVO> list = productService.getFromMember(account);
+// 	List<ProductVO> list = productService.getFromMember(17);
 	pageContext.setAttribute("list", list);
 %>
 
@@ -49,6 +49,13 @@
 	    padding: 5px;
 	    text-align: center;
 	  }
+		img {
+		    max-width:64px;
+		    max-height:64px;
+		    width:auto;
+		    height:auto;
+		}
+		
 	</style>
 </head>
 <body>
@@ -94,23 +101,23 @@
 		<table class="table table-hover table-bordered table-sm align-middle border-light rounded-3">
 			<thead>
 				<tr>
-					<th scope="col">商品編號</th>
-					<th scope="col">會員編號_賣家</th>
-					<th scope="col">商品類型</th>
-					<th scope="col">商品敘述</th>
-					<th scope="col">商品價格</th>
-					<th scope="col">商品名稱</th>
-					<th scope="col">上架時間</th>
-					<th scope="col">商品所在</th>
-					<th scope="col">商品狀態</th>
-					<th scope="col">圖片</th>
-					<th scope="col">修改</th>
-					<th scope="col">刪除</th>
+					<th scope="col" style="text-align:center;">商品編號</th>
+					<th scope="col" style="text-align:center;">會員編號_賣家</th>
+					<th scope="col" style="text-align:center;">商品類型</th>
+					<th scope="col" style="text-align:center;">商品敘述</th>
+					<th scope="col" style="text-align:center;">商品價格</th>
+					<th scope="col" style="text-align:center;">商品名稱</th>
+					<th scope="col" style="text-align:center;">上架時間</th>
+					<th scope="col" style="text-align:center;">商品所在</th>
+					<th scope="col" style="text-align:center;">商品狀態</th>
+					<th scope="col" style="text-align:center;">圖片</th>
+					<th scope="col" style="text-align:center;">修改</th>
+					<th scope="col" style="text-align:center;">刪除</th>
 				</tr>
 			</thead>
 			<c:forEach var="productVO" items="${list}">
 				<tr>
-					<th scope="row" class="align-middle">${productVO.id}</th>
+					<th scope="row" class="align-middle" style="text-align:center;">${productVO.id}</th>
 					<td class="align-middle">${productVO.sellerMemberId}</td>
 					<td class="align-middle">${productVO.type}</td>
 					<td class="align-middle">${productVO.description}</td>	
@@ -119,7 +126,7 @@
 					<td class="align-middle">${productVO.launchedDate}</td>
 					<td class="align-middle">${productVO.location}</td>
 					<td class="align-middle">${productVO.status}</td>
-					<td class="align-middle">
+					<td class="align-middle" style="padding:0px">
 						<img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top">
 					</td>
 					<td class="align-middle">

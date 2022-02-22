@@ -44,6 +44,8 @@
 		<url-pattern>/front_end/move/moveRequestManage.jsp</url-pattern>	
 		<url-pattern>/front_end/notification/homePage.jsp</url-pattern>	
 		<url-pattern>/front_end/move/frontGetMoveOrder.jsp</url-pattern>
+  		<url-pattern>/front_end/product/sellerProduct.jsp</url-pattern>
+  		<url-pattern>/front_end/product/sellerAllProducts.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -227,7 +229,14 @@
 		<servlet-name>DBGifReader2</servlet-name>
 		<url-pattern>/product_photo/DBGifReader2</url-pattern>
 	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>UpdatePhoto</servlet-name>
+		<servlet-class>com.product_photo.controller.UpdatePhoto</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdatePhoto</servlet-name>
+		<url-pattern>/product_photo/UpdatePhoto</url-pattern>
+	</servlet-mapping>
 	<!-- MEMBER -->
 	<servlet>
 		<servlet-name>MemberServlet</servlet-name>

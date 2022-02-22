@@ -2,15 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.member.model.*"%>
 <!DOCTYPE html>
 <html lang="en">
-<%
-	MemberVO memberVo = (MemberVO) session.getAttribute("memberVO");
-	if (memberVo == null) {
-	response.sendRedirect(request.getContextPath() + "/front_end/member/login.jsp");
-	}
-%>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -97,76 +91,36 @@
 			</c:forEach>
 		</ul>
 	</c:if>
-	<br><br>
-	
-	<!-- 麵包屑 (Breadcrumb) -->
-	<nav aria-label="breadcrumb">
-	  <ol class="breadcrumb">
-	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總攬</a></li>
-	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp">買賣家</a></li>
-	    <li class="breadcrumb-item active" aria-current="page">新增商品</li>
-	  </ol>
-	</nav>	
-		
+
 	<!-- nav -->
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 	<div class="container">
 		<main>
 			<div class="py-5 text-center">
-				<h2>新增商品</h2>
+				<h2>商品圖片</h2>
 			</div>
-				<!-- 目前手動輸入 -->
-				<!-- 取得會員ID -->
-				<jsp:useBean id="memberVO" class="com.member.model.MemberVO"/>
-				<div class="col-12">
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet" class="needs-validation" 
-						  name="form1" novalidate>
-						<div class="row g-3">
-							<div class="col-sm-6">
-								<label for="" class="form-label">會員編號:</label><br> 
-								<input type="text" value="${sessionScope.memberVO.id}" class="form-control" name="memId"/>
-							</div>
-							<!-- 商品名稱 -->
-							<div class="col-sm-6">
-								<label for="lastName" class="form-label">商品名稱</label> 
-								<input type="text" name="prodName" class="form-control" required/>
-								<div class="invalid-feedback">Valid last name is required.</div>
-							</div>
-							<!-- 商品內容 -->
-							<div class="col-12">
-								<label for="lastName" class="form-label">商品內容</label> 
-								<input type="text" name="prodDesc" class="form-control" required>
-								<div class="invalid-feedback">Valid last name is required.</div>
-							</div>
-							<!-- 商品地址 -->
-							<div class="col-sm-6">
-								<label for="address" class="form-label">地址</label> 
-								<input type="text" name="prodLoc" class="form-control" id="address" required>
-							</div>
-							<!-- 商品價格 -->
-							<div class="col-sm-6">
-								<label for="address" class="form-label">金額</label> <input
-									type="text" name="prodPrice" 
-									class="form-control" id="prodPrice"
-									placeholder="NT$" required>
-							</div>
-							<!-- 商品種類 -->
-							<div class="col-md-5">
-								<label for="country" class="form-label">類型</label> 
-								<select name="prodType" class="form-select" id="country" required>
-									<option>Choose...</option>
-									<option value=4>電器類</option>
-									<option value=2>寢具類</option>
-									<option value=0>其他</option>
-								</select>
-							</div>
-						</div>
-						<!-- 送出文字資訊 -->
-						<br><br>
-						<input type="hidden" name="action" value="insert">	
-						<input class="w-100 btn btn-primary btn-lg" type="submit" value="送出">
-					</FORM>			
-				</div>
+			<div class="row align-items-center justify-align-center">
+				<FORM ACTION="<%=request.getContextPath()%>/product_photo/UpdatePhoto" METHOD="post" enctype="multipart/form-data">				
+					<!-- 圖片 -->
+<!-- 				    <div class="col-md-5"> -->
+<!-- 					  <label for="country" class="form-label">圖片</label>		       -->
+<!-- 				      <input type="file" name="upImg" class="form-control"> -->
+<%-- 				      <img class="form-control" src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" alt="" width="72" height="57"> --%>
+<!-- 					  <input type="hidden" name="action" value="insert">	 -->
+<!-- 					  <input class="w-100 btn btn-primary btn-lg" type="submit" value="上傳圖片"> -->
+<!-- 				    </div> -->
+					<div class="card" style="width: 18rem;">
+					  <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top" alt="...">
+<!-- 					  <div class="card-body"> -->
+<!-- 					    <h5 class="card-title" style="text-align:center">圖片</h5> -->
+<!-- 					  </div> -->
+					  <input type="file" name="upImg" class="form-control">
+<!-- 					  <input type="hidden" name="action" value="updateImg"> -->
+					  <input type="hidden" name="prodId" value="${productVO.id}" class="form-control">
+					  <input class="btn btn-outline-info" type="submit" value="上傳圖片">
+					</div>				    
+			    </FORM>					
+			</div>
 			</div>
 		</main>
 

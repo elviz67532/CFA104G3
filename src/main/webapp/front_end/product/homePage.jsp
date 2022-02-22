@@ -32,29 +32,34 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
     <style>
-	  .SEARCHFOR{
-	  padding:10px;
-	  margin-bottom: 30px;
-	}
-	#pagination{
-	  bottom: 0;
-	}
-	.d-block{
-	  height: 30%;
-	}
-	.myImg {
-	  height:  400px;
-	  background-repeat: no-repeat;
-	  background-attachment: fixed;
-	  background-position: center;
-	  background-size: cover;
-	}
-	.pagination{
-		margin: 10px
-	}
-	.card{
-		margin: 5px
-	}
+		  .SEARCHFOR{
+		  padding:10px;
+		  margin-bottom: 30px;
+		}
+		#pagination{
+		  bottom: 0;
+		}
+		.d-block{
+		  height: 30%;
+		}
+		.myImg {
+		  height:  400px;
+		  background-repeat: no-repeat;
+		  background-attachment: fixed;
+		  background-position: center;
+		  background-size: cover;
+		}
+		.pagination{
+			margin: 10px
+		}
+		.card{
+			margin: 5px
+		}
+		img{
+		    max-height:256px;
+		    width:auto;
+		    height:auto;
+		}
 	</style>
 </head>
 
