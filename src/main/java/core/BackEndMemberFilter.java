@@ -97,10 +97,10 @@ public class BackEndMemberFilter implements Filter {
 	private void initAuths() {
 		Enumeration<String> initParameterNames = config.getInitParameterNames();
 		while(initParameterNames.hasMoreElements()) {
-			String urls = initParameterNames.nextElement();
-			String urlAuth = config.getInitParameter(urls);
-			Integer authCode = Integer.valueOf(urlAuth);
-			urlAuths.put(urls, authCode);
+			String initParameterName = initParameterNames.nextElement();
+			String initParameter = config.getInitParameter(initParameterName);
+			Integer valueOf = Integer.valueOf(initParameter);
+			urlAuths.put(initParameterName, valueOf);
 		}
 	}
 }	
