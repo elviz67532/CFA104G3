@@ -45,6 +45,12 @@
 	    margin: 20px;
 	    text-size:3px;
 	  }
+	  th {
+	  	font-size:16px;
+	  }
+	  td {
+	  	font-size:15px;
+	  }	  
 	  th, td {
 	    padding: 5px;
 	    text-align: center;
@@ -131,11 +137,16 @@
 					</td>
 					<td class="align-middle">
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet">
-							<input type="submit" value="修改">
+							<input type="submit" value="資料">
 							<input type="hidden" value="${productVO.id}" name="prodId">
 		<%-- 					--${productVO.id}-- --%>
 							<input type="hidden" value="getOne_For_Update" name="action"> 
 						</FORM>
+						<FORM ACTION="<%=request.getContextPath()%>/front_end/product/update_img.jsp" METHOD="post">	
+							<input type="submit" value="圖片">
+							<input type="hidden" value="${productVO.id}" name="prodId">
+							<input type="hidden" value="getOne_For_Update_Img" name="action">
+						</FORM>	
 					</td>
 					<td class="align-middle">
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet">

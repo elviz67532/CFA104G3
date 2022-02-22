@@ -40,6 +40,7 @@ public class UpdatePhoto extends HttpServlet {
 		//【Part 物件】【DB】
 		Part filepart = req.getPart("upImg");
 		inputStream = filepart.getInputStream();
+		System.out.println("inputStream" + inputStream);
 		Integer prodId = Integer.valueOf(req.getParameter("prodId"));	
 		int row = update(inputStream,prodId);
 		RequestDispatcher view = req
