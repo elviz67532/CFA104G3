@@ -71,12 +71,12 @@ td {
 									value="新增FAQ"></a></td>
 						</h2>
 					</h1>
-<!-- 					<FORM METHOD="post" -->
-<%-- 						ACTION="<%=request.getContextPath()%>/back_end/faq/faq.do"> --%>
-<!-- 						<b>FAQ編號檢索:</b> <input type="text" name="id"> <input -->
-<!-- 							type="hidden" name="action" value="getOne_For_Display"> <input -->
-<!-- 							type="submit" value="Search"> -->
-<!-- 					</FORM> -->
+					<!-- 					<FORM METHOD="post" -->
+					<%-- 						ACTION="<%=request.getContextPath()%>/back_end/faq/faq.do"> --%>
+					<!-- 						<b>FAQ編號檢索:</b> <input type="text" name="id"> <input -->
+					<!-- 							type="hidden" name="action" value="getOne_For_Display"> <input -->
+					<!-- 							type="submit" value="Search"> -->
+					<!-- 					</FORM> -->
 
 					<table class="table table-striped table-hover">
 						<tr>

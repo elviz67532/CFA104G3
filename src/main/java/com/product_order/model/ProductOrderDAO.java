@@ -6,7 +6,9 @@ import core.dao.CoreDao;
 
 public interface ProductOrderDAO extends CoreDao<ProductOrderVO, Integer> {
 
-	int changeStatus(int id, int status);
+//	int changeStatus(int id, int status);
+
+	int updateStatus(ProductOrderVO vo);
 
 //	public void insertOrder(ProductOrderVO shop_OrderFrontVO);// 新增訂單
 

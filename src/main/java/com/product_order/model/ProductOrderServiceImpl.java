@@ -3,6 +3,7 @@ package com.product_order.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.activity.model.ActivityVO;
 import com.product.model.ProductVO;
 
 public class ProductOrderServiceImpl implements ProductOrderService {
@@ -71,27 +72,77 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 	}
 
 	@Override
+	public ProductOrderVO retrieveById(Integer id) {
+		return dao.selectById(id);
+	}
+
+	@Override
 	public List<ProductOrderVO> getAll() {
 		return dao.selectAll();
 	}
 
-	public boolean changeStatus(Integer id, Integer status) {
+//	public boolean changeStatus(Integer id, Integer status) {
+//
+//		int row = dao.changeStatus(id, status);
+//
+//		return row > 0;
+//	}
 
-		int row = dao.changeStatus(id, status);
-
-		return row > 0;
+	@Override
+	public ProductOrderVO changeStatus(Integer id, Integer status) {
+		ProductOrderVO vo = new ProductOrderVO();
+		vo.setId(id);
+		vo.setStatus(status);
+		dao.updateStatus(vo);
+		return vo;
 	}
 
-//	@Override
-//	public boolean getDataFromProduct(ProductVO productVO) {
-//
-//		ProductOrderVO vo = new ProductOrderVO();
-//
-//		vo.setId(ProductVO.getProductId());
-//		vo.setSellerMemberId(ProductVO.getSellerMemberId());
-//
-//		dao.insert(vo);
-//
-//		return true;
-//	}
+	public ProductOrderVO waitGO(Integer id) {
+		return changeStatus(id, 0);
+	}
+
+	public ProductOrderVO go(Integer id) {
+		return changeStatus(id, 1);
+	}
+
+	public ProductOrderVO complete(Integer id) {
+		return changeStatus(id, 2);
+
+	}
+
+	public ProductOrderVO accountOne(Integer id) {
+		return changeStatus(id, 3);
+
+	}
+
+	public ProductOrderVO accountTwo(Integer id) {
+		return changeStatus(id, 4);
+	}
+
+	public ProductOrderVO cancelOne(Integer id) {
+		return changeStatus(id, 5);
+	}
+
+	public ProductOrderVO returnOne(Integer id) {
+		return changeStatus(id, 6);
+	}
+
+	public ProductOrderVO cancelTwo(Integer id) {
+		return changeStatus(id, 7);
+	}
+
+	public ProductOrderVO returnTwo(Integer id) {
+		return changeStatus(id, 8);
+
+	}
+
+	public ProductOrderVO sellerCancelOne(Integer id) {
+		return changeStatus(id, 9);
+
+	}
+
+	public ProductOrderVO sellerCancelTwo(Integer id) {
+		return changeStatus(id, 10);
+
+	}
 }
