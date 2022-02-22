@@ -108,12 +108,21 @@ table th {
 		</div>
 	</div>
 
-	 <!-- Footer-->
-   	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+		<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
+	
+	<!-- Logout Modal-->
+	<jsp:include page="/back_end/common/logoutModal.jsp"></jsp:include>
+	
+	<!-- custom script -->
+	
+	<!-- Bootstrap core JavaScript-->
+	<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
 </body>
 
 </html>
