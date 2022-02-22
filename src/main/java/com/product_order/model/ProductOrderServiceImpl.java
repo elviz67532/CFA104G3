@@ -75,6 +75,13 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 		return dao.selectAll();
 	}
 
+	public boolean changeStatus(Integer id, Integer status) {
+
+		int row = dao.changeStatus(id, status);
+
+		return row > 0;
+	}
+
 //	@Override
 //	public boolean getDataFromProduct(ProductVO productVO) {
 //

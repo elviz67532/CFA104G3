@@ -22,6 +22,8 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 			+ "PRODO_NAME = ?, PRODO_MOBILE = ?, PRODO_ADDRESS = ?, PRODO_DATE = ?, PRODO_AMOUNT = ?, PRODO_STATUS = ?, PRODO_SUM = ? "
 			+ "where PRODO_ID = ?";
 
+	private static final String CHANGE_STATUS = "update PRODUCT_ORDER set PRODO_STATUS = ? where PRODO_ID = ?";
+
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -186,6 +188,31 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 		}
 
 		return list;
+	}
+
+	@Override
+	public int changeStatus(int id, int status) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int updateRow;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(CHANGE_STATUS);
+
+			pstmt.setInt(1, status);
+			pstmt.setInt(2, id);
+
+			updateRow = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
+
+		return updateRow;
+		// TODO 自動產生的方法 Stub
+
 	}
 
 }
