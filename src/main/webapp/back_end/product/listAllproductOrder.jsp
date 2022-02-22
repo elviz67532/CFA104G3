@@ -91,9 +91,7 @@ th, td {
 				<div class="container-fluid">
 
 					<!-- main -->
-
-					<h2>二手商品訂單</h2>
-
+					<h2>後台商品訂單</h2>
 
 					<%-- 錯誤表列 --%>
 					<c:if test="${not empty errorMsgs}">
@@ -104,9 +102,12 @@ th, td {
 							</c:forEach>
 						</ul>
 					</c:if>
-
+					<li>
+						<a href="productOrderMain.jsp">
+							<input type="submit" value="後台商品訂單查詢">
+						</a>
+					</li>
 					<table>
-						<tr>
 						<thead>
 							<tr>
 								<th class="text-nowrap">訂單編號</th>
@@ -122,54 +123,56 @@ th, td {
 								<th class="text-nowrap">訂單狀態</th>
 							</tr>
 						</thead>
-
-						</tr>
+						<tfoot>
+							<tr>
+								<th class="text-nowrap">訂單編號</th>
+								<th class="text-nowrap">商品編號</th>
+								<th class="text-nowrap">買家編號</th>
+								<th class="text-nowrap">賣家編號</th>
+								<th class="text-nowrap">收件人姓名</th>
+								<th class="text-nowrap">收件人電話</th>
+								<th class="text-nowrap">收件人地址</th>
+								<th class="text-nowrap">訂單成立時間</th>
+								<th class="text-nowrap">商品數量</th>
+								<th class="text-nowrap">訂單總金額</th>
+								<th class="text-nowrap">訂單狀態</th>
+							</tr>
+						</tfoot>
 						<%@ include file="page1.jsp"%>
 						<c:forEach var="productOrderVO" items="${list}"
 							begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
+							<tbody>
+								<tr>
+									<td>${productOrderVO.id}</td>
+									<td>${productOrderVO.productId}</td>
+									<td>${productOrderVO.customerMemberId}</td>
+									<td>${productOrderVO.sellerMemberId}</td>
+									<td>${productOrderVO.productName}</td>
+									<td>${productOrderVO.phone}</td>
+									<td>${productOrderVO.address}</td>
+									<td>${productOrderVO.date}</td>
+									<td>${productOrderVO.amountOfProduct}</td>
+									<td>${productOrderVO.amountOfPrice}</td>
+									<td>${productOrderVO.status}</td>
 
-
-							<tr>
-								<td>${productOrderVO.id}</td>
-								<td>${productOrderVO.productId}</td>
-								<td>${productOrderVO.customerMemberId}</td>
-								<td>${productOrderVO.sellerMemberId}</td>
-								<td>${productOrderVO.productName}</td>
-								<td>${productOrderVO.phone}</td>
-								<td>${productOrderVO.address}</td>
-
-								<td>${productOrderVO.date}</td>
-								<td>${productOrderVO.amountOfProduct}</td>
-								<td>${productOrderVO.amountOfPrice}</td>
-								<td>${productOrderVO.status}</td>
-								<td>
-									<FORM METHOD="post" ACTION="productorder.do">
-
-										<input type="submit" value="修改"> <input type="hidden"
-											name="empno" value="${ProductVO.id}"> <input
-											type="hidden" name="action" value="getOne_For_Update">
-									</FORM>
-								</td>
-								<td>
-									<FORM METHOD="post" ACTION="productorder.do">
-										<input type="submit" value="取消"> <input type="hidden"
-											name="empno" value="${ProductVO.id}"> <input
-											type="hidden" name="action" value="delete">
-									</FORM>
-								</td>
-							</tr>
+									<td>
+										<FORM METHOD="post" ACTION="productorderback.do">
+											<input type="submit" value="取消"> <input
+												type="hidden" name="id" value="${productOrderVO.id}">
+											<input type="hidden" name="action" value="delete_back">
+										</FORM>
+									</td>
+								</tr>
 						</c:forEach>
-					</table>
-					<%@ include file="page2.jsp"%>
+					</table> <%@ include file="page2.jsp"%>
 				</div>
 			</div>
+			<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
 		</div>
 	</div>
-	</div>
-	<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
-	</div>
-	</div>
+	
+	
 	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
@@ -180,27 +183,13 @@ th, td {
 	<!-- Logout Modal-->
 	<jsp:include page="/back_end/common/logoutModal.jsp"></jsp:include>
 
+	<!-- custom script -->
+	
 	<!-- Bootstrap core JavaScript-->
 	<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-	<!-- Core plugin JavaScript-->
-	<script
-		src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-	<!-- Custom scripts for all pages-->
-	<script
-		src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
-
-	<!-- Page level plugins -->
-	<script
-		src="<%=request.getContextPath()%>/vendor/datatables/jquery.dataTables.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-	<!-- Page level custom scripts -->
-	<script src="<%=request.getContextPath()%>/js/demo/datatables-demo.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
 
 	<!-- 註冊按鈕觸發功能  -->
 	<script>

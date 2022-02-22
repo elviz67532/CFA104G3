@@ -250,19 +250,19 @@ textarea:focus{
 				value="<%= (actVO == null) ? "2000" : actVO.getCost() %>"/><br>
 	
 			<label class="formLabel" for="applyStartDate">報名開始時間: <span style="color: red">${errorMsgs.applyStartDate}</span></label>
-			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" value="${actVO.applyStartDate}"/><br>
+			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" value="<%= (actVO == null) ? "2022-03-05T08:30" : actVO.getApplyStartDate()%>"/><br>
 <%-- 			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" value="<%= (actVO == null)? "2022-03-04T08:30": actVO.getApplyStartDate()%>"/><br> --%>
 	
 			<label class="formLabel" for="applyEndDate">報名截止時間: <span style="color: red">${errorMsgs.applyEndDate}</span></label>
-			<input class="actTimeFormInput" step="1" type="datetime-local" name="applyEndDate" value="${actVO.applyEndDate}"/><br>
+			<input class="actTimeFormInput" step="1" type="datetime-local" name="applyEndDate" value="<%= (actVO == null) ? "2022-03-09T16:30" : actVO.getApplyEndDate()%>"/><br>
 <%-- 			<input class="actTimeFormInput" step="1" type="datetime-local" name="applyEndDate" value="<%= (actVO == null)? "2022-03-05T10:40": actVO.getApplyEndDate()%>"/><br> --%>
 	
 			<label class="formLabel" for="startDate">活動開始時間: <span style="color: red">${errorMsgs.startDate}</span></label>
-			<input class="actTimeFormInput" step="1" type="datetime-local" name="startDate" value="${actVO.startDate}"/><br> 
+			<input class="actTimeFormInput" step="1" type="datetime-local" name="startDate" value="<%= (actVO == null) ? "2022-03-10T12:30" : actVO.getStartDate()%>"/><br> 
 <%-- 			<input class="actTimeFormInput" step="1" type="datetime-local" name="startDate" value="<%= (actVO == null)? "2022-03-06T12:50": actVO.getStartDate()%>"/><br>  --%>
 			
 			<label class="formLabel" for="endDate">活動結束時間: <span style="color: red">${errorMsgs.endDate}</span></label>
-			<input class="actTimeFormInput" step="1" type="datetime-local" name="endDate" value="${actVO.endDate}"/><br> 
+			<input class="actTimeFormInput" step="1" type="datetime-local" name="endDate" value="<%= (actVO == null) ? "2022-03-12T21:30" : actVO.getEndDate()%>"/><br> 
 <%-- 			<input class="actTimeFormInput" step="1" type="datetime-local" name="endDate" value="<%= (actVO == null)? "2022-03-07T15:00": actVO.getEndDate()%>"/><br>  --%>
 				
 <!-- 			<label class="formLabel" for="applyMemberExisting">報名人數倒數: <span style="color: red"></span></label> -->
@@ -296,18 +296,6 @@ textarea:focus{
     <!-- Core theme JS-->
     <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
     <script>
-    var btn1 = document.getElementById('sweetBtnInsert');
-	btn1.addEventListener('click', function() {
-        swal('幹得漂亮！', '你的活動刊登完成了！', 'success');
-    });
-	$('#sweetBtnInsert').click (function (e) {
-	   e.preventDefault(); //will stop the link href to call the blog page
-
-	   setTimeout(function () {
-	       window.location.href = "http://localhost:8081/CFA104G3/front_end/activity/previewActPage.jsp"; //will redirect to your blog page (an ex: blog.html)
-	    }, 1000); //will call the function after 2 secs.
-
-	});
     </script>
 </body>
 

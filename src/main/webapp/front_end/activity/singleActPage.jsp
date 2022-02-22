@@ -32,7 +32,7 @@
 		pageContext.setAttribute("list",list);
 %>
 <%
-	request.setAttribute("findActivityTypeString", new String[]{"活動","聚餐","講座","其他"});
+	request.setAttribute("findActivityType", new String[]{"活動","聚餐","講座","其他"});
 %>
 <!DOCTYPE html>
 <html>
@@ -464,15 +464,25 @@ textarea:focus{
 			       </FORM>
                </div>
 <%-- 		      <c:set var="typeNum" scope="request" value="${actVO.type}"/> --%>
-<%--              		<span class="actType">${findActivityTypeString[typeNum]}</span> --%>
+<%--              		<span class="actType">${findActivityType[typeNum]}</span> --%>
 		       <br>
+		       <c:set var="actType" scope="session" value="${actVO.type}"/>
 		       <span class="actType">
-				    <%	int type = actVO.getType();
-						if (type == 1){ out.println("活動"); 
-						} else if(type == 2){ out.println("聚餐");
- 						} else if(type == 3){ out.println("講座"); 
- 						} else { out.println("其他");} 
-					%> 
+		       <c:choose>
+		       		<c:when test="${actType == 1}">
+		       		活動
+		       		</c:when>
+		       		<c:when test="${actType == 2}">
+		       		聚餐
+		       		</c:when>
+		       		<c:when test="${actType == 3}">
+		       		講座
+		       		</c:when>
+		       		<c:when test="${actType == 4}">
+		       		其他
+		       		</c:when>	
+		       </c:choose>
+		       
 		       </span>
              		<button class="btn-hover color-11" style=" float:right; padding: 20px;">報名人數倒數: ${actVO.applyMemberExisting}</button>
              		</div>
@@ -527,118 +537,7 @@ textarea:focus{
 			       		</FORM>
 	               </div>
 				<!--   ==================== 報名活動 ====================   -->
-	               <div class="main">
-			       <!-- 彈出視窗 -->
-				        <div class="overlay">
-				            <article>
-				                <h2 class="h2">來報名活動吧!</h2>
-				            	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/acta.do" style="display: inline;">
-<!-- =============================== 內容從這裡開始 =============================== -->
-<table>
-			<tr>
-				<td>參與會員編號:</td>
-				<td><input type="TEXT" name="memberId" size="45"
-					value="<%=(actaVO == null) ? "7" : actaVO.getMemberId()%>" /></td>
-			</tr>
-			<tr>
-				<td>參與活動編號:</td>
-				<td><input type="TEXT" name="activityId" size="45"
-					value="<%=(actaVO == null) ? "1005" : actaVO.getActivityId()%>" /></td>
-			</tr>
-			<tr>
-				<td>評論內容:</td>
-				<td><input type="TEXT" name="comment" size="45"
-					value="<%=(actaVO == null)?"不好玩":actaVO.getComment() %>" /></td>
-			</tr>
-			<tr>
-				<td>活動內容備註:</td>
-				<td><input type="TEXT" name="note" size="45"
-					value="<%=(actaVO== null)?"佛教徒" : actaVO.getNote()%>" /></td>
-			</tr>
-			<tr>
-<!-- 				<td>付款狀態:</td> -->
-<!-- 				<td><input type="TEXT" name="status" size="45" -->
-<%-- 					value="<%=(actaVO == null) ? "1" : actaVO.getStatus()%>" /></td> --%>				
-<!-- 				<select name="status"> -->
-<%--    					<option value="<%=(actaVO == null) ? "0" : actaVO.getStatus()%>">未付款</option> --%>
-<%--    					<option value="<%=(actaVO == null) ? "1" : actaVO.getStatus()%>">已付款</option> --%>
-<!-- 				</select>	 -->
-<!-- 			</tr> -->
-			<tr>
-		<td>付款狀態:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="status">
-				<option value="-1">請選擇付款狀態</option>
-				<option value="0" >未付款</option>
-   				<option value="1">已付款</option>
-					
-		</select></td>
-		</tr>
-			
-</table>
-<!-- =============================== 內容從這裡結束 =============================== -->
-							       <input type="hidden" name="action" value="xxx"/> 
-				      	           <input type="hidden" name="activityId" value="${actVO.activityId}">
-							       <input type="submit" class="btn-hover color-1" value="送出表單"/>
-						       	</FORM>
-						       	<button type="button" class="btn_modal_close btn-hover color-1">取消活動</button>
-				            </article>
-				        </div>
-			        </div>
-			        
-			      <!--   ==================== 為活動評分 ====================   -->  
-			        <div class="main2">
-			       <!-- 彈出視窗 -->
-				        <div class="overlay2">
-				            <article>
-								<!-- 內容從這裡開始 -->
-								<div style="height: 60%;">
-				                <h2 class="h2">來評分活動囉!</h2>
-					               <%-- 錯誤表列 --%>
-								<c:if test="${not empty errorMsgs}">
-									<font style="color: red">請修正以下錯誤:</font>
-								<ul> 
-									<c:forEach var="message" items="${errorMsgs}">
-										<li style="color: red">${message}</li>
-									</c:forEach>
-								</ul>
-								</c:if>
-								<div>
-									<span style="font-size: 46px;">★</span>
-								</div>
-								</div>
-								
-								<!-- 內容從這裡結束 -->
-				            	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/acta.do" style="display: inline;"> 
-							       <input type="hidden" name="action" value="score"/> 
-				      	           <input type="hidden" name="activityId" value="${actVO.activityId}">
-							       <input type="submit" class="btn-hover color-1" value="為活動評分"/>
-						        </FORM>
-						       	<button type="button" class="btn_modal_close2 btn-hover color-1">取消評分</button>
-				            </article>
-				        </div>
-			        </div>
-			        
-			        <!--   ==================== 檢舉活動 ====================   -->  
-			        <div class="main3">
-			       <!-- 彈出視窗 -->
-				        <div class="overlay3">
-				            <article>
-				                <h2 class="h2">來檢舉活動囉!</h2>
-								<!-- 內容從這裡開始 -->
-								
-								
-								
-								
-								<!-- 內容從這裡結束 -->
-				            	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/acta.do" style="display: inline;"> 
-							       <input type="hidden" name="action" value="attend"/> 
-				      	           <input type="hidden" name="activityId" value="${actVO.activityId}">
-							       <input type="submit" class="btn-hover color-1" value="檢舉活動"/>
-						        </FORM>
-						       	<button type="button" class="btn_modal_close3 btn-hover color-1">取消檢舉</button>
-				            </article>
-				        </div>
-			        </div>
+	         <%@ include file="secondActivity.jsp" %>      
 		       </div>
                <p class="launchedDate" style="text-align: center;"><fmt:formatDate value="${actVO.launchedDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
  	
@@ -655,8 +554,16 @@ textarea:focus{
 				                <button type="button" class="btn-hover color-8 btnFor${actqVO.memberId}" style="border-radius: 50px;">發問會員編號: ${actqVO.memberId}</button>
 			                </div>
 			                <div style="margin-left:50px;width: 90%;">
-								${actqVO.problem}
+								${actqVO.problem}<br>
+								<p class="launchedDate" style="text-align: center;">問題建立時間: <fmt:formatDate value="${actqVO.problemDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
 			                </div>
+			                <div style="padding:16px;margin-left:50px;width: 90%; background-color: lightgray; color: black; border-radius: 16px;">
+				                主辦方的回覆:
+									<br>
+									${actqVO.reply}
+			                </div>
+									<p class="launchedDate" style="text-align: center;">主辦回應時間: <fmt:formatDate value="${actqVO.replyDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
+									
 			                <div style="text-align: center">
 								<input id="answerInput${actqVO.memberId}" style="border-radius: 50px;" type="button" class="btn_modal5 btn-hover color-6" value="回答問題"/>
 			                </div>
@@ -675,7 +582,30 @@ textarea:focus{
 		   				document.getElementById('imgContact').style.left = "5%";
 		   				document.getElementById('spanContact').style.left = "4.3%";
 		   			})
-   				</script>
+		   			
+/*==============================================================================================*/
+   		var answerInput${actqVO.memberId} = document.getElementById('answerInput${actqVO.memberId}');
+   		answerInput${actqVO.memberId}.addEventListener('click',function(){
+   			var input${actqVO.memberId} = document.createElement('input');
+   			var inputB${actqVO.memberId} = document.createElement('input');
+   			var inputC${actqVO.memberId} = document.createElement('input');
+   			document.getElementById('appendChildDiv').prepend(inputB${actqVO.memberId});
+   			inputB${actqVO.memberId}.id = "inputB${actqVO.id}";
+   			inputB${actqVO.memberId}.value = "${actqVO.activityId}";
+   			inputB${actqVO.memberId}.name = "activityId";
+   			inputB${actqVO.memberId}.type = "hidden";
+   			document.getElementById('appendChildDiv').prepend(inputC${actqVO.memberId});
+   			inputC${actqVO.memberId}.id = "inputB${actqVO.id}";
+   			inputC${actqVO.memberId}.value = "${actqVO.memberId}";
+   			inputC${actqVO.memberId}.name = "id";
+   			inputC${actqVO.memberId}.type = "hidden";
+   			document.getElementById('appendChildDiv').prepend(input${actqVO.memberId});
+   			input${actqVO.memberId}.id = "input${actqVO.id}";
+   			input${actqVO.memberId}.value = "${actqVO.id}";
+   			input${actqVO.memberId}.name = "id";
+   			input${actqVO.memberId}.type = "hidden";
+   		})
+  </script>
    			</c:forEach>
    		</div>
  <!--  ==================== 最下方活動問答  ==================== -->  		
@@ -683,7 +613,6 @@ textarea:focus{
 </section>
 
 <%@include file="memberaskquestion.jsp" %> 
-		
 
 <!--    ============================ 以下為會員回答區塊 ============================ -->
    		<div class="main5">
@@ -704,15 +633,14 @@ textarea:focus{
 			</ul>
 		</c:if>
 			<label class="formLabel" for="answer">輸入回應內容: <span style="color: red">${errorMsgs.reply}</span></label>
-			<textarea class="actFormInput actContentFormInput" cols="55" name="problem">"<%= (actqVO == null) ? 
+			<textarea class="actFormInput actContentFormInput" cols="55" name="reply">"<%= (actqVO == null) ? 
 					"空想食時間帶消費" : actqVO.getReply() %>"</textarea>
 			</div>
 			<!-- 內容從這裡結束 -->
-		       <input type="hidden" name="action" value="answer"/> 
-		       <input type="hidden" name="activityId" value="${actVO.activityId}">
-<!--                <input type="hidden" name="action" value="selectOneAct"/>  -->
-<%-- 		       <a style="text-decoration:none;" href="<%=request.getContextPath()%>/front_end/activity/singleActPage.jsp?action=selectOneAct"> --%>
-			       <input id="answerQuestion" type="submit" class="" value="回答問題"/>
+			<div id="appendChildDiv">
+		       <input  type="hidden" name="action" value="answer"/> 
+			   <input id="answerQuestion" type="submit" class="" value="回答問題"/>
+			</div>
 <!-- 		       </a> -->
 	        </FORM>
 	       	<button type="button" class="btn_modal_close5">取消回答</button>
@@ -720,6 +648,7 @@ textarea:focus{
        </div>
    </div>
   <script>
+  
 //============================= 回答區 =============================
 	 $(function(){
 	        // 開啟 Moda5 彈跳視窗

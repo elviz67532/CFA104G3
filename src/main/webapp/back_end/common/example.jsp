@@ -23,11 +23,9 @@
 				<!-- Topbar -->
 				<jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
 				<div class="container-fluid">
-
 					<!-- main -->
-
+        
 					<!-- end of main -->
-					
 				</div>
 			</div>
 			<jsp:include page="/back_end/common/footer.jsp"></jsp:include>

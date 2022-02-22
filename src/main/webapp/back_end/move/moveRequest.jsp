@@ -6,11 +6,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link href="/CFA104G3/css/back_end/sb-admin-2.min.css" rel="stylesheet">
-	<link href="/CFA104G3/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="/CFA104G3/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="<%=request.getContextPath()%>/css/back_end/sb-admin-2.min.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<title>委域</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+	<style>
+		.btn{
+			padding: 0px;
+			height: 100%;
+		}
+	</style>
 </head>
 <body id="page-top">
 	<div id="wrapper">
@@ -30,7 +36,7 @@
 						
 							<!-- Form 模式 -->
 							<form class="row g-3" method="POST"
-								action="/CFA104G3/move/moveManage.do"
+								action="<%=request.getContextPath()%>/move/moveManage.do"
 								name="moveManage">
 								<input type="hidden" name="action" value="moveManage">
 								<input type="hidden" id="requestId" value="moveManage">
@@ -100,19 +106,24 @@
 								
 								<hr style="border: 1px solid black; width: 100%;" />
 								
-								<div class="col-4">
+								<div class="col-3">
 									<label for="status" class="form-label">申請單狀態:</label><br/>
 									<input name="status" type="text" class="form-control" id="status"
 									disabled>
 								</div>
 
-							    <div class="col-4">
+							    <div class="col-3">
 							   		<label for="evaulatePrice" class="form-label">估價金額:</label><br/>
-							      	<input type="number" id="evaulatePrice" class="form-control">
+							      	<input type="text" id="evaulatePrice" class="form-control" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
 							  	</div>
-								<div class="col-4">
-								  	<button type="button" id="verifyOK" value="">審核成功</button>
-								  	<button type="button" id="verifyNAK" value="">審核失敗</button>
+								<div class="col-2">
+								  	<button type="button" class="btn btn-success btn-block align-middle" id="verifyOK" value="">審核成功</button><br/>
+								</div>
+								<div class="col-2">
+								  	<button type="button" class="btn btn-danger btn-block align-middle" id="verifyNAK" value="">審核失敗</button>
+								</div>
+								<div class="col-2">
+								  	<button type="button" class="btn btn-warning btn-block align-middle" id="siteEvaOk" value="">現場估價</button><br/>
 								</div>
 							</form>
 						</div>
@@ -123,6 +134,9 @@
 		</div>
 	</div>
 
+	<!-- sweetAlert -->		
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top">
 		<i class="fas fa-angle-up"></i>
@@ -132,16 +146,16 @@
 	<jsp:include page="/back_end/common/logoutModal.jsp"></jsp:include>
 	
 	<!-- Bootstrap core JavaScript-->
-	<script src="/CFA104G3/vendor/jquery/jquery.min.js"></script>
-	<script src="/CFA104G3/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
-	<script src="/CFA104G3/vendor/jquery-easing/jquery.easing.min.js"></script>
-	<script src="/CFA104G3/js/back_end/sb-admin-2.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
 
 	<!-- jQuery -->
-	<script src="/CFA104G3/vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/datatables/jquery.dataTables.min.js"></script>
 
 	<!-- 註冊按鈕觸發功能  -->
-	<script src="/CFA104G3/js/common/utility.js"></script>
+	<script src="<%=request.getContextPath()%>/js/common/utility.js"></script>
 	<script>
 	    $(document).ready(function(){
 	        initMoveRequest();
@@ -151,8 +165,9 @@
 	        
 	        // 先禁用所有input
 	        let requestId = getCookie('requestId');
-	        if (requestId === 'undefined' || requestId === null) {
+	        if (!requestId) {
 	        	$('#evaulatePrice').attr('disabled', true);
+	        	$('#siteEvaOk').attr('disabled', true);
 	        	$('#verifyOK').attr('disabled', true);
 	        	$('#verifyNAK').attr('disabled', true);
 	        	return;
@@ -160,11 +175,10 @@
 	        
 	        $('#requestId').val(requestId);
 	        $.ajax({
-	            url: "/CFA104G3/move/moveManage.do",
+	            url: "<%=request.getContextPath()%>/move/moveManage.do",
 	            type: "POST",
 	            data: JSON.stringify({'action':'backManage', 'id':requestId}),
 	            success: function(data){
-	            	console.log('success');
 	        		let jsonObj = JSON.parse(data);
 	        		if(jsonObj.errorCode==='success') {
 	        			let body = jsonObj.body;
@@ -178,7 +192,6 @@
 		        		if ("0" == body.evaluateType) {
 		        			$('#online').attr('checked', true);
 		        			$('#siteEvaDiv').hide();
-
 		        		} else if ("1" == body.evaluateType) {
 		        			$('#site').attr('checked', true);
 		        		}
@@ -186,9 +199,6 @@
 		        		$('#photos').val('');
 		        		
 		        		$.each(body.movePhotoTransVOs, function(index, moveRequestPhoto) {
-	        			  console.log(moveRequestPhoto);
-	        			  console.log(moveRequestPhoto.moveRequestId);
-	        			  
 	        			  let img = document.createElement("img");
 	        			  img.setAttribute("alt", "photo");
 	        			  img.setAttribute("class", "itemPhoto");
@@ -199,58 +209,115 @@
 		        		
 		        		$('#status').val(body.status);
         				$('#evaulatePrice').val(body.evaluatePrice);
+        				
+        				if ("0" == body.evaluateType) {
+        					if (body.statusCode != 0) {
+        						$('#evaulatePrice').attr('disabled', true);
+        					}	
+        					$('#siteEvaOk').attr('disabled', true);
+		        		} else if ("1" == body.evaluateType) {
+							if (body.statusCode != 2) {
+								$('#evaulatePrice').attr('disabled', true);
+								$('#siteEvaOk').attr('disabled', true);
+        					} 
+		        		}
+
+        				if (body.statusCode != 0) {
+        					$('#verifyNAK').attr('disabled', true);
+        					$('#verifyOK').attr('disabled', true);
+        				}
 	        		} else if(jsonObj.errorCode==='login'){
 	        	        window.location.href = jsonObj.body;
 	        		}
         		},
 	    	});
     	};
-    	$("#verifyOK").click(function(){
-	        let self = this;
-		    let price = $('#evaulatePrice').val();
-		    let status = $('#reqStatus').val();
-	  		let requestId = $('#requestId').val();
-            $.ajax({
-	            url: "/CFA104G3/move/moveManage.do",
-	            type: "POST",
-	            data: JSON.stringify({'action':'verifyOK', 'id':requestId, 'price' : price}),
-	            success: function(data){
-	        		let jsonObj = JSON.parse(data);
-	       			if(jsonObj.errorCode==='success') {
-		            	let body = jsonObj.body;
-		            	console.log(body.status);	
-        				$('#status').val(body.status);
-        				$('#evaulatePrice').val(body.evaluatePrice);
-	        		} else if(jsonObj.errorCode==='login'){
-	        	        window.location.href = jsonObj.body;
-	        		}
-	            }
-            })
+    	
+    	$("#verifyOK").click(function() {
+			function ok() {
+ 			 	let self = this;
+ 			    let price = $('#evaulatePrice').val();
+ 			    let status = $('#reqStatus').val();
+ 		  		let requestId = $('#requestId').val();
+ 		  		
+ 	            $.ajax({
+ 		            url: "<%=request.getContextPath()%>/move/moveManage.do",
+ 		            type: "POST",
+ 		            data: JSON.stringify({'action':'verifyOK', 'id':requestId, 'price' : price}),
+ 		            success: function(data){
+ 		            	if (jsonObj.errorCode==='login') {
+ 		        	        window.location.href = jsonObj.body;
+ 		        		} else {
+	     			 		location.reload();
+ 		        		}
+		            }
+ 	            })
+    		}
+    		lastCheck("確認審核成功", ok);
 		});
     	
     	$("#verifyNAK").click(function(){
-    	    let self = this;
-  		    let price = $('#evaulatePrice').val();
-  		    let status = $('#reqStatus').val();
-	  		let requestId = $('#requestId').val();
+    		function ok() {
+    			let self = this;
+   	  		    let price = $('#evaulatePrice').val();
+   	  		    let status = $('#reqStatus').val();
+   		  		let requestId = $('#requestId').val();
 
-	  		$.ajax({
-	            url: "/CFA104G3/move/moveManage.do",
-	            type: "POST",
-	            data: JSON.stringify({'action':'verifyNAK', 'id':requestId, 'price' : price}),
-	            success: function(data){
-	            	let jsonObj = JSON.parse(data);
-        			if(jsonObj.errorCode==='success') {
-        				let body = jsonObj.body;
-        				$('#status').val(body.status);
-        				$('#evaulatePrice').val(body.evaluatePrice);
-        				console.log(body.evaluatePrice);
-	        		} else if(jsonObj.errorCode==='login')  {
-	        	        window.location.href = jsonObj.body;
-	        		}
-	            }
-            })
+   		  		$.ajax({
+   		            url: "<%=request.getContextPath()%>/move/moveManage.do",
+   		            type: "POST",
+   		            data: JSON.stringify({'action':'verifyNAK', 'id':requestId, 'price' : price}),
+   		            success: function(data){
+   		          		if (jsonObj.errorCode==='login') {
+		        	        window.location.href = jsonObj.body;
+		        		} else {
+     			 			location.reload();
+		        		}
+   		            }
+   	            })
+    		}
+    		lastCheck("確認審核失敗", ok);
 		});
+    	
+    	$("#siteEvaOk").click(function(){
+    		function ok() {
+    			let self = this;
+   	  		    let price = $('#evaulatePrice').val();
+   	  		    let status = $('#reqStatus').val();
+   		  		let requestId = $('#requestId').val();
+   		  		
+   		  		$.ajax({
+		            url: "<%=request.getContextPath()%>/move/moveManage.do",
+		            type: "POST",
+		            data: JSON.stringify({'action':'siteEvaOk', 'id':requestId, 'price' : price}),
+		            success: function(data){
+		          		if (jsonObj.errorCode==='login') {
+		        	        window.location.href = jsonObj.body;
+		        		} else {
+	 			 			location.reload();	// FIXME
+		        		}
+		            }
+	            })
+    		}
+   			lastCheck("確認審核失敗", ok);
+   		});
+    	
+    	function lastCheck(title, okFun) {
+   			swal({
+            	title: title,
+				html: "按下確定後申請單狀態將無法變更",
+               	type: "question",
+               	showCancelButton: true,
+               	showCloseButton: true,
+           	}).then(function(result) {
+           	    if (result) {
+               		swal("完成審核", "success");
+           	 		okFun();
+               	}
+           	}, function(dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
+               swal("取消審核動作", "error");
+           	}).catch(swal.noop);
+    	}
 	</script>
 </body>
 </html>

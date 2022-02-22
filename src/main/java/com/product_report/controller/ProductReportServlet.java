@@ -45,14 +45,14 @@ public class ProductReportServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **************************/
 
 				/**************************** 1-2 檢查商品編號 *********************************/
-				String str = req.getParameter("k1");
+				String str = req.getParameter("k2");
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入商品編號");
 				}
 //				 Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/product/report/select_page.jsp");
+							.getRequestDispatcher("/back_end/product/report/productReportManage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -68,20 +68,20 @@ public class ProductReportServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/product/report/select_page.jsp");
+							.getRequestDispatcher("/back_end/product/report/productReportManage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 
 				/**************************** 1-1 檢查會員編號 *************************************/
-				String str1 = req.getParameter("k2");
+				String str1 = req.getParameter("k1");
 				if (str1 == null || (str1.trim()).length() == 0) {
 					errorMsgs.add("請輸入會員編號");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/product/report/select_page.jsp");
+							.getRequestDispatcher("/back_end/product/report/productReportManage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -97,7 +97,7 @@ public class ProductReportServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/product/report/select_page.jsp");
+							.getRequestDispatcher("/back_end/product/report/productReportManage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -113,7 +113,7 @@ public class ProductReportServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/product/report/select_page.jsp");
+							.getRequestDispatcher("/back_end/product/report/productReportManage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -127,7 +127,7 @@ public class ProductReportServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/report/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/report/productReportManage.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -192,7 +192,7 @@ public class ProductReportServlet extends HttpServlet {
 					status = Integer.valueOf(req.getParameter("status").trim());
 				} catch (NumberFormatException e) {
 					status = 0;
-					errorMsgs.add("未設定預設狀態(PS 大吳:死因仔，報錯啦，不想活了你。女生沒關係慢慢來!!).");
+					errorMsgs.add("未設定預設狀態");
 				}
 
 				ProductReportVO pojo = new ProductReportVO();

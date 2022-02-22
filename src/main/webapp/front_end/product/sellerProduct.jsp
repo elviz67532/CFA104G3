@@ -2,9 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.member.model.*"%>
 <!DOCTYPE html>
 <html lang="en">
-
+<%
+	MemberVO memberVo = (MemberVO) session.getAttribute("memberVO");
+	if (memberVo == null) {
+	response.sendRedirect(request.getContextPath() + "/front_end/member/login.jsp");
+	}
+%>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -91,24 +97,34 @@
 			</c:forEach>
 		</ul>
 	</c:if>
-
+	<br><br>
+	
+	<!-- 麵包屑 (Breadcrumb) -->
+	<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總攬</a></li>
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp">買賣家</a></li>
+	    <li class="breadcrumb-item active" aria-current="page">新增商品</li>
+	  </ol>
+	</nav>	
+		
 	<!-- nav -->
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 	<div class="container">
 		<main>
 			<div class="py-5 text-center">
-				<h2>商品新增</h2>
+				<h2>新增商品</h2>
 			</div>
 				<!-- 目前手動輸入 -->
 				<!-- 取得會員ID -->
-				<jsp:useBean id="memVO" class="com.member.model.MemberVO"/>
+				<jsp:useBean id="memberVO" class="com.member.model.MemberVO"/>
 				<div class="col-12">
 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet" class="needs-validation" 
 						  name="form1" novalidate>
 						<div class="row g-3">
 							<div class="col-sm-6">
-								<label for="memId" class="form-label">會員編號:</label><br> 
-								<input type="text" value="" class="form-control" name="memId"/>
+								<label for="" class="form-label">會員編號:</label><br> 
+								<input type="text" value="${sessionScope.memberVO.id}" class="form-control" name="memId"/>
 							</div>
 							<!-- 商品名稱 -->
 							<div class="col-sm-6">

@@ -47,7 +47,14 @@
    
    	<!-- 主體畫面設計  -->
 	<%
-	// 錯誤訊息
+		MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
+		if (memberVo == null) {
+			RequestDispatcher failureView = request.getRequestDispatcher("/front_end/move/homePage.jsp");
+			failureView.forward(request, response);
+			return;
+		}
+		
+		// 錯誤訊息
 		Map<String, String> errorMsgs = (Map<String, String>) request.getAttribute("errorMsgs");
 		if (errorMsgs != null) {
 			if(errorMsgs.get("fromAddress") != null) 
@@ -65,7 +72,6 @@
 			if(errorMsgs.get("itemPhoto") != null) 
 		pageContext.setAttribute("itemPhoto", errorMsgs.get("itemPhoto"));
 		}
-		
 		
 		// 傳入參數
 		MoveRequestVO moveRequestVO = (MoveRequestVO) request.getAttribute("moveRequestVO");
@@ -100,8 +106,8 @@
 		if (photos != null) {
 			List<String> photosData = new ArrayList<>();
 			for (byte[] photo : photos) {
-		String base64data = Base64.getEncoder().encodeToString(photo);
-		photosData.add(base64data);
+				String base64data = Base64.getEncoder().encodeToString(photo);
+				photosData.add(base64data);
 			}
 			pageContext.setAttribute("photosData", photosData);
 		}
@@ -290,7 +296,7 @@
 	
 	<!-- custom -->
 	<script src="${pageContext.request.contextPath}/js/front_end/move/moveRequest.js"></script>
- 	
+ 		
     <!-- Footer-->
    	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
     <!-- Bootstrap core JS-->

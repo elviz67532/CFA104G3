@@ -12,8 +12,6 @@ public interface MoveRequestService {
 	boolean addRequest(int memberId, String fromAddress, String toAddress, String items, Timestamp tMoveDate,
 			EMoveRequestEvaType evaluateType, Timestamp tEvaDate, List<byte[]> fileParts);
 	
-	boolean evaluate(int requestId, int price);
-
 	MoveRequestVO getRequest(int requestId);
 	
 	// unsued
@@ -31,7 +29,7 @@ public interface MoveRequestService {
 
 	boolean verifyRequestNAK(int requestId);
 
-	boolean verifyOnlineRequestOK(int requestId, int price);
+	boolean evaluatePrice(int requestId, int price);
 
 	boolean verifySiteRequestOK(int requestId);
 }

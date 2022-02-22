@@ -32,29 +32,34 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
     <style>
-	  .SEARCHFOR{
-	  padding:10px;
-	  margin-bottom: 30px;
-	}
-	#pagination{
-	  bottom: 0;
-	}
-	.d-block{
-	  height: 30%;
-	}
-	.myImg {
-	  height:  400px;
-	  background-repeat: no-repeat;
-	  background-attachment: fixed;
-	  background-position: center;
-	  background-size: cover;
-	}
-	.pagination{
-		margin: 10px
-	}
-	.card{
-		margin: 5px
-	}
+		  .SEARCHFOR{
+		  padding:10px;
+		  margin-bottom: 30px;
+		}
+		#pagination{
+		  bottom: 0;
+		}
+		.d-block{
+		  height: 30%;
+		}
+		.myImg {
+		  height:  400px;
+		  background-repeat: no-repeat;
+		  background-attachment: fixed;
+		  background-position: center;
+		  background-size: cover;
+		}
+		.pagination{
+			margin: 10px
+		}
+		.card{
+			margin: 5px
+		}
+		img{
+		    max-height:256px;
+		    width:auto;
+		    height:auto;
+		}
 	</style>
 </head>
 
@@ -80,15 +85,6 @@
    	<!-- 主體畫面設計  -->
    	<div class="row justify-content-center">
       <div class="col-lg-6 SEARCHFOR">
-        <div class="input-group">
-        
-		<!-- search  複合查詢-->
-          <input type="text" class="form-control" placeholder="Search for...">
-          <input type="hidden" name="action" value="">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Go!</button>
-          </span>
-        </div>
       </div>
     </div>
 
@@ -121,14 +117,13 @@
 			<!-- 左邊3欄  list group 分類功能-->
 			<div class="col-12 col-md-3 list-group">
 				<FORM METHOD="post" ACTION="product/ProductServlet">
-				  <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+				  <a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp" class="list-group-item list-group-item-action active" aria-current="true">
 				    總覽
 				  </a>
-				  <a href="browseElec.jsp"  name="prodType" value=4 class="list-group-item list-group-item-action">電器類</a>
-				  
-				  <a href="browseFurniture.jsp" class="list-group-item list-group-item-action">寢具</a>
-				  <a href="browseOthers.jsp" class="list-group-item list-group-item-action">其他</a>
-				  <a href="#" class="list-group-item list-group-item-action" tabindex="-1" aria-disabled="true">A disabled link item</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/browseElec.jsp"  name="prodType" value=4 class="list-group-item list-group-item-action">電器類</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/browseFurniture.jsp" class="list-group-item list-group-item-action">寢具</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/browseOthers.jsp" class="list-group-item list-group-item-action">其他</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp" class="list-group-item list-group-item-action">買賣家</a>
 				</FORM>
 			</div>
 			<!-- 右邊9欄  card 卡片 & text-center -->
@@ -143,7 +138,10 @@
 					          <div class="card-body">
 					            <h5 class="card-title">${productVO.name}</h5>
 					<%--             <p class="card-text">${productVO.prodDesc}</p> --%>
-					            <a href="#" class="btn btn-primary">查看詳情</a>
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet" ">
+			     					<input type="submit" value="前往">
+			     					<input type="hidden" name="prodId"  value="${productVO.id}">
+			     					<input type="hidden" name="action"	value="getOne_For_Display"></FORM>
 					<%--             <a href="#" class="btn btn-primary">${productVO.prodName}</a> --%>
 					          </div>
 					        </div>	
@@ -160,15 +158,15 @@
 	
 	<!-- card 卡片 & text-center-->
 	<!-- Pages-->
-	<nav aria-label="Page navigation example">
-	  <ul class="pagination justify-content-center">
-	    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-	    <li class="page-item"><a class="page-link" href="#">1</a></li>
-	    <li class="page-item"><a class="page-link" href="#">2</a></li>
-	    <li class="page-item"><a class="page-link" href="#">3</a></li>
-	    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-	  </ul>
-	</nav>
+<!-- 	<nav aria-label="Page navigation example"> -->
+<!-- 	  <ul class="pagination justify-content-center"> -->
+<!-- 	    <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+<!-- 	    <li class="page-item"><a class="page-link" href="#">1</a></li> -->
+<!-- 	    <li class="page-item"><a class="page-link" href="#">2</a></li> -->
+<!-- 	    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+<!-- 	    <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+<!-- 	  </ul> -->
+<!-- 	</nav> -->
 	
    
     <!-- Footer-->

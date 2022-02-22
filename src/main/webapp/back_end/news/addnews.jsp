@@ -51,7 +51,8 @@
                         <h3 class="m-0 font-weight-bold text-primary">新增最新消息:</h3><br>
                         <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/back_end/news/NewsServlet"
                             name="form1" enctype="multipart/form-data">
-                            <table>
+                           
+                            <table>                            
                                 <tr>
                                     <td>消息分類編號:</td>
                                     <td><input class="form-control" list="datalistOptions"
@@ -73,20 +74,22 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>內容:</td>
-                                    <td><textarea class="form-control" name="content" size="45"
-                                            value="<%=(newsVO == null) ? "" : newsVO.getContent()%>"
-                                            rows="3" /></textarea></td>
-                                </tr>
-                                <tr>
                                     <td>圖片:</td>
                                     <td><input type="file" name="image" size="45"
                                             value="<%=(newsVO == null) ? "" : newsVO.getImage()%>" />
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>內容:</td>
+                                    <td><textarea class="form-control" name="content" size="45"
+                                            value="<%=(newsVO == null) ? "" : newsVO.getContent()%>"
+                                            rows="3" /></textarea></td>
+                                </tr> 
+                                
 
                                 <jsp:useBean id="newsSvc" scope="page" class="com.news.model.NewsServiceImpl" />
                             </table>
+                           
                             <input type="hidden" name="action" value="insert">
                             <input type="submit" value="送出新增" class="btn btn-outline-primary">
                         </FORM>

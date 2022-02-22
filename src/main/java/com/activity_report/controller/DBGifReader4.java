@@ -23,8 +23,6 @@ public class DBGifReader4 extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
-
-		System.out.println("aaaaa");
 		
 		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();

@@ -15,7 +15,7 @@ public class ServerManagerAuthDAOJDBCImpl implements ServerManagerAuthDAO{
 
 	// SQL 
 	private static final String INSERT_STMT = "INSERT INTO SERVERMANAGERAUTH (SMGEAUTH_ID, SMGR_ID) VALUES (?, ?)";
-	private static final String DELETE_STMT = "DELETE FROM SERVERMANAGERAUTH WHERE SMGEAUTH_ID=? AND SMGR_ID=?";
+	private static final String DELETE_STMT = "DELETE FROM SERVERMANAGERAUTH WHERE SMGR_ID=?";
 	private static final String SELECT_BY_ID_STMT = "SELECT * FROM SERVERMANAGERAUTH WHERE SMGEAUTH_ID=? AND SMGR_ID=?";
 	private static final String GET_ALL_STMT = "SELECT * FROM SERVERMANAGERAUTH";
 	private static final String SELECT_BY_SMGRID = "SELECT * FROM SERVERMANAGERAUTH WHERE `SMGR_ID`=?";
@@ -77,15 +77,14 @@ public class ServerManagerAuthDAOJDBCImpl implements ServerManagerAuthDAO{
 	}
 
 	@Override
-	public int deleteById(DualKey<Integer, Integer> id) {
+	public int deleteById(Integer id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int row = 0;
 		try {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(DELETE_STMT);
-			pstmt.setInt(1, id.getK1());
-			pstmt.setInt(2, id.getK2());
+			pstmt.setInt(1, id);
 			
 			row = pstmt.executeUpdate();
 		} catch (SQLException e) {

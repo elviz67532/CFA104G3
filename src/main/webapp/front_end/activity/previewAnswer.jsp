@@ -14,9 +14,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%
 	MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
-	
 	ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");
-	
 	ActivityQuestionVO actqVO = (ActivityQuestionVO) request.getAttribute("actqVO");
 %>   
 <!DOCTYPE html>
@@ -157,20 +155,22 @@
 <!--                問題預覽頁面 -->
    		<div style="border: 2px white groove; width: 40%; margin: 0 auto 60px auto;">
 <!-- 				<img class="showImage" src="http://picsum.photos/300/200?random=?" alt=""> -->
+   	
+   	
    	<section class="section1">
                <div class="idDiv">
-	               <span class="idSpan">會員編號: ${memberVO.id} </span><br>
-		           <span class="idSpan">活動編號: ${actqVO.activityId} </span><br>
+<%-- 	               <span class="idSpan">會員編號: ${memberVO.id} </span><br> --%>
+<%-- 		           <span class="idSpan">活動編號: ${actqVO.activityId} </span><br> --%>
                </div>
 		           <br>
                <span class="question">
                我的回應是:
                <br>
-               ${actqVO.problem} </span>
+               ${actqVO.reply} </span>
                <br>
                
                <input type="submit" class="btn-hover color-1" id="sweetBtnPreview" value="結束預覽"/>
-               <p style="text-align:center;" class="problemDate"><fmt:formatDate value="${actqVO.problemDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
+               <p style="text-align:center;" class="replyDate"><fmt:formatDate value="${actqVO.replyDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
  	</section>
    		</div>
 	<script>

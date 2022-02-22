@@ -1,103 +1,186 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.product_order.model.*"%>
 <%@ page import="java.util.*"%>
+<%
+// 傳入參數
+ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+List<ProductOrderVO> list = poSvc.getAll();
+pageContext.setAttribute("list", list);
 
-<html>
+// 顯示格式
+SimpleDateFormat ymdtmFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy/MM/dd");
+%>
+<!doctype html>
+<html lang="zh-TW">
 <head>
-<title>二手商品訂單管理後台</title>
-
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link
+	href="<%=request.getContextPath()%>/css/back_end/sb-admin-2.min.css"
+	rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+<title>委域-Entrust area</title>
+</head>
 <style>
-table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
+table {
+	width: 800px;
+	background-color: white;
 	margin-top: 5px;
-	margin-bottom: 10px;
-	border: 3px ridge Gray;
-	height: 80px;
+	margin-bottom: 5px;
+}
+
+table, th, td {
+	border: 1px solid #CCCCFF;
+}
+
+th, td {
+	padding: 5px;
 	text-align: center;
 }
 
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
+.box1 {
+	width: 200px;
+	background-color: black;
+	margin-top: auto;
+	margin-right: 0px;
 }
 
-h4 {
-	color: blue;
-	display: inline;
+.box2 {
+	width: 200px;
+	background-color: black;
+	margin-top: auto;
+	margin-right: 0px;
+}
+
+.box3 {
+	width: 200px;
+	background-color: black;
+	margin-top: auto;
+	margin-right: 0px;
+}
+
+.box4 {
+	width: 200px;
+	background-color: black;
+	margin-top: auto;
+	margin-right: 0px;
 }
 </style>
-
-</head>
-<body bgcolor='white'>
-
-	<table id="table-1">
-		<tr>
-			<td><h3>二手商品訂單管理後台</h3>
-				<h4>委域二手商城</h4></td>
-		</tr>
-	</table>
-
-
-	<h3>訂單查詢:</h3>
-
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
-
-	<ul>
-		<li><a href='listAllproductOrder.jsp'>所有二手商品訂單</a> <br>
-		<br></li>
+<body id="page-top">
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<jsp:include page="/back_end/common/sidebar.jsp"></jsp:include>
+		<div id="content-wrapper" class="d-flex flex-column">
+			<div id="content">
+				<!-- Topbar -->
+				<jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
+				<div class="container-fluid">
 
 
-		<li>
-			<FORM METHOD="post" ACTION="product.do">
-				<b>輸入訂單編號 (如1):</b> <input type="text" name="id"> <input
-					type="hidden" name="action" value="getOne_For_Display"> <input
-					type="submit" value="送出">
-			</FORM>
-		</li>
+					<h3>後台訂單查詢:</h3>
 
-		<jsp:useBean id="proSvc" scope="page"
-			class="com.product_order.model.ProductOrderServiceImpl" />
+					<%-- 錯誤表列 --%>
+					<c:if test="${not empty errorMsgs}">
+						<font style="color: red">請修正以下錯誤:</font>
+						<ul>
+							<c:forEach var="message" items="${errorMsgs}">
+								<li style="color: red">${message}</li>
+							</c:forEach>
+						</ul>
+					</c:if>
 
-		<li>
-			<FORM METHOD="post" ACTION="product.do">
-				<b>選擇賣家編號:</b> <select size="1" name="id">
-					<c:forEach var="productVO" items="${proSvc.all}">
-						<option value="${productVO.id}">${productVO.id}
-					</c:forEach>
-				</select> <input type="hidden" name="action" value="getOne_For_Display">
-				<input type="submit" value="送出">
-			</FORM>
-		</li>
+					<ul>
+						<li><a href='listAllproductOrder.jsp'>後台所有商品訂單</a></li>
+						<li>
+							<FORM METHOD="post" ACTION="productorderback.do">
+								<b>輸入訂單編號 (如1):</b> <input type="text" name="id"> <input
+									type="hidden" name="action" value="getOne_For_Display">
+								<input type="submit" value="送出">
+							</FORM>
+						</li>
 
-		<li>
-			<FORM METHOD="post" ACTION="product.do">
-				<b>選擇買家編號:</b> <select size="1" name="id">
-					<c:forEach var="productVO" items="${proSvc.all}">
-						<option value="${productVO.id}">${productVO.productId}
-					</c:forEach>
-				</select> <input type="hidden" name="action" value="getOne_For_Display">
-				<input type="submit" value="送出">
-			</FORM>
-		</li>
-	</ul>
+						<jsp:useBean id="proSvc" scope="page"
+							class="com.product_order.model.ProductOrderServiceImpl" />
+
+						<li>
+							<FORM METHOD="post" ACTION="productorderback.do">
+								<b>選擇賣家編號:</b> <select size="1" name="id">
+									<c:forEach var="productVO" items="${proSvc.all}">
+										<option value="${productVO.id}">${productVO.id}
+									</c:forEach>
+								</select> <input type="hidden" name="action" value="getOne_For_Display">
+								<input type="submit" value="送出">
+							</FORM>
+						</li>
+
+						<li>
+							<FORM METHOD="post" ACTION="productorderback.do">
+								<b>選擇買家編號:</b> <select size="1" name="id">
+									<c:forEach var="productVO" items="${proSvc.all}">
+										<option value="${productVO.id}">${productVO.productId}
+									</c:forEach>
+								</select> <input type="hidden" name="action" value="getOne_For_Display">
+								<input type="submit" value="送出">
+							</FORM>
+						</li>s	
+					</ul>
 
 
-	<h3>訂單管理</h3>
+					<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
+				</div>
+			</div>
+			<!-- End of Page Wrapper -->
 
-	<ul>
-		<li><a href='addEmp.jsp'>新增二手商品訂單</a>
-	</ul>
+			<!-- Scroll to Top Button-->
+			<a class="scroll-to-top rounded" href="#page-top"> <i
+				class="fas fa-angle-up"></i>
+			</a>
 
+			<!-- Logout Modal-->
+			<jsp:include page="/back_end/common/logoutModal.jsp"></jsp:include>
+
+			<!-- Bootstrap core JavaScript-->
+			<script
+				src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
+			<script
+				src="<%=request.getContextPath()%>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+			<!-- Core plugin JavaScript-->
+			<script
+				src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+			<!-- Custom scripts for all pages-->
+			<script
+				src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
+
+			<!-- Page level plugins -->
+			<script
+				src="<%=request.getContextPath()%>/vendor/datatables/jquery.dataTables.min.js"></script>
+			<script
+				src="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+			<!-- Page level custom scripts -->
+			<script
+				src="<%=request.getContextPath()%>/js/demo/datatables-demo.js"></script>
+
+			<!-- 註冊按鈕觸發功能  -->
+			<script>
+				
+			</script>
 </body>
+
 </html>

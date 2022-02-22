@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.activity.model.ActivityDAO;
+import com.activity_attend.model.ActivityAttendServiceImpl;
+import com.activity_attend.model.ActivityAttendVO;
 import com.activity_report.*;
 import com.activity_report.model.ActivityReportServiceImpl;
 import com.activity_report.model.ActivityReportVO;
@@ -32,7 +35,7 @@ public class ActivityReportServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-		 if ("insert".equals(action)) { // 來自addActa.jsp的請求  
+		 if ("insert".equals(action)) {   
 				
 				List<String> errorMsgs = new LinkedList<String>();
 				// Store this set in the request scope, in case we need to
@@ -43,14 +46,10 @@ public class ActivityReportServlet extends HttpServlet {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 //檢舉活動編號
 					int activityId = Integer.valueOf(req.getParameter("activityId"));
-					if(activityId==0) {
-						errorMsgs.add("檢舉活動編號請勿空白");
-					}
+					
 //檢舉會員編號					
 					int memberId = Integer.valueOf(req.getParameter("memberId"));
-					if(memberId==0) {
-						errorMsgs.add("檢舉會員編號請勿空白");
-					}
+					
 //檢舉內容					
 					String content = req.getParameter("content").trim();
 					if (content == null || content.trim().length() == 0) {
@@ -58,9 +57,7 @@ public class ActivityReportServlet extends HttpServlet {
 					}
 //審核結果					
 					int status = Integer.valueOf(req.getParameter("status"));
-					if(status==-1) {
-						errorMsgs.add("請選擇審核結果");
-					}
+	
 //檢舉圖片
 					byte[] photo = null;
 					try {
@@ -78,14 +75,14 @@ public class ActivityReportServlet extends HttpServlet {
 					actrVO.setActivityId(activityId);
 					actrVO.setMemberId(memberId);
 					actrVO.setContent(content);
-					actrVO.setStatus(status);
+					actrVO.setStatus(0);
 					actrVO.setPhoto(photo);
 
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("actrVO", actrVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back_end/activity/addReport.jsp");
+								.getRequestDispatcher("/front_end/activity/addReport.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -103,13 +100,131 @@ public class ActivityReportServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add(e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/activity/addReport.jsp");
+							.getRequestDispatcher("/back_end/activity/listAllActr.jsp");
 					failureView.forward(req, res);
 				}
 		 }
-	}
+		 if ("getOne_For_Insert".equals(action)) { // 來自listAllActa.jsp的請求
+			 
+			 				List<String> errorMsgs = new LinkedList<String>();
+			 				// Store this set in the request scope, in case we need to
+			 				// send the ErrorPage view.
+			 				req.setAttribute("errorMsgs", errorMsgs);
+			 				
+			 				try {
+			 					/***************************1.接收請求參數****************************************/
+			 					int memberId =Integer.valueOf(req.getParameter("memberId"));
+			 					int activityId = Integer.valueOf(req.getParameter("activityId"));
+			 					
+			 					/***************************2.開始查詢資料****************************************/
+			 					ActivityAttendServiceImpl actaSvc = new ActivityAttendServiceImpl();
+			 					ActivityReportVO actrVO =new ActivityReportVO();
+			 					actrVO.setMemberId(memberId);
+			 					actrVO.setActivityId(activityId);
+			 					actrVO.setContent("好不好玩");
+			 					/***************************3.查詢完成,準備轉交(Send the Success view)************/
+			 					req.setAttribute("actrVO", actrVO);         // 資料庫取出的empVO物件,存入req
+			 					String url = "/front_end/activity/addReport.jsp";
+			 					RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+			 					successView.forward(req, res);
+			 
+			 					/***************************其他可能的錯誤處理**********************************/
+			 				} catch (Exception e) {
+			 					errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+			 					RequestDispatcher failureView = req
+			 							.getRequestDispatcher("/front_end/activity/addReport.jsp");
+			 					failureView.forward(req, res);
+			 				}
+			 			}
+		 
+		 if ("normalReport".equals(action)) { // 來自update_acta_input.jsp的請求
+				
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				req.setAttribute("errorMsgs", errorMsgs);
+			
+				try {
+					/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+					
+//參與會員編號					
+					int id =Integer.valueOf(req.getParameter("id"));
+									
+					ActivityReportServiceImpl actrSvc = new ActivityReportServiceImpl();
+					
+					ActivityReportVO actrVO = actrSvc.getOneActr(id);
+					actrVO = actrSvc.updateActr(actrVO.getId(),actrVO.getActivityId(),actrVO.getMemberId(),actrVO.getContent(),2,actrVO.getPhoto());
+					// Send the use back to the form, if there were errors
+					if (!errorMsgs.isEmpty()) {
+						req.setAttribute("actrVO", actrVO); // 含有輸入格式錯誤的empVO物件,也存入req
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/back_end/activity/listAllActr.jsp");
+						failureView.forward(req, res);
+						return; //程式中斷
+					}
+					
+					/***************************2.開始修改資料*****************************************/
+	
+					
+					/***************************3.修改完成,準備轉交(Send the Success view)*************/
+					req.setAttribute("actrVO", actrVO); // 資料庫update成功後,正確的的empVO物件,存入req
+					String url = "/back_end/activity/listAllActr.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+					successView.forward(req, res);
+
+					/***************************其他可能的錯誤處理*************************************/
+				} catch (Exception e) {
+					errorMsgs.add("修改資料失敗:"+e.getMessage());
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/activity/listAllActr.jsp");
+					failureView.forward(req, res);
+				}
+			}
+		 if ("cancelReport".equals(action)) { // 來自update_acta_input.jsp的請求
+				
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				req.setAttribute("errorMsgs", errorMsgs);
+			
+				try {
+					/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+					
+//參與會員編號					
+					int Id =Integer.valueOf(req.getParameter("id"));
+									
+					ActivityReportServiceImpl actrSvc = new ActivityReportServiceImpl();
+					
+					ActivityReportVO actrVO = actrSvc.getOneActr(Id);
+					actrVO = actrSvc.updateActr(actrVO.getId(),actrVO.getActivityId(),actrVO.getMemberId(),actrVO.getContent(),1,actrVO.getPhoto());
+					// Send the use back to the form, if there were errors
+					if (!errorMsgs.isEmpty()) {
+						req.setAttribute("actrVO", actrVO); // 含有輸入格式錯誤的empVO物件,也存入req
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/back_end/activity/listAllActr.jsp");
+						failureView.forward(req, res);
+						return; //程式中斷
+					}
+					
+					/***************************2.開始修改資料*****************************************/
+	
+					
+					/***************************3.修改完成,準備轉交(Send the Success view)*************/
+					req.setAttribute("actrVO", actrVO); // 資料庫update成功後,正確的的empVO物件,存入req
+					String url = "/back_end/activity/listAllActr.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+					successView.forward(req, res);
+
+					/***************************其他可能的錯誤處理*************************************/
+				} catch (Exception e) {
+					errorMsgs.add("修改資料失敗:"+e.getMessage());
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/activity/listAllActr.jsp");
+					failureView.forward(req, res);
+				}
+		 }
 }
-		
+}		
 //		 if ("update".equals(action)) { // 來自update_acta_input.jsp的請求
 //				
 //				List<String> errorMsgs = new LinkedList<String>();

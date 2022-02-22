@@ -1,8 +1,10 @@
 package com.activity_attend.controller;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.activity.model.ActivityServiceImpl;
+import com.activity.model.ActivityVO;
 import com.activity_attend.model.ActivityAttendServiceImpl;
 import com.activity_attend.model.ActivityAttendVO;
 
@@ -57,11 +61,8 @@ public class ActivityAttendServlet extends HttpServlet {
 						errorMsgs.add("活動內容備註請勿空白");
 					}
 //付款狀態					
-					int status = Integer.valueOf(req.getParameter("status"));
-					if(status==-1) {
-						errorMsgs.add("請選擇付款狀態");
-					}
-
+					int status = 1;
+					
 					ActivityAttendVO actaVO = new ActivityAttendVO();
 					actaVO.setMemberId(memberId);
 					actaVO.setActivityId(activityId);
@@ -73,7 +74,7 @@ public class ActivityAttendServlet extends HttpServlet {
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("actaVO", actaVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back_end/activity/addAttend.jsp");
+								.getRequestDispatcher("/front_end/activity/addAttend.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -83,14 +84,14 @@ public class ActivityAttendServlet extends HttpServlet {
 					actaVO = actaSvc.addActa(memberId, activityId, comment, note, status);
 					
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
-					RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/appearActPage.jsp"); // 新增成功後轉交listAllActa.jsp
+					RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/listAllActa.jsp"); // 新增成功後轉交listAllActa.jsp
 					successView.forward(req, res);				
 					
 					/***************************其他可能的錯誤處理**********************************/
 				} catch (Exception e) {
 					errorMsgs.add(e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/activity/addAttend.jsp");
+							.getRequestDispatcher("/front_end/activity/addAttend.jsp");
 					failureView.forward(req, res);
 				}
 			}
@@ -143,7 +144,7 @@ public class ActivityAttendServlet extends HttpServlet {
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("actaVO", actaVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back_end/activity/update_acta_input.jsp");
+								.getRequestDispatcher("/front_end/activity/update_acta_input.jsp");
 						failureView.forward(req, res);
 						return; //程式中斷
 					}
@@ -154,7 +155,7 @@ public class ActivityAttendServlet extends HttpServlet {
 					
 					/***************************3.修改完成,準備轉交(Send the Success view)*************/
 					req.setAttribute("actaVO", actaVO); // 資料庫update成功後,正確的的empVO物件,存入req
-					String url = "/back_end/activity/listOneActa.jsp";
+					String url = "/front_end/activity/listOneActa.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 					successView.forward(req, res);
 
@@ -162,7 +163,7 @@ public class ActivityAttendServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add("修改資料失敗:"+e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/activity/update_acta_input.jsp");
+							.getRequestDispatcher("/front_end/activity/update_acta_input.jsp");
 					failureView.forward(req, res);
 				}
 			}
@@ -184,7 +185,7 @@ public class ActivityAttendServlet extends HttpServlet {
 									
 					/***************************3.查詢完成,準備轉交(Send the Success view)************/
 					req.setAttribute("actaVO", actaVO);         // 資料庫取出的empVO物件,存入req
-					String url = "/back_end/activity/update_acta_input.jsp";
+					String url = "/front_end/activity/update_acta_input.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 					successView.forward(req, res);
 
@@ -192,9 +193,57 @@ public class ActivityAttendServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/activity/listAllActa.jsp");
+							.getRequestDispatcher("/front_end/activity/listAllActa.jsp");
 					failureView.forward(req, res);
 				}
 			}
+		 if ("cancel".equals(action)) { // 來自update_acta_input.jsp的請求
+				
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				req.setAttribute("errorMsgs", errorMsgs);
+			
+				try {
+					/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+					
+//參與會員編號					
+					int memberId =Integer.valueOf(req.getParameter("memberId"));
+					
+//參與活動編號
+					int activityId = Integer.valueOf(req.getParameter("activityId"));
+					
+					
+					ActivityAttendServiceImpl actaSvc = new ActivityAttendServiceImpl();
+					
+					ActivityAttendVO actaVO = actaSvc.getOneActa(memberId, activityId);
+					actaVO = actaSvc.updateActa(actaVO.getMemberId(), actaVO.getActivityId(), actaVO.getComment(), actaVO.getNote(), 0);
+					// Send the use back to the form, if there were errors
+					if (!errorMsgs.isEmpty()) {
+						req.setAttribute("actaVO", actaVO); // 含有輸入格式錯誤的empVO物件,也存入req
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/front_end/activity/listAllActa.jsp");
+						failureView.forward(req, res);
+						return; //程式中斷
+					}
+					
+					/***************************2.開始修改資料*****************************************/
+	
+					
+					/***************************3.修改完成,準備轉交(Send the Success view)*************/
+					req.setAttribute("actaVO", actaVO); // 資料庫update成功後,正確的的empVO物件,存入req
+					String url = "/front_end/activity/listAllActa.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+					successView.forward(req, res);
+
+					/***************************其他可能的錯誤處理*************************************/
+				} catch (Exception e) {
+					errorMsgs.add("修改資料失敗:"+e.getMessage());
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/activity/listAllActa.jsp");
+					failureView.forward(req, res);
+				}
+			}
+		 
 	}
 }

@@ -107,10 +107,6 @@ public class ActivityQuestionDAOJDBCImpl implements ActivityQuestionDAO {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
-//			pstmt.setInt(1, vo.getActivityId());
-//			pstmt.setInt(2, vo.getMemberId());
-//			pstmt.setString(3, vo.getProblem());
-//			pstmt.setTimestamp(5, vo.getProblemDate());
 			pstmt.setString(1, vo.getReply());
 			pstmt.setTimestamp(2, vo.getReplyDate());
 			pstmt.setInt(3, vo.getId());
