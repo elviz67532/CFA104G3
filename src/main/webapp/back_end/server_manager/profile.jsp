@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@	page import="com.server_manager.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+
+<%
+	ServerManagerVO smVO = (ServerManagerVO)session.getAttribute("ServerManagerVO");
+	pageContext.setAttribute("smVO", smVO);
+%>
 
 <!doctype html>
 <html lang="zh-TW">
@@ -25,7 +31,51 @@
 				<div class="container-fluid">
 
 					<!-- main -->
-				123
+					<table class="table table-striped">
+<!-- 					  <thead> -->
+<!-- 					    <tr> -->
+<!-- 					      <th scope="col">#</th> -->
+<!-- 					      <th scope="col">First</th> -->
+<!-- 					      <th scope="col">Last</th> -->
+<!-- 					      <th scope="col">Handle</th> -->
+<!-- 					    </tr> -->
+<!-- 					  </thead> -->
+					  <tbody>
+					    <tr>
+					      <th scope="row">管理員編號</th>
+					      <td>${ServerManagerVO.smgrId}</td>
+					    </tr>
+					    <tr>
+					      <th scope="row">email</th>
+					      <td>${ServerManagerVO.smgrEmail}</td>
+					    </tr>
+					    <tr>
+					      <th scope="row">account</th>
+					      <td>${ServerManagerVO.smgrAccount}</td>
+					    </tr>
+					    <tr>
+					      <th scope="row">password</th>
+					      <td>${ServerManagerVO.smgrPassword}</td>
+					    </tr>
+					    <tr>
+					      <th scope="row">名稱</th>
+					      <td>${ServerManagerVO.smgrName}</td>
+					    </tr>
+					    <tr>
+					      <th scope="row">電話</th>
+					      <td>${ServerManagerVO.smgrPhone}</td>
+					    </tr>
+					    <tr>
+					      <th scope="row">性別</th>
+					      <td>${ServerManagerVO.smgrGender}</td>
+					    </tr>
+					    <tr>
+					      <th scope="row">地址</th>
+					      <td>${ServerManagerVO.smgrAddress}</td>
+					    </tr>					    					    					    					    					    
+					  </tbody>
+					</table>
+				
 					<!-- end of main -->
 					
 				</div>
