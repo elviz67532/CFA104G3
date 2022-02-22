@@ -126,10 +126,12 @@ $('#button1').click(function() {
 	</c:if>
 
 	<h2>搬家訂單管理</h2>
+	
 <div class="main">
 
 		<c:forEach var="moveOrderVO" items="${moveOrderVO}">
-		<table>		
+		
+		<table>	
 			<tr>
 				<th class="text-nowrap">訂單編號:</th>
 				<td>${moveOrderVO.id}</td>
@@ -194,7 +196,9 @@ $('#button1').click(function() {
 			</tr>
 		</table>
 		<hr>
+		
 		</c:forEach>	
+		
 </div>
 
 
