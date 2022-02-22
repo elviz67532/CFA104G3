@@ -88,86 +88,93 @@
 		    <li class="breadcrumb-item active" aria-current="page">修改商品</li>
 		  </ol>
 		</nav>	
-	
-		<FORM METHOD="post" ACTION="ProductServlet" name="form1">
-		<table>
-			<tr>
-		<%-- 	--${productVO.prodId}-- --%>
-				<td>商品編號:</td>
-				<td class="input-group-text"><%=productVO.getId()%></td>
-			</tr>
-			<tr>
-				<td>商品名稱:</td>
-				<td><input type="text" name="prodName"
-				value="<%= (productVO == null)? "": productVO.getName()%>"
-				class="input-group-text"
-				style="margin: 15px;"/></td>
-			</tr>
-			
-			<tr>
-				<td>會員編號:</td>
-				<td><input type="text" name="memId"
-				value="<%= (productVO == null)? "": productVO.getSellerMemberId() %>"
-				class="input-group-text"
-				style="margin: 15px;"/></td>
-			</tr>
-			<jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductServiceImpl"></jsp:useBean>
-		
-			<tr>
-				<td>商品類別:</td>
-				<td><select size="1" name="prodType" class="input-group-text">
-		<%-- 			<c:forEach var="type" items="${ProductUtil.prodType}"> --%>
-		<!-- 				<option value="type">type -->
-		<%-- 			</c:forEach> --%>
-						<option>--請選擇--
-						<option value=0 ${(productVO.type == 0)? 'selected':''}>其他類
-						<option value=1 ${(productVO.type == 1)? 'selected':''}>桌椅類
-						<option value=2 ${(productVO.type == 2)? 'selected':''}>寢具類
-						<option value=3 ${(productVO.type == 3)? 'selected':''}>服飾類
-						<option value=4 ${(productVO.type == 4)? 'selected':''}>電器類
-					</select></td>
-			</tr>
-				<td>商品敘述:</td>
-				<td><input type="text" name="prodDesc"
-				value="<%= (productVO == null)? "": productVO.getDescription() %>"
-				class="input-group-text"
-				style="margin: 15px;"/></td>
-			</tr>
+	<div class="container">
+		<div class="row">
+			<div class="col-6 mx-auto my-5">
+				<FORM METHOD="post" ACTION="ProductServlet" name="form1">
+				<table>
+					<tr>
+				<%-- 	--${productVO.prodId}-- --%>
+						<td>商品編號:</td>
+						<td ><%=productVO.getId()%></td>
+					</tr>
+					<tr>
+						<td>商品名稱:</td>
+						<td><input type="text" name="prodName"
+						value="<%= (productVO == null)? "": productVO.getName()%>"
+						style="margin: 15px;"/></td>
+					</tr>
+					
+					<tr>
+						<td>會員編號:</td>
+						<td><input type="text" name="memId"
+						value="<%= (productVO == null)? "": productVO.getSellerMemberId() %>"
+						style="margin: 15px;"/></td>
+					</tr>
+					<jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductServiceImpl"></jsp:useBean>
 				
-			<tr>
-				<td>價格:</td>
-				<td><input type="text" name="prodPrice"
-				value="<%= (productVO == null)? "": productVO.getPrice() %>"
-				class="input-group-text"
-				style="margin: 15px;"/></td>			
-			</tr>
-			<tr>
-				<td>上架時間:</td>
-				<td><input type="text" name="prodUpdate" disabled
-				value="<%= new java.sql.Date(System.currentTimeMillis()) %>"
-				class="input-group-text"
-				style="margin: 15px;"/></td>			
-			</tr>
-			<tr>
-				<td>所在地:</td>
-				<td><input type="text" name="prodLoc"
-				value="<%= (productVO == null)? "": productVO.getLocation() %>"
-				class="input-group-text"
-				style="margin: 15px;"/></td>			
-			</tr>	
-			<tr>
-				<td>商品狀態:</td>
-				<td><select size="1" name="prodStatus" class="input-group-text" style="margin: 15px;">
-						<option>--請選擇--				
-						<option value=0 ${(productVO.status == 0)? 'selected':''}>販售中
-						<option value=1 ${(productVO.status == 1)? 'selected':''}>完售
-					</select></td>
-			</tr>			
-		</table>
-		<input type="hidden" name="action" value="update">
-		<input type="hidden" name="prodId" value="<%=productVO.getId()%>">
-		<input type="submit" value="送出修改" class="btn btn-outline-info" style="margin: 15px;">
-		</FORM>
+					<tr>
+						<td>商品類別:</td>
+						<td><select size="1" name="prodType">
+				<%-- 			<c:forEach var="type" items="${ProductUtil.prodType}"> --%>
+				<!-- 				<option value="type">type -->
+				<%-- 			</c:forEach> --%>
+								<option>--請選擇--
+								<option value=0 ${(productVO.type == 0)? 'selected':''}>其他類
+								<option value=1 ${(productVO.type == 1)? 'selected':''}>桌椅類
+								<option value=2 ${(productVO.type == 2)? 'selected':''}>寢具類
+								<option value=3 ${(productVO.type == 3)? 'selected':''}>服飾類
+								<option value=4 ${(productVO.type == 4)? 'selected':''}>電器類
+							</select></td>
+					</tr>
+						<td>商品敘述:</td>
+						<td><input type="text" name="prodDesc"
+						value="<%= (productVO == null)? "": productVO.getDescription() %>"
+						style="margin: 15px;"/></td>
+					</tr>
+						
+					<tr>
+						<td>價格:</td>
+						<td><input type="text" name="prodPrice"
+						value="<%= (productVO == null)? "": productVO.getPrice() %>"
+						style="margin: 15px;"/></td>			
+					</tr>
+					<tr>
+						<td>上架時間:</td>
+						<td><input type="text" name="prodUpdate" disabled
+						value="<%= new java.sql.Date(System.currentTimeMillis()) %>"
+						style="margin: 15px;"/></td>			
+					</tr>
+					<tr>
+						<td>所在地:</td>
+						<td><input type="text" name="prodLoc"
+						value="<%= (productVO == null)? "": productVO.getLocation() %>"
+						style="margin: 15px;"/></td>			
+					</tr>	
+					<tr>
+						<td>商品狀態:</td>
+						<td><select size="1" name="prodStatus" style="margin: 15px;">
+								<option>--請選擇--				
+								<option value=0 ${(productVO.status == 0)? 'selected':''}>販售中
+								<option value=1 ${(productVO.status == 1)? 'selected':''}>完售
+							</select></td>
+					</tr>
+					<tr>
+						
+					</tr>			
+				</table>
+			</div>		
+			<div class="col-6 mx-auto my-auto">
+				<div class="card" style="width: 18rem;">
+				  <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top" alt="...">
+				</div>
+			</div>	
+					
+			<input type="hidden" name="action" value="update_data">
+			<input type="hidden" name="prodId" value="<%=productVO.getId()%>">
+			<input type="submit" value="送出修改" class="btn btn-outline-info" style="margin: 15px;">
+			</FORM>
+		</div>
 	</div>
     <!-- Footer-->
    	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>

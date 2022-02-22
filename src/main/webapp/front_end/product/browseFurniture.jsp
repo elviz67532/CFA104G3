@@ -55,6 +55,11 @@
 	.card{
 		margin: 5px
 	}
+	img{
+	    max-height:256px;
+	    width:auto;
+	    height:auto;
+	}	
 	</style>
 </head>
 
