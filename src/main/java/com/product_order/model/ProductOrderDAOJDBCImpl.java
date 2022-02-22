@@ -15,8 +15,8 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 	private static final String GET_ALL_STMT = "select * from PRODUCT_ORDER order by PRODO_ID";
 	private static final String GET_ONE_STMT = "select * from PRODUCT_ORDER where PRODO_ID = ?";
 	private static final String INSERT_STMT = "insert into PRODUCT_ORDER"
-			+ "(PRODO_ID, PRODO_PROD_ID, PRODO_MBUY_ID, PRODO_MSELL_ID, PRODO_NAME, PRODO_MOBILE, PRODO_ADDRESS, PRODO_DATE, PRODO_AMOUNT, PRODO_STATUS, PRODO_SUM) "
-			+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			+ "(PRODO_PROD_ID, PRODO_MBUY_ID, PRODO_MSELL_ID, PRODO_NAME, PRODO_MOBILE, PRODO_ADDRESS, PRODO_DATE, PRODO_AMOUNT, PRODO_STATUS, PRODO_SUM) "
+			+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String DELETE = "delete from PRODUCT_ORDER where PRODO_ID = ?";
 	private static final String UPDATE = "update PRODUCT_ORDER set "
 			+ "PRODO_NAME = ?, PRODO_MOBILE = ?, PRODO_ADDRESS = ?, PRODO_DATE = ?, PRODO_AMOUNT = ?, PRODO_STATUS = ?, PRODO_SUM = ? "
@@ -40,17 +40,16 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, vo.getId());
-			pstmt.setInt(2, vo.getProductId());
-			pstmt.setInt(3, vo.getCustomerMemberId());
-			pstmt.setInt(4, vo.getSellerMemberId());
-			pstmt.setString(5, vo.getProductName());
-			pstmt.setString(6, vo.getPhone());
-			pstmt.setString(7, vo.getAddress());
-			pstmt.setTimestamp(8, vo.getDate());
-			pstmt.setInt(9, vo.getAmountOfProduct());
-			pstmt.setInt(10, vo.getStatus());
-			pstmt.setInt(11, vo.getAmountOfPrice());
+			pstmt.setInt(1, vo.getProductId());
+			pstmt.setInt(2, vo.getCustomerMemberId());
+			pstmt.setInt(3, vo.getSellerMemberId());
+			pstmt.setString(4, vo.getProductName());
+			pstmt.setString(5, vo.getPhone());
+			pstmt.setString(6, vo.getAddress());
+			pstmt.setTimestamp(7, vo.getDate());
+			pstmt.setInt(8, vo.getAmountOfProduct());
+			pstmt.setInt(9, vo.getStatus());
+			pstmt.setInt(10, vo.getAmountOfPrice());
 
 			insertedRow = pstmt.executeUpdate();
 		} catch (SQLException se) {

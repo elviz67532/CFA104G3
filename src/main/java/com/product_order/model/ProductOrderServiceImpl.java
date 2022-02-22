@@ -14,13 +14,12 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 	}
 
 	@Override
-	public ProductOrderVO addProductOrder(Integer productId, Integer customerMemberId, Integer sellerMemberId,
-			String productName, String phone, String address, Timestamp date, Integer amountOfProduct, Integer status,
+	public ProductOrderVO addProductOrder(Integer customerMemberId, Integer sellerMemberId, String productName,
+			String phone, String address, Timestamp date, Integer amountOfProduct, Integer status,
 			Integer amountOfPrice) {
 
 		ProductOrderVO vo = new ProductOrderVO();
 
-		vo.setProductId(productId);
 		vo.setCustomerMemberId(customerMemberId);
 		vo.setSellerMemberId(sellerMemberId);
 		vo.setProductName(productName);
@@ -76,7 +75,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 		return dao.selectAll();
 	}
 
-	
 //	@Override
 //	public boolean getDataFromProduct(ProductVO productVO) {
 //
