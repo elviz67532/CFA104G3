@@ -94,24 +94,26 @@
 
 	<!-- nav -->
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
+	<%
+	Integer prodId = Integer.valueOf(request.getParameter("prodId")); 
+	
+	%>
 	<div class="container">
 		<main>
-			<div class="py-5 text-center">
+			<div class="row py-5 text-center">
 				<h2>商品圖片</h2>
-			</div>
-			<div class="row align-items-center justify-align-center">
 				<FORM ACTION="<%=request.getContextPath()%>/product_photo/UpdatePhoto" METHOD="post" enctype="multipart/form-data">				
 					<!-- 圖片 -->
-					<div class="card" style="width: 18rem;">
-					  <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top" alt="...">
+					<div class="card " style="width: 18rem; display: inline-flex;">
+					  <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=<%=prodId%>" class="card-img-top" alt="...">
 					  <input type="file" name="upImg" class="form-control">
-					  <input type="hidden" name="prodId" value="${productVO.id}" class="form-control">
+					  <input type="hidden" name="prodId" value="<%=prodId%>" class="form-control">
 					  <input class="btn btn-outline-info" type="submit" value="上傳圖片">
 					</div>				    
 			    </FORM>					
 			</div>
-			</div>
 		</main>
+	</div>
 
 	<footer class="my-5 pt-5 text-muted text-center text-small">
 		<p class="mb-1">&copy; 2017–2021 Company Name</p>

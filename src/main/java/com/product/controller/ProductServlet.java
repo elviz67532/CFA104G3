@@ -263,8 +263,35 @@ public class ProductServlet extends HttpServlet {
 						.getRequestDispatcher("/front_end/product/listAll.jsp");
 				failView.forward(req, res);
 			} 
-			
 		}	
+		
+		if("getOne_For_Update_Img".equals(action)) {
+			
+			List<String> errMsgs = new LinkedList<String>();
+			req.setAttribute("errMsgs", errMsgs); // 放置到request裡面	
+			
+			try {
+				/***************************1.接收請求參數****************************************/
+				Integer prodId = Integer.valueOf(req.getParameter("prodId"));
+//				System.out.println("ProductServlet-getoneforupdate: " + prodId); // 有取得數值
+				/***************************2.開始查詢資料****************************************/
+				ProductServiceImpl productSvc = new ProductServiceImpl();
+				ProductVO productVO = productSvc.getOneProduct(prodId);
+				
+				/***************************3.查詢完成，準備轉交****************************************/
+				req.setAttribute("productVO", productVO);
+				String url = "/front_end/product/update_img.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				errMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failView = req
+						.getRequestDispatcher("/front_end/product/listAll.jsp");
+				failView.forward(req, res);
+			} 
+		}			
 		
 		if("update".equals(action)) {
 			
