@@ -133,7 +133,7 @@
         <div class="container px-5 px-lg-6 my-6">
             <div class="row gx-4 gx-lg-5 align-items-start">
                 <div class="col-md-6">
-                    <img style="max-width: 600px; max-height: 480px; overflow:hidden; border: 2px lightgray solid;"
+                    <img class="img-fluid rounded mb-5 mb-lg-0 img-thumbnail"
                         src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=<%=productVO.getId()%>"
                         alt="" />
                     <div class="mb-1">商品編號: <%=productVO.getId()%>
@@ -206,6 +206,7 @@
 	
 	<!--second section -->
     <section class="py-5 bg-light">
+<!--      <div class="container px-4 px-lg-5 mt-5"> -->
         <div style="margin: 0 230px;">
             <div>
                 <div class="aboutProductWord"
@@ -213,7 +214,7 @@
                     商品詳圖
                 </div>
                 <br>
-                <img style="border: 2px lightgray solid;" src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}"
+                <img class="img-fluid rounded mb-2 mb-lg-0 img-thumbnail" src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}"
                     alt="<%=productVO.getName()%>" />
             </div>
             <div class="aboutProductWord"
@@ -228,7 +229,8 @@
             <div class="small mb-1" style="text-align:center;margin-top:20px;">
                 上架時間: <%=productVO.getLaunchedDate()%>
             </div>
-        </div>
+<!--         </div> -->
+       </div>
     </section>
     
     

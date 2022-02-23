@@ -47,7 +47,7 @@
 		<!-- 處理中 -->
 		<url-pattern>/front_end/move/frontGetMoveOrder.jsp</url-pattern>
 		<url-pattern>/front_end/product/productReport.jsp</url-pattern>
-		<url-pattern>/front_end/product/singleItem.jsp</url-pattern>
+		
 		
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
@@ -222,6 +222,14 @@
 	<servlet-mapping>
 		<servlet-name>NewsServlet</servlet-name>
 		<url-pattern>/back_end/news/NewsServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>NewsUserServlet</servlet-name>
+		<servlet-class>com.news.controller.NewsUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NewsUserServlet</servlet-name>
+		<url-pattern>/news/NewsUserServlet.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>NewsImageReader</servlet-name>

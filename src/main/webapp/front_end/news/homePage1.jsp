@@ -32,7 +32,7 @@ pageContext.setAttribute("list", list);
     <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
 </head>
 
-<body>
+<body id="page-top">
     <!-- Navigation-->
     <!-- nav -->
     <jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
@@ -53,62 +53,42 @@ pageContext.setAttribute("list", list);
     <!-- 主體畫面設計  -->
     
     <!-- Page Content-->
+    
     <!-- About section one-->
+    	<c:forEach var="newsVO" items="${list}"> 
             <section class="py-5 bg-light" id="scroll-target">
                 <div class="container px-5 my-5">
                     <div class="row gx-5 align-items-center">
-                        <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
+                        <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id}" alt="..." /></div>
                         <div class="col-lg-6">
-                            <h2 class="fw-bolder">Our founding</h2>
-                            <p class="lead fw-normal text-muted mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto est, ut esse a labore aliquam beatae expedita. Blanditiis impedit numquam libero molestiae et fugit cupiditate, quibusdam expedita, maiores eaque quisquam.</p>
+                            <h2 class="fw-bolder">${newsVO.title}</h2>
+                            <p>${newsVO.date}</p>
+                            <p class="lead fw-normal text-muted mb-0">${newsVO.content}...</p>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/news/NewsUserServlet.do">
+			     					<input type="submit" value="前往" class="btn btn-primary"	>
+			     					<input type="hidden" name="id"  value="${newsVO.id}">
+			     					<input type="hidden" name="action"	value="getOne_For_User">
+			     			</FORM>
+			     			</div>
                         </div>
                     </div>
                 </div>
             </section>
-            <!-- About section two-->
-            <section class="py-5">
-                <div class="container px-5 my-5">
-                    <div class="row gx-5 align-items-center">
-                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                        <div class="col-lg-6">
-                            <h2 class="fw-bolder">Growth &amp; beyond</h2>
-                            <p class="lead fw-normal text-muted mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto est, ut esse a labore aliquam beatae expedita. Blanditiis impedit numquam libero molestiae et fugit cupiditate, quibusdam expedita, maiores eaque quisquam.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-    <!-- About section three-->
-            <section class="py-5 bg-light" id="scroll-target">
-                <div class="container px-5 my-5">
-                    <div class="row gx-5 align-items-center">
-                        <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                        <div class="col-lg-6">
-                            <h2 class="fw-bolder">Our founding</h2>
-                            <p class="lead fw-normal text-muted mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto est, ut esse a labore aliquam beatae expedita. Blanditiis impedit numquam libero molestiae et fugit cupiditate, quibusdam expedita, maiores eaque quisquam.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- About section four-->
-            <section class="py-5">
-                <div class="container px-5 my-5">
-                    <div class="row gx-5 align-items-center">
-                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                        <div class="col-lg-6">
-                            <h2 class="fw-bolder">Growth &amp; beyond</h2>
-                            <p class="lead fw-normal text-muted mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto est, ut esse a labore aliquam beatae expedita. Blanditiis impedit numquam libero molestiae et fugit cupiditate, quibusdam expedita, maiores eaque quisquam.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-    
-    
+        </c:forEach>
+        
+        
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>    
     <!-- Footer-->
     <jsp:include page="/front_end/common/footer.jsp"></jsp:include>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+    <script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
 </body>
 
 </html>

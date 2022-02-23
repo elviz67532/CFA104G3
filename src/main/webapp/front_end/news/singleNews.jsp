@@ -70,15 +70,15 @@ pageContext.setAttribute("list", list);
                                 <!-- Post header-->
                                 <header class="mb-4">
                                     <!-- Post title-->
-                                    <h1 class="fw-bolder mb-1">標題</h1>
+                                    <h1 class="fw-bolder mb-1">${newsVO.title}</h1>
                                     <!-- Post meta content-->
-                                    <div class="text-muted fst-italic mb-2">時間</div>                               
+                                    <div class="text-muted fst-italic mb-2">${newsVO.date}</div>                               
                                 </header>
                                 <!-- Preview image figure-->
-                                <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                                <figure class="mb-4"><img class="img-fluid rounded" src="<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id}" alt="..." /></figure>
                                 <!-- Post content-->
                                 <section class="mb-5">
-                                    <p class="fs-5 mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>                          
+                                    <p class="fs-5 mb-4">${newsVO.content}</p>                          
                                 </section>
                             </article>
 

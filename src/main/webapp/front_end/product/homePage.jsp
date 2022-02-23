@@ -1,21 +1,14 @@
-<%@page import="com.news.model.*"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@	page import="com.product_photo.model.*"%>
-<%@	page import="com.product.model.*"%>
-<%
-	ProductServiceImpl productService = new ProductServiceImpl();
-	List<ProductVO> list = productService.getAll();
-	pageContext.setAttribute("list", list);
+<%@ page import="com.news.model.*" %>
+
+
+<% 
+NewsServiceImpl newsServiceImpl=new NewsServiceImpl(); 
+List<NewsVO> list = newsServiceImpl.selectAllNews();
+pageContext.setAttribute("list", list);
 %>
-<%
-	NewsServiceImpl newsSvc = new NewsServiceImpl();
-	List<NewsVO> newslist = newsSvc.selectAllNews();
-	pageContext.setAttribute("newslist", newslist);
-%>
-<jsp:useBean id="photoSvc" scope="page" class="com.product_photo.model.ProductPhotoServiceImpl" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,152 +30,62 @@
         rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
-    <style>
-		  .SEARCHFOR{
-		  padding:10px;
-		  margin-bottom: 30px;
-		}
-		#pagination{
-		  bottom: 0;
-		}
-		.d-block{
-		  height: 30%;
-		}
-		.myImg {
-		  height:  400px;
-		  background-repeat: no-repeat;
-		  background-attachment: fixed;
-		  background-position: center;
-		  background-size: cover;
-		}
-		.pagination{
-			margin: 10px
-		}
-		.card{
-			margin: 5px
-		}
-		img{
-		    max-height:256px;
-		    width:auto;
-		    height:auto;
-		}
-	</style>
 </head>
 
-<body class="d-flex flex-column h-100">
+<body id="page-top">
     <!-- Navigation-->
     <!-- nav -->
-	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
+    <jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
     <!-- Page Header-->
-    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/product01.jpg')">
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/news.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>二手商城</h1>
-                        <span class="subheading">愛地球，資源再利用</span>
+                        <h1>最新消息</h1>
+                        <span class="subheading">最新資訊都在這</span>
                     </div>
                 </div>
             </div>
         </div>
     </header>
-   
-   	<!-- 主體畫面設計  -->
-   	<div class="row justify-content-center">
-      <div class="col-lg-6 SEARCHFOR">
-      </div>
-    </div>
-
-	<!-- 輪播 (Carousel) -->
-    <!-- 搭配圖片滿版 -->
-    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-      <c:forEach var="newsVO" items="${newslist}">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/NewsImageReader?id=${newsVO.id})"></div>
-        </div>
-<!-- 	        <div class="carousel-item"> -->
-<!-- 	          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news2.jpg)"></div> -->
-<!-- 	        </div> -->
-<!-- 	        <div class="carousel-item"> -->
-<!-- 	          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news3.jpg)"></div> -->
-<!-- 	        </div> -->
-      </div>
-      </c:forEach>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-	
-	<div class="container">
-		<div class="row">
-			<!-- 左邊3欄  list group 分類功能-->
-			<div class="col-12 col-md-3 list-group">
-				<FORM METHOD="post" ACTION="product/ProductServlet">
-				  <a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp" class="list-group-item list-group-item-action active" aria-current="true">
-				    總覽
-				  </a>
-				  <a href="<%=request.getContextPath() %>/front_end/product/browseElec.jsp"  name="prodType" value=4 class="list-group-item list-group-item-action">電器類</a>
-				  <a href="<%=request.getContextPath() %>/front_end/product/browseFurniture.jsp" class="list-group-item list-group-item-action">寢具</a>
-				  <a href="<%=request.getContextPath() %>/front_end/product/browseOthers.jsp" class="list-group-item list-group-item-action">其他</a>
-				  <a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp" class="list-group-item list-group-item-action">買賣家</a>
-				</FORM>
-			</div>
-			<!-- 右邊9欄  card 卡片 & text-center -->
-			<div class="col-12 col-md-9">
-				<div class="row">
-					<div class="col">
-					    <div class="col-12 row justify-content-center">
-						<c:forEach var="productVO" items="${list}">
-					        <div class="card text-center" style="width: 18rem;">
-					          <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top" 
-					          		alt="<%=request.getContextPath()%>/assets/img/home-bg.jpg"/>
-					          <div class="card-body">
-					            <h5 class="card-title">${productVO.name}</h5>
-					<%--             <p class="card-text">${productVO.prodDesc}</p> --%>
-									<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/product/ProductServlet">
+    <!-- 主體畫面設計  -->
+    
+    <!-- Page Content-->
+    <!-- About section one-->
+    	<c:forEach var="newsVO" items="${list}"> 
+            <section class="py-5 bg-light" id="scroll-target">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5 align-items-center">
+                        <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id}" alt="..." /></div>
+                        <div class="col-lg-6">
+                            <h2 class="fw-bolder">${newsVO.title}</h2>
+                            <p>${newsVO.date}</p>
+                            <p class="lead fw-normal text-muted mb-0">${newsVO.content}...</p>
+                            <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/news/NewsUserServlet.do">
 			     					<input type="submit" value="前往">
-			     					<input type="hidden" name="prodId"  value="${productVO.id}">
-			     					<input type="hidden" name="action"	value="getOne_For_Display"></FORM>
-					<%--             <a href="#" class="btn btn-primary">${productVO.prodName}</a> --%>
-					          </div>
-					        </div>	
-						</c:forEach>
-					    </div>					
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<br>
-	<br>
-	
-	<!-- card 卡片 & text-center-->
-	<!-- Pages-->
-<!-- 	<nav aria-label="Page navigation example"> -->
-<!-- 	  <ul class="pagination justify-content-center"> -->
-<!-- 	    <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
-<!-- 	    <li class="page-item"><a class="page-link" href="#">1</a></li> -->
-<!-- 	    <li class="page-item"><a class="page-link" href="#">2</a></li> -->
-<!-- 	    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-<!-- 	    <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
-<!-- 	  </ul> -->
-<!-- 	</nav> -->
-	
-   
+			     					<input type="hidden" name="id"  value="${newsVO.id}">
+			     					<input type="hidden" name="action"	value="getOne_For_User">
+			     			</FORM>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </c:forEach>
+        
+        
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>    
     <!-- Footer-->
-   	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+    <jsp:include page="/front_end/common/footer.jsp"></jsp:include>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+    <script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
 </body>
 
 </html>
