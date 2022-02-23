@@ -30,6 +30,10 @@ public interface ProductOrderService {
 
 	ProductOrderVO reviseOrder(Integer id, String productName, String phone, String address);
 
+	List<ProductOrderVO> retrieveByBuyerId(int memberId);
+
+	List<ProductOrderVO> retrieveBySellerId(int memberId);
+
 //	boolean getDataFromProduct(ProductVO productVO);
 
 }

@@ -235,7 +235,7 @@ textarea:focus{
 		<div style="margin: 0 auto; width: 36%;">
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do">
-				<table>
+				<table class="table table-hover">
 
 
 					<tr>
@@ -249,10 +249,6 @@ textarea:focus{
 					</tr>
 
 
-					<tr>
-						<td>商品數量:</td>
-						<td>${vo.amountOfProduct}</td>
-					</tr>
 
 					<tr>
 						<td>訂單總金額:</td>

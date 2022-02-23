@@ -78,6 +78,16 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 	}
 
 	@Override
+	public List<ProductOrderVO> retrieveBySellerId(int memberId) {
+		return dao.retrieveBySellerId(memberId);
+	}
+
+	@Override
+	public List<ProductOrderVO> retrieveByBuyerId(int memberId) {
+		return dao.retrieveByBuyerId(memberId);
+	}
+
+	@Override
 	public List<ProductOrderVO> getAll() {
 		return dao.selectAll();
 	}

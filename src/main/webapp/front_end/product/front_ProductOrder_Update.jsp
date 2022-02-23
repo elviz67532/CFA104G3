@@ -36,151 +36,25 @@ ProductOrderVO vo = (ProductOrderVO) request.getAttribute("vo");
 
 </head>
 <style>
-.innerDiv{
-	width: 60%;
-    margin: 0 auto;
-    padding: 60px 20px 0;
+form {
+	display: inline;
+	border-radius: 16px;
 }
-.innerDiv h2{
+
+form:hover {
+	cursor: pointer;
+	border-radius: 16px;
+	margin-bottom: 0px;
+}
+
+table th {
+	color: black;
+	padding: 5px 10px;
 	text-align: center;
 }
-.innerDiv h2:hover{
-	color: gray;
-	cursor: grabbing;
-}
-.memId{
-	margin: 0;
-    padding: 0;
-}
-.formLabel {
-    font-size: 14px;
-    font-weight: 600;
-    color: #282828;
-/*     line-height: 1.71; */
-/*     padding-bottom: 10px; */
-    /* text-align: center; */
-    /* font: 1rem 'Fira Sans', sans-serif; */
-}
-.launchedDate{
-    color: #b5bac1;
-    font-size: 14px;
-    font-weight: 500;
-	margin: 4px 8px; 
-}
-.actFormInput{
-	width: 100%;
-    flex: 1;
-    border: 0;
-    padding: 8px 24px;
-    background-color: #f1f1f1;
-    position: relative;
-    font-size: 16px;
-    border-radius: 0;
-}
-.actSelect{
-	width: 100%;
-    flex: 1;
-    border: 0;
-    padding: 0 24px;
-    background-color: #f1f1f1;
-    position: relative;
-    font-size: 16px;
-    border-radius: 0;
-}
-.actSelect:hover{
-	border: 2px solid black;
-	opacity: 0.8;
-    background-color: #30dd8a;
-}
-.actPhoto{
-	width: 100%;
-    flex: 1;
-    border: 0;
-    padding: 0 24px;
-    background-color: #f1f1f1;
-    position: relative;
-    font-size: 16px;
-    border-radius: 0;
-}
-.actTimeFormInput{
-	width: 100%;
-    flex: 1;
-    border: 0;
-    padding: 0 24px;
-    background-color: #f1f1f1;
-    position: relative;
-    font-size: 16px;
-    border-radius: 0;
-}
 
-/*input hover*/
-input[type="text"]:focus{
-	border: 2px solid black;
-	opacity: 0.8;
-    background-color: #30dd8a;
-}
-
-input[type="number"]:focus{
-	border: 2px solid black;
-	opacity: 0.8;
-    background-color: #30dd8a;
-}
-input[type="date"]:focus{
-	border: 2px solid black;
-	opacity: 0.8;
-    background-color: #30dd8a;
-}
-input[type="datetime-local"]:focus{
-	border: 2px solid black;
-	opacity: 0.8;
-    background-color: #30dd8a;
-}
-textarea:focus{
-	border: 2px solid black;
-	opacity: 0.8;
-    background-color: #30dd8a;
-}
-
-
-.btn{
-	width: 100%;
-    padding: 16px 40px;
-	margin: 8px 0 60px 0;
-}
-.btn-hover {
-    width: 200px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-    cursor: pointer;
-    margin: 20px;
-    height: 55px;
-    text-align:center;
-    border: none;
-    background-size: 300% 100%;
-
-    border-radius: 50px;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-}
-
-.btn-hover:hover {
-    background-position: 100% 0;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-}
-
-.btn-hover:focus {
-    outline: none;
-}
-
-.btn-hover.color-5 {
-    background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
-    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+td {
+	text-align: center;
 }
 </style>
 <body>
@@ -207,8 +81,6 @@ textarea:focus{
 	</header>
 
 
-<div style="border: 2px white groove; width: 70%; margin: 0 auto 60px auto;">
-		<div class="innerDiv">
 
 
 	<%-- 錯誤表列 --%>
@@ -230,7 +102,7 @@ textarea:focus{
 			<FORM METHOD="post" ACTION="productorder.do">
 			
 			
-				<table>
+				<table class="table table-striped">
 					<tr>
 
 						<td>收件人姓名:</td>
