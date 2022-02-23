@@ -13,9 +13,9 @@
 
 
 
-<% 	
-ProductVO productVO = (ProductVO)request.getAttribute("productVO");
-%>
+<%-- <% 	 --%>
+// ProductVO productVO = (ProductVO)request.getAttribute("productVO");
+<%-- %> --%>
 
 <!DOCTYPE html>
 <html lang="en">
