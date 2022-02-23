@@ -84,7 +84,7 @@ td {
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
 						<h1>
-							前台買家訂單管理主頁
+							買家訂單檢索
 							<h1>
 								<span class="subheading">二手商城</span>
 					</div>
@@ -98,10 +98,18 @@ td {
 	<!-- 主體畫面設計  -->
 
 	<!-- 程式例外錯誤 -->
+	<c:if test="${not empty errorMsgs}">
+		<font style="color: red">請修正以下錯誤:</font>
+		<ul>
+			<c:forEach var="message" items="${errorMsgs}">
+				<li style="color: red">${message}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
 	<table class="table table-striped table-hover">
 		<tr>
 			<td>
-				<h3>訂單資料</h3>
+
 				<h4>
 					<a href="front_ProductOrder_Retrieve.jsp"><img
 						src="images/back1.gif" width="100" height="32" border="0"></a>

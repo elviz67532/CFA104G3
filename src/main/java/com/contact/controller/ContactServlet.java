@@ -15,6 +15,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+import com.member.model.MailService;
+
 public class ContactServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -28,55 +30,78 @@ public class ContactServlet extends HttpServlet {
 
 		if ("addmassage".equals(action)) {
 
-			List<String> errorMsgs = new LinkedList<String>();
+//			List<String> errorMsgs = new LinkedList<String>();
+			Map<String, String> errorMsgs = new HashMap<String, String>();
+
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
-				/*************************** 1.接收請求參數 ****************************************/
-				String name = req.getParameter("name");
-				String email = req.getParameter("email");
-				String phone = req.getParameter("phone");
-				String massage = req.getParameter("massage");
-				req.setAttribute("result", "1");
-				/*************************** 2.開始查詢資料 ****************************************/
+//			try {
+			/*************************** 1.接收請求參數 ****************************************/
+			String name = req.getParameter("name");
+			String email = req.getParameter("email");
+			String phone = req.getParameter("phone");
+			String massage = req.getParameter("massage");
 
-				String to = "debralee30@bottomav.com";
-				String subject = email + "傳送訊息給您";
-				String messageText = "你好,我是" + name + "我的手機號碼是" + phone + "," + massage;
-
-				// 設定使用SSL連線至 Gmail smtp Server
-				Properties props = new Properties();
-				props.put("mail.smtp.host", "smtp.gmail.com");
-				props.put("mail.smtp.socketFactory.port", "465");
-				props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-				props.put("mail.smtp.auth", "true");
-				props.put("mail.smtp.port", "465");
-				// ●設定 gmail 的帳號 & 密碼 (將藉由你的Gmail來傳送Email)
-				// ●須將myGmail的【安全性較低的應用程式存取權】打開
-				final String myGmail = "encored98931@gmail.com"; // TODD還沒放帳號密碼
-				final String myGmail_password = "arirswxcbvdncjje";
-				Session session = Session.getInstance(props, new Authenticator() {
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(myGmail, myGmail_password);
-					}
-				});
-
-				MimeMessage message = new MimeMessage(session);
-				message.setFrom(new InternetAddress(myGmail));
-				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-
-				// 設定信中的主旨
-				message.setSubject(subject, "UTF-8");
-				// 設定信中的內容
-//					message.setText(messageText);
-				message.setContent(messageText, "text/html;charset=UTF-8");
-				Transport.send(message);
-				System.out.println("傳送成功!");
-
-			} catch (MessagingException e) {
-				System.out.println("傳送失敗!");
-				e.printStackTrace();
+			if (name == null || (name.trim()).length() == 0) {
+				errorMsgs.put("name", "請輸入姓名");
 			}
+
+			if (email == null || (email.trim()).length() == 0) {
+				errorMsgs.put("email", "請輸入電子信箱");
+			}
+
+			if (phone == null || (phone.trim()).length() == 0) {
+				errorMsgs.put("phone", "請輸入手機號碼");
+			}
+
+			if (massage == null || (massage.trim()).length() == 0) {
+				errorMsgs.put("massage", "請輸入訊息");
+			}
+
+			req.setAttribute("result", "1");
+			/*************************** 2.開始查詢資料 ****************************************/
+
+//				String to = "fvw32258@mzico.com";
+			String subject = email + "傳送訊息給您";
+			String messageText = "你好,我是" + name + "我的手機號碼是" + phone + "," + massage;
+
+			MailService mailService = new MailService();
+			mailService.sendToSelf(subject, messageText);
+
+//
+//				// 設定使用SSL連線至 Gmail smtp Server
+//				Properties props = new Properties();
+//				props.put("mail.smtp.host", "smtp.gmail.com");
+//				props.put("mail.smtp.socketFactory.port", "465");
+//				props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+//				props.put("mail.smtp.auth", "true");
+//				props.put("mail.smtp.port", "465");
+//				// ●設定 gmail 的帳號 & 密碼 (將藉由你的Gmail來傳送Email)
+//				// ●須將myGmail的【安全性較低的應用程式存取權】打開
+//				final String myGmail = "encored98931@gmail.com"; // TODD還沒放帳號密碼
+//				final String myGmail_password = "arirswxcbvdncjje";
+//				Session session = Session.getInstance(props, new Authenticator() {
+//					protected PasswordAuthentication getPasswordAuthentication() {
+//						return new PasswordAuthentication(myGmail, myGmail_password);
+//					}
+//				});
+//
+//				MimeMessage message = new MimeMessage(session);
+//				message.setFrom(new InternetAddress(myGmail));
+//				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+//
+//				// 設定信中的主旨
+//				message.setSubject(subject, "UTF-8");
+//				// 設定信中的內容
+////					message.setText(messageText);
+//				message.setContent(messageText, "text/html;charset=UTF-8");
+//				Transport.send(message);
+			System.out.println("傳送成功!");
+
+//			} catch (MessagingException e) {
+//				System.out.println("傳送失敗!");
+//				e.printStackTrace();
+//			}
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 

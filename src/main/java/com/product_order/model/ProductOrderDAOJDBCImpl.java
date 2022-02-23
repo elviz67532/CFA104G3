@@ -26,6 +26,8 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 
 	private static final String CHANGE_STATUS = "update PRODUCT_ORDER set PRODO_STATUS = ? where PRODO_ID = ?";
 
+	private static final String REVISE_ORDER = "update PRODUCT_ORDER set PRODO_NAME = ?, PRODO_MOBILE = ?, PRODO_ADDRESS = ? where PRODO_ID = ?";
+
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -227,6 +229,30 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 
 			pstmt.setInt(1, vo.getStatus());
 			pstmt.setInt(2, vo.getId());
+
+			updateRow = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
+		return updateRow;
+	}
+
+	@Override
+	public int reviseOrder(ProductOrderVO vo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int updateRow;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(REVISE_ORDER);
+
+			pstmt.setString(1, vo.getProductName());
+			pstmt.setString(2, vo.getPhone());
+			pstmt.setString(3, vo.getAddress());
+			pstmt.setInt(4, vo.getId());
 
 			updateRow = pstmt.executeUpdate();
 		} catch (SQLException se) {

@@ -6,7 +6,6 @@
 <%
 ProductOrderVO vo = (ProductOrderVO) request.getAttribute("vo");
 %>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +13,8 @@ ProductOrderVO vo = (ProductOrderVO) request.getAttribute("vo");
 
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>委域</title>
@@ -33,6 +33,18 @@ ProductOrderVO vo = (ProductOrderVO) request.getAttribute("vo");
 <link
 	href="${pageContext.request.contextPath}/vendor/bootstrap/css/styles.css"
 	rel="stylesheet" type="text/css" />
+
+<link href="<%=request.getContextPath()%>/css/activity/backNewFile.css"
+	rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
 
 </head>
 <style>
@@ -197,7 +209,7 @@ textarea:focus{
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
 						<h1>
-							買家訂單資料修改
+							新增商品訂單
 							<h1>
 								<span class="subheading">二手商城</span>
 					</div>
@@ -206,12 +218,11 @@ textarea:focus{
 		</div>
 	</header>
 
+	<!-- 成功顯示, disabled, 隱藏送出 -->
 
-<div style="border: 2px white groove; width: 70%; margin: 0 auto 60px auto;">
-		<div class="innerDiv">
+	<!-- 主體畫面設計  -->
 
-
-	<%-- 錯誤表列 --%>
+	<!-- 程式例外錯誤 -->
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
@@ -222,30 +233,49 @@ textarea:focus{
 	</c:if>
 	<div style="width: 100%;">
 		<div style="margin: 0 auto; width: 36%;">
-
-			<a href="listAllproductOrder.jsp"><img src="images/back1.gif"
-				width="100" height="32" border="0"></a> <br>
-			<h3>訂單資料修改:</h3>
-
-			<FORM METHOD="post" ACTION="productorder.do">
-			
-			
+			<FORM METHOD="post"
+				ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do">
 				<table>
-					<tr>
 
+
+					<tr>
+						<td>商品編號:</td>
+						<td>${vo.productId}</td>
+					</tr>
+
+					<tr>
+						<td>賣家編號:</td>
+						<td>${vo.sellerMemberId}</td>
+					</tr>
+
+
+					<tr>
+						<td>商品數量:</td>
+						<td>${vo.amountOfProduct}</td>
+					</tr>
+
+					<tr>
+						<td>訂單總金額:</td>
+						<td>${vo.amountOfPrice}</td>
+					</tr>
+
+
+					<tr>
 						<td>收件人姓名:</td>
 						<td><input type="TEXT" name="productName" size="45"
-							value="${vo.productName}" /></td>
+							value="<%=(vo == null) ? "Java" : vo.getProductName()%>" /></td>
 					</tr>
+
 					<tr>
 						<td>收件人電話:</td>
-						<td><input type="TEXT" name="phone" size="45"
-							value="${vo.phone}" /></td>
+						<td><input type="TEXT" name="pone" size="45"
+							value="<%=(vo == null) ? "0988888888" : vo.getPhone()%>" /></td>
 					</tr>
+
 					<tr>
 						<td>收件人地址:</td>
 						<td><input type="TEXT" name="address" size="45"
-							value="${vo.address}" /></td>
+							value="<%=(vo == null) ? "秋名市秋名路86號" : vo.getAddress()%>" /></td>
 					</tr>
 
 
@@ -254,19 +284,20 @@ textarea:focus{
 
 
 				</table>
-				<br> <input type="hidden" name="action" value="reviseOrder">
-				<input type="hidden" name="id" value="${vo.id}"> <input
-					type="submit" value="送出修改">
+				<div style="">
+					<input type="hidden" name="action" value="insert"> <input
+						type="submit" value="送出新增">
+				</div>
 			</FORM>
+		</div>
+	</div>
+	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+	<!-- Bootstrap core JS-->
 
-
-			<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
-			<!-- Bootstrap core JS-->
-
-			<script
-				src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-			<!-- Core theme JS-->
-			<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+	<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
 </body>
 
 </html>
