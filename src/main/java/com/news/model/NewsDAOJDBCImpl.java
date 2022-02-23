@@ -203,5 +203,4 @@ public class NewsDAOJDBCImpl implements NewsDAO {
 		
 		return list;
 	}
-
 }
