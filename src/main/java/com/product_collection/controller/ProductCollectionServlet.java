@@ -40,30 +40,36 @@ public class ProductCollectionServlet extends HttpServlet{
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-				String str = req.getParameter("productId");
+				String str = req.getParameter("id");
 				Integer productId = null;
 				productId = Integer.valueOf(str);
 				
 				HttpSession session = req.getSession();
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
-				if(memberVO == null) {
-					//寫怡理filter的東西
-				}else {
-					Integer memberId = memberVO.getId();
 				
-					ProductCollectionVO productCollectionVO = new ProductCollectionVO();
-					productCollectionVO.setProductId(productId);
-					productCollectionVO.setMemberId(memberId);
-				
-				/***************************2.開始新增資料***************************************/
-					ProductCollectionServiceImpl proCollectionSvc = new ProductCollectionServiceImpl();
-					productCollectionVO = proCollectionSvc.insert(memberId, productId);
-				
-				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-					String url = "/front_end/product/singleItem.jsp";
-					RequestDispatcher successView = req.getRequestDispatcher(url); 
-					successView.forward(req, res);				
+				if (memberVO == null) {				
+					return;
 				}
+				Integer memberId = memberVO.getId();
+			
+				ProductCollectionVO productCollectionVO = new ProductCollectionVO();
+				
+				productCollectionVO.setProductId(productId);
+				productCollectionVO.setMemberId(memberId);
+				System.out.println("成功抓到");
+				/***************************2.開始新增資料***************************************/
+				ProductCollectionServiceImpl proCollectionSvc = new ProductCollectionServiceImpl();
+				productCollectionVO = proCollectionSvc.insert(memberId, productId);
+				
+				ProductServiceImpl service = new ProductServiceImpl();
+				ProductVO oneProduct = service.getOneProduct(productId);
+				
+				req.setAttribute("productVO", oneProduct);
+					
+				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+				String url = "/front_end/product/singleItem.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
@@ -85,9 +91,6 @@ public class ProductCollectionServlet extends HttpServlet{
 				HttpSession session = req.getSession();
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 				if(memberVO == null) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/product/去登入會員畫面");
-					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				
@@ -100,9 +103,10 @@ public class ProductCollectionServlet extends HttpServlet{
 					productIdList.add(pId.getProductId());
 				}
 				ProductServiceImpl prodSvc = new ProductServiceImpl();
-				List<ProductVO> productVOs = prodSvc.getIdForCollection(productIdList);
+				List<ProductVO> productVO = prodSvc.getIdForCollection(productIdList);
+
 			/***************************2.開始查詢資料*****************************************/
-				if (productVOs.isEmpty()) {
+				if (productVO.isEmpty()) {
 					errorMsgs.add("收藏是空的喔");
 				}
 				// Send the use back to the form, if there were errors
@@ -114,7 +118,7 @@ public class ProductCollectionServlet extends HttpServlet{
 				}
 			
 			/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("productVOs", productVOs); // 資料庫取出的empVO物件,存入req
+				req.setAttribute("productVO", productVO); // 資料庫取出的empVO物件,存入req
 				String url = "/front_end/product/collection.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
@@ -151,7 +155,19 @@ public class ProductCollectionServlet extends HttpServlet{
 				DualKey<Integer, Integer> key = new DualKey<Integer, Integer>(memberId, productId);
 				dao.deleteById(key);
 				
-				String url = "/front_end/product/商品列表畫面.jsp";
+				/*========================刪除後再查詢===========================*/
+				ProductCollectionServiceImpl pcSvc = new ProductCollectionServiceImpl();
+				List<ProductCollectionVO> productCollectionVO = pcSvc.getByMemId(memberId);
+				List<Integer> productIdList = new ArrayList<Integer>();
+				for(ProductCollectionVO pId: productCollectionVO) {
+					
+					productIdList.add(pId.getProductId());
+				}
+				ProductServiceImpl prodSvc = new ProductServiceImpl();
+				List<ProductVO> productVO = prodSvc.getIdForCollection(productIdList);
+				 
+				req.setAttribute("productVO", productVO);
+				String url = "/front_end/product/collection.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);				
 				

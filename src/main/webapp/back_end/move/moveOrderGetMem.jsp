@@ -5,6 +5,15 @@
 <%@ page import="com.move_order.model.*"%>
 <%
 List<MoveOrderVO> moveOrderVO = (List<MoveOrderVO>) request.getAttribute("moveOrderVO");
+
+Map<Integer, String> statusMap = new HashMap<>();
+statusMap.put(0, "等待簽訂契約");
+statusMap.put(1, "不簽訂契約結束訂單");
+statusMap.put(2, "等待運送貨物");
+statusMap.put(3, "運送中");
+statusMap.put(4, "完成訂單");
+pageContext.setAttribute("map", statusMap);
+
 %>
 <!doctype html>
 <html lang="zh-TW">
@@ -107,6 +116,7 @@ button {
 							<th>訂單成立時間</th>
 							<th>評論</th>
 							<th>訂單狀態</th>
+							<th>訂單狀態</th>
 						</thead>
 						<tbody>
 						<c:forEach var="moveOrderVO" items="${moveOrderVO}">
@@ -141,6 +151,7 @@ button {
 								</td>
 								<td>${moveOrderVO.orderDate}</td>
 								<td>${moveOrderVO.comment}</td>
+								<td>${map[moveOrderVO.status]}</td>
 								<td>
 									<FORM METHOD="post" ACTION="moveorder.do">
 										<input type="hidden" name="action" value="updatestatusto1bymem"> 
