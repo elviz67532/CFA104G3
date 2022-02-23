@@ -13,9 +13,9 @@ import javax.mail.internet.MimeMessage;
 public class MailService {
 	final String myGmail = "encored98931@gmail.com";    //TODD還沒放帳號密碼
 	final String myGmail_password = "arirswxcbvdncjje"; 
-	
+	final String myGmail2 = "mirian24@opinionsbte.com";
 	public void sendToSelf(String subject, String messageText) {
-		sendMail(myGmail, subject, messageText);
+		sendMail(myGmail2, subject, messageText);
 	}
 
 	// 設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容

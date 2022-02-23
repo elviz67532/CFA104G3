@@ -132,6 +132,11 @@ td {
 <!-- 			<input type="submit" value="送出"> -->
 <!-- 		</FORM> -->
 <!-- 	</li> -->
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do">
+				<b>請輸入會員編號檢索訂單:</b> <input type="text" name="id"> <input
+					type="hidden" name="action" value="retrieveByBuyerId">
+				<input type="submit" value="送出">
+			</FORM>
 
 	<table class="table table-striped table-hover">
 		<thead>

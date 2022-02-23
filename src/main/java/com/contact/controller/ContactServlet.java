@@ -35,38 +35,54 @@ public class ContactServlet extends HttpServlet {
 
 			req.setAttribute("errorMsgs", errorMsgs);
 
-//			try {
-			/*************************** 1.接收請求參數 ****************************************/
-			String name = req.getParameter("name");
-			String email = req.getParameter("email");
-			String phone = req.getParameter("phone");
-			String massage = req.getParameter("massage");
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				String name = req.getParameter("name");
+				String email = req.getParameter("email");
+				String phone = req.getParameter("phone");
+				String massage = req.getParameter("massage");
+				int result = 0;
+				if (name == null || (name.trim()).length() == 0) {
+					result = 0;
+					errorMsgs.put("0", "請輸入姓名");
+				}
 
-			if (name == null || (name.trim()).length() == 0) {
-				errorMsgs.put("name", "請輸入姓名");
-			}
+				String emailReg = "/^([\\w\\.\\-]){1,64}\\@([\\w\\.\\-]){1,64}$/";
+				if (email == null || (email.trim()).length() == 0) {
+					errorMsgs.put("0", "請輸入電子信箱");
+				} else if (!email.trim().matches(emailReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("0", "電子信箱格式錯誤");
+				}
 
-			if (email == null || (email.trim()).length() == 0) {
-				errorMsgs.put("email", "請輸入電子信箱");
-			}
+				String phoneReg = "/^09\\d{2}-?\\d{3}-?\\d{3}$/";
+				if (phone == null || (phone.trim()).length() == 0) {
+					errorMsgs.put("0", "請輸入手機號碼");
+				} else if (!phone.trim().matches(phoneReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("0", "手機號碼: 只能是數字");
+				}
 
-			if (phone == null || (phone.trim()).length() == 0) {
-				errorMsgs.put("phone", "請輸入手機號碼");
-			}
+				if (massage == null || (massage.trim()).length() == 0) {
+					errorMsgs.put("0", "請輸入訊息");
+				} else {
+					result = 1;
+				}
 
-			if (massage == null || (massage.trim()).length() == 0) {
-				errorMsgs.put("massage", "請輸入訊息");
-			}
+				if (result == 1) {
+					req.setAttribute("result", 1);
 
-			req.setAttribute("result", "1");
-			/*************************** 2.開始查詢資料 ****************************************/
+				} else {
+					req.setAttribute("result", 0);
 
-//				String to = "fvw32258@mzico.com";
-			String subject = email + "傳送訊息給您";
-			String messageText = "你好,我是" + name + "我的手機號碼是" + phone + "," + massage;
+				}
 
-			MailService mailService = new MailService();
-			mailService.sendToSelf(subject, messageText);
+				/*************************** 2.開始查詢資料 ****************************************/
+
+				String to = "xtn30113@uooos.com";
+				String subject = email + "傳送訊息給您";
+				String messageText = "你好,我是" + name + "我的手機號碼是" + phone + "," + massage;
+
+				MailService mailService = new MailService();
+				mailService.sendToSelf(subject, messageText);
 
 //
 //				// 設定使用SSL連線至 Gmail smtp Server
@@ -96,23 +112,26 @@ public class ContactServlet extends HttpServlet {
 ////					message.setText(messageText);
 //				message.setContent(messageText, "text/html;charset=UTF-8");
 //				Transport.send(message);
-			System.out.println("傳送成功!");
 
 //			} catch (MessagingException e) {
 //				System.out.println("傳送失敗!");
 //				e.printStackTrace();
 //			}
+				System.out.println(result);
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
-			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				String url = "/contact.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_Faq_input.jsp
+				successView.forward(req, res);
 
-			String url = "/contact.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_Faq_input.jsp
-			successView.forward(req, res);
+				/*************************** 其他可能的錯誤處理 **********************************/
 
-			/*************************** 其他可能的錯誤處理 **********************************/
-
+			} catch (Exception e) {
+				errorMsgs.put("0", "傳送失敗!");
+				RequestDispatcher failureView = req.getRequestDispatcher("/CFA104G3/contact.jsp");
+				failureView.forward(req, res);
+			}
 		}
 
 	}
-
 }

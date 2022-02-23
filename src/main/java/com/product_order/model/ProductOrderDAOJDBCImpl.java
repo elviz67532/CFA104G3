@@ -28,6 +28,9 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 
 	private static final String REVISE_ORDER = "update PRODUCT_ORDER set PRODO_NAME = ?, PRODO_MOBILE = ?, PRODO_ADDRESS = ? where PRODO_ID = ?";
 
+	private static final String GET_SELLER_ALL_STMT = "select * from PRODUCT_ORDER where PRODO_MSELL_ID = ?";
+	private static final String GET_BUYER_ALL_STMT = "select * from PRODUCT_ORDER where PRODO_MBUY_ID = ?";
+	
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -263,4 +266,82 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 		return updateRow;
 	}
 
+	@Override
+	public List<ProductOrderVO> retrieveBySellerId(int memberId) {
+		List<ProductOrderVO> list = new ArrayList<ProductOrderVO>();
+		ProductOrderVO vo = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(GET_SELLER_ALL_STMT);
+
+			pstmt .setInt(1, memberId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				vo = new ProductOrderVO();
+				vo.setId(rs.getInt("PRODO_ID"));
+				vo.setProductId(rs.getInt("PRODO_PROD_ID"));
+				vo.setCustomerMemberId(rs.getInt("PRODO_MBUY_ID"));
+				vo.setSellerMemberId(rs.getInt("PRODO_MSELL_ID"));
+				vo.setProductName(rs.getString("PRODO_NAME"));
+				vo.setPhone(rs.getString("PRODO_MOBILE"));
+				vo.setAddress(rs.getString("PRODO_ADDRESS"));
+				vo.setDate(rs.getTimestamp("PRODO_DATE"));
+				vo.setAmountOfProduct(rs.getInt("PRODO_AMOUNT"));
+				vo.setStatus(rs.getInt("PRODO_STATUS"));
+				vo.setAmountOfPrice(rs.getInt("PRODO_SUM"));
+				list.add(vo);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+
+		return list;
+	}
+	
+
+	@Override
+	public List<ProductOrderVO> retrieveByBuyerId(int memberId) {
+		List<ProductOrderVO> list = new ArrayList<ProductOrderVO>();
+		ProductOrderVO vo = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(GET_BUYER_ALL_STMT);
+
+			pstmt .setInt(1, memberId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				vo = new ProductOrderVO();
+				vo.setId(rs.getInt("PRODO_ID"));
+				vo.setProductId(rs.getInt("PRODO_PROD_ID"));
+				vo.setCustomerMemberId(rs.getInt("PRODO_MBUY_ID"));
+				vo.setSellerMemberId(rs.getInt("PRODO_MSELL_ID"));
+				vo.setProductName(rs.getString("PRODO_NAME"));
+				vo.setPhone(rs.getString("PRODO_MOBILE"));
+				vo.setAddress(rs.getString("PRODO_ADDRESS"));
+				vo.setDate(rs.getTimestamp("PRODO_DATE"));
+				vo.setAmountOfProduct(rs.getInt("PRODO_AMOUNT"));
+				vo.setStatus(rs.getInt("PRODO_STATUS"));
+				vo.setAmountOfPrice(rs.getInt("PRODO_SUM"));
+				list.add(vo);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+
+		return list;
+	}
 }

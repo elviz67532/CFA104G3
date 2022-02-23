@@ -1,24 +1,24 @@
 package com.product_order.controller;
 
 import java.io.IOException;
-import java.sql.*;
-import java.util.*;
+import java.sql.Timestamp;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.activity.model.ActivityServiceImpl;
-import com.activity.model.ActivityVO;
-import com.faq.model.FaqService;
-import com.faq.model.FaqServiceImpl;
-import com.faq.model.FaqVO;
-import com.move_order.model.MoveOrderServiceImpl;
-import com.move_order.model.MoveOrderVO;
-import com.product_order.model.*;
+import com.member.model.MemberVO;
+
+import com.product_order.model.ProductOrderService;
+import com.product_order.model.ProductOrderServiceImpl;
+import com.product_order.model.ProductOrderVO;
 
 //@WebServlet("/Shop_OrderReturnServlet")
 public class ProductOrderServlet extends HttpServlet {
@@ -799,6 +799,16 @@ public class ProductOrderServlet extends HttpServlet {
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
+				HttpSession session = req.getSession();
+				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+
+				System.out.println("memberVO" + memberVO);
+				if (memberVO == null) {
+					// TODO
+
+					System.out.println("insert enter");
+					return;
+				}
 				Integer amountOfPrice = null;
 				try {
 					amountOfPrice = Integer.valueOf(req.getParameter("amountOfPrice").trim());
@@ -893,7 +903,7 @@ public class ProductOrderServlet extends HttpServlet {
 				vo = poSvc.reviseOrder(id, productName, phone, address);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("vo", vo);
+				req.setAttribute("productOrderVO", vo);
 				String url = "/front_end/product/front_ProductOrder_ListOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -904,6 +914,69 @@ public class ProductOrderServlet extends HttpServlet {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/front_end/product/front_ProductOrder_Update.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("retrieveByBuyerId".equals(action)) { // 來自select_page.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String str = req.getParameter("memberid");
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("請輸入會員編號");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/product/listAllproductOrder.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				Integer memberId = null;
+				try {
+					memberId = Integer.valueOf(str);
+				} catch (Exception e) {
+					errorMsgs.add("會員編號格式不正確");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/product/listAllproductOrder.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始查詢資料 *****************************************/
+				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+				List<ProductOrderVO> productOrderVO = poSvc.retrieveByBuyerId(memberId);
+				if (productOrderVO.isEmpty()) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/product/listAllproductOrder.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("productOrderVO", productOrderVO); // 資料庫取出的empVO物件,存入req
+				String url = "/front_end/product/front_ProductOrder_ListAll_RetrieveB.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front_end/product/front_ProductOrder_ListAll_RetrieveB.jsp");
 				failureView.forward(req, res);
 			}
 		}

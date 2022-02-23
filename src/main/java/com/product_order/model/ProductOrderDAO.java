@@ -12,6 +12,10 @@ public interface ProductOrderDAO extends CoreDao<ProductOrderVO, Integer> {
 
 	int reviseOrder(ProductOrderVO vo);
 
+	List<ProductOrderVO> retrieveBySellerId(int memberId);
+
+	List<ProductOrderVO> retrieveByBuyerId(int memberId);
+
 //	public void insertOrder(ProductOrderVO shop_OrderFrontVO);// 新增訂單
 
 //	public void updateOrderForFront(ProductOrderVO Shop_OrderVO); // 前台更新訂單

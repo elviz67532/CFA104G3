@@ -2,9 +2,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.product_order.model.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.member.model.*"%>
 <%
 ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
-List<ProductOrderVO> list = poSvc.getAll();
+MemberVO memberVo = (MemberVO) session.getAttribute("memberVO");
+if (memberVo == null) {
+	System.out.println("尚未登入");
+	response.sendRedirect(request.getContextPath() + "/front_end/member/login.jsp");
+	return;
+}
+Integer id = memberVo.getId();
+List<ProductOrderVO> list = poSvc.retrieveBySellerId(id);
 pageContext.setAttribute("list", list);
 %>
 
