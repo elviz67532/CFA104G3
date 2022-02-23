@@ -29,7 +29,7 @@
 					
 					<div style="text-align:center;">
 						<div style="width: 720px; display: inline-block; text-align: left;">
-							<h3>查詢資料</h3>
+							<h3>商品管理</h3>
 							
 							<%-- 錯誤表列 --%>
 							<c:if test="${not empty errMsgs}">

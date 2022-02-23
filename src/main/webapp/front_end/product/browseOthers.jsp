@@ -144,6 +144,7 @@
 					          <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top" 
 					          		alt="<%=request.getContextPath()%>/assets/img/home-bg.jpg"/>
 					          <div class="card-body">
+					            <h5 class="card-title">${productVO.name}</h5>					          
 					<%--             <p class="card-text">${productVO.prodDesc}</p> --%>
 									<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/product/ProductServlet">
 			     					<input type="submit" value="前往">
