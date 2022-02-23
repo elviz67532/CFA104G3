@@ -60,47 +60,31 @@ pageContext.setAttribute("prodId", prodId);
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <h2>回報單</h2>
-                           	<%-- 錯誤表列 --%>
-   							<div class="my-5">
-     						<c:if test="${not empty errorMsgs}">
-                            <font style="color: red">請修正以下錯誤:</font>
-                            <ul>
-                                <c:forEach var="message" items="${errorMsgs}">
-                                    <li style="color: red">${message}</li>
-                                </c:forEach>
-                            </ul>
-    						</c:if>
-    						</div>
-    						 
-                        <div class="my-5">
+                        <h2>檢舉回報單</h2>                           	   						    						 
+                        <div class="my-6">
                             <form METHOD="Post" name="form1" ACTION="<%=request.getContextPath()%>/product/report.do" enctype="multipart/form-data">
                             <table>    
                             <!-- 商品編號 input 加上class="form-control-plaintext" 變成只能看-->                                
                             <tr>
                                 <td>
-                                <input class="form-control"  type="text" placeholder="商品編號...*" data-sb-validations="required" name="productId"
+                                <input class="form-control"  type="hidden" placeholder="商品編號...*" data-sb-validations="required" name="productId"
                                 value="${prodId}" /></td>                        
-                            </tr>
-                            
+                            </tr>                            
                             <!-- 會員編號 input-->                                
                             <tr>
-                                <td><input class="form-control" type="text" placeholder="會員編號...*" data-sb-validations="required" name="memberId"
+                                <td><input class="form-control" type="hidden" placeholder="會員編號...*" data-sb-validations="required" name="memberId"
                                 value="${memberVO.id}"/></td>                             
-                            </tr>
-                            
+                            </tr>                            
                             <!-- 狀態 input-->                                
                             <tr> 
                                 <td><input type="hidden" name="status" value="<%=(productReportVO == null) ? "0" : productReportVO.getContent()%>"/></td>                                                               
-                            </tr>
-                            
+                            </tr>                            
                             <!-- 內文 input-->                                
                             <tr>
                                 <td><textarea class="form-control" name="content" 
                                             value="<%=(productReportVO == null) ? "" : productReportVO.getContent()%>"
-                                            rows="3" /></textarea></td>                                
-                            </tr>
-                                                        
+                                            rows="3" placeholder="從這裡開始...*"/></textarea></td>                                
+                            </tr>                                                        
                             <!-- 圖片 input-->                                                
                             <tr>
                                 <td>
@@ -108,8 +92,7 @@ pageContext.setAttribute("prodId", prodId);
                                 value="<%=(productReportVO == null) ? "" : productReportVO.getPhoto()%>"/>
                                 </td>
                             </tr>   
-                            
-                                
+                                                           
                             <jsp:useBean id="reportSvc" scope="session" class="com.product_report.model.ProductReportServiceImpl"/>                             	                           
                             
                             </table><br>
@@ -120,6 +103,17 @@ pageContext.setAttribute("prodId", prodId);
                             </form>
                         </div>
                         
+                        <%-- 錯誤表列 --%>
+   							<div>
+     						<c:if test="${not empty errorMsgs}">
+                            <font style="color: red">請修正以下錯誤:</font>
+                            <ul>
+                                <c:forEach var="message" items="${errorMsgs}">
+                                    <li style="color: red">${message}</li>
+                                </c:forEach>
+                            </ul>
+    						</c:if>
+   							</div>
                     </div>
                 </div>
             </div>

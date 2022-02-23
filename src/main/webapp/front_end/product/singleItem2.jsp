@@ -162,7 +162,7 @@
                     <!--<div class="small mb-1">商品地點: 這個好像不用特別寫</div> -->
 
                     <!--按鈕 "me-間隔" "<i>按鈕" "readonly 只看不可改" 下方-->
-                    <!--檢查邊界的 style="border: 2px purple solid; -->
+                    <!--檢查邊界的 style="border: 2px purple solid;" -->
                     <div style="padding:10px;">
                         <button class="btn1Buy" type="button">
                             <i class="bi-cart-fill me-1"></i>

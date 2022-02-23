@@ -273,7 +273,11 @@ textarea:focus{
 						<td><input type="TEXT" name="address" size="45"
 							value="<%=(vo == null) ? "秋名市秋名路86號" : vo.getAddress()%>" /></td>
 					</tr>
-
+					<tr>
+						<td>數量:</td>
+						<td><input type="TEXT" name="amountOfProduct" size="45"
+							value="1" /></td>
+					</tr>
 
 					<jsp:useBean id="poSvc" scope="page"
 						class="com.product_order.model.ProductOrderServiceImpl" />
@@ -281,7 +285,7 @@ textarea:focus{
 
 				</table>
 				<div style="">
-					<input type="hidden" name="action" value="insert"> <input
+					<input type="hidden" name="action" value="insert"><input
 						type="submit" value="送出新增">
 				</div>
 			</FORM>

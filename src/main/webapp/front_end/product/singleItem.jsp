@@ -167,11 +167,16 @@
                     <!--按鈕 "me-間隔" "<i>按鈕" "readonly 只看不可改" 下方-->
                     <!--檢查邊界的 style="border: 2px purple solid; -->
                     <div style="padding:10px;">
-                        <button class="btn1Buy" type="button">
-                            <i class="bi-cart-fill me-1"></i>
-                            直接購買
-                        </button>
-                        <br>
+                    
+                    	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/front_end/product/productorder.do">
+                    	<input type="hidden" name="action" value="insert">
+                    	<input type="hidden" name="id" value="${productVO.id}">                    
+                        	<button class="btn1Buy" type="submit">
+                            	<i class="bi-cart-fill me-1"></i>
+                            	直接購買
+                        	</button>
+                    	</FORM>
+                        	
                       
                         <FORM METHOD="post" ACTION="productcollection.do?prodId=${productVO.id}">
                         <input type="hidden" name="action" value="insert">
