@@ -170,9 +170,11 @@
                         </button>
                         <br>
                       
-                        <FORM METHOD="post" ACTION="productcollection.do">
+                        <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/front_end/product/productcollection.do">
                         <input type="hidden" name="action" value="insert">
-                        <button class="btn2Collect" type="button">
+                        <input type="hidden" name="productId" value="<%=productVO.getId()%>">
+<!--                         <button class="btn2Collect" type="button"> -->
+                        <button class="btn2Collect" type="submit">                       
                          <i class="bi bi-bookmarks-fill"></i>
                             加入收藏
                         </button>

@@ -144,19 +144,19 @@ public class ProductReportServlet extends HttpServlet {
 		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 			
-//			HttpSession session = req.getSession();
-//			MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
+			HttpSession session = req.getSession();
+			MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
 			
-//			MemberVO memberVO = (MemberVO) req.getAttribute("memberVO");
-//			
-//			System.out.println("memberVO" + memberVO);
-//			if (memberVO == null) {
-//				// TODO 
-//				
-//				System.out.println("insert enter");
-//				return;
-//			}
-			Integer memberId = null;
+
+			
+			System.out.println("memberVO" + memberVO);
+			if (memberVO == null) {
+				// TODO 
+				
+				System.out.println("insert enter");
+				return;
+			}
+			Integer memberId = memberVO.getId();
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
