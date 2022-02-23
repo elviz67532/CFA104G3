@@ -32,7 +32,7 @@ pageContext.setAttribute("list", list);
     <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
 </head>
 
-<body id="page-top">
+<body>
     <!-- Navigation-->
     <!-- nav -->
     <jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
@@ -51,44 +51,43 @@ pageContext.setAttribute("list", list);
         </div>
     </header>
     <!-- 主體畫面設計  -->
-    
     <!-- Page Content-->
-    
-    <!-- About section one-->
-    	<c:forEach var="newsVO" items="${list}"> 
-            <section class="py-5 bg-light" id="scroll-target">
+            <section class="py-5">
                 <div class="container px-5 my-5">
-                    <div class="row gx-5 align-items-center">
-                        <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id}" alt="..." /></div>
-                        <div class="col-lg-6">
-                            <h2 class="fw-bolder">${newsVO.title}</h2>
-                            <p>${newsVO.date}</p>
-<%--                             <p class="lead fw-normal text-muted mb-0 text-break">${newsVO.content}...</p> --%>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/news/NewsUserServlet.do">
-			     					<input type="submit" value="查看詳情" class="btn btn-outline-primary"	>
-			     					<input type="hidden" name="id"  value="${newsVO.id}">
-			     					<input type="hidden" name="action"	value="getOne_For_User">
-			     			</FORM>
-			     			</div>
+                    <div class="row gx-5">
+                        <div class="col-lg-3">
+                            <div class="d-flex align-items-center mt-lg-5 mb-4">
+                                <img class="img-fluid rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+                                <div class="ms-3">
+                                    <div class="fw-bold">Valerie Luna</div>
+                                    <div class="text-muted">News, Business</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-        </c:forEach>
-        
-        
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>    
+                        <div class="col-lg-9">
+                            <!-- Post content-->
+                            <article>
+                                <!-- Post header-->
+                                <header class="mb-4">
+                                    <!-- Post title-->
+                                    <h1 class="fw-bolder mb-1">${newsVO.title}</h1>
+                                    <!-- Post meta content-->
+                                    <div class="text-muted fst-italic mb-2">${newsVO.date}</div>                               
+                                </header>
+                                <!-- Preview image figure-->
+                                <figure class="mb-4"><img class="img-fluid rounded" src="<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id}" alt="..." /></figure>
+                                <!-- Post content-->
+                                <section class="mb-5">
+                                    <p class="fs-5 mb-4">${newsVO.content}</p>                          
+                                </section>
+                            </article>
+
     <!-- Footer-->
     <jsp:include page="/front_end/common/footer.jsp"></jsp:include>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
-    <script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
 </body>
 
 </html>

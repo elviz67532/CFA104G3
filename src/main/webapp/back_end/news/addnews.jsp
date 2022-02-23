@@ -55,17 +55,15 @@
                             <table>                            
                                 <tr>
                                     <td>消息分類編號:</td>
-                                    <td><input class="form-control" list="datalistOptions"
-                                            placeholder="Type to search..." name="type" size="15"
-                                            value="<%=(newsVO == null) ? "" : newsVO.getType()%>" />
-                                    </td>
-                                    <datalist id="datalistOptions">
-                                        <option name="活動" value="1">
-                                        <option value="2">
-                                        <option value="3">
-                                        <option value="4">
-                                        <option value="5">
-                                    </datalist>
+                                    <td><select size="1" name="type">				
+										<option>--請選擇--
+										<option value=0>活動
+										<option value=1>二手
+										<option value=2>搬家
+										<option value=3>其他
+										<option value=4>系統
+										</select>
+									</td>
                                 </tr>
                                 <tr>
                                     <td>標題:</td>

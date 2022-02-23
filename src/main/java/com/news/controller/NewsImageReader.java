@@ -2,6 +2,7 @@ package com.news.controller;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -43,21 +44,21 @@ public class NewsImageReader extends HttpServlet {
 				in.close();
 			}  else {
 				res.sendError(HttpServletResponse.SC_NOT_FOUND);
-//				InputStream in = getServletContext().getResourceAsStream("");
-//				byte[] b = new byte[in.available()];
-//				in.read(b);
-//				out.write(b);
-//				in.close();
+				InputStream in = getServletContext().getResourceAsStream("/front_end/news/img/pic07.png");
+				byte[] b = new byte[in.available()];
+				in.read(b);
+				out.write(b);
+				in.close();
 			}
 			rs.close();
 			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-//			InputStream in = getServletContext().getResourceAsStream("/front-end/mem/images/null.jpg");
-//			byte[] b = new byte[in.available()];
-//			in.read(b);
-//			out.write(b);
-//			in.close();
+			InputStream in = getServletContext().getResourceAsStream("/front_end/news/img/pic07.png");
+			byte[] b = new byte[in.available()];
+			in.read(b);
+			out.write(b);
+			in.close();
 		}
 	}
 

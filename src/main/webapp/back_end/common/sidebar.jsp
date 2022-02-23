@@ -15,7 +15,7 @@
 		</div>
 		<div class="sidebar-brand-text mx-3">委域</div>
 	</a>
-
+	
 	<!-- 幫助中心管理	 -->
 	<hr class="sidebar-divider">
 	<li class="nav-item">
@@ -25,7 +25,15 @@
 			<i class="fas fa-fw fa-table"></i> 
 			<span>FAQ</span>
 	</a></li>
-
+	  <!-- 最新消息管理  -->
+ 	<hr class="sidebar-divider">
+ 	<li class="nav-item">
+  		<a class="nav-link" 
+     	   href="<%=request.getContextPath()%>/back_end/news/listallnews.jsp"
+     	   onclick="this.parentNode.submit()">
+           <i class="fas fa-fw fa-table"></i> 
+   	       <span>最新消息</span>
+  	</a></li>
 	<!-- 活動管理 -->
 	<hr class="sidebar-divider">
 	<div class="sidebar-heading">活動管理</div>
@@ -55,7 +63,7 @@
 		<div id="collapseProduct" class="collapse"
 			aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/product/report/productReportManage.jsp">檢舉管理</a>				
+				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/product/productReportManage.jsp">檢舉管理</a>				
 				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/product/seller.jsp">商品管理</a>
 				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/product/listAllproductOrder.jsp">訂單管理</a>
 			</div>

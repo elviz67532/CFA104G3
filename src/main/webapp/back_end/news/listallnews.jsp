@@ -114,12 +114,15 @@ NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
                                                                         <table>
                                                                             <tr>
                                                                                 <td class="text-nowrap">類別:</td>
-                                                                                <td><input
-                                                                                        class="form-control form-control-sm"
-                                                                                        type="TEXT" name="type"
-                                                                                        size="15"
-                                                                                        value="<%=(newsVO == null) ? "" : newsVO.getType()%>" />
-                                                                                </td>
+                                                                                <td><select size="1" name="type">				
+																					<option>--請選擇--
+																					<option value=0>活動
+																					<option value=1>二手
+																					<option value=2>搬家
+																					<option value=3>其他
+																					<option value=4>系統
+																					</select>
+																				</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td>標題:</td>
