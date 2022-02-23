@@ -2,9 +2,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.product_order.model.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.member.model.*"%>
 <%
 ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
-List<ProductOrderVO> list = poSvc.getAll();
+MemberVO memberVo = (MemberVO) session.getAttribute("memberVO");
+if (memberVo == null) {
+	System.out.println("尚未登入");
+	response.sendRedirect(request.getContextPath() + "/front_end/member/login.jsp");
+	return;
+}
+Integer id = memberVo.getId();
+List<ProductOrderVO> list = poSvc.retrieveByBuyerId(id);
 pageContext.setAttribute("list", list);
 %>
 <%
@@ -124,19 +132,20 @@ td {
 			</c:forEach>
 		</ul>
 	</c:if>
-<!-- 	<li> -->
-<!-- 		<FORM METHOD="post" -->
-<%-- 			ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do"> --%>
-<!-- 			<b>輸入訂單編號 (如1):</b> <input type="text" name="id"> <input -->
-<!-- 				type="hidden" name="action" value="getOne_For_Displayfront"> -->
-<!-- 			<input type="submit" value="送出"> -->
-<!-- 		</FORM> -->
-<!-- 	</li> -->
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do">
-				<b>請輸入會員編號檢索訂單:</b> <input type="text" name="id"> <input
-					type="hidden" name="action" value="retrieveByBuyerId">
-				<input type="submit" value="送出">
-			</FORM>
+	<!-- 	<li> -->
+	<!-- 		<FORM METHOD="post" -->
+	<%-- 			ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do"> --%>
+	<!-- 			<b>輸入訂單編號 (如1):</b> <input type="text" name="id"> <input -->
+	<!-- 				type="hidden" name="action" value="getOne_For_Displayfront"> -->
+	<!-- 			<input type="submit" value="送出"> -->
+	<!-- 		</FORM> -->
+	<!-- 	</li> -->
+	<FORM METHOD="post"
+		ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do">
+		<b>請輸入會員編號檢索訂單:</b> <input type="text" name="id"> <input
+			type="hidden" name="action" value="retrieveByBuyerId"> <input
+			type="submit" value="送出">
+	</FORM>
 
 	<table class="table table-striped table-hover">
 		<thead>
@@ -213,7 +222,7 @@ td {
 	<%@ include file="page2.jsp"%>
 	<!-- Footer-->
 
-	
+
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
 	<!-- Bootstrap core JS-->
 
