@@ -3,8 +3,9 @@
 <%@ page import="com.product.model.ProductVO"%>
 <%@ page import="com.member.model.*"%>
 <%@ page import ="java.util.List"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.util.Map.Entry" %>
 <%@ page import="com.product.model.ProductDAOImpl"%>
-<%-- <%@ page language="java" contentType="text/html; charset=BIG5" pageEncoding="BIG5"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -19,7 +20,21 @@
 // 	List<ProductVO> list = productService.getFromMember(17);
 	pageContext.setAttribute("list", list);
 %>
-
+<%
+	Map<Integer, String> map = new HashMap<>();
+	map.put(0,"其他");
+	map.put(1,"桌椅");
+	map.put(2,"寢具");
+	map.put(3,"服飾");
+	map.put(4, "電器");
+	pageContext.setAttribute("map", map);
+%>
+<%
+	Map<Integer, String> status = new HashMap<>();
+	status.put(0,"販售");
+	status.put(1,"完售");
+	pageContext.setAttribute("status", status);	
+%>
 <html>
 <head>
 	<title>所有商品資料 - listAll.jsp</title>
@@ -45,6 +60,12 @@
 	    margin: 20px;
 	    text-size:3px;
 	  }
+	  th {
+	  	font-size:16px;
+	  }
+	  td {
+	  	font-size:15px;
+	  }	  
 	  th, td {
 	    padding: 5px;
 	    text-align: center;
@@ -92,7 +113,7 @@
 	<!-- 麵包屑 (Breadcrumb) -->
 	<nav aria-label="breadcrumb">
 	  <ol class="breadcrumb">
-	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總攬</a></li>
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總覽</a></li>
 	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp">買賣家</a></li>
 	    <li class="breadcrumb-item active" aria-current="page">商品管理</li>
 	  </ol>
@@ -119,23 +140,28 @@
 				<tr>
 					<th scope="row" class="align-middle" style="text-align:center;">${productVO.id}</th>
 					<td class="align-middle">${productVO.sellerMemberId}</td>
-					<td class="align-middle">${productVO.type}</td>
+					<td class="align-middle">${map[productVO.type]}</td>
 					<td class="align-middle">${productVO.description}</td>	
 					<td class="align-middle">${productVO.price}</td>
 					<td class="align-middle">${productVO.name}</td>
 					<td class="align-middle">${productVO.launchedDate}</td>
 					<td class="align-middle">${productVO.location}</td>
-					<td class="align-middle">${productVO.status}</td>
+					<td class="align-middle">${status[productVO.status]}</td>
 					<td class="align-middle" style="padding:0px">
 						<img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top">
 					</td>
 					<td class="align-middle">
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet">
-							<input type="submit" value="修改">
+							<input type="submit" value="資料">
 							<input type="hidden" value="${productVO.id}" name="prodId">
 		<%-- 					--${productVO.id}-- --%>
 							<input type="hidden" value="getOne_For_Update" name="action"> 
 						</FORM>
+						<FORM ACTION="<%=request.getContextPath()%>/front_end/product/update_img.jsp" METHOD="post">	
+							<input type="submit" value="圖片">
+							<input type="hidden" value="${productVO.id}" name="prodId">
+							<input type="hidden" value="getOne_For_Update_Img" name="action">
+						</FORM>	
 					</td>
 					<td class="align-middle">
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet">

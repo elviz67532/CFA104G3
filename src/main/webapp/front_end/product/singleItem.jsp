@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@	page import="com.product.model.ProductVO"%>
+
+<%@	page import="com.product.model.*"%>
+
 
 <% 
 	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
@@ -10,6 +12,10 @@
 
 
 
+
+<%-- <% 	 --%>
+// ProductVO productVO = (ProductVO)request.getAttribute("productVO");
+<%-- %> --%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,16 +34,90 @@
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet"
         type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
-       	  rel="stylesheet" type="text/css" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+        rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
+    
+    <style>
+        .btn1Buy {
+            border-radius: 8px;
+            border: none;
+            background-color: #FF4D00;
+            color: white;
+            width: 200px;
+            margin-bottom: 5px;
+            font-size: 14px;
+            transition: transform .3s;
+        }
+
+        .btn1Buy:hover {
+            border: 1px gray solid;
+            border-radius: 8px;
+            background-color: white;
+            color: black;
+            opacity: 0.8;
+            transform: scale(1.04);
+        }
+
+        .btn2Collect {
+            border-radius: 8px;
+            border: none;
+            background-color: #FFD700;
+            width: 200px;
+            margin-bottom: 5px;
+            font-size: 14px;
+            transition: transform .3s;
+        }
+
+        .btn2Collect:hover {
+            border: 1px gray solid;
+            border-radius: 8px;
+            opacity: 0.8;
+            background-color: white;
+            transform: scale(1.02);
+        }
+
+        .btn3Return {
+            border-radius: 8px;
+            border: none;
+            background-color: #00FF80;
+            width: 200px;
+            margin-bottom: 5px;
+            font-size: 14px;
+            transition: transform .3s;
+        }
+
+        .btn3Return:hover {
+            border: 1px gray solid;
+            border-radius: 8px;
+            opacity: 0.8;
+            background-color: white;
+            transform: scale(1.02);
+        }
+
+        .spanLocation {
+            font-size: 14px;
+            color: black;
+        }
+
+        .aboutProductWord {
+            padding: 3px 8px;
+            font-weight: bold;
+            font-size: 116%;
+            line-height: 1.231;
+            letter-spacing: 0.01em;
+            color: #5A5A5A;
+        }
+    </style>
+
 </head>
 
 <body>
     <!-- Navigation-->
+    <jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
     <!-- nav -->
-	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
     <!-- Page Header-->
     <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/product01.jpg')">
@@ -51,82 +131,124 @@
                 </div>
             </div>
         </div>
-    </header>  
-   	<!-- 主體畫面設計  -->
-   	
-    <!-- 商品簡述 section-->
-    <section class="py-5 bg-light">
-        <div class="container px-4 px-lg-5 my-5">
+    </header>
+    <!-- 主體畫面設計  -->
+
+    <!-- Product section-->
+    <section class="py-5">
+        <div class="container px-5 px-lg-6 my-6">
             <div class="row gx-4 gx-lg-5 align-items-start">
                 <div class="col-md-6">
-                    <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}"
-                        alt="..." />
+                    <img style="max-width: 600px; max-height: 480px; overflow:hidden; border: 2px lightgray solid;"
+                        src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=<%=productVO.getId()%>"
+                        alt="" />
+                    <div class="mb-1">商品編號: <%=productVO.getId()%>
+                    </div>
                 </div>
-                
-                <div class="col-md-6 gy-3">
-                    
-                    <div class="mb-2">
-                        <h1 class="fw-bolder text-dark"><%=productVO.getName()%></h1>
+                <div class="col-md-6 align-items-start">
+                    <div class="mb-1">
+                        <h3 class="fw-bolder" style="color:black; font-size: 24px;">
+                            <%=productVO.getName()%>
+                        </h3>
+                        <hr>
                     </div>
-                    
-                    <div class="fs-5 mb-2 fw-bold text-dark">上架時間: <%=productVO.getLaunchedDate()%></div>
-                    
-                    <div class="fs-5 mb-2 fw-bold text-dark">商品地點: <%=productVO.getLocation()%></div>
-                    
-                    <div class="fs-5 mb-2 fw-bold text-dark">商品狀態: <%=productVO.getStatus()%></div>                     
-                                        
-                    <div class="fs-4 mb-4 fw-bold text-dark">商品金額:                    
-                        <span class="text-decoration-line-through">$3999.00</span>
-                        <span class="text-danger">$<%=productVO.getPrice()%>.00</span>
+                    <div class="fs-4 mb-4">
+                        <span style="font-size:14px;">定價: </span><span class="text-decoration-line-through"
+                            style="font-size:18px;">$99999.00</span><br>
+                        <span style="font-size:18px;">優惠價: </span><span style="font-size: 20px;color:#E60000;"><strong>$
+                                <%=productVO.getPrice()%>.00
+                            </strong></span>
                     </div>
-                    
+                    <div>
+                        <em style="color: white; font-size:14px; background-color: #8ab70f;border-radius: 4px;">滿額優惠
+                        </em>
+                        &nbsp&nbsp<span style="font-size:12px; color: black; border-radius: 16px;">買越多送越多
+                            <%=productVO.getName()%>!!
+                        </span>
+                    </div>
+                    <!--<div class="small mb-1">商品地點: 這個好像不用特別寫</div> -->
+
                     <!--按鈕 "me-間隔" "<i>按鈕" "readonly 只看不可改" 下方-->
-                    <div class="d-flex">
-                        <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1"
-                            style="max-width: 3rem" readonly />
-                        <button class="btn btn-outline-dark flex-shrink-0 me-1" type="button">
+                    <!--檢查邊界的 style="border: 2px purple solid; -->
+                    <div style="padding:10px;">
+                        <button class="btn1Buy" type="button">
                             <i class="bi-cart-fill me-1"></i>
-                            購買
+                            直接購買
                         </button>
-                        <button class="btn btn-outline-dark flex-shrink-0 me-1" type="button">
+                        <br>
+                      
+                        <button class="btn2Collect" type="button">
                             <i class="bi bi-bookmarks-fill"></i>
+                            加入收藏
+                        </button>
+                        <br>
+                        <button class="btn3Return" type="button">
+                        <FORM METHOD="post" ACTION="productcollection.do">
+                        <input type="hidden" name="action" value="insert">
+                        <button type="button"> 
                             收藏
                         </button>
+                        </FORM>
+                        
+                        <a href="<%=request.getContextPath()%>/front_end/product/productReport.jsp">
                         <button class="btn btn-outline-dark flex-shrink-0 me-1" type="button">
+
                             <i class="bi bi-people-fill"></i>
-                            回報
-                        </button>
+                            問題回報                       
+                        </button></a>
+                        
+                        <!-- modal 互動視窗-->
                     </div>
+                    
                     <!--按鈕 "me-間隔" "<i>按鈕" "readonly 只看不可改" 上方-->
+                    
+                    <div>
+                        <span class="spanLocation">付款方式 : 信用卡( 限台灣發行 )</span><br>
+                        <span class="spanLocation">運送方式 : 臺灣與離島</span><br>
+                        <span class="spanLocation">可配送地點 : 台灣、蘭嶼、綠島、澎湖、金門、馬祖</span><br>
+                        <span class="spanLocation">可取貨地點 : 台灣、蘭嶼、綠島、澎湖、金門、馬祖</span><br>
+                        <span class="spanLocation">商品所在地 : <%=productVO.getLocation()%></span>
+                    </div>
                 </div>
             </div>
         </div>
-    </section >
+    </section>
     
-	<!-- 商品詳情 section-->
-	<section class="py-5">
-    <div class="container my-5 d-grid gap-5">
-       <div class="p-5 border border-dark rounded">     	
-		   <div class="fs-4 mb-2 fw-bold text-dark">商品名稱: <%=productVO.getName()%></div>
-		   
-           <div class="fs-4 mb-2 fw-bold text-dark">商品編號: <%=productVO.getId()%></div>
+    
+	
+	<!--second section -->
+    <section class="py-5 bg-light">
+        <div style="margin: 0 230px;">
+            <div>
+                <div class="aboutProductWord"
+                    style="font-size:16px;width:100%;padding: 3px 0 3px 10px;background-color: lightgray;">
+                    商品詳圖
+                </div>
+                <br>
+                <img style="border: 2px lightgray solid;" src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}"
+                    alt="<%=productVO.getName()%>" />
+            </div>
+            <div class="aboutProductWord"
+                style="font-size:16px;width:100%;padding: 3px 0 3px 10px;background-color: lightgray;">
+                產品說明
+            </div>
+            <div>
+                <p class="lead">
+                    <%=productVO.getDescription()%>
+                </p>
+            </div>
+            <div class="small mb-1" style="text-align:center;margin-top:20px;">
+                上架時間: <%=productVO.getLaunchedDate()%>
+            </div>
+        </div>
+    </section>
+    
+    
 
-           <div class="fs-4 mb-2 fw-bold text-dark">會員編號: <%=productVO.getSellerMemberId()%></div>
-                    
-           <div class="fs-4 mb-2 fw-bold text-dark">上架時間: <%=productVO.getLaunchedDate()%></div>
-                    
-           <div class="fs-4 mb-2 fw-bold text-dark">商品地點: <%=productVO.getLocation()%></div>
-                                                           
-           <div class="fs-4 mb-2 fw-bold text-dark">商品描述: <p class=" fs-5 mb-2 text-dark"><%=productVO.getDescription()%></p></div>                                           
-       </div>
-    </div>         
-	</section>
-
-
-   	<!-- Related items section-->
-   	<jsp:include page="/front_end/product/relatedItems.jsp"></jsp:include>
+    <!-- Related items section-->
+    <jsp:include page="/front_end/product/relatedItems.jsp"></jsp:include>
     <!-- Footer-->
-   	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+    <jsp:include page="/front_end/common/footer.jsp"></jsp:include>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

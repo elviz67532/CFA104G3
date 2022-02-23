@@ -37,8 +37,8 @@ public class ProductReportImageReader extends HttpServlet {
 			String memberId = req.getParameter("PRODRP_MEM_ID");
 			
 			ResultSet rs = stmt.executeQuery(
-//					雙主見有夠麻煩
-			    "SELECT PRODRP_PHOTO FROM PRODCUT_REPORT WHERE PRODRP_PROD_ID = ? and PRODRP_MEM_ID = ?");
+
+			    "SELECT PRODRP_PHOTO FROM PRODCUT_REPORT WHERE PRODRP_PROD_ID = "+productId+" and PRODRP_MEM_ID = "+memberId+"");
 			if (rs.next()) {
 				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("PRODRP_PHOTO"));
 				byte[] buf = new byte[4 * 1024]; // 4K buffer
@@ -70,7 +70,7 @@ public class ProductReportImageReader extends HttpServlet {
 	public void init() throws ServletException {
 		try {
 			Class.forName(SQLUtil.DRIVER);
-			con = DriverManager.getConnection("SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD");
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);			
 		} catch (ClassNotFoundException e) {
 			throw new UnavailableException("Couldn't load JdbcOdbcDriver");
 		} catch (SQLException e) {

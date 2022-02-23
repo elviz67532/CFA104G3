@@ -2,7 +2,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@	page import="java.util.*"%>
 <%@	page import="java.util.HashMap"%>
-
+<%
+	Map<Integer, String> map = new HashMap<>();
+	map.put(0,"其他");
+	map.put(1,"桌椅");
+	map.put(2,"寢具");
+	map.put(3,"服飾");
+	map.put(4, "電器");
+	pageContext.setAttribute("map", map);
+%>
+<%
+	Map<Integer, String> status = new HashMap<>();
+	status.put(0,"販售");
+	status.put(1,"完售");
+	pageContext.setAttribute("status", status);	
+%>
 <!DOCTYPE html>
 <html lang="zh-TW">
 
@@ -15,13 +29,25 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 	<title>委域</title>
 <style>
-  table, th, td {
-    border: 1px solid #CCCCFF;
-  }
-  th, td {
-    padding: 5px;
-    text-align: center;
-  }
+	  table, th, td {
+	    border: 1px solid #CCCCFF;
+	  }
+	  th, td {
+	    padding: 5px;
+	    text-align: center;
+	  }
+	  th {
+	  	font-size:16px;
+	  }
+	  td {
+	  	font-size:15px;
+	  }
+	  img{
+		    max-width:128px;
+		    max-height:128px;
+		    width:auto;
+		    height:auto;	  	
+	  }  
 </style>
 </head>
 <body>
@@ -69,7 +95,7 @@
 						<tr>
 							<td>${productVO.id}</td>
 							<td>${productVO.sellerMemberId}</td>
-							<td>${productVO.type}</td>
+							<td>${map[productVO.type]}</td>
 							<td>${productVO.description}</td>	
 							<td>${productVO.price}</td>
 							<td>${productVO.name}</td>
@@ -78,7 +104,7 @@
 							</td>
 							<td>${productVO.launchedDate}</td>
 							<td>${productVO.location}</td>
-							<td>${productVO.status}</td>
+							<td>${status[productVO.status]}</td>
 						</tr>
 						
 					</c:forEach>

@@ -18,5 +18,7 @@ public interface MemberDAO extends CoreDao<MemberVO, Integer> {
 
 	int veriftyCode(Integer status, Integer id, String code);
 
+	int status(MemberVO vo);
+
 	
 }

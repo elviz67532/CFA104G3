@@ -20,13 +20,13 @@
 %>
 <%
 	Map<Integer, String> map = new HashMap<>();
-	map.put(1,"管理員權限管理");
-	map.put(10,"活動");
-	map.put(20,"二手");
-	map.put(30,"搬家");
-	map.put(40, "會員");
-	map.put(50, "FAQ");
-	map.put(60, "NEWS");
+	map.put(1,"管理員權限管理  ");
+	map.put(10,"活動  ");
+	map.put(20,"二手  ");
+	map.put(30,"搬家  ");
+	map.put(40, "會員  ");
+	map.put(50, "FAQ  ");
+	map.put(60, "NEWS  ");
 	pageContext.setAttribute("map", map);
 %>
 <%
@@ -84,7 +84,7 @@
 									<th>
 <%-- 										<c:if test="${smVO.smgrId !=1}" var="varName" scope="session"> --%>
 											<c:forEach var="auth" items="${smVO.authList}">
-												${auth.smgeAuthId } -
+												${map[auth.smgeAuthId]}
 											</c:forEach>
 <%-- 										<c:forEach var="auth" items="${smVO.authList}"> --%>
 <%-- 											<c:if test="${smVO.smgrId !=1}" var="varName" scope="session"> --%>
@@ -176,7 +176,7 @@
 									</th>
 									<th>
 										<c:if test="${smVO.smgrId !=1}" var="varName" scope="session">
-											<c:out value="${smVO.smgrId}"></c:out>
+<%-- 											<c:out value="${smVO.smgrId}"></c:out> --%>
 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/server_manager/ServerManagerServlet">								
 											
 											<input type="hidden" name="smgrId"  value="${smVO.smgrId}">

@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.*" %>
-<%@page import="java.sql.Timestamp"%>
+<%@	page import="java.sql.Timestamp"%>
 
 <%ProductReportVO productReportVO = (ProductReportVO) request.getAttribute("productReportVO");%>
 
@@ -52,7 +52,7 @@
                         
                         <!-- main -->
                         
-                        <FORM METHOD="post" ACTION="report.do"
+                        <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/product/report.do"
                             name="form1" enctype="multipart/form-data">
                             <table>
                                 <tr>

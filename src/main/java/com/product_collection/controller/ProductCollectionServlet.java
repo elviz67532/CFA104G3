@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +21,8 @@ import com.product_collection.model.ProductCollectionVO;
 
 import core.DualKey;
 
-public class ProductCollectionServlet {
+public class ProductCollectionServlet extends HttpServlet{
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -58,7 +60,7 @@ public class ProductCollectionServlet {
 					productCollectionVO = proCollectionSvc.insert(memberId, productId);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-					String url = "/front_end/product/listOneProduct.jsp";
+					String url = "/front_end/product/singleItem.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); 
 					successView.forward(req, res);				
 				}
@@ -66,7 +68,7 @@ public class ProductCollectionServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front_end/product/listOneProduct.jsp");
+						.getRequestDispatcher("/front_end/product/singleItem.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -106,14 +108,14 @@ public class ProductCollectionServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/product/商品前台畫面.jsp");
+							.getRequestDispatcher("/front_end/product/singleItem.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 			
 			/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("productVOs", productVOs); // 資料庫取出的empVO物件,存入req
-				String url = "/front_end/product/收藏畫面.jsp";
+				String url = "/front_end/product/collection.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 				
