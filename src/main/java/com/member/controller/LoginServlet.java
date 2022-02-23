@@ -381,14 +381,13 @@ public class LoginServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 *****************************************/
 				MemberServiceImpl memberServiceImpl = new MemberServiceImpl();
-				memberVO = memberServiceImpl.frontMemberUpdate(email, password, nickname, name, phone, city, cityArea,
+				memberServiceImpl.frontMemberUpdate(email, password, nickname, name, phone, city, cityArea,
 						address, avatar, id);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				
 				MemberVO memberVo = memberServiceImpl.selectById(id);
 				
-				HttpSession session = req.getSession();
 				session.setAttribute("memberVO", memberVo);
 				
 				String url = "/front_end/member/front_end_listOneMember.jsp";
