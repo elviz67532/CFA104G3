@@ -10,6 +10,8 @@ public interface ProductOrderDAO extends CoreDao<ProductOrderVO, Integer> {
 
 	int updateStatus(ProductOrderVO vo);
 
+	int reviseOrder(ProductOrderVO vo);
+
 //	public void insertOrder(ProductOrderVO shop_OrderFrontVO);// 新增訂單
 
 //	public void updateOrderForFront(ProductOrderVO Shop_OrderVO); // 前台更新訂單

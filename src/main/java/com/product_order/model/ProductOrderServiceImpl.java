@@ -15,12 +15,13 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 	}
 
 	@Override
-	public ProductOrderVO addProductOrder(Integer customerMemberId, Integer sellerMemberId, String productName,
-			String phone, String address, Timestamp date, Integer amountOfProduct, Integer status,
+	public ProductOrderVO addProductOrder(Integer productId, Integer customerMemberId, Integer sellerMemberId,
+			String productName, String phone, String address, Timestamp date, Integer amountOfProduct, Integer status,
 			Integer amountOfPrice) {
 
 		ProductOrderVO vo = new ProductOrderVO();
 
+		vo.setProductId(productId);
 		vo.setCustomerMemberId(customerMemberId);
 		vo.setSellerMemberId(sellerMemberId);
 		vo.setProductName(productName);
@@ -145,4 +146,16 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 		return changeStatus(id, 10);
 
 	}
+
+	@Override
+	public ProductOrderVO reviseOrder(Integer id, String productName, String phone, String address) {
+		ProductOrderVO vo = new ProductOrderVO();
+		vo.setId(id);
+		vo.setProductName(productName);
+		vo.setPhone(phone);
+		vo.setAddress(address);
+		dao.reviseOrder(vo);
+		return vo;
+	}
+
 }
