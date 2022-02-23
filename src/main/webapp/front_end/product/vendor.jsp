@@ -108,7 +108,7 @@
 					          		alt=""/>
 					          <div class="card-body">
 					            <h5 class="card-title"></h5>
-					            <a href="#" class="btn btn-primary">收藏商品</a>
+								<a href="<%=request.getContextPath()%>/product/productcollection.do?action=get_By_Mem" class="btn btn-primary">收藏商品</a>
 					          </div>
 					        </div>	
 					    </div>					

@@ -46,7 +46,7 @@
 		
 		<!-- 處理中 -->
 		<url-pattern>/front_end/move/frontGetMoveOrder.jsp</url-pattern>
-
+		<url-pattern>/front_end/product/collection.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -258,7 +258,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ProductCollectionServlet</servlet-name>
-		<url-pattern>/front_end/product/productcollection.do</url-pattern>
+		<url-pattern>/product/productcollection.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>ProductPhotoServlet</servlet-name>
