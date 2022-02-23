@@ -108,8 +108,13 @@ public class NewsServlet extends HttpServlet {
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				String content = req.getParameter("content").trim();
-				if (content == null || content.trim().length() == 0) {
+//				String content = req.getParameter("content").trim();
+//				if (content == null || content.trim().length() == 0) {
+//					errorMsgs.add("內容請勿空白");
+//				}
+				
+				String content = req.getParameter("content");
+				if (content == null || content.length() == 0) {
 					errorMsgs.add("內容請勿空白");
 				}
 

@@ -78,7 +78,7 @@ pageContext.setAttribute("list", list);
                                 <figure class="mb-4"><img class="img-fluid rounded" src="<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id}" alt="..." /></figure>
                                 <!-- Post content-->
                                 <section class="mb-5">
-                                    <p class="fs-5 mb-4">${newsVO.content}</p>                          
+                                    <pre class="fs-5 mb-4">${newsVO.content}</pre>                          
                                 </section>
                             </article>
 
