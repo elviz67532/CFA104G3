@@ -554,11 +554,10 @@ textarea:focus{
  			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
  			     <input type="hidden" name="action"	value="getOne_For_Insert"></FORM> 
 				</td> 
-    					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
-					       <input type="hidden" name="action" value="quit"/> 
-		      	           <input type="hidden" name="activityId" value="${actVO.activityId}">
-					       <input type="submit" class="btn-hover color-1" value="退出活動"/>
-			       		</FORM>
+    					<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
+ 			     <input type="submit" value="活動取消"> 
+ 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
+ 			     <input type="hidden" name="action"	value=""></FORM> 
 	               </div>
 				<!--   ==================== 報名活動 ====================   -->
 <%-- 	         <%@ include file="secondActivity.jsp" %>       --%>
