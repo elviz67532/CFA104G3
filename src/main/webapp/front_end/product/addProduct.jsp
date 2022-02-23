@@ -116,7 +116,8 @@
 								<option value=2>寢具類
 								<option value=3>服飾類
 								<option value=4>電器類
-							</select></td>
+							</select>
+						</td>
 					</tr>
 						<td>商品敘述:</td>
 						<td><input type="text" name="prodDesc"

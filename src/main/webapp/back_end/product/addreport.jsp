@@ -52,7 +52,7 @@
                         
                         <!-- main -->
                         
-                        <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/product/report.do"
+                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/report.do"
                             name="form1" enctype="multipart/form-data">
                             <table>
                                 <tr>

@@ -1,10 +1,9 @@
-<%@page import="com.news.model.*"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@	page import="com.product_photo.model.*"%>
 <%@	page import="com.product.model.*"%>
+<%@ page import="com.news.model.*" %>
 <%
 	ProductServiceImpl productService = new ProductServiceImpl();
 	List<ProductVO> list = productService.getAll();
@@ -14,8 +13,7 @@
 	NewsServiceImpl newsSvc = new NewsServiceImpl();
 	List<NewsVO> newslist = newsSvc.selectAllByType(1);
 	pageContext.setAttribute("newslist", newslist);
-%>
-<jsp:useBean id="photoSvc" scope="page" class="com.product_photo.model.ProductPhotoServiceImpl" />
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,57 +35,27 @@
         rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
-    <style>
-		  .SEARCHFOR{
-		  padding:10px;
-		  margin-bottom: 30px;
-		}
-		#pagination{
-		  bottom: 0;
-		}
-		.d-block{
-		  height: 30%;
-		}
-		.myImg {
-		  height:  400px;
-		  background-repeat: no-repeat;
-		  background-attachment: fixed;
-		  background-position: center;
-		  background-size: cover;
-		}
-		.pagination{
-			margin: 10px
-		}
-		.card{
-			margin: 5px
-		}
-		img{
-		    max-height:256px;
-		    width:auto;
-		    height:auto;
-		}
-	</style>
 </head>
 
-<body class="d-flex flex-column h-100">
+<body id="page-top">
     <!-- Navigation-->
     <!-- nav -->
-	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
+    <jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
     <!-- Page Header-->
-    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/product01.jpg')">
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/news.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>二手商城</h1>
-                        <span class="subheading">愛地球，資源再利用</span>
+                        <h1>最新消息</h1>
+                        <span class="subheading">最新資訊都在這</span>
                     </div>
                 </div>
             </div>
         </div>
     </header>
-   
+ 
    	<!-- 主體畫面設計  -->
 <!--    	<div class="row justify-content-center"> -->
 <!--       <div class="col-lg-6 SEARCHFOR"> -->
@@ -147,42 +115,29 @@
 					            <h5 class="card-title">${productVO.name}</h5>
 					<%--             <p class="card-text">${productVO.prodDesc}</p> --%>
 									<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/product/ProductServlet">
+
 			     					<input type="submit" value="前往">
-			     					<input type="hidden" name="prodId"  value="${productVO.id}">
-			     					<input type="hidden" name="action"	value="getOne_For_Display"></FORM>
-					<%--             <a href="#" class="btn btn-primary">${productVO.prodName}</a> --%>
-					          </div>
-					        </div>	
-						</c:forEach>
-					    </div>					
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<br>
-	<br>
-	
-	<!-- card 卡片 & text-center-->
-	<!-- Pages-->
-<!-- 	<nav aria-label="Page navigation example"> -->
-<!-- 	  <ul class="pagination justify-content-center"> -->
-<!-- 	    <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
-<!-- 	    <li class="page-item"><a class="page-link" href="#">1</a></li> -->
-<!-- 	    <li class="page-item"><a class="page-link" href="#">2</a></li> -->
-<!-- 	    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-<!-- 	    <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
-<!-- 	  </ul> -->
-<!-- 	</nav> -->
-	
-   
+			     					<input type="hidden" name="id"  value="${newsVO.id}">
+			     					<input type="hidden" name="action"	value="getOne_For_User">
+			     			</FORM>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </c:forEach>
+        
+        
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>    
     <!-- Footer-->
-   	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+    <jsp:include page="/front_end/common/footer.jsp"></jsp:include>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+    <script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
 </body>
 
 </html>

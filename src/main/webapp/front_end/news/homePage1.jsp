@@ -63,10 +63,10 @@ pageContext.setAttribute("list", list);
                         <div class="col-lg-6">
                             <h2 class="fw-bolder">${newsVO.title}</h2>
                             <p>${newsVO.date}</p>
-<%--                             <p class="lead fw-normal text-muted mb-0 text-break">${newsVO.content}...</p> --%>
+                            <p class="lead fw-normal text-muted mb-0">${newsVO.content}...</p>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/news/NewsUserServlet.do">
-			     					<input type="submit" value="查看詳情" class="btn btn-outline-primary"	>
+			     					<input type="submit" value="前往" class="btn btn-primary"	>
 			     					<input type="hidden" name="id"  value="${newsVO.id}">
 			     					<input type="hidden" name="action"	value="getOne_For_User">
 			     			</FORM>

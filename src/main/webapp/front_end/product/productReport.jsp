@@ -8,6 +8,9 @@
 <%
 ProductReportVO productReportVO = (ProductReportVO) request.getAttribute("productReportVO");
 System.out.println("productReportVO: " + productReportVO);
+
+String prodId = (String)request.getParameter("prodId");
+pageContext.setAttribute("prodId", prodId);
 %>
 
 <!DOCTYPE html>
@@ -71,19 +74,19 @@ System.out.println("productReportVO: " + productReportVO);
     						</div>
     						 
                         <div class="my-5">
-                            <form METHOD="Post" name="form2" ACTION="<%=request.getContextPath()%>/product/report.do" enctype="multipart/form-data">
+                            <form METHOD="Post" name="form1" ACTION="<%=request.getContextPath()%>/product/report.do" enctype="multipart/form-data">
                             <table>    
                             <!-- 商品編號 input 加上class="form-control-plaintext" 變成只能看-->                                
                             <tr>
                                 <td>
                                 <input class="form-control"  type="text" placeholder="商品編號...*" data-sb-validations="required" name="productId"
-                                value="<%=(productReportVO == null) ? "" : productReportVO.getProductId()%>" /></td>                        
+                                value="${prodId}" /></td>                        
                             </tr>
                             
                             <!-- 會員編號 input-->                                
                             <tr>
                                 <td><input class="form-control" type="text" placeholder="會員編號...*" data-sb-validations="required" name="memberId"
-                                value="<%=(productReportVO == null) ? "" : productReportVO.getMemberId()%>"/></td>                             
+                                value="${memberVO.id}"/></td>                             
                             </tr>
                             
                             <!-- 狀態 input-->                                
@@ -107,9 +110,9 @@ System.out.println("productReportVO: " + productReportVO);
                             </tr>   
                             
                                 
-                            <jsp:useBean id="reportSvc" scope="page" class="com.product_report.model.ProductReportServiceImpl"/>                             	                           
+                            <jsp:useBean id="reportSvc" scope="session" class="com.product_report.model.ProductReportServiceImpl"/>                             	                           
                             
-                            </table>
+                            </table><br>
                             
                                 <!-- Submit Button-->
                                 <input type="hidden" name="action" value="insert">
