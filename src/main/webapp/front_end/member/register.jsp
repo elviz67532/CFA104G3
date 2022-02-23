@@ -5,7 +5,7 @@
 <%@ page import="com.member.model.*"%>
 
 <%
-MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
+MemberVO tempMemberVO = (MemberVO) request.getAttribute("tempMemberVO");
 //<!--錯誤訊息 -->
 Map<String, String> errorMsgs = (Map<String, String>) request.getAttribute("errorMsgs");
 if (errorMsgs != null) {
@@ -138,7 +138,7 @@ tr {
 			<table>
 				<tr>
 					<td>郵件:</td>
-					<td><input placeholder="請輸入郵件" name="email" size="10"value="<%=(memberVO == null) ? "" : memberVO.getEmail()%>" /></td>
+					<td><input placeholder="請輸入郵件" name="email" size="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getEmail()%>" /></td>
 				</tr>
 				 <c:if test="${not empty email}">
 					<span style="color: red"> "${email}" </span>
@@ -146,7 +146,7 @@ tr {
 
 				<tr >
 					<td>帳號:</td>
-					<td><input placeholder="請輸入帳號" name="account" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getAccount()%>" /></td>
+					<td><input placeholder="請輸入帳號" name="account" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getAccount()%>" /></td>
 				</tr>
 				 <c:if test="${not empty account}">
 					<span style="color: red"> "${account}" </span>
@@ -154,7 +154,7 @@ tr {
 
 				<tr >
 					<td>密碼:</td>
-					<td><input placeholder="請輸入密碼" name="password" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getPassword()%>" /></td>
+					<td><input placeholder="請輸入密碼" name="password" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getPassword()%>" /></td>
 				</tr>
 				 <c:if test="${not empty password}">
 					<span style="color: red"> "${password}" </span>
@@ -162,21 +162,21 @@ tr {
 
 				<tr >
 					<td>暱稱:</td>
-					<td><input placeholder="請輸入暱稱" name="nickname" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getNickname()%>" /></td>
+					<td><input placeholder="請輸入暱稱" name="nickname" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getNickname()%>" /></td>
 				</tr>
                    <c:if test="${not empty nickname}">
 					<span style="color: red"> "${nickname}" </span>
 				</c:if>
 				<tr >
 					<td>姓名:</td>
-					<td><input placeholder="請輸入名字" name="name" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getName()%>" /></td>
+					<td><input placeholder="請輸入名字" name="name" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getName()%>" /></td>
 				</tr>
 				 <c:if test="${not empty name}">
 					<span style="color: red"> "${name}" </span>
 				</c:if>
 				<tr>
 					<td>電話:</td>
-					<td><input placeholder="請輸入電話" name="phone" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getPhone()%>" /></td>
+					<td><input placeholder="請輸入電話" name="phone" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getPhone()%>" /></td>
 				</tr>
 				 <c:if test="${not empty phone}">
 					<span style="color: red"> "${phone}" </span>
@@ -192,30 +192,6 @@ tr {
 				 <c:if test="${not empty gender}">
 					<span style="color: red"> "${gender}" </span>
 				</c:if>
-
-				<!-- 				<tr> -->
-				<!-- 					<td>城市:</td> -->
-				<!-- 					<td><input placeholder="請輸入居住城市" name="city" maxlength="10" -->
-				<%-- 						value="<%=(memberVO == null) ? "桃園市" : memberVO.getCity()%>" /></td> --%>
-				<!-- 				</tr> -->
-				<!-- 				<tr> -->
-				<!-- 					<td>鄉鎮:</td> -->
-				<!-- 					<td><input placeholder="請輸入居住鄉鎮" name="cityArea" -->
-				<!-- 						maxlength="10" -->
-				<%-- 						value="<%=(memberVO == null) ? "八德市" : memberVO.getCityArea()%>" /></td> --%>
-				<!-- 				</tr> -->
-				<!-- 				<tr> -->
-				<!-- 					<td>地址:</td> -->
-				<!-- 					<td><input placeholder="請輸入地址" name="address" maxlength="10" -->
-				<%-- 						value="<%=(membervo == null) ? "廣福路394" : membervo.getaddress()%>" /></td> --%>
-				<!-- 				</tr> -->
-
-				<!-- 				<tr> -->
-				<!-- 					<td>圖片:</td> -->
-				<!-- 					<td><input type="file" accept="image/*" name="avatar" -->
-				<!-- 						size="45" -->
-				<%-- 						value="<%=(memberVO == null) ? "" : memberVO.getAvatar()%>" /></td> --%>
-				<!-- 				</tr> -->
 			</table>
 			<br> <input type="hidden" name="action" value="register"><input type="submit" value="送出新增">
 		</FORM>

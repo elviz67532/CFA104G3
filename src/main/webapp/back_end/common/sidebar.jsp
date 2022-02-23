@@ -55,7 +55,7 @@
 		<div id="collapseProduct" class="collapse"
 			aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/product/report/productReportManage.jsp">檢舉管理</a>				
+				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/product/productReportManage.jsp">檢舉管理</a>				
 				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/product/seller.jsp">商品管理</a>
 				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/product/listAllproductOrder.jsp">訂單管理</a>
 			</div>

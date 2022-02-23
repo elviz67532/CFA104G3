@@ -5,7 +5,26 @@
 <%@ page import="com.member.model.*"%>
 
 <%
-MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
+MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+MemberVO tempMemberVO = (MemberVO) request.getAttribute("tempMemberVO");
+if (tempMemberVO == null && memberVO != null) {
+	tempMemberVO = new MemberVO();
+	tempMemberVO.setId(memberVO.getId());
+	tempMemberVO.setEmail(memberVO.getEmail());
+	tempMemberVO.setAccount(memberVO.getAccount());
+	tempMemberVO.setPassword(memberVO.getPassword());
+	tempMemberVO.setNickname(memberVO.getNickname());
+	tempMemberVO.setName(memberVO.getName());
+	tempMemberVO.setPhone(memberVO.getPhone());
+	tempMemberVO.setGender(memberVO.getGender());
+	tempMemberVO.setCity(memberVO.getCity());
+	tempMemberVO.setCityArea(memberVO.getCityArea());
+	tempMemberVO.setAddress(memberVO.getAddress());
+	tempMemberVO.setCode(memberVO.getCode());
+	tempMemberVO.setAvatar(memberVO.getAvatar());
+	tempMemberVO.setRegisterDate(memberVO.getRegisterDate());
+	tempMemberVO.setStatus(memberVO.getStatus());
+}
 %>
 
 <!DOCTYPE html>
@@ -106,72 +125,72 @@ td {
 			<table id="table-2">
 				<tr>
 					<td>會員編號:<font color=red><b>*</b></font></td>
-					<td><%=memberVO.getId()%></td>
+					<td><%=tempMemberVO.getId()%></td>
 				</tr>
 
 
 				<tr>
 					<td>EMAIL:</td>
 					<td>
-					<input placeholder="請輸入EMAIL" name="email" maxlength="45"autocomplete="off"value="<%=(memberVO == null) ? "aaa" : memberVO.getEmail()%>" />
+					<input placeholder="請輸入EMAIL" name="email" maxlength="45"autocomplete="off"value="<%=(tempMemberVO == null) ? "aaa" : tempMemberVO.getEmail()%>" />
 					</td>
 				</tr>
 
 				<tr>
 					<td>密碼:</td>
 					<td>
-					<input type="TEXT" name="password" maxlength="10"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getPassword()%>" />
+					<input type="TEXT" name="password" maxlength="10"autocomplete="off"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getPassword()%>" />
 					</td>
 				</tr>
 
 				<tr>
 					<td>暱稱:</td>
 					<td>
-					<input type="TEXT" name="nickname" maxlength="10"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getNickname()%>" />
+					<input type="TEXT" name="nickname" maxlength="10"autocomplete="off"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getNickname()%>" />
 					</td>
 				</tr>
 				<tr>
 					<td>姓名:</td>
 					<td>
-					<input type="TEXT" name="name" maxlength="10"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getName()%>" />
+					<input type="TEXT" name="name" maxlength="10"autocomplete="off"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getName()%>" />
 					</td>
 				</tr>
 				<tr>
 					<td>電話:</td>
 					<td>
-					<input placeholder="請輸入電話" name="phone" maxlength="10"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getPhone()%>" />
+					<input placeholder="請輸入電話" name="phone" maxlength="10"autocomplete="off"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getPhone()%>" />
 					</td>
 				</tr>
 				<tr>
 					<td>居住城市:</td>
 					<td>
-					<input placeholder="請輸入居住城市" name="city" size="30"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getCity()%>" />
+					<input placeholder="請輸入居住城市" name="city" size="30"autocomplete="off"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getCity()%>" />
 					</td>
 				</tr>
 				<tr>
 					<td>居住鄉鎮:</td>
 					<td>
-					<input placeholder="請輸入居住鄉鎮" name="cityArea" size="30"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getCityArea()%>" />
+					<input placeholder="請輸入居住鄉鎮" name="cityArea" size="30"autocomplete="off"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getCityArea()%>" />
 					</td>
 				</tr>
 				<tr>
 					<td>地址:</td>
 					<td>
-					<input placeholder="請輸入地址" name="address" size="30"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getAddress()%>" />
+					<input placeholder="請輸入地址" name="address" size="30"autocomplete="off"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getAddress()%>" />
 					</td>
 				</tr>
 				<tr>
 					<td>圖片:</td>
 					<td>
-					<input type="file" name="avatar" size="45"value="<%=(memberVO == null) ? "" : memberVO.getAvatar()%>" />
+					<input type="file" name="avatar" size="45"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getAvatar()%>" />
 					</td>
 				</tr>
 		</table>
 			<br> 
 			<input type="hidden" name="action"value="front_end_member_update"> 
-			<input type="hidden"name="account" value="<%=memberVO.getAccount()%>">
-			<input type="hidden" name="id" value="<%=memberVO.getId()%>"> 
-			<input type="hidden" name="account" value="${memberVO.account}"> 
+			<input type="hidden"name="account" value="<%=tempMemberVO.getAccount()%>">
+			<input type="hidden" name="id" value="<%=tempMemberVO.getId()%>"> 
+			<input type="hidden" name="account" value="${tempMemberVO.account}"> 
 			<input type="submit" value="送出" >
 		</FORM>
 	</div>

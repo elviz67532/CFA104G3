@@ -8,8 +8,6 @@ import java.net.URLDecoder;
 import javax.sql.DataSource;
 
 public class CommonUtil {
-	private static DataSource DATASOURCE;
-
 	public static byte[] getPictureByteArray(String path) throws IOException {
 		FileInputStream fis = new FileInputStream(path);
 		byte[] buffer = new byte[fis.available()];
