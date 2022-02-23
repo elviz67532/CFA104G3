@@ -10,7 +10,6 @@
 	System.out.println("productVO: " + productVO);
 %>
 
-
 <!DOCTYPE html>
 <html lang="en">
 

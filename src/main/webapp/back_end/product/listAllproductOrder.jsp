@@ -10,9 +10,26 @@ ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
 List<ProductOrderVO> list = poSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
+
+<%
+Map<Integer, String> map = new HashMap<>();
+map.put(0, "待出貨");
+map.put(1, "已出貨");
+map.put(2, "完成訂單(待撥款給賣方)");
+map.put(3, "待撥款");
+map.put(4, "已撥款給賣方");
+map.put(5, "待退款(買方取消訂單)"); //買家取消訂單
+map.put(6, "待退款(買方退貨)");
+map.put(7, "已退款(買方取消訂單)");
+map.put(8, "已退款(買方退貨)");
+map.put(9, "待退款(賣方取消訂單)"); //賣家取消訂單
+map.put(10, "已退款(賣方取消訂單)");
+pageContext.setAttribute("map", map);
+%>
 <!doctype html>
 <html lang="zh-TW">
 <head>
+<meta charset="utf-8">
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -61,6 +78,7 @@ td {
 				<jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
 				<div class="container-fluid">
 
+
 					<!-- main -->
 					<h1>後台商品訂單管理主頁</h1>
 					<!-- 					<FORM METHOD="post" -->
@@ -84,7 +102,7 @@ td {
 								<th class="text-nowrap">商品數量</th>
 								<th class="text-nowrap">訂單總金額</th>
 								<th class="text-nowrap">訂單狀態</th>
-								<th class="text-nowrap">取消</th>
+								<th class="text-nowrap">訂單變動</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -100,7 +118,7 @@ td {
 								<th class="text-nowrap">商品數量</th>
 								<th class="text-nowrap">訂單總金額</th>
 								<th class="text-nowrap">訂單狀態</th>
-								<th class="text-nowrap">取消</th>
+								<th class="text-nowrap">訂單變動</th>
 							</tr>
 						</tfoot>
 						<%@ include file="page1.jsp"%>
@@ -119,14 +137,20 @@ td {
 									<td>${productOrderVO.date}</td>
 									<td>${productOrderVO.amountOfProduct}</td>
 									<td>${productOrderVO.amountOfPrice}</td>
-									<td>${productOrderVO.status}</td>
+									<td>${map[productOrderVO.status]}</td>
 
 									<td>
 										<FORM METHOD="post"
 											ACTION="<%=request.getContextPath()%>/back_end/product/productorderback.do">
-											<input type="submit" value="取消"> <input type="hidden"
-												name="id" value="${productOrderVO.id}"> <input
-												type="hidden" name="action" value="delete_back">
+											<input type="hidden" name="action" value="accountTwo">
+											<input type="hidden" name="id" value="${productOrderVO.id}">
+											<input type="submit" value="撥款">
+										</FORM>
+										<FORM METHOD="post"
+											ACTION="<%=request.getContextPath()%>/back_end/product/productorderback.do">
+											<input type="hidden" name="action" value="returnTwo">
+											<input type="hidden" name="id" value="${productOrderVO.id}">
+											<input type="submit" value="退款">
 										</FORM>
 									</td>
 								</tr>
@@ -152,12 +176,15 @@ td {
 
 	<!-- custom script -->
 
-	
+
 	<!-- Bootstrap core JavaScript-->
 	<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
-	<script src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
-	<script src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
-	<script src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
 
 	<!-- 註冊按鈕觸發功能  -->
 	<script>

@@ -50,20 +50,67 @@ pageContext.setAttribute("list", list);
             </div>
         </div>
     </header>
-    <!-- 主體畫面設計  -->
-    
-    <!-- Page Content-->
-    <!-- About section one-->
-    	<c:forEach var="newsVO" items="${list}"> 
-            <section class="py-5 bg-light" id="scroll-target">
-                <div class="container px-5 my-5">
-                    <div class="row gx-5 align-items-center">
-                        <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id}" alt="..." /></div>
-                        <div class="col-lg-6">
-                            <h2 class="fw-bolder">${newsVO.title}</h2>
-                            <p>${newsVO.date}</p>
-                            <p class="lead fw-normal text-muted mb-0">${newsVO.content}...</p>
-                            <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/news/NewsUserServlet.do">
+ 
+   	<!-- 主體畫面設計  -->
+<!--    	<div class="row justify-content-center"> -->
+<!--       <div class="col-lg-6 SEARCHFOR"> -->
+<!--       </div> -->
+<!--     </div> -->
+
+	<!-- 輪播 (Carousel) -->
+    <!-- 搭配圖片滿版 -->
+   <c:forEach var="newsVO" items="${newslist}">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id})"></div>
+        </div>
+<!--         <div class="carousel-item"> -->
+<%--           <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id+1})"></div> --%>
+<!--         </div> -->
+<!--         <div class="carousel-item"> -->
+<%--           <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id+2})"></div> --%>
+<!--         </div> -->
+      </div>
+      </c:forEach>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+	<br><br>
+	<div class="container">
+		<div class="row">
+			<!-- 左邊3欄  list group 分類功能-->
+			<div class="col-12 col-md-3 list-group">
+				<FORM METHOD="post" ACTION="product/ProductServlet">
+				  <a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp" class="list-group-item list-group-item-action active" aria-current="true">
+				    總覽
+				  </a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/browseElec.jsp"  name="prodType" value=4 class="list-group-item list-group-item-action">電器類</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/browseFurniture.jsp" class="list-group-item list-group-item-action">寢具</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/browseOthers.jsp" class="list-group-item list-group-item-action">其他</a>
+				  <a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp" class="list-group-item list-group-item-action">買賣家</a>
+				</FORM>
+			</div>
+			<!-- 右邊9欄  card 卡片 & text-center -->
+			<div class="col-12 col-md-9">
+				<div class="row">
+					<div class="col">
+					    <div class="col-12 row justify-content-center">
+						<c:forEach var="productVO" items="${list}">
+					        <div class="card text-center" style="width: 18rem;">
+					          <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top" 
+					          		alt="<%=request.getContextPath()%>/assets/img/home-bg.jpg"/>
+					          <div class="card-body">
+					            <h5 class="card-title">${productVO.name}</h5>
+					<%--             <p class="card-text">${productVO.prodDesc}</p> --%>
+									<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/product/ProductServlet">
+
 			     					<input type="submit" value="前往">
 			     					<input type="hidden" name="id"  value="${newsVO.id}">
 			     					<input type="hidden" name="action"	value="getOne_For_User">

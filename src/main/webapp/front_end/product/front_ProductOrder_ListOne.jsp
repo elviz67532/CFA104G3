@@ -14,7 +14,8 @@ ProductOrderVO productOrderVO = (ProductOrderVO) request.getAttribute("productOr
 
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>委域</title>
@@ -34,78 +35,38 @@ ProductOrderVO productOrderVO = (ProductOrderVO) request.getAttribute("productOr
 	href="${pageContext.request.contextPath}/vendor/bootstrap/css/styles.css"
 	rel="stylesheet" type="text/css" />
 
+<link href="<%=request.getContextPath()%>/css/activity/backNewFile.css"
+	rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
 </head>
 <style>
-.section {
-	/* 	border:2px black solid; */
-	text-align: center;
-	background-color: rgba(196, 220, 179, 0.2);
-	font-size: 0;
-	z-index: -100;
-	top: 50px;
-	bottom: 100px;
-}
-
-.titleh1 h1 {
-	text-align: center;
-	font-size: 25px;
-	line-height: 50px;;
-}
-
-.buttondiv {
-	position: absolute;
-	top: 125px;
+form {
 	display: inline;
-	right: 120px;
+	border-radius: 16px;
 }
 
-.btn {
-	box-sizing: border-box;
-	appearance: none;
-	background-color: transparent;
-	border: 2px solid #3498db;
-	border-radius: 0.6em;
-	color: #3498db;
+form:hover {
 	cursor: pointer;
-	align-self: center;
-	font-size: 1rem;
-	font-weight: 400;
-	line-height: 1;
-	margin: 20px;
-	padding: 1.2em 2.8em;
-	text-decoration: none;
-	text-align: center;
-	text-transform: uppercase;
-	font-family: 'Montserrat', sans-serif;
-	font-weight: 700;
+	border-radius: 16px;
+	margin-bottom: 0px;
 }
 
-.btn {
-	border-color: #3498db;
-	color: #fff;
-	box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
-	transition: all 150ms ease-in-out;
-}
-
-.btn:hover {
+table th {
 	color: black;
-	outline: 0;
-	box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
+	padding: 5px 10px;
+	text-align: center;
 }
 
-table {
-	width: 800px;
-	background-color: #DEFFFF;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-table, th, td {
-	border: 1px solid #00C2C2;
-}
-
-th, td {
-	padding: 5px;
+td {
 	text-align: center;
 }
 </style>
@@ -137,7 +98,7 @@ th, td {
 	<!-- 主體畫面設計  -->
 
 	<!-- 程式例外錯誤 -->
-	<table id="table-1">
+	<table class="table table-striped table-hover">
 		<tr>
 			<td>
 				<h3>訂單資料</h3>

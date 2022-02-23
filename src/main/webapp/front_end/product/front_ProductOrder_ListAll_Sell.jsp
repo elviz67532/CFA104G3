@@ -6,19 +6,25 @@
 ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
 List<ProductOrderVO> list = poSvc.getAll();
 pageContext.setAttribute("list", list);
-
-Map<Integer, String> statusMap = new HashMap<>();
-statusMap.put(0, "待出貨");
-statusMap.put(1, "已出貨");
-statusMap.put(2, "完成訂單");
-statusMap.put(3, "待撥款");
-statusMap.put(4, "已撥款");
-statusMap.put(5, "待退款1");
-statusMap.put(6, "待退款2");
-statusMap.put(7, "已退款1");
-statusMap.put(8, "已退款2");
-
 %>
+
+<%
+Map<Integer, String> map = new HashMap<>();
+map.put(0, "待出貨");
+map.put(1, "已出貨");
+map.put(2, "完成訂單(待撥款給賣方)");
+map.put(3, "待撥款");
+map.put(4, "已撥款給賣方");
+map.put(5, "待退款(買方取消訂單)"); //買家取消訂單
+map.put(6, "待退款(買方退貨)");
+map.put(7, "已退款(買方取消訂單)");
+map.put(8, "已退款(買方退貨)");
+map.put(9, "待退款(賣方取消訂單)"); //賣家取消訂單
+map.put(10, "已退款(賣方取消訂單)");
+pageContext.setAttribute("map", map);
+%>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,12 +33,28 @@ statusMap.put(8, "已退款2");
 
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>委域</title>
+<link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+	crossorigin="anonymous"></script>
+<!-- Google fonts-->
 <link
-	href="<%=request.getContextPath()%>/css/back_end/sb-admin-2.min.css"
+	href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+	rel="stylesheet" type="text/css" />
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+	rel="stylesheet" type="text/css" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link
+	href="${pageContext.request.contextPath}/vendor/bootstrap/css/styles.css"
+	rel="stylesheet" type="text/css" />
+
+<link href="<%=request.getContextPath()%>/css/activity/backNewFile.css"
 	rel="stylesheet">
 <link
 	href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.css"
@@ -46,83 +68,24 @@ statusMap.put(8, "已退款2");
 
 </head>
 <style>
-.section {
-	/* 	border:2px black solid; */
-	text-align: center;
-	background-color: rgba(196, 220, 179, 0.2);
-	font-size: 0;
-	z-index: -100;
-	top: 50px;
-	bottom: 100px;
-}
-
-.titleh1 h1 {
-	text-align: center;
-	font-size: 25px;
-	line-height: 50px;;
-}
-
-.buttondiv {
-	position: absolute;
-	top: 125px;
+form {
 	display: inline;
-	right: 120px;
+	border-radius: 16px;
 }
 
-.btn {
-	box-sizing: border-box;
-	appearance: none;
-	background-color: transparent;
-	border: 2px solid #3498db;
-	border-radius: 0.6em;
-	color: #3498db;
+form:hover {
 	cursor: pointer;
-	align-self: center;
-	font-size: 1rem;
-	font-weight: 400;
-	line-height: 1;
-	margin: 20px;
-	padding: 1.2em 2.8em;
-	text-decoration: none;
-	text-align: center;
-	text-transform: uppercase;
-	font-family: 'Montserrat', sans-serif;
-	font-weight: 700;
+	border-radius: 16px;
+	margin-bottom: 0px;
 }
 
-.btn {
-	border-color: #3498db;
-	color: #fff;
-	box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
-	transition: all 150ms ease-in-out;
-}
-
-.btn:hover {
+table th {
 	color: black;
-	outline: 0;
-	box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
+	padding: 5px 10px;
+	text-align: center;
 }
 
-table {
-	width: 800px;
-	background-color: #DEFFFF;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-table {
-	width: 800px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-table, th, td {
-	border: 1px solid #CCCCFF;
-}
-
-th, td {
-	padding: 5px;
+td {
 	text-align: center;
 }
 </style>
@@ -165,12 +128,11 @@ th, td {
 	<li><a href="front_ProductOrder_Retrieve.jsp"><input
 			type="submit" value="商品訂單查詢"></a>
 	<li>
-		<table>
+		<table class="table table-striped table-hover">
 			<thead>
 				<tr>
 					<th class="text-nowrap">訂單編號</th>
 					<th class="text-nowrap">商品編號</th>
-
 					<th class="text-nowrap">買家編號</th>
 					<th class="text-nowrap">收件人姓名</th>
 					<th class="text-nowrap">收件人電話</th>
@@ -179,23 +141,10 @@ th, td {
 					<th class="text-nowrap">商品數量</th>
 					<th class="text-nowrap">訂單總金額</th>
 					<th class="text-nowrap">訂單狀態</th>
+					<th class="text-nowrap">訂單變動</th>
 				</tr>
 			</thead>
-			<tfoot>
-				<tr>
-					<th class="text-nowrap">訂單編號</th>
-					<th class="text-nowrap">商品編號</th>
 
-					<th class="text-nowrap">買家編號</th>
-					<th class="text-nowrap">收件人姓名</th>
-					<th class="text-nowrap">收件人電話</th>
-					<th class="text-nowrap">收件人地址</th>
-					<th class="text-nowrap">訂單成立時間</th>
-					<th class="text-nowrap">商品數量</th>
-					<th class="text-nowrap">訂單總金額</th>
-					<th class="text-nowrap">訂單狀態</th>
-				</tr>
-			</tfoot>
 			<%@ include file="page1.jsp"%>
 			<c:forEach var="productOrderVO" items="${list}"
 				begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -212,30 +161,37 @@ th, td {
 						<td>${productOrderVO.date}</td>
 						<td>${productOrderVO.amountOfProduct}</td>
 						<td>${productOrderVO.amountOfPrice}</td>
-						<td>${productOrderVO.status}</td>
+
+						<td>${map[productOrderVO.status]}</td>
+						<td>
 
 
+							<FORM METHOD="post"
+								ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do">
+								<input type="hidden" name="action" value="sellerCancelTwo">
+								<input type="hidden" name="id" value="${productOrderVO.id}">
+								<input type="submit" value="取消">
+							</FORM>
+							<FORM METHOD="post"
+								ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do">
+								<input type="hidden" name="action" value="go"> <input
+									type="hidden" name="id" value="${productOrderVO.id}"> <input
+									type="submit" value="出貨">
+							</FORM>
+
+						</td>
 					</tr>
 				</tbody>
 			</c:forEach>
 		</table> <%@ include file="page2.jsp"%> <!-- Footer-->
-		<jsp:include page="/front_end/common/footer.jsp"></jsp:include> <!-- Bootstrap core JS-->
+
+		
+		</script> <jsp:include page="/front_end/common/footer.jsp"></jsp:include> <!-- Bootstrap core JS-->
 
 		<script
-			src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
-		<script
-			src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
-		<script
-			src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
-		<script
-			src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
-		<script
-			src="<%=request.getContextPath()%>/vendor/datatables/jquery.dataTables.min.js"></script>
-		<script
-			src="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-		<!-- Page level custom scripts --> <script
-			src="<%=request.getContextPath()%>/js/demo/datatables-demo.js"></script>
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- Core theme JS--> <script
+			src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
 </body>
 
 </html>

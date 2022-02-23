@@ -6,7 +6,6 @@
 <%@ page import="java.util.*"%>
 <%@ page import="java.util.Map.Entry" %>
 <%@ page import="com.product.model.ProductDAOImpl"%>
-<%-- <%@ page language="java" contentType="text/html; charset=BIG5" pageEncoding="BIG5"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -114,7 +113,7 @@
 	<!-- 麵包屑 (Breadcrumb) -->
 	<nav aria-label="breadcrumb">
 	  <ol class="breadcrumb">
-	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總攬</a></li>
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總覽</a></li>
 	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp">買賣家</a></li>
 	    <li class="breadcrumb-item active" aria-current="page">商品管理</li>
 	  </ol>

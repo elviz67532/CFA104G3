@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.product.model.*" %>
 <%@ page import="com.member.model.*"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,6 +11,9 @@
 	if (memberVo == null) {
 	response.sendRedirect(request.getContextPath() + "/front_end/member/login.jsp");
 	}
+%>
+<%
+	ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 %>
 <head>
     <meta charset="utf-8" />
@@ -102,7 +106,7 @@
 	<!-- 麵包屑 (Breadcrumb) -->
 	<nav aria-label="breadcrumb">
 	  <ol class="breadcrumb">
-	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總攬</a></li>
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總覽</a></li>
 	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp">買賣家</a></li>
 	    <li class="breadcrumb-item active" aria-current="page">新增商品</li>
 	  </ol>
@@ -129,7 +133,9 @@
 							<!-- 商品名稱 -->
 							<div class="col-sm-6">
 								<label for="lastName" class="form-label">商品名稱</label> 
-								<input type="text" name="prodName" class="form-control" required/>
+								<input type="text" name="prodName" 
+								value="<%= (productVO==null)? "" : productVO.getName()%>"
+								class="form-control" required/>
 								<div class="invalid-feedback">Valid last name is required.</div>
 							</div>
 							<!-- 商品內容 -->

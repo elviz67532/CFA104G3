@@ -3,6 +3,8 @@ package com.product_order.model;
 import java.sql.*;
 import java.util.*;
 
+import com.activity.model.ActivityVO;
+
 import core.util.SQLUtil;
 
 public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
@@ -21,6 +23,8 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 	private static final String UPDATE = "update PRODUCT_ORDER set "
 			+ "PRODO_NAME = ?, PRODO_MOBILE = ?, PRODO_ADDRESS = ?, PRODO_DATE = ?, PRODO_AMOUNT = ?, PRODO_STATUS = ?, PRODO_SUM = ? "
 			+ "where PRODO_ID = ?";
+
+	private static final String CHANGE_STATUS = "update PRODUCT_ORDER set PRODO_STATUS = ? where PRODO_ID = ?";
 
 	static {
 		try {
@@ -186,6 +190,51 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 		}
 
 		return list;
+	}
+
+//	@Override
+//	public int changeStatus(int id, int status) {
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		int updateRow;
+//
+//		try {
+//			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+//			pstmt = con.prepareStatement(CHANGE_STATUS);
+//
+//			pstmt.setInt(1, status);
+//			pstmt.setInt(2, id);
+//
+//			updateRow = pstmt.executeUpdate();
+//		} catch (SQLException se) {
+//			throw new RuntimeException("A database error occured. " + se.getMessage());
+//		} finally {
+//			SQLUtil.closeResource(con, pstmt, null);
+//		}
+//
+//		return updateRow;
+//
+//	}
+	@Override
+	public int updateStatus(ProductOrderVO vo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int updateRow;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(CHANGE_STATUS);
+
+			pstmt.setInt(1, vo.getStatus());
+			pstmt.setInt(2, vo.getId());
+
+			updateRow = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
+		return updateRow;
 	}
 
 }

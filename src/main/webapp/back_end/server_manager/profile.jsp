@@ -8,7 +8,13 @@
 	ServerManagerVO smVO = (ServerManagerVO)session.getAttribute("ServerManagerVO");
 	pageContext.setAttribute("smVO", smVO);
 %>
-
+<%
+	Map<Integer, String> gender = new HashMap<>();
+	gender.put(0,"不透漏");
+	gender.put(1,"男");
+	gender.put(2,"女");
+	pageContext.setAttribute("gender", gender);	
+%>
 <!doctype html>
 <html lang="zh-TW">
 <head>
@@ -67,7 +73,7 @@
 					    </tr>
 					    <tr>
 					      <th scope="row">性別</th>
-					      <td>${ServerManagerVO.smgrGender}</td>
+					      <td>${gender[ServerManagerVO.smgrGender]}</td>
 					    </tr>
 					    <tr>
 					      <th scope="row">地址</th>

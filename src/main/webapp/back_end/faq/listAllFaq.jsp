@@ -71,12 +71,12 @@ td {
 									value="新增FAQ"></a></td>
 						</h2>
 					</h1>
-<!-- 					<FORM METHOD="post" -->
-<%-- 						ACTION="<%=request.getContextPath()%>/back_end/faq/faq.do"> --%>
-<!-- 						<b>FAQ編號檢索:</b> <input type="text" name="id"> <input -->
-<!-- 							type="hidden" name="action" value="getOne_For_Display"> <input -->
-<!-- 							type="submit" value="Search"> -->
-<!-- 					</FORM> -->
+					<!-- 					<FORM METHOD="post" -->
+					<%-- 						ACTION="<%=request.getContextPath()%>/back_end/faq/faq.do"> --%>
+					<!-- 						<b>FAQ編號檢索:</b> <input type="text" name="id"> <input -->
+					<!-- 							type="hidden" name="action" value="getOne_For_Display"> <input -->
+					<!-- 							type="submit" value="Search"> -->
+					<!-- 					</FORM> -->
 
 					<table class="table table-striped table-hover">
 						<tr>
@@ -126,17 +126,35 @@ td {
 		class="fas fa-angle-up"></i>
 	</a>
 
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
+	
 	<!-- Logout Modal-->
 	<jsp:include page="/back_end/common/logoutModal.jsp"></jsp:include>
-
+	
 	<!-- custom script -->
-
+	
 	<!-- Bootstrap core JavaScript-->
 	<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
+
+
+	<!-- Page level plugins -->
 	<script
-		src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
+		src="<%=request.getContextPath()%>/vendor/datatables/jquery.dataTables.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
+		src="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+	<!-- Page level custom scripts -->
+	<script src="<%=request.getContextPath()%>/js/demo/datatables-demo.js"></script>
+
+	<!-- 註冊按鈕觸發功能  -->
+	<script>
+		
+	</script>
+</body>
 </html>
