@@ -84,8 +84,8 @@
 	<!-- 麵包屑 (Breadcrumb) -->
 	<nav aria-label="breadcrumb">
 	  <ol class="breadcrumb">
-	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總攬</a></li>
-	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/update_product_input.jsp">買賣家</a></li>
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總覽</a></li>
+	    <li class="breadcrumb-item active" aria-current="page">買賣家</li>
 	    <li class="breadcrumb-item active" aria-current="page">照片</li>
 	  </ol>
 	</nav>	

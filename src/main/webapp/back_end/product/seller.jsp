@@ -42,7 +42,7 @@
 							</c:if>
 							
 							<ul>
-								<li><a href='listAll.jsp'><h5>List all Products</h5></a> 
+								<li><a href='<%=request.getContextPath()%>/back_end/product/listAll.jsp'><h5>List all Products</h5></a> 
 								
 								<li>
 									<div class="input-group mb-3">
