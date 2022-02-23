@@ -16,7 +16,8 @@ public class NewsDAOJDBCImpl implements NewsDAO {
 	private static final String INSERT_STMT = "insert into NEWS(NEWS_CONTENT, NEWS_IMG, NEWS_TIME, NEWS_TYPE, NEWS_TITLE) values(?, ?, ?, ?, ?)";
 	private static final String DELETE = "delete from NEWS where NEWS_ID = ?";
 	private static final String UPDATE = "update NEWS set NEWS_CONTENT = ?, NEWS_IMG = ?, NEWS_TIME = ?, NEWS_TYPE = ?, NEWS_TITLE = ? where NEWS_ID = ?";
-
+	private static final String GET_ALL_BY_TYPE = "SELECT * FROM NEWS WHERE NEWS_TYPE=?";
+	
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -168,5 +169,40 @@ public class NewsDAOJDBCImpl implements NewsDAO {
 
 		return list;
 	}
+
+	@Override
+	public List<NewsVO> selectByType(Integer type) {
+		List<NewsVO> list = new ArrayList<NewsVO>();
+		NewsVO vo = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(GET_ALL_BY_TYPE);
+			pstmt.setInt(1, type);
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				vo = new NewsVO();
+				vo.setId(rs.getInt("NEWS_ID"));
+				vo.setContent(rs.getString("NEWS_CONTENT"));
+				vo.setImage(rs.getBytes("NEWS_IMG"));
+				vo.setDate(rs.getTimestamp("NEWS_TIME"));
+				vo.setType(rs.getInt("NEWS_TYPE"));
+				vo.setTitle(rs.getString("NEWS_TITLE"));
+				list.add(vo);
+			}		
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}		
+		
+		return list;
+	}
+
 
 }

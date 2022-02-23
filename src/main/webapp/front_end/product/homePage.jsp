@@ -2,12 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.news.model.*" %>
-
-
-<% 
-NewsServiceImpl newsServiceImpl=new NewsServiceImpl(); 
-List<NewsVO> list = newsServiceImpl.selectAllNews();
-pageContext.setAttribute("list", list);
+<%@	page import="com.product.model.*"%>
+<%
+	ProductServiceImpl productService = new ProductServiceImpl();
+	List<ProductVO> list = productService.getAll();
+	pageContext.setAttribute("list", list);
+%>
+<%
+	NewsServiceImpl newsSvc = new NewsServiceImpl();
+	List<NewsVO> newslist = newsSvc.selectAllByType(1);
+	pageContext.setAttribute("newslist", newslist);
 %>
 
 <!DOCTYPE html>
@@ -38,19 +42,18 @@ pageContext.setAttribute("list", list);
     <jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
     <!-- Page Header-->
-    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/news.jpg')">
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/product01.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>最新消息</h1>
-                        <span class="subheading">最新資訊都在這</span>
+                        <h1>二手商城</h1>
+                        <span class="subheading">愛地球，資源再利用</span>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
- 
+    </header> 
    	<!-- 主體畫面設計  -->
 <!--    	<div class="row justify-content-center"> -->
 <!--       <div class="col-lg-6 SEARCHFOR"> -->
