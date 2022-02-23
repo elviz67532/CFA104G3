@@ -86,8 +86,7 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
-    </div>
-	<br><br>
+    </div>	<br><br>
 	<div class="container">
 		<div class="row">
 			<!-- 左邊3欄  list group 分類功能-->
@@ -117,14 +116,19 @@
 									<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/product/ProductServlet">
 
 			     					<input type="submit" value="前往">
-			     					<input type="hidden" name="id"  value="${newsVO.id}">
-			     					<input type="hidden" name="action"	value="getOne_For_User">
-			     			</FORM>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </c:forEach>
+			     					<input type="hidden" name="prodId"  value="${productVO.id}">
+			     					<input type="hidden" name="action"	value="getOne_For_Display">
+					     			</FORM>
+		                        </div>
+		                    </div>
+						</c:forEach>
+					    </div>					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		        
         
         
     <!-- Scroll to Top Button-->

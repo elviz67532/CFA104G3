@@ -170,16 +170,14 @@
                         </button>
                         <br>
                       
-                        <FORM METHOD="post" ACTION="productcollection.do">
+                        <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/front_end/product/productcollection.do">
                         <input type="hidden" name="action" value="insert">
-
-                        <input type="hidden" name="id" value="${productVO.id}">
-                        <button class="btn btn-outline-dark flex-shrink-0 me-1" type="submit">收藏</button>
-                        </FORM>
-                        <button class="btn btn-outline-dark flex-shrink-0 me-1" type="button">
-                            <i class="bi bi-people-fill"></i>
-                            回報
-                        
+                        <input type="hidden" name="productId" value="<%=productVO.getId()%>">
+                        <button class="btn2Collect" type="submit">                       
+                         <i class="bi bi-bookmarks-fill"></i>
+                            加入收藏
+                        </button>
+                        </FORM>                        
                         
                         <a href="<%=request.getContextPath()%>/front_end/product/productReport.jsp?prodId=<%=productVO.getId()%>">
                         <button class="btn3Return" type="button">                       

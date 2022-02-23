@@ -134,7 +134,7 @@
 <%-- 				<c:set var="product" scope="session" value="${productVO.status}"/> --%>
 			         <c:choose>
 				           <c:when test="${productVO.status == 0}">
-				           		販售111
+				           		販售
 				           </c:when>
 				           <c:when test="${productVO.status == 1}">
 				           		完售

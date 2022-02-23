@@ -34,10 +34,10 @@ public class ProductCollectionServlet extends HttpServlet{
 		String action = req.getParameter("action");
 		
         if ("insert".equals(action)) {   
-			
+			System.out.println("insert");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				String str = req.getParameter("id");
