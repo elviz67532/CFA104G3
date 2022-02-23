@@ -53,8 +53,7 @@
 			<!-- 帳號 -->
 		    <div class="form-floating">
 		      <input 
-<%--		        value="${requestScope.inputAccount}" --%>
-		        value="GrT85h4E" 
+		        value="${requestScope.inputAccount}"
 		      	type="text" name="account" class="form-control" id="floatingInput" placeholder="">
 		      <label for="floatingInput">Account</label>
 		    </div>
@@ -65,8 +64,7 @@
 		    <!-- 密碼 -->
 		    <div class="form-floating">
 		      <input 
-<%--		     	value="${requestScope.inputPassword}" --%>
- 		     	value="V3uWPzYp" 
+		     	value="${requestScope.inputPassword}"
 		      	type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
 		      <label for="floatingPassword">Password</label>
 		    </div>

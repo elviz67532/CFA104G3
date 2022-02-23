@@ -80,7 +80,7 @@ public class BackEndMemberFilter implements Filter {
 		boolean hasAuth = false;
 		// 擁有權限
 		for (ServerManagerAuthVO authVo : authVos) { // user 登入一個網頁檢查一次
-			if(authVo.getSmgeAuthId() == currentURLAuth) {
+			if(authVo.getSmgeAuthId().intValue() == currentURLAuth) {
 				hasAuth = true;
 				break;
 			}

@@ -161,21 +161,22 @@ th, td {
 		class="fas fa-angle-up"></i>
 	</a>
 
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
+	
 	<!-- Logout Modal-->
 	<jsp:include page="/back_end/common/logoutModal.jsp"></jsp:include>
-
+	
+	<!-- custom script -->
+	
 	<!-- Bootstrap core JavaScript-->
 	<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
 
-	<!-- Core plugin JavaScript-->
-	<script
-		src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-	<!-- Custom scripts for all pages-->
-	<script
-		src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
 
 	<!-- Page level plugins -->
 	<script
