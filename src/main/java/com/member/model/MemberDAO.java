@@ -20,5 +20,9 @@ public interface MemberDAO extends CoreDao<MemberVO, Integer> {
 
 	int status(MemberVO vo);
 
+	MemberVO findByAccount(String account);
+
+	MemberVO findByEmail(String email);
+
 	
 }

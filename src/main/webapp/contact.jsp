@@ -43,27 +43,27 @@
 			</div>
 		</div>
 	</header>
-	
+
 	<c:if test="${not empty result}">
-			 	<div class="container position-relative px-4 px-lg-5">
-		            <div class="row gx-4 gx-lg-5 justify-content-center">
-		                <div class="col-md-10 col-lg-8 col-xl-7">
-		                    <div class="site-heading"  style="text-align:center;">
-							<c:choose>
-								<c:when test="${result == 1}">
-									</label>
-									  <h1>訊息傳送成功</h1>
-								</c:when>
-								<c:otherwise>
-									</label>
-									  <h1>申請失敗，請重新申請</h1>
-								</c:otherwise>
-							</c:choose>
-							</div>		
-		                </div>
-		            </div>
-		        </div>
-			</c:if>
+		<div class="container position-relative px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<div class="site-heading" style="text-align: center;">
+						<c:choose>
+							<c:when test="${result == 1}">
+								</label>
+								<h1>訊息傳送成功</h1>
+							</c:when>
+							<c:otherwise>
+								</label>
+								<h1>申請失敗，請重新申請</h1>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
 	<!-- Main Content-->
 	<main class="mb-4">
 		<div class="container px-4 px-lg-5">
@@ -78,28 +78,74 @@
 						<!-- To make this form functional, sign up at-->
 						<!-- https://startbootstrap.com/solution/contact-forms-->
 						<!-- to get an API token!-->
+						<!-- 						<form id="contactForm" METHOD="post" ACTION="contact.do"> -->
+						<!-- 							<div class="form-floating"> -->
+						<!-- 								<input name="name" class="form-control" id="name" type="text" -->
+						<!-- 									placeholder="Enter your name..." data-sb-validations="required" /> -->
+						<!-- 								<label for="name">您的大名</label> -->
+						<!-- 								<div class="invalid-feedback" data-sb-feedback="name:required">名字尚未填寫</div> -->
+						<!-- 							</div> -->
+						<!-- 							<div class="form-floating"> -->
+						<!-- 								<input name="email" class="form-control" id="email" type="email" -->
+						<!-- 									placeholder="Enter your email..." -->
+						<!-- 									data-sb-validations="required,email" /> <label for="email">電子信箱</label> -->
+						<!-- 								<div class="invalid-feedback" data-sb-feedback="email:required">信箱尚未填寫</div> -->
+						<!-- 								<div class="invalid-feedback" data-sb-feedback="email:email">信箱錯誤</div> -->
+						<!-- 							</div> -->
+						<!-- 							<div class="form-floating"> -->
+						<!-- 								<input name="phone" class="form-control" id="phone" type="tel" -->
+						<!-- 									placeholder="Enter your phone number..." -->
+						<!-- 									data-sb-validations="required" /> <label for="phone">連絡電話</label> -->
+						<!-- 								<div class="invalid-feedback" data-sb-feedback="phone:required">電話號碼尚未填寫</div> -->
+						<!-- 							</div> -->
+						<!-- 							<div class="form-floating"> -->
+						<!-- 								<textarea name="massage" class="form-control" id="message" -->
+						<!-- 									placeholder="Enter your message here..." style="height: 12rem" -->
+						<!-- 									data-sb-validations="required"></textarea> -->
+						<!-- 								<label for="message">給我們的訊息</label> -->
+						<!-- 								<div class="invalid-feedback" -->
+						<!-- 									data-sb-feedback="message:required">電子信箱尚未填寫</div> -->
+						<!-- 							</div> -->
+						<!-- 							<br /> -->
+						<!-- 							<div class="d-none" id="submitSuccessMessage"> -->
+						<!-- 								<div class="text-center mb-3"> -->
+						<!-- 									<div class="fw-bolder">Form submission successful!</div> -->
+						<!-- 									To activate this form, sign up at <br /> <a -->
+						<!-- 										href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a> -->
+						<!-- 								</div> -->
+						<!-- 							</div> -->
+						<!-- 							<div class="d-none" id="submitErrorMessage"> -->
+						<!-- 								<div class="text-center text-danger mb-3">Error sending -->
+						<!-- 									message!</div> -->
+						<!-- 							</div> -->
+						<!-- 							Submit Button -->
+						<!-- 							<input type="hidden" name="action" value="addmassage"> -->
+						<!-- 							<button id="submitButton" type="submit">傳送</button> -->
+						<!-- 						</form> -->
+
+						<!-- 						<form id="contactForm" data-sb-form-api-token="API_TOKEN"> -->
 						<form id="contactForm" METHOD="post" ACTION="contact.do">
 							<div class="form-floating">
-								<input name="name" class="form-control" id="name" type="text"
+								<input class="form-control" id="name" type="text"
 									placeholder="Enter your name..." data-sb-validations="required" />
 								<label for="name">您的大名</label>
 								<div class="invalid-feedback" data-sb-feedback="name:required">名字尚未填寫</div>
 							</div>
 							<div class="form-floating">
-								<input name="email" class="form-control" id="email" type="email"
+								<input class="form-control" id="email" type="email"
 									placeholder="Enter your email..."
 									data-sb-validations="required,email" /> <label for="email">電子信箱</label>
 								<div class="invalid-feedback" data-sb-feedback="email:required">信箱尚未填寫</div>
 								<div class="invalid-feedback" data-sb-feedback="email:email">信箱錯誤</div>
 							</div>
 							<div class="form-floating">
-								<input name="phone" class="form-control" id="phone" type="tel"
+								<input class="form-control" id="phone" type="tel"
 									placeholder="Enter your phone number..."
 									data-sb-validations="required" /> <label for="phone">連絡電話</label>
 								<div class="invalid-feedback" data-sb-feedback="phone:required">電話號碼尚未填寫</div>
 							</div>
 							<div class="form-floating">
-								<textarea name="massage" class="form-control" id="message"
+								<textarea class="form-control" id="message"
 									placeholder="Enter your message here..." style="height: 12rem"
 									data-sb-validations="required"></textarea>
 								<label for="message">給我們的訊息</label>
@@ -107,8 +153,21 @@
 									data-sb-feedback="message:required">電子信箱尚未填寫</div>
 							</div>
 							<br />
+							<div class="d-none" id="submitSuccessMessage">
+								<div class="text-center mb-3">
+									<div class="fw-bolder">Form submission successful!</div>
+									To activate this form, sign up at <br /> <a
+										href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+								</div>
+							</div>
+							<div class="d-none" id="submitErrorMessage">
+								<div class="text-center text-danger mb-3">Error sending
+									message!</div>
+							</div>
 							<!-- Submit Button-->
-							<input type="hidden" name="action" value="addmassage">
+							<!-- 							<button class="btn btn-primary text-uppercase disabled" -->
+							<!-- 								id="submitButton" type="submit">Send</button> -->
+
 							<button id="submitButton" type="submit">傳送</button>
 						</form>
 					</div>

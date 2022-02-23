@@ -3,6 +3,8 @@ package com.member.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.server_manager.model.ServerManagerVO;
+
 public class MemberServiceImpl implements MemberService {
 	private MemberDAOJDBCImpl dao;
 
@@ -97,7 +99,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVO register(String email, String account, String password, String nickname, String name, String phone,
-			Integer gender, String city, String cityArea, String address, String code, byte[] avatar) {
+			Integer gender, String code, byte[] avatar) {
 
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -109,9 +111,6 @@ public class MemberServiceImpl implements MemberService {
 		memberVO.setName(name);
 		memberVO.setPhone(phone);
 		memberVO.setGender(gender);
-		memberVO.setCity(city);
-		memberVO.setCityArea(cityArea);
-		memberVO.setAddress(address);
 		memberVO.setCode(code);
 		memberVO.setAvatar(avatar);
 		memberVO.setRegisterDate(timestamp);
@@ -145,10 +144,10 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public boolean veriftyCode(Integer status, Integer id, String code) {
-		// TODO 
-
-		return dao.veriftyCode(1, id, code) > 0;
-
+//		if (status != 0) {
+//			return false;			
+//		} 
+		return dao.veriftyCode(1, id, code) > 0;		
 	}
 
 	private boolean updateStatus(Integer id, Integer status) {
@@ -173,6 +172,16 @@ public class MemberServiceImpl implements MemberService {
 		memberVO.setStatus(status);
 
 		dao.status(memberVO);
+		return memberVO;
+	}
+    @Override
+    public MemberVO findByAccount(String account) {
+    	MemberVO memberVO = dao.findByAccount(account);
+		return memberVO;
+	}
+    @Override
+    public MemberVO findByEmail(String email) {
+    	MemberVO memberVO = dao.findByEmail(email);
 		return memberVO;
 	}
 

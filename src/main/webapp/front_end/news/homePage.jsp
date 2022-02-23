@@ -61,7 +61,7 @@ pageContext.setAttribute("list", list);
                     <div class="row gx-5 align-items-center">
                         <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id}" alt="..." /></div>
                         <div class="col-lg-6">
-                            <h2 class="fw-bolder">${newsVO.title}</h2>
+                            <h2 class="fw-bolder text-truncate">${newsVO.title}</h2>
                             <p>${newsVO.date}</p>
 <%--                             <p class="lead fw-normal text-muted mb-0 text-break">${newsVO.content}...</p> --%>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">

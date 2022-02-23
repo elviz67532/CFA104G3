@@ -11,6 +11,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.activity.model.ActivityDAO;
@@ -19,6 +20,7 @@ import com.activity_attend.model.ActivityAttendVO;
 import com.activity_report.*;
 import com.activity_report.model.ActivityReportServiceImpl;
 import com.activity_report.model.ActivityReportVO;
+import com.member.model.MemberVO;
 
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 10 * 1024 * 1024, maxRequestSize = 5 * 10 * 1024 * 1024)
@@ -43,12 +45,20 @@ public class ActivityReportServlet extends HttpServlet {
 				req.setAttribute("errorMsgs", errorMsgs);
 
 				try {
+					 HttpSession session = req.getSession();
+					    MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+					    if (memberVO == null) {
+//					        FrontEndMemberFilter.doFilter(req, res, gg);
+					     RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/login.jsp");
+					     failureView.forward(req, res);
+					     return;// 程式中斷
+					    }				
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-//檢舉活動編號
+//檢舉活動編號		
 					int activityId = Integer.valueOf(req.getParameter("activityId"));
 					
 //檢舉會員編號					
-					int memberId = Integer.valueOf(req.getParameter("memberId"));
+					int memberId = memberVO.getId();
 					
 //檢舉內容					
 					String content = req.getParameter("content").trim();
@@ -82,7 +92,7 @@ public class ActivityReportServlet extends HttpServlet {
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("actrVO", actrVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/front_end/activity/addReport.jsp");
+								.getRequestDispatcher("/front_end/activity/reportActivity.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -104,35 +114,27 @@ public class ActivityReportServlet extends HttpServlet {
 					failureView.forward(req, res);
 				}
 		 }
-		 if ("getOne_For_Insert".equals(action)) { // 來自listAllActa.jsp的請求
-			 
-			 				List<String> errorMsgs = new LinkedList<String>();
-			 				// Store this set in the request scope, in case we need to
-			 				// send the ErrorPage view.
-			 				req.setAttribute("errorMsgs", errorMsgs);
-			 				
-			 				try {
+		 if ("getOne_For_Insert".equals(action)) { 
+
+			 		try {
 			 					/***************************1.接收請求參數****************************************/
-			 					int memberId =Integer.valueOf(req.getParameter("memberId"));
 			 					int activityId = Integer.valueOf(req.getParameter("activityId"));
 			 					
 			 					/***************************2.開始查詢資料****************************************/
-			 					ActivityAttendServiceImpl actaSvc = new ActivityAttendServiceImpl();
 			 					ActivityReportVO actrVO =new ActivityReportVO();
-			 					actrVO.setMemberId(memberId);
+			 					System.out.println(activityId);
 			 					actrVO.setActivityId(activityId);
-			 					actrVO.setContent("好不好玩");
+			 					actrVO.setContent("不好玩");
 			 					/***************************3.查詢完成,準備轉交(Send the Success view)************/
 			 					req.setAttribute("actrVO", actrVO);         // 資料庫取出的empVO物件,存入req
-			 					String url = "/front_end/activity/addReport.jsp";
+			 					String url = "/front_end/activity/reportActivity.jsp";
 			 					RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 			 					successView.forward(req, res);
 			 
 			 					/***************************其他可能的錯誤處理**********************************/
 			 				} catch (Exception e) {
-			 					errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 			 					RequestDispatcher failureView = req
-			 							.getRequestDispatcher("/front_end/activity/addReport.jsp");
+			 							.getRequestDispatcher("/front_end/activity/homePage.jsp");
 			 					failureView.forward(req, res);
 			 				}
 			 			}

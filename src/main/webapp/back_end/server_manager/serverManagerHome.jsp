@@ -31,11 +31,14 @@
 				<!-- Topbar -->
 				<jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
 				<div class="container-fluid">
-
+					<div class="d-flex justify-content-center">
 					<!-- main -->
-					首頁!!!!
+					<img src="<%=request.getContextPath()%>/asset/img/backendHome.jpeg"
+						style="max-height:'100%';max-width:'100%'"
+						class="img-fluid d-none d-md-block rounded mb-2 s">
+					</div>
 			
-			
+					
 			
 			
 			

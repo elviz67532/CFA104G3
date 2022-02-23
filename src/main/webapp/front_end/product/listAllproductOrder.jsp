@@ -102,7 +102,7 @@ td {
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
 						<h1>
-							前台買家訂單管理主頁
+							買家訂單管理主頁
 							<h1>
 								<span class="subheading">二手商城</span>
 					</div>
@@ -124,14 +124,14 @@ td {
 			</c:forEach>
 		</ul>
 	</c:if>
-	<li>
-		<FORM METHOD="post"
-			ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do">
-			<b>輸入訂單編號 (如1):</b> <input type="text" name="id"> <input
-				type="hidden" name="action" value="getOne_For_Update_Order_Front">
-			<input type="submit" value="送出">
-		</FORM>
-	</li>
+<!-- 	<li> -->
+<!-- 		<FORM METHOD="post" -->
+<%-- 			ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do"> --%>
+<!-- 			<b>輸入訂單編號 (如1):</b> <input type="text" name="id"> <input -->
+<!-- 				type="hidden" name="action" value="getOne_For_Displayfront"> -->
+<!-- 			<input type="submit" value="送出"> -->
+<!-- 		</FORM> -->
+<!-- 	</li> -->
 
 	<table class="table table-striped table-hover">
 		<thead>
@@ -208,39 +208,7 @@ td {
 	<%@ include file="page2.jsp"%>
 	<!-- Footer-->
 
-	<script>
-		function triggerAlert1() {
-			var box1 = document.querySelector('.box1');
-			box1.style.backgroundColor = "black";
-
-		}
-		var ele1 = document.getElementById('foo1');
-		ele1.onclick = triggerAlert1;
-
-		function triggerAlert2() {
-			var box2 = document.querySelector('.box2');
-			box2.style.backgroundColor = "green";
-
-		}
-		var ele2 = document.getElementById('foo2');
-		ele2.onclick = triggerAlert2;
-
-		function triggerAlert3() {
-			var box3 = document.querySelector('.box3');
-			box3.style.backgroundColor = "red";
-
-		}
-		var ele3 = document.getElementById('foo3');
-		ele3.onclick = triggerAlert3;
-
-		function triggerAlert4() {
-			var box4 = document.querySelector('.box4');
-			box4.style.backgroundColor = "blue";
-
-		}
-		var ele4 = document.getElementById('foo4');
-		ele4.onclick = triggerAlert4;
-	</script>
+	
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
 	<!-- Bootstrap core JS-->
 
