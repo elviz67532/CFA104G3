@@ -90,7 +90,7 @@ th, td {
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
 						<h1>
-							前台訂單查詢
+							訂單查詢
 							<h1>
 								<span class="subheading">二手商城</span>
 					</div>

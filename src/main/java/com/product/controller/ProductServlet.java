@@ -55,7 +55,7 @@ public class ProductServlet extends HttpServlet {
 				}
 				if (!errMsgs.isEmpty()) { // errorMsgs有內容
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/product/Seller.jsp");
+							.getRequestDispatcher("/front_end/product/singleItem.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -70,7 +70,7 @@ public class ProductServlet extends HttpServlet {
 				
 				if(!errMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/product/Seller.jsp");
+							.getRequestDispatcher("/front_end/product/singleItem.jsp");
 					failureView.forward(req, res);
 					return;		
 				}
@@ -84,7 +84,7 @@ public class ProductServlet extends HttpServlet {
 				
 				if(!errMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/product/Seller.jsp");
+							.getRequestDispatcher("/front_end/product/singleItem.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷				
 				}
@@ -97,7 +97,7 @@ public class ProductServlet extends HttpServlet {
 			} catch (Exception e) {
 				errMsgs.add("無法取得資料" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front_end/product/Seller.jsp");
+						.getRequestDispatcher("/front_end/product/singleItem.jsp");
 				failureView.forward(req, res);
 				return;				
 			}	
@@ -112,13 +112,13 @@ public class ProductServlet extends HttpServlet {
 			
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/			
-				String str = req.getParameter("prodId");
+				String str = req.getParameter("prodId").trim();
 				if(str == null || (str.trim()).length() == 0) { // 沒有輸入資料 或 僅輸入空格
 					errMsgs.add("請輸入商品編號");
 				}
 				if (!errMsgs.isEmpty()) { // errorMsgs有內容
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/product/Seller.jsp");
+							.getRequestDispatcher("/back_end/product/seller.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -133,7 +133,7 @@ public class ProductServlet extends HttpServlet {
 				
 				if(!errMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/product/Seller.jsp");
+							.getRequestDispatcher("/back_end/product/seller.jsp");
 					failureView.forward(req, res);
 					return;		
 				}
@@ -160,7 +160,7 @@ public class ProductServlet extends HttpServlet {
 			} catch (Exception e) {
 				errMsgs.add("無法取得資料" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front_end/product/Seller.jsp");
+						.getRequestDispatcher("/back_end/product/seller.jsp");
 				failureView.forward(req, res);
 				return;				
 			}				
@@ -244,7 +244,7 @@ public class ProductServlet extends HttpServlet {
 			
 			try {
 				/***************************1.接收請求參數****************************************/
-				Integer prodId = Integer.valueOf(req.getParameter("prodId"));
+				Integer prodId = Integer.valueOf(req.getParameter("prodId").trim());
 //				System.out.println("ProductServlet-getoneforupdate: " + prodId); // 有取得數值
 				/***************************2.開始查詢資料****************************************/
 				ProductServiceImpl productSvc = new ProductServiceImpl();
@@ -263,8 +263,35 @@ public class ProductServlet extends HttpServlet {
 						.getRequestDispatcher("/front_end/product/listAll.jsp");
 				failView.forward(req, res);
 			} 
-			
 		}	
+		
+		if("getOne_For_Update_Img".equals(action)) {
+			
+			List<String> errMsgs = new LinkedList<String>();
+			req.setAttribute("errMsgs", errMsgs); // 放置到request裡面	
+			
+			try {
+				/***************************1.接收請求參數****************************************/
+				Integer prodId = Integer.valueOf(req.getParameter("prodId"));
+//				System.out.println("ProductServlet-getoneforupdate: " + prodId); // 有取得數值
+				/***************************2.開始查詢資料****************************************/
+				ProductServiceImpl productSvc = new ProductServiceImpl();
+				ProductVO productVO = productSvc.getOneProduct(prodId);
+				
+				/***************************3.查詢完成，準備轉交****************************************/
+				req.setAttribute("productVO", productVO);
+				String url = "/front_end/product/update_img.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				errMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failView = req
+						.getRequestDispatcher("/front_end/product/listAll.jsp");
+				failView.forward(req, res);
+			} 
+		}			
 		
 		if("update".equals(action)) {
 			
@@ -428,7 +455,7 @@ public class ProductServlet extends HttpServlet {
 			
 			/***************************3.修改完成,準備轉交(Send the Success view)*************/		
 			req.setAttribute("productVO", productVO);
-			String successUrl = "/front_end/product/update_img.jsp";
+			String successUrl = "/front_end/product/sellerAllProducts.jsp";
 			RequestDispatcher successDispatcher = req.getRequestDispatcher(successUrl);
 			System.out.println("修改完成,準備轉交");
 			successDispatcher.forward(req, res);
@@ -458,12 +485,17 @@ public class ProductServlet extends HttpServlet {
 			}
 
 
-			Integer prodType = Integer.valueOf(req.getParameter("prodType").trim());
-			/*檢查是否為 0 1 2 3 4*/
+			Integer prodType = null;
+			try {
+				prodType = Integer.valueOf(req.getParameter("prodType").trim());
+			} catch (NumberFormatException e1) {
+				errMsgs.add("選擇商品類型");
+				//e1.printStackTrace();
+			}
 
 			String prodDesc = req.getParameter("prodDesc").trim();
 			if(prodDesc == null || prodDesc.trim().length() == 0) {
-				errMsgs.add("商品敘述請勿空白");
+				errMsgs.add("商品內容請勿空白");
 			}
 			
 			Integer prodPrice = null;
@@ -473,9 +505,15 @@ public class ProductServlet extends HttpServlet {
 				errMsgs.add("請填入商品價格");
 			}
 			
-			String prodName = req.getParameter("prodName").trim();
-			if (prodName == null || prodDesc.trim().length() == 0) {
-				errMsgs.add("請填入商品名稱");
+			String prodName = null;
+			try {
+				prodName = req.getParameter("prodName").trim();
+				if (prodName == null || prodDesc.trim().length() == 0) {
+					errMsgs.add("請填入商品名稱");
+				}
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 
 			Timestamp prodUptime = null;

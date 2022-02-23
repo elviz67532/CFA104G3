@@ -118,7 +118,7 @@ public class MemberServiceImpl implements MemberService {
 		memberVO.setStatus(0);
 		int id = dao.insert(memberVO);
 		memberVO.setId(id);
-  
+
 		return memberVO;
 
 	}
@@ -144,9 +144,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public boolean veriftyCode(Integer status,Integer id, String code) {
+	public boolean veriftyCode(Integer status, Integer id, String code) {
+		// TODO 
 
-		return dao.veriftyCode(1,id, code) > 0;
+		return dao.veriftyCode(1, id, code) > 0;
 
 	}
 
@@ -163,12 +164,17 @@ public class MemberServiceImpl implements MemberService {
 	public boolean restoreMember(Integer id) {
 		return updateStatus(id, 1);
 	}
-}
+    @Override
+	public MemberVO status(Integer id, Integer status) {
 
-//public MemberVO genVerifyCode(int memberId) {
-//	
-//	RandomPassword rPd =new RandomPassword();
-//	String randomPassword = rPd.getRandomPassword();
-//	dao.update(memberId);
-//	return randomPassword;
-//}
+		MemberVO memberVO = new MemberVO();
+
+		memberVO.setId(id);
+		memberVO.setStatus(status);
+
+		dao.status(memberVO);
+		return memberVO;
+	}
+
+	
+}

@@ -1,3 +1,4 @@
+<%@page import="com.news.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,6 +9,11 @@
 	ProductServiceImpl productService = new ProductServiceImpl();
 	List<ProductVO> list = productService.getProductsByType(4);
 	pageContext.setAttribute("list", list);
+%>
+<%
+	NewsServiceImpl newsSvc = new NewsServiceImpl();
+	List<NewsVO> newslist = newsSvc.selectAllByType(1);
+	pageContext.setAttribute("newslist", newslist);
 %>
 <jsp:useBean id="photoSvc" scope="page" class="com.product_photo.model.ProductPhotoServiceImpl" />
 
@@ -90,18 +96,20 @@
 
 	<!-- 輪播 (Carousel) -->
     <!-- 搭配圖片滿版 -->
+   <c:forEach var="newsVO" items="${newslist}">
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news1.jpg)"></div>
+          <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id})"></div>
         </div>
-        <div class="carousel-item">
-          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news2.jpg)"></div>
-        </div>
-        <div class="carousel-item">
-          <div class="d-block w-100 myImg" style="background-image: url(assets/img/news3.jpg)"></div>
-        </div>
+<!--         <div class="carousel-item"> -->
+<%--           <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id+1})"></div> --%>
+<!--         </div> -->
+<!--         <div class="carousel-item"> -->
+<%--           <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id+2})"></div> --%>
+<!--         </div> -->
       </div>
+      </c:forEach>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
@@ -111,7 +119,7 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-	
+	<br><br>	
 	<div class="container">
 		<div class="row">
 			<!-- 左邊3欄  list group 分類功能-->
@@ -138,7 +146,10 @@
 					          <div class="card-body">
 					            <h5 class="card-title">${productVO.name}</h5>
 					<%--             <p class="card-text">${productVO.prodDesc}</p> --%>
-					            <a href="#" class="btn btn-primary">查看詳情</a>
+									<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/product/ProductServlet">
+			     					<input type="submit" value="前往">
+			     					<input type="hidden" name="prodId"  value="${productVO.id}">
+			     					<input type="hidden" name="action"	value="getOne_For_Display"></FORM>
 					<%--             <a href="#" class="btn btn-primary">${productVO.prodName}</a> --%>
 					          </div>
 					        </div>	

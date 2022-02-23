@@ -1,4 +1,3 @@
-<%@ page import="com.server_manager.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,8 +7,10 @@
 	if(account == null){
 		session.setAttribute("location", request.getRequestURI());
 		response.sendRedirect(request.getContextPath()+"/back_end/server_manager/loginServer.jsp");
+		return;
 	}
 %>
+
 <!doctype html>
 <html lang="zh-TW">
 <head>
@@ -32,7 +33,18 @@
 				<div class="container-fluid">
 
 					<!-- main -->
-					product
+					首頁!!!!
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+					
 					<!-- end of main -->
 					
 				</div>

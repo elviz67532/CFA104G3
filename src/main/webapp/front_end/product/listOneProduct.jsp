@@ -4,9 +4,22 @@
 <%@	page import="com.product.model.ProductVO"%>
 <% 
 	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
+	pageContext.setAttribute("productVO", productVO);
 	System.out.println("productVO: " + productVO);
 %>
-
+<%
+	Map<Integer, String> map = new HashMap<>();
+	map.put(0,"其他");
+	map.put(1,"桌椅");
+	map.put(2,"寢具");
+	map.put(3,"服飾");
+	map.put(4, "電器");
+	pageContext.setAttribute("map", map);
+%>
+<%
+	Integer type = productVO.getType();
+	request.setAttribute("type", map.get(type));
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -130,7 +143,26 @@
 		<tr>
 			<td><%=productVO.getId()%></td>
 			<td><%=productVO.getSellerMemberId()%></td>
-			<td><%=productVO.getType()%></td>	
+			<td><%=productVO.getType() %>
+<%-- 				<c:set var="type" value="<%=productVO.getType() %>"/> --%>
+<%-- 		         <c:choose> --%>
+<%-- 		           <c:when test="${type == 0}"> --%>
+<!-- 		           其他 -->
+<%-- 		           </c:when>            --%>
+<%-- 		           <c:when test="${type == 1}"> --%>
+<!-- 		           桌椅 -->
+<%-- 		           </c:when> --%>
+<%-- 		           <c:when test="${type == 2}"> --%>
+<!-- 		           寢具 -->
+<%-- 		           </c:when> --%>
+<%-- 		           <c:when test="${type == 3}"> --%>
+<!-- 		           服飾 -->
+<%-- 		           </c:when>		    --%>
+<%-- 		           <c:when test="${type == 4}"> --%>
+<!-- 		           電器 -->
+<%-- 		           </c:when>				                    --%>
+<%-- 				</c:choose>			 --%>
+			</td>	
 			<td><%=productVO.getDescription()%></td>
 			<td><%=productVO.getPrice()%></td>
 			<td><%=productVO.getName()%></td>

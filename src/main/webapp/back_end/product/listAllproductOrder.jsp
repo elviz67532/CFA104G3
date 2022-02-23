@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat"%>
@@ -10,19 +9,31 @@
 ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
 List<ProductOrderVO> list = poSvc.getAll();
 pageContext.setAttribute("list", list);
+%>
 
-// 顯示格式
-SimpleDateFormat ymdtmFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy/MM/dd");
+<%
+Map<Integer, String> map = new HashMap<>();
+map.put(0, "待出貨");
+map.put(1, "已出貨");
+map.put(2, "完成訂單(待撥款給賣方)");
+map.put(3, "待撥款");
+map.put(4, "已撥款給賣方");
+map.put(5, "待退款(買方取消訂單)"); //買家取消訂單
+map.put(6, "待退款(買方退貨)");
+map.put(7, "已退款(買方取消訂單)");
+map.put(8, "已退款(買方退貨)");
+map.put(9, "待退款(賣方取消訂單)"); //賣家取消訂單
+map.put(10, "已退款(賣方取消訂單)");
+pageContext.setAttribute("map", map);
 %>
 <!doctype html>
 <html lang="zh-TW">
 <head>
 <meta charset="utf-8">
+<meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link
-	href="<%=request.getContextPath()%>/css/back_end/sb-admin-2.min.css"
+<link href="<%=request.getContextPath()%>/css/activity/backNewFile.css"
 	rel="stylesheet">
 <link
 	href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.css"
@@ -33,53 +44,30 @@ SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy/MM/dd");
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
-<title>委域-Entrust area</title>
-</head>
+<title>委域後台商品訂單ㄋ管理主頁</title>
 <style>
-table {
-	width: 800px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
+form {
+	display: inline;
+	border-radius: 16px;
 }
 
-table, th, td {
-	border: 1px solid #CCCCFF;
+form:hover {
+	cursor: pointer;
+	border-radius: 16px;
+	margin-bottom: 0px;
 }
 
-th, td {
-	padding: 5px;
+table th {
+	color: black;
+	padding: 5px 10px;
 	text-align: center;
 }
 
-.box1 {
-	width: 200px;
-	background-color: black;
-	margin-top: auto;
-	margin-right: 0px;
-}
-
-.box2 {
-	width: 200px;
-	background-color: black;
-	margin-top: auto;
-	margin-right: 0px;
-}
-
-.box3 {
-	width: 200px;
-	background-color: black;
-	margin-top: auto;
-	margin-right: 0px;
-}
-
-.box4 {
-	width: 200px;
-	background-color: black;
-	margin-top: auto;
-	margin-right: 0px;
+td {
+	text-align: center;
 }
 </style>
+</head>
 <body id="page-top">
 	<div id="wrapper">
 		<!-- Sidebar -->
@@ -90,24 +78,12 @@ th, td {
 				<jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
 				<div class="container-fluid">
 
-					<!-- main -->
-					<h2>後台商品訂單</h2>
 
-					<%-- 錯誤表列 --%>
-					<c:if test="${not empty errorMsgs}">
-						<font style="color: red">請修正以下錯誤:</font>
-						<ul>
-							<c:forEach var="message" items="${errorMsgs}">
-								<li style="color: red">${message}</li>
-							</c:forEach>
-						</ul>
-					</c:if>
-					<li>
-						<a href="productOrderMain.jsp">
-							<input type="submit" value="後台商品訂單查詢">
-						</a>
-					</li>
-					<table>
+					<!-- main -->
+					<h1>後台商品訂單管理主頁</h1>
+
+
+					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
 								<th class="text-nowrap">訂單編號</th>
@@ -121,6 +97,7 @@ th, td {
 								<th class="text-nowrap">商品數量</th>
 								<th class="text-nowrap">訂單總金額</th>
 								<th class="text-nowrap">訂單狀態</th>
+								<th class="text-nowrap">訂單變動</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -136,6 +113,7 @@ th, td {
 								<th class="text-nowrap">商品數量</th>
 								<th class="text-nowrap">訂單總金額</th>
 								<th class="text-nowrap">訂單狀態</th>
+								<th class="text-nowrap">訂單變動</th>
 							</tr>
 						</tfoot>
 						<%@ include file="page1.jsp"%>
@@ -154,26 +132,34 @@ th, td {
 									<td>${productOrderVO.date}</td>
 									<td>${productOrderVO.amountOfProduct}</td>
 									<td>${productOrderVO.amountOfPrice}</td>
-									<td>${productOrderVO.status}</td>
+									<td>${map[productOrderVO.status]}</td>
 
 									<td>
-										<FORM METHOD="post" ACTION="productorderback.do">
-											<input type="submit" value="取消"> <input
-												type="hidden" name="id" value="${productOrderVO.id}">
-											<input type="hidden" name="action" value="delete_back">
+										<FORM METHOD="post"
+											ACTION="<%=request.getContextPath()%>/back_end/product/productorderback.do">
+											<input type="hidden" name="action" value="accountTwo">
+											<input type="hidden" name="id" value="${productOrderVO.id}">
+											<input type="submit" value="撥款">
+										</FORM>
+										<FORM METHOD="post"
+											ACTION="<%=request.getContextPath()%>/back_end/product/productorderback.do">
+											<input type="hidden" name="action" value="returnTwo">
+											<input type="hidden" name="id" value="${productOrderVO.id}">
+											<input type="submit" value="退款">
 										</FORM>
 									</td>
 								</tr>
 						</c:forEach>
-					</table> <%@ include file="page2.jsp"%>
+					</table>
+					<%@ include file="page2.jsp"%>
+					<!-- end of main -->
 				</div>
 			</div>
 			<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
 		</div>
 	</div>
-	
-	
 	<!-- End of Page Wrapper -->
+
 
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i
@@ -184,12 +170,16 @@ th, td {
 	<jsp:include page="/back_end/common/logoutModal.jsp"></jsp:include>
 
 	<!-- custom script -->
-	
+
+
 	<!-- Bootstrap core JavaScript-->
 	<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
-	<script src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
-	<script src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
-	<script src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
 
 	<!-- 註冊按鈕觸發功能  -->
 	<script>

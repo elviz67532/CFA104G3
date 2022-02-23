@@ -40,7 +40,7 @@ ProductReportVO productReportVO = (ProductReportVO) request.getAttribute("produc
             <div id="content">
 
                 <!-- Topbar -->
-                <jsp:include page="/back_end/product/report/reportnavbar.jsp"></jsp:include>
+                <jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
                 <div class="container-fluid">
 					
                     <!-- main -->
@@ -95,14 +95,20 @@ ProductReportVO productReportVO = (ProductReportVO) request.getAttribute("produc
                                                 <td>${productReportVO.productId}</td>
                                                 <td>${productReportVO.memberId}</td>
                                                 <td>${productReportVO.content}</td>
-                                                <td><img src="<%=request.getContextPath()%>/report/reportphoto.do?PRODRP_PROD_ID=${productReportVO.productId}?PRODRP_MEM_ID =${productReportVO.memberId}"
+                                                <td><img src="<%=request.getContextPath()%>/product/reportphoto.do?PRODRP_PROD_ID=${productReportVO.productId}&PRODRP_MEM_ID=${productReportVO.memberId}"
                                                     alt=""
                                                     class="img-fluid d-none d-md-block rounded mb-2 shadow "></td>
                                                 <td>${productReportVO.date}</td>
-                                                <td>${productReportVO.status}</td>
+                                                <td>
+                                                <c:choose>
+   													<c:when test="${productReportVO.status==0}">未審核</c:when>  														  														   														
+   													<c:when test="${productReportVO.status==1}">已審核</c:when>
+													<c:otherwise>已下架</c:otherwise>
+												</c:choose>
+                                                </td>
                                                 <td class="text-nowrap">
 
-                                                    <FORM METHOD="post" ACTION="report.do" style="margin-bottom: 0px;">
+                                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/report.do" style="margin-bottom: 0px;">
                                                         <button type="button" class="btn btn-outline-danger"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#exampleModal">刪除</button>

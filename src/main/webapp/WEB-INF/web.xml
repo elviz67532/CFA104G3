@@ -36,17 +36,24 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>frontEndMemberFilter</filter-name>
-		<!-- 完成 -->
+		<!-- 尚缺買賣業面 -->
+		<url-pattern>/front_end/activity/publishActivity.jsp</url-pattern>
+		<url-pattern>/front_end/activity/memPublishActivityOwnPage.jsp</url-pattern>
+		<url-pattern>/front_end/product/sellerProduct.jsp</url-pattern>
+		<url-pattern>/front_end/product/sellerAllProducts.jsp</url-pattern>
+    <url-pattern>/front_end/product/productReport.jsp</url-pattern>
+		<url-pattern>/front_end/product/singleItem.jsp</url-pattern>
 		<url-pattern>/front_end/move/moveRequest.jsp</url-pattern>
 		<url-pattern>/front_end/move/moveRequestManage.jsp</url-pattern>
 		<url-pattern>/front_end/move/moveRequestCManage.jsp</url-pattern>
-		<url-pattern>/front_end/notification/homePage.jsp</url-pattern>
-		<url-pattern>/front_end/product/sellerProduct.jsp</url-pattern>
-		<url-pattern>/front_end/product/sellerAllProducts.jsp</url-pattern>
-		
-		<!-- 處理中 -->
 		<url-pattern>/front_end/move/frontGetMoveOrder.jsp</url-pattern>
+
 		<url-pattern>/front_end/product/collection.jsp</url-pattern>
+
+
+		<url-pattern>/front_end/product/productReport.jsp</url-pattern>
+
+
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -64,53 +71,52 @@
 	<filter>
 		<filter-name>backEndMemberFilter</filter-name>
 		<filter-class>core.BackEndMemberFilter</filter-class>
-		    <init-param><param-name>/back_end/move/moveRequestManage.jsp</param-name><param-value>30</param-value></init-param>
-		    <init-param><param-name>/back_end/move/moveRequest.jsp</param-name><param-value>30</param-value></init-param>
-		    <init-param><param-name>/back_end/move/readMoveOrder.jsp</param-name><param-value>30</param-value></init-param>
-		    <init-param><param-name>/back_end/member/memberstate.jsp</param-name><param-value>40</param-value></init-param>
-			<init-param><param-name>/back_end/faq/listAllFaq.jsp</param-name><param-value>50</param-value></init-param>
-			<init-param><param-name>/back_end/news/listallnews.jsp</param-name><param-value>60</param-value></init-param>
-			<init-param><param-name>/back_end/activity/listAllActr.jsp</param-name><param-value>10</param-value></init-param>
-		    <init-param><param-name>/back_end/product/report/productReportManage.jsp</param-name><param-value>20</param-value></init-param>
-		    <init-param><param-name>/back_end/product/seller.jsp</param-name><param-value>20</param-value></init-param>
- 			<init-param><param-name>/back_end/product/listAllproductOrder.jsp</param-name><param-value>20</param-value></init-param>
-		    <init-param><param-name>/back_end/server_manager/admin.jsp</param-name><param-value>1</param-value></init-param>
-		    <init-param><param-name>/back_end/server_manager/addManager.jsp</param-name><param-value>1</param-value></init-param>
-		    <init-param><param-name>/back_end/server_manager/activity.jsp</param-name><param-value>10</param-value></init-param>
-		    <init-param><param-name>/back_end/product/seller.jsp</param-name><param-value>20</param-value></init-param>
-		    <init-param><param-name>/back_end/product/productReportManage.jsp</param-name><param-value>20</param-value></init-param>
-		    <init-param><param-name>/back_end/product/listAllproductOrder.jsp</param-name><param-value>20</param-value></init-param>
-		    <init-param><param-name>/back_end/move/readMoveOrder.jsp</param-name><param-value>30</param-value></init-param>
-		    <init-param><param-name>/back_end/server_manager/manager.jsp</param-name><param-value>40</param-value></init-param>
-		    <init-param><param-name>/back_end/server_manager/FAQ.jsp</param-name><param-value>50</param-value></init-param>
-		    <init-param><param-name>/back_end/news/listallnews.jsp</param-name><param-value>60</param-value></init-param>
+		    
+		    <!-- 處理中 -->
+	
+		    
+		    <!-- 測試用 -->
+		<init-param><param-name>/back_end/news/listallnews.jsp</param-name><param-value>60</param-value></init-param>  
+		<init-param><param-name>/back_end/server_manager/activity.jsp</param-name><param-value>10</param-value></init-param>
+		<init-param><param-name>/back_end/server_manager/manager.jsp</param-name><param-value>40</param-value></init-param>
+		<init-param><param-name>/back_end/server_manager/FAQ.jsp</param-name><param-value>50</param-value></init-param>
+
+		<init-param><param-name>/back_end/activity/listAllActr.jsp</param-name><param-value>10</param-value></init-param>
+	  <init-param><param-name>/back_end/product/seller.jsp</param-name><param-value>20</param-value></init-param>
+	  <init-param><param-name>/back_end/product/productReportManage.jsp</param-name><param-value>20</param-value></init-param>
+	  <init-param><param-name>/back_end/product/listAllproductOrder.jsp</param-name><param-value>20</param-value></init-param>
+	  <init-param><param-name>/back_end/product/report/productReportManage.jsp</param-name><param-value>20</param-value></init-param>
+	  <init-param><param-name>/back_end/move/moveRequest.jsp</param-name><param-value>30</param-value></init-param>
+	  <init-param><param-name>/back_end/move/readMoveOrder.jsp</param-name><param-value>30</param-value></init-param>
+	  <init-param><param-name>/back_end/move/moveRequestManage.jsp</param-name><param-value>30</param-value></init-param>
+	  <init-param><param-name>/back_end/news/listallnews.jsp</param-name><param-value>60</param-value></init-param>
+		<init-param><param-name>/back_end/faq/listAllFaq.jsp</param-name><param-value>50</param-value></init-param>
+	  <init-param><param-name>/back_end/member/memberstate.jsp</param-name><param-value>40</param-value></init-param>
+	  <init-param><param-name>/back_end/server_manager/admin.jsp</param-name><param-value>1</param-value></init-param>
+	  <init-param><param-name>/back_end/server_manager/addManager.jsp</param-name><param-value>1</param-value></init-param>
+
 	</filter>
 	<filter-mapping>
 		<filter-name>backEndMemberFilter</filter-name>
-		<url-pattern>/back_end/move/moveRequestManage.jsp</url-pattern>
-		<url-pattern>/back_end/move/moveRequest.jsp</url-pattern>
-		<url-pattern>/back_end/move/readMoveOrder.jsp</url-pattern>
-		<url-pattern>/back_end/product/seller.jsp</url-pattern>
-		<url-pattern>/back_end/product/listAllproductOrder.jsp</url-pattern>
-		
-		<!-- 處理中 -->
-		<url-pattern>/back_end/product/report/productReportManage.jsp</url-pattern>
-		
-		<!-- 測試用 -->
-		<url-pattern>/back_end/server_manager/activity.jsp</url-pattern>
-		<url-pattern>/back_end/server_manager/manager.jsp</url-pattern>
-		<url-pattern>/back_end/server_manager/FAQ.jsp</url-pattern>
-		<url-pattern>/back_end/server_manager/server.jsp</url-pattern>
-		<url-pattern>/back_end/member/memberstate.jsp</url-pattern>
-		<url-pattern>/back_end/faq/listAllFaq.jsp</url-pattern>
-		<url-pattern>/back_end/news/listallnews.jsp</url-pattern>
 		<url-pattern>/back_end/activity/listAllActr.jsp</url-pattern>
-		<url-pattern>/back_end/product/report/productReportManage.jsp</url-pattern>
+	  <url-pattern>/back_end/product/seller.jsp</url-pattern>
+	  <url-pattern>/back_end/product/productReportManage.jsp</url-pattern>
+	  <url-pattern>/back_end/product/listAllproductOrder.jsp</url-pattern>
+	  <url-pattern>/back_end/product/report/productReportManage.jsp</url-pattern>
+	  <url-pattern>/back_end/move/moveRequest.jsp</url-pattern>
+	  <url-pattern>/back_end/move/readMoveOrder.jsp</url-pattern>
+		<url-pattern>/back_end/move/moveRequestManage.jsp</url-pattern>
+		<url-pattern>/back_end/news/listallnews.jsp</url-pattern>
+
+		<url-pattern>/back_end/activity/listAllActr.jsp</url-pattern>
+		<url-pattern>/back_end/product/productReportManage.jsp</url-pattern>
    		<url-pattern>/back_end/product/seller.jsp</url-pattern>
  		<url-pattern>/back_end/product/listAllproductOrder.jsp</url-pattern>
+		<url-pattern>/back_end/faq/listAllFaq.jsp</url-pattern>
+	  <url-pattern>/back_end/member/memberstate.jsp</url-pattern>
+	  <url-pattern>/back_end/server_manager/admin.jsp</url-pattern>
+	  <url-pattern>/back_end/server_manager/addManager.jsp</url-pattern>
 
-		<url-pattern>/back_end/server_manager/admin.jsp</url-pattern>
-		<url-pattern>/back_end/server_manager/addManager.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -216,6 +222,14 @@
 		<url-pattern>/back_end/news/NewsServlet</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>NewsUserServlet</servlet-name>
+		<servlet-class>com.news.controller.NewsUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NewsUserServlet</servlet-name>
+		<url-pattern>/news/NewsUserServlet.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>NewsImageReader</servlet-name>
 		<servlet-class>com.news.controller.NewsImageReader</servlet-class>
 	</servlet>
@@ -230,7 +244,7 @@
 	</servlet>	
 	<servlet-mapping>
 		<servlet-name>ProductReportServlet</servlet-name>
-		<url-pattern>/back_end/product/report/report.do</url-pattern>
+		<url-pattern>/product/report.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>ProductReportImageReader</servlet-name>
@@ -238,8 +252,8 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ProductReportImageReader</servlet-name>
-		<url-pattern>/back_end/product/report/reportphoto.do</url-pattern>
-	</servlet-mapping>
+		<url-pattern>/product/reportphoto.do</url-pattern>
+	</servlet-mapping>	
   
  	 <!-- 耀德 product和news 上-->
   
@@ -286,12 +300,12 @@
 	</servlet-mapping>
 	<!-- MEMBER -->
 	<servlet>
-		<servlet-name>MemberServlet</servlet-name>
-		<servlet-class>com.member.controller.MemberServlet</servlet-class>
+		<servlet-name>BackMemberServlet</servlet-name>
+		<servlet-class>com.member.controller.BackMemberServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>MemberServlet</servlet-name>
-		<url-pattern>/back_end/member/MemberServlet.do</url-pattern>
+		<servlet-name>BackMemberServlet</servlet-name>
+		<url-pattern>/back_end/member/BackMemberServlet.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
@@ -363,5 +377,14 @@
 	<servlet-mapping>
 		<servlet-name>NotificationServlet</servlet-name>
 		<url-pattern>/notification/notification.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ContactServlet</servlet-name>
+		<servlet-class>com.contact.controller.ContactServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ContactServlet</servlet-name>
+		<url-pattern>/contact.do</url-pattern>
 	</servlet-mapping>
 </web-app>

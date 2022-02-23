@@ -12,7 +12,9 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.member.model.MemberVO;
 import com.product_report.model.ProductReportServiceImpl;
 import com.product_report.model.ProductReportVO;
 
@@ -52,7 +54,7 @@ public class ProductReportServlet extends HttpServlet {
 //				 Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/product/report/productReportManage.jsp");
+							.getRequestDispatcher("/back_end/product/productReportManage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -68,7 +70,7 @@ public class ProductReportServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/product/report/productReportManage.jsp");
+							.getRequestDispatcher("/back_end/product/productReportManage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -81,7 +83,7 @@ public class ProductReportServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/product/report/productReportManage.jsp");
+							.getRequestDispatcher("/back_end/product/productReportManage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -97,7 +99,7 @@ public class ProductReportServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/product/report/productReportManage.jsp");
+							.getRequestDispatcher("/back_end/product/productReportManage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -113,21 +115,22 @@ public class ProductReportServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/product/report/productReportManage.jsp");
+							.getRequestDispatcher("/back_end/product/productReportManage.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("productReportVO", pojo); // 資料庫取出的empVO物件,存入req
-				String url = "/back_end/product/report/listOneReport.jsp";
+				String url = "/back_end/product/listOneReport.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/report/productReportManage.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back_end/product/productReportManage.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -136,8 +139,25 @@ public class ProductReportServlet extends HttpServlet {
 		 * 新增 "insert" *
 		 ****************/
 
+		System.out.println("--------------------------");
+		System.out.println(action);
+		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
-
+			
+//			HttpSession session = req.getSession();
+//			MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
+			
+//			MemberVO memberVO = (MemberVO) req.getAttribute("memberVO");
+//			
+//			System.out.println("memberVO" + memberVO);
+//			if (memberVO == null) {
+//				// TODO 
+//				
+//				System.out.println("insert enter");
+//				return;
+//			}
+			Integer memberId = null;
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -152,15 +172,7 @@ public class ProductReportServlet extends HttpServlet {
 					productId = 0;
 					errorMsgs.add("請輸入商品編號.");
 				}
-
-				Integer memberId = null;
-				try {
-					memberId = Integer.valueOf(req.getParameter("memberId").trim());
-				} catch (NumberFormatException e) {
-					memberId = 0;
-					errorMsgs.add("請輸入會員編號.");
-				}
-
+				
 				String content = req.getParameter("content").trim();
 				if (content == null || content.trim().length() == 0) {
 					errorMsgs.add("內容請勿空白");
@@ -203,10 +215,11 @@ public class ProductReportServlet extends HttpServlet {
 				pojo.setPhoto(photo);
 				pojo.setStatus(status);
 
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("productReportVO", pojo); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/news/addreport.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/productReport.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -214,16 +227,18 @@ public class ProductReportServlet extends HttpServlet {
 				/*************************** 2.開始新增資料 ***************************************/
 				ProductReportServiceImpl reportSvc = new ProductReportServiceImpl();
 				pojo = reportSvc.insert(productId, memberId, content, date, photo, status);
-
+				
+				
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/back_end/product/report/productReportManage.jsp";
+				String url = "/front_end/product/homePage.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/news/addreport.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/productReport.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -248,7 +263,7 @@ public class ProductReportServlet extends HttpServlet {
 				reportSvc.deleteById(id);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/back_end/product/report/productReportManage.jsp";
+				String url = "/back_end/product/productReportManage.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 
@@ -256,7 +271,7 @@ public class ProductReportServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/report/listOneReport.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/listOneReport.jsp");
 				failureView.forward(req, res);
 			}
 		}

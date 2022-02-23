@@ -92,7 +92,7 @@ public class ServerManagerServlet extends HttpServlet {
 					res.sendRedirect(location);
 					return;
 				}
-				res.sendRedirect(req.getContextPath() + "/back_end/server_manager/serverManagerHom.jsp"); // *工作3:
+				res.sendRedirect(req.getContextPath() + "/back_end/server_manager/serverManagerHome.jsp"); // *工作3:
 			} catch (IOException e) {
 				e.printStackTrace();
 				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
@@ -103,7 +103,7 @@ public class ServerManagerServlet extends HttpServlet {
 		if("logout".equals(action)) {
 			HttpSession session = req.getSession();
 			session.invalidate();
-			res.sendRedirect(req.getContextPath() + "/back_end/server_manager/serverManagerHom.jsp");
+			res.sendRedirect(req.getContextPath() + "/back_end/server_manager/serverManagerHome.jsp");
 		}
 		
 		if("insert".equals(action)) {

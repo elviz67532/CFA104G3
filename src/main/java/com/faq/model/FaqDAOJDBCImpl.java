@@ -14,8 +14,7 @@ public class FaqDAOJDBCImpl implements FaqDAO {
 
 	private static final String GET_ALL_STMT = "select * from FAQ order by FAQ_ID";
 	private static final String GET_ONE_STMT = "select * from FAQ where FAQ_ID = ?";
-	private static final String INSERT_STMT = "insert into FAQ" + "(FAQ_ID, FAQ_QUESTION, FAQ_ANSWER) "
-			+ "values(?, ?, ?)";
+	private static final String INSERT_STMT = "insert into FAQ" + "(FAQ_QUESTION, FAQ_ANSWER) " + "values(?, ?)";
 	private static final String DELETE = "delete from FAQ where FAQ_ID = ?";
 	private static final String UPDATE = "update FAQ set " + "FAQ_QUESTION = ?, FAQ_ANSWER = ? " + "where FAQ_ID = ?";
 
@@ -37,9 +36,8 @@ public class FaqDAOJDBCImpl implements FaqDAO {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, vo.getId());
-			pstmt.setString(2, vo.getQuestion());
-			pstmt.setString(3, vo.getAnswer());
+			pstmt.setString(1, vo.getQuestion());
+			pstmt.setString(2, vo.getAnswer());
 
 			insertedRow = pstmt.executeUpdate();
 		} catch (SQLException se) {

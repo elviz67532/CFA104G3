@@ -83,8 +83,9 @@
 <%-- 									<th>${smVO.smgrGender}</th> --%>
 									<th>
 <%-- 										<c:if test="${smVO.smgrId !=1}" var="varName" scope="session"> --%>
-											<c:forEach var="auth" items="${smVO.authList}">
-												${auth.smgeAuthId } -
+											<c:forEach var="auth" varStatus="s" items="${smVO.authList}">
+												${map[auth.smgeAuthId]}
+												<c:if test="${s.last eq false}">、</c:if>
 											</c:forEach>
 <%-- 										<c:forEach var="auth" items="${smVO.authList}"> --%>
 <%-- 											<c:if test="${smVO.smgrId !=1}" var="varName" scope="session"> --%>
@@ -176,7 +177,7 @@
 									</th>
 									<th>
 										<c:if test="${smVO.smgrId !=1}" var="varName" scope="session">
-											<c:out value="${smVO.smgrId}"></c:out>
+<%-- 											<c:out value="${smVO.smgrId}"></c:out> --%>
 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/server_manager/ServerManagerServlet">								
 											
 											<input type="hidden" name="smgrId"  value="${smVO.smgrId}">
