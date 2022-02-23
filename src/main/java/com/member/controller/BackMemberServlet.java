@@ -91,7 +91,7 @@ public class BackMemberServlet extends HttpServlet {
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("memberVO", memberVO);
+				req.setAttribute("tempMemberVO", memberVO);
 				String url = "/back_end/member/memberlistonestatus.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -133,7 +133,7 @@ public class BackMemberServlet extends HttpServlet {
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("memberVO", memberVO);
+				req.setAttribute("tempMemberVO", memberVO);
 				String url = "/back_end/member/memberlistonestatus.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -159,7 +159,7 @@ public class BackMemberServlet extends HttpServlet {
 				MemberVO memberVO = memberSvc.selectById(id);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("memberVO", memberVO);
+				req.setAttribute("tempMemberVO", memberVO);
 				String url = "/back_end/member/memberlistonestatus.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -253,7 +253,7 @@ public class BackMemberServlet extends HttpServlet {
 				MemberVO memberVO = memberServiceImpl.selectById(id);
 				
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("memberVO", memberVO);
+				req.setAttribute("tempMemberVO", memberVO);
 				String url = "/back_end/member/memberlistonestatus.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);

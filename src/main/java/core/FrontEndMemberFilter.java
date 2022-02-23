@@ -64,7 +64,7 @@ public class FrontEndMemberFilter implements Filter {
 			break;
 		case 2:// 停權
 			System.out.println("會員已停權");
-			res.sendRedirect(req.getContextPath() + "/front_end/member/banmember.jsp.jsp");
+			res.sendRedirect(req.getContextPath() + "/front_end/member/banmember.jsp");
 			break;
 		default:
 			System.out.println("會員狀態異常, 狀態=" + status);

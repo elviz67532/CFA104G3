@@ -6,6 +6,24 @@
 
 <%
 MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+MemberVO tempMemberVO = (MemberVO) request.getAttribute("tempMemberVO");
+if (tempMemberVO == null && memberVO != null) {
+	tempMemberVO = new MemberVO();
+	tempMemberVO.setId(memberVO.getId());
+	tempMemberVO.setEmail(memberVO.getEmail());
+	tempMemberVO.setAccount(memberVO.getAccount());
+	tempMemberVO.setPassword(memberVO.getPassword());
+	tempMemberVO.setNickname(memberVO.getNickname());
+	tempMemberVO.setName(memberVO.getName());
+	tempMemberVO.setPhone(memberVO.getPhone());
+	tempMemberVO.setGender(memberVO.getGender());
+	tempMemberVO.setCity(memberVO.getCity());
+	tempMemberVO.setCityArea(memberVO.getCityArea());
+	tempMemberVO.setAddress(memberVO.getAddress());
+	tempMemberVO.setCode(memberVO.getCode());
+	tempMemberVO.setAvatar(memberVO.getAvatar());
+	tempMemberVO.setRegisterDate(memberVO.getRegisterDate());
+	tempMemberVO.setStatus(memberVO.getStatus());
 //<!--錯誤訊息 -->
 Map<String, String> errorMsgs = (Map<String, String>) request.getAttribute("errorMsgs");
 if (errorMsgs != null) {
@@ -118,61 +136,61 @@ input[type="tel"]:focus{
 				<div style="color:white;">
 				<tr>
 					<td>會員編號:<font color=red><b>*</b></font></td>
-					<td><%=memberVO.getId()%></td>
+					<td><%=tempMemberVO.getId()%></td>
 				</tr>
 				<br>
 				<br>
 					<c:if test="${not empty email}">
 					 您的email: <span style="color: red"> "${email}" </span>
 					</c:if>
-						<input class="inputholder" placeholder="請輸入郵件" type="email" name="email" size="10"value="<%=(memberVO == null) ? "" : memberVO.getEmail()%>" />
+						<input class="inputholder" placeholder="請輸入郵件" type="email" name="email" size="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getEmail()%>" />
 					<br>
 
 					<c:if test="${not empty password}">
 						您的密碼: <span style="color: red"> "${password}" </span>
 					</c:if>
-						<input class="inputholder" placeholder="請輸入密碼" type="password" name="password" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getPassword()%>" />
+						<input class="inputholder" placeholder="請輸入密碼" type="password" name="password" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getPassword()%>" />
 					<br>
 
 					<c:if test="${not empty nickname}">
 						您的暱稱: <span style="color: red"> "${nickname}" </span>
 					</c:if>
-						<input class="inputholder" placeholder="請輸入暱稱" type="text" name="nickname" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getNickname()%>" />
+						<input class="inputholder" placeholder="請輸入暱稱" type="text" name="nickname" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getNickname()%>" />
 					<br>
 					<c:if test="${not empty name}">
 						<span style="color: red"> "${name}" </span>
 					</c:if>
-						<input class="inputholder" placeholder="請輸入名字" type="text" name="name" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getName()%>" />
+						<input class="inputholder" placeholder="請輸入名字" type="text" name="name" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getName()%>" />
 					<br>
 					<c:if test="${not empty phone}">
 						<span style="color: red"> "${phone}" </span>
 					</c:if>
-						<input class="inputholder" placeholder="請輸入電話" type="tel" name="phone" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getPhone()%>" />
+						<input class="inputholder" placeholder="請輸入電話" type="tel" name="phone" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getPhone()%>" />
 					<br>
 					<c:if test="${not empty city}">
 						<span style="color: red"> "${city}" </span>
 					</c:if>
-						<input class="inputholder" placeholder="請輸入居住城市" type="text" name="city" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getCity()%>" />
+						<input class="inputholder" placeholder="請輸入居住城市" type="text" name="city" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getCity()%>" />
 					<br>
 					<c:if test="${not empty cityArea}">
 						<span style="color: red"> "${cityArea}" </span>
 					</c:if>
-						<input class="inputholder" placeholder="請輸入居住鄉鎮" type="text" name="cityArea" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getCityArea()%>" />
+						<input class="inputholder" placeholder="請輸入居住鄉鎮" type="text" name="cityArea" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getCityArea()%>" />
 					<br>
 					<c:if test="${not empty address}">
 						<span style="color: red"> "${address}" </span>
 					</c:if>
-						<input class="inputholder" placeholder="請輸入地址" type="text" name="address" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getAddress()%>" />
+						<input class="inputholder" placeholder="請輸入地址" type="text" name="address" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getAddress()%>" />
 					<br>
-						<input class="inputholder" placeholder="請上傳圖片" type="file" name="avatar" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getAvatar()%>" />
+						<input class="inputholder" placeholder="請上傳圖片" type="file" name="avatar" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getAvatar()%>" />
 				    <br>
 		
 					<br> 
 				</div>	
 			<input type="hidden" name="action"value="front_end_member_update"> 
-			<input type="hidden"name="account" value="<%=memberVO.getAccount()%>">
-			<input type="hidden" name="id" value="<%=memberVO.getId()%>"> 
-			<input type="hidden" name="account" value="${memberVO.account}"> 
+			<input type="hidden"name="account" value="<%=tempMemberVO.getAccount()%>">
+			<input type="hidden" name="id" value="<%=tempMemberVO.getId()%>"> 
+			<input type="hidden" name="account" value="${tempMemberVO.account}"> 
 			<input class="submitBtn" type="submit" value="更新會員資料" >
 		</FORM>
 	</div>

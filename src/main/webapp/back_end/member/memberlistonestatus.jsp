@@ -5,15 +5,15 @@
 <%@ page import="com.member.model.*"%>
 <%
 
-MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
+MemberVO tempMemberVO = (MemberVO) request.getAttribute("tempMemberVO");
 
 Map<Integer, String> statusMap = new HashMap<>();
 statusMap.put(0, "未驗證");
 statusMap.put(1, "正常");
 statusMap.put(2, "停權");
 
-if (memberVO != null) {
-	Integer status = memberVO.getStatus();
+if (tempMemberVO != null) {
+	Integer status = tempMemberVO.getStatus();
 	request.setAttribute("status", statusMap.get(status));
 	System.out.print(statusMap.get(status));
 }
@@ -128,76 +128,76 @@ button {
 
 								<tr>
 									<td>會員編號:</td>
-									<td>${memberVO.id}</td>
+									<td>${tempMemberVO.id}</td>
 								</tr>
 								<tr>
 									<td>會員郵件:</td>
-									<td>${memberVO.email}</td>
+									<td>${tempMemberVO.email}</td>
 								</tr>
 								<tr>
 									<td>會員帳號:</td>
-									<td>${memberVO.account}</td>
+									<td>${tempMemberVO.account}</td>
 								</tr>
 								<tr>
 									<td>會員密碼:</td>
-									<td>${memberVO.password}</td>
+									<td>${tempMemberVO.password}</td>
 								</tr>
 								<tr>
 									<td>會員暱稱:</td>
-									<td>${memberVO.nickname}</td>
+									<td>${tempMemberVO.nickname}</td>
 								</tr>
 								<tr>
 									<td>會員姓名:</td>
-									<td>${memberVO.name}</td>
+									<td>${tempMemberVO.name}</td>
 								</tr>
 								<tr>
 									<td>會員電話:</td>
-									<td>${memberVO.phone}</td>
+									<td>${tempMemberVO.phone}</td>
 								</tr>
 								<tr>
 									<td>會員性別:</td>
-									<c:if test="${memberVO.gender==0}">
+									<c:if test="${tempMemberVO.gender==0}">
 										<td>不透漏</td>
 									</c:if>
-									<c:if test="${memberVO.gender==1}">
+									<c:if test="${tempMemberVO.gender==1}">
 										<td>男</td>
 									</c:if>
-									<c:if test="${memberVO.gender==2}">
+									<c:if test="${tempMemberVO.gender==2}">
 										<td>女</td>
 									</c:if>
 								</tr>
 								<tr>
 									<td>居住地:</td>
-									<td>${memberVO.city}</td>
+									<td>${tempMemberVO.city}</td>
 								</tr>
 
 								<tr>
 									<td>鄉/鎮:</td>
-									<td>${memberVO.cityArea}</td>
+									<td>${tempMemberVO.cityArea}</td>
 								</tr>
 								<tr>
 									<td>地址:</td>
-									<td>${memberVO.address}</td>
+									<td>${tempMemberVO.address}</td>
 								</tr>
 								<tr>
 									<td>驗證碼:</td>
-									<td>${memberVO.code}</td>
+									<td>${tempMemberVO.code}</td>
 								</tr>
 								<tr>
 									<td>頭像:</td>
-									<td><img src="<%=request.getContextPath()%>/front_end/member/MemberServlet.do?action=getImage&MEM_ID=${memberVO.id}"></td>
+									<td><img src="<%=request.getContextPath()%>/front_end/member/MemberServlet.do?action=getImage&MEM_ID=${tempMemberVO.id}"></td>
 								</tr>
 								<tr>
 									<td>註冊日期:</td>
-									<td>${memberVO.registerDate}</td>
+									<td>${tempMemberVO.registerDate}</td>
 								</tr>
-										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/member/BackMemberServlet.do">
-       										<input type="radio" value="1" name="status" />恢復權限
-       										<input type="radio" value="2" name="status" />會員停權
-											<input type="hidden" name="id" value="${memberVO.id}"> 
-											<input type="hidden" name="action"value="updateStatus"> 
-										    <input type="submit" value="送出"> 
-										</FORM>
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/member/BackMemberServlet.do">
+      										<input type="radio" value="1" name="status" />恢復權限
+      										<input type="radio" value="2" name="status" />會員停權
+										<input type="hidden" name="id" value="${tempMemberVO.id}"> 
+										<input type="hidden" name="action"value="updateStatus"> 
+									    <input type="submit" value="送出"> 
+									</FORM>
 								</td>								
 							</table>
 						</div>

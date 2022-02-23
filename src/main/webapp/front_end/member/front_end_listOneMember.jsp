@@ -134,7 +134,7 @@ td {
 
 
 			<td style="width: 100px;" >
-				<FORM METHOD="post"ACTION="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"style="margin-bottom: 0px; " >
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front_end/member/front_end_update.jsp" style="margin-bottom: 0px;" >
 					<input type="submit" value="修改會員資料">
 					<input type="hidden"name="id" value="${memberVO.id}">
 					<input type="hidden"name="action" value="getOne_For_Member_Update">
