@@ -91,6 +91,7 @@ td {
 	</h1>
 
 	<main>
+	<div >
 		<table id="table-2">
 			<h2 align="center" valign="center">會員資料</h2>
 
@@ -140,7 +141,8 @@ td {
                 </FORM>
 			</td>
 	
-		</table>
+			</table>
+		</div>
 	</main>
 	<!-- Footer-->
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>

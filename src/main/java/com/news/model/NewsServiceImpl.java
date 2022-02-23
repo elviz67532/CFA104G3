@@ -61,4 +61,8 @@ public class NewsServiceImpl {
 	public List<NewsVO> selectAllNews() {
 		return dao.selectAll();
 	}
+	
+	public List<NewsVO> selectAllByType(Integer type){
+		return dao.selectByType(type);
+	}	
 }

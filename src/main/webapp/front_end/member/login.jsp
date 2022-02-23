@@ -9,9 +9,9 @@
 	Map<String, String> errorMsgs = (Map<String, String>) request.getAttribute("errorMsgs");
 	if (errorMsgs != null) {
 		if (errorMsgs.get("account") != null)
-			request.setAttribute("account", errorMsgs.get("account"));
+			request.setAttribute("frontAccount", errorMsgs.get("account"));
 		if (errorMsgs.get("password") != null)
-			request.setAttribute("password", errorMsgs.get("password"));
+			request.setAttribute("frontPassword", errorMsgs.get("password"));
 	}
 %>
 
@@ -326,13 +326,12 @@ p {
 				</label> 
 				<input type="hidden" name="action" value="login">
 				<input 
-<%-- 					value="${requestScope.inputAccount}" --%>
-					value="wilfredo68"
+					value="${requestScope.inputAccount}"
 					id="account" type="text" autocomplete="off" name="account"
 					class="form__input" placeholder="Username">
 			</div>
-			<c:if test="${not empty account}">
-				<span style="color: red">"${account}"</span>
+			<c:if test="${not empty frontAccount}">
+				<span style="color: red">"${frontAccount}"</span>
 			</c:if>
 
 			<div class="form__field">
@@ -343,13 +342,12 @@ p {
 				</label> 
 				<input type="hidden" name="action" value="login"> 
 				<input 
-<%-- 					value="${requestScope.inputPassword}" --%>
-					value="QlareSQw"
+					value="${requestScope.inputPassword}"
 					id="login__password" type="password" name="password"
 					class="form__input" placeholder="Password">
 			</div>
-			<c:if test="${not empty password}">
-				<span style="color: red"> "${password}" </span>
+			<c:if test="${not empty frontPassword}">
+				<span style="color: red"> "${frontPassword}" </span>
 			</c:if>
 			<div class="form__field">
 				<input type="submit" type="hidden" name="action" value="登入">

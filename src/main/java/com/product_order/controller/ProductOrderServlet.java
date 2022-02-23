@@ -15,6 +15,7 @@ import com.activity.model.ActivityServiceImpl;
 import com.activity.model.ActivityVO;
 import com.faq.model.FaqService;
 import com.faq.model.FaqServiceImpl;
+import com.faq.model.FaqVO;
 import com.move_order.model.MoveOrderServiceImpl;
 import com.move_order.model.MoveOrderVO;
 import com.product_order.model.*;
@@ -93,8 +94,6 @@ public class ProductOrderServlet extends HttpServlet {
 		if ("getOne_For_Displayfront".equals(action)) { // 來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
@@ -106,7 +105,7 @@ public class ProductOrderServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/product/front_ProductOrder_Retrieve.jsp");
+							.getRequestDispatcher("/front_end/product/front_ProductOrder_ListOne.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -120,7 +119,7 @@ public class ProductOrderServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/product/front_ProductOrder_Retrieve.jsp");
+							.getRequestDispatcher("/front_end/product/front_ProductOrder_ListOne.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -134,7 +133,7 @@ public class ProductOrderServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/product/front_ProductOrder_Retrieve.jsp");
+							.getRequestDispatcher("/front_end/product/front_ProductOrder_ListOne.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -149,7 +148,7 @@ public class ProductOrderServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front_end/product/front_ProductOrder_Retrieve.jsp");
+						.getRequestDispatcher("/front_end/product/front_ProductOrder_ListOne.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -247,6 +246,7 @@ public class ProductOrderServlet extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/front_end/product/front_ProductOrder_Update.jsp");
@@ -789,5 +789,123 @@ public class ProductOrderServlet extends HttpServlet {
 			}
 		}
 
+		if ("insert".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+
+				Integer amountOfPrice = null;
+				try {
+					amountOfPrice = Integer.valueOf(req.getParameter("amountOfPrice").trim());
+				} catch (NumberFormatException e) {
+					amountOfPrice = 0;
+					errorMsgs.add("請輸入金額");
+				}
+
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				Integer productId = Integer.valueOf(req.getParameter("productId"));
+				Integer customerMemberId = Integer.valueOf(req.getParameter("customerMemberId"));
+				Integer sellerMemberId = Integer.valueOf(req.getParameter("sellerMemberId"));
+				String productName = req.getParameter("productName");
+				String phone = req.getParameter("phone");
+				String address = req.getParameter("address");
+				Integer amountOfProduct = Integer.valueOf(req.getParameter("amountOfProduct"));
+				Timestamp date = java.sql.Timestamp.valueOf(req.getParameter("date"));
+				Integer status = Integer.valueOf(req.getParameter("status").trim());
+
+				ProductOrderVO vo = new ProductOrderVO();
+
+				vo.setId(id);
+				vo.setProductId(productId);
+				vo.setCustomerMemberId(customerMemberId);
+				vo.setSellerMemberId(sellerMemberId);
+				vo.setProductName(productName);
+				vo.setPhone(phone);
+				vo.setAddress(address);
+				vo.setDate(date);
+				vo.setAmountOfProduct(amountOfProduct);
+				vo.setStatus(status);
+				vo.setAmountOfPrice(amountOfPrice);
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("vo", vo); // 含有輸入格式錯誤的FaqVO物件,也存入req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/product/front_ProductOrder_Create.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				/*************************** 2.開始新增資料 ***************************************/
+				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+				vo = poSvc.addProductOrder(productId, customerMemberId, sellerMemberId, productName, phone, address,
+						date, amountOfProduct, status, amountOfPrice);
+
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				String url = "/front_end/product/listAllproductOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllFaq.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front_end/product/front_ProductOrder_Create.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("reviseOrder".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				Integer id = Integer.valueOf(req.getParameter("id"));
+				String productName = req.getParameter("productName");
+				String phone = req.getParameter("phone");
+				String address = req.getParameter("address");
+
+				ProductOrderVO vo = new ProductOrderVO();
+				vo.setId(id);
+				vo.setProductName(productName);
+				vo.setPhone(phone);
+				vo.setAddress(address);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("vo", vo);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front_end/product/front_ProductOrder_Update.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始修改資料 *****************************************/
+				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
+				vo = poSvc.reviseOrder(id, productName, phone, address);
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("vo", vo);
+				String url = "/front_end/product/front_ProductOrder_ListOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front_end/product/front_ProductOrder_Update.jsp");
+				failureView.forward(req, res);
+			}
+		}
 	}
 }

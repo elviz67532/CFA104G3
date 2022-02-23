@@ -10,13 +10,6 @@
 	System.out.println("productVO: " + productVO);
 %>
 
-
-
-
-<%-- <% 	 --%>
-// ProductVO productVO = (ProductVO)request.getAttribute("productVO");
-<%-- %> --%>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -139,7 +132,7 @@
         <div class="container px-5 px-lg-6 my-6">
             <div class="row gx-4 gx-lg-5 align-items-start">
                 <div class="col-md-6">
-                    <img style="max-width: 600px; max-height: 480px; overflow:hidden; border: 2px lightgray solid;"
+                    <img class="img-fluid rounded mb-5 mb-lg-0 img-thumbnail"
                         src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=<%=productVO.getId()%>"
                         alt="" />
                     <div class="mb-1">商品編號: <%=productVO.getId()%>
@@ -177,23 +170,20 @@
                         </button>
                         <br>
                       
-                        <button class="btn2Collect" type="button">
-                            <i class="bi bi-bookmarks-fill"></i>
-                            加入收藏
-                        </button>
-                        <br>
-                        <button class="btn3Return" type="button">
                         <FORM METHOD="post" ACTION="productcollection.do">
                         <input type="hidden" name="action" value="insert">
-                        <button type="button"> 
-                            收藏
-                        </button>
-                        </FORM>
-                        
-                        <a href="<%=request.getContextPath()%>/front_end/product/productReport.jsp">
-                        <button class="btn btn-outline-dark flex-shrink-0 me-1" type="button">
 
+                        <input type="hidden" name="id" value="${productVO.id}">
+                        <button class="btn btn-outline-dark flex-shrink-0 me-1" type="submit">收藏</button>
+                        </FORM>
+                        <button class="btn btn-outline-dark flex-shrink-0 me-1" type="button">
                             <i class="bi bi-people-fill"></i>
+                            回報
+                        
+                        
+                        <a href="<%=request.getContextPath()%>/front_end/product/productReport.jsp?prodId=<%=productVO.getId()%>">
+                        <button class="btn3Return" type="button">                       
+                        <i class="bi bi-people-fill"></i>
                             問題回報                       
                         </button></a>
                         
@@ -218,6 +208,7 @@
 	
 	<!--second section -->
     <section class="py-5 bg-light">
+<!--      <div class="container px-4 px-lg-5 mt-5"> -->
         <div style="margin: 0 230px;">
             <div>
                 <div class="aboutProductWord"
@@ -225,7 +216,7 @@
                     商品詳圖
                 </div>
                 <br>
-                <img style="border: 2px lightgray solid;" src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}"
+                <img class="img-fluid rounded mb-2 mb-lg-0 img-thumbnail" src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}"
                     alt="<%=productVO.getName()%>" />
             </div>
             <div class="aboutProductWord"
@@ -240,7 +231,8 @@
             <div class="small mb-1" style="text-align:center;margin-top:20px;">
                 上架時間: <%=productVO.getLaunchedDate()%>
             </div>
-        </div>
+<!--         </div> -->
+       </div>
     </section>
     
     

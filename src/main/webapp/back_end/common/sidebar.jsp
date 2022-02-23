@@ -15,7 +15,7 @@
 		</div>
 		<div class="sidebar-brand-text mx-3">委域</div>
 	</a>
-
+	
 	<!-- 幫助中心管理	 -->
 	<hr class="sidebar-divider">
 	<li class="nav-item">
@@ -25,7 +25,15 @@
 			<i class="fas fa-fw fa-table"></i> 
 			<span>FAQ</span>
 	</a></li>
-
+	  <!-- 最新消息管理  -->
+ 	<hr class="sidebar-divider">
+ 	<li class="nav-item">
+  		<a class="nav-link" 
+     	   href="<%=request.getContextPath()%>/back_end/news/listallnews.jsp"
+     	   onclick="this.parentNode.submit()">
+           <i class="fas fa-fw fa-table"></i> 
+   	       <span>最新消息</span>
+  	</a></li>
 	<!-- 活動管理 -->
 	<hr class="sidebar-divider">
 	<div class="sidebar-heading">活動管理</div>

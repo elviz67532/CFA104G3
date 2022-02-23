@@ -3,7 +3,6 @@ package com.product_report.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
-import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,6 +12,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.member.model.MemberVO;
 import com.product_report.model.ProductReportServiceImpl;
@@ -144,13 +144,19 @@ public class ProductReportServlet extends HttpServlet {
 		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 			
-			MemberVO memberVO = (MemberVO) req.getAttribute("memberVO");
-			if (memberVO == null) {
-				// TODO 
-				
-				return;
-			}
-			Integer memberId = memberVO.getId();
+//			HttpSession session = req.getSession();
+//			MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
+			
+//			MemberVO memberVO = (MemberVO) req.getAttribute("memberVO");
+//			
+//			System.out.println("memberVO" + memberVO);
+//			if (memberVO == null) {
+//				// TODO 
+//				
+//				System.out.println("insert enter");
+//				return;
+//			}
+			Integer memberId = null;
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -224,7 +230,7 @@ public class ProductReportServlet extends HttpServlet {
 				
 				
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/front_end/common/example.jsp";
+				String url = "/front_end/product/homePage.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 
@@ -257,7 +263,7 @@ public class ProductReportServlet extends HttpServlet {
 				reportSvc.deleteById(id);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/back_end/product/report/productReportManage.jsp";
+				String url = "/back_end/product/productReportManage.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 
@@ -265,7 +271,7 @@ public class ProductReportServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/report/listOneReport.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/product/listOneReport.jsp");
 				failureView.forward(req, res);
 			}
 		}
