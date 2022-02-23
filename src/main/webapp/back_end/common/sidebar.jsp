@@ -9,7 +9,7 @@
 	<!-- Sidebar - Brand -->
 	<a
 		class="sidebar-brand d-flex align-items-center justify-content-center"
-		href="#">
+		href="<%=request.getContextPath()%>/back_end/server_manager/serverManagerHome.jsp">
 		<div class="sidebar-brand-icon rotate-n-15">
 			<i class="fas fa-laugh-wink"></i>
 		</div>
@@ -29,17 +29,19 @@
 	<!-- 活動管理 -->
 	<hr class="sidebar-divider">
 	<div class="sidebar-heading">活動管理</div>
-	<li class="nav-item"><a class="nav-link collapsed" href="#"
-		data-toggle="collapse" data-target="#collapseActivity"
-		aria-expanded="true" aria-controls="collapseActivity"> <i
-			class="fas fa-fw fa-cog"></i> <span>活動</span>
-	</a>
+	<li class="nav-item">
+		<a class="nav-link collapsed" href="#"
+			data-toggle="collapse" data-target="#collapseActivity"
+			aria-expanded="true" aria-controls="collapseActivity"> 
+			<i class="fas fa-fw fa-cog"></i> <span>活動</span>
+		</a>
 		<div id="collapseActivity" class="collapse"
 			aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<a class="collapse-item" href="<%=request.getContextPath()%>/back_end/activity/listAllActr.jsp">活動管理</a>
 			</div>
-		</div></li>
+		</div>
+	</li>
 
 
 	<!-- 二手買賣管理 -->
@@ -96,7 +98,7 @@
 	<hr class="sidebar-divider">
 	<div class="sidebar-heading">管理員權限</div>
 	<li class="nav-item"><a class="nav-link collapsed"
-		href="/CFA104G3/back_end/server_manager/server.jsp"
+		href="#"
 		data-toggle="collapse" data-target="#collapseManager"
 		aria-expanded="true" aria-controls="collapseManager"> <i
 			class="fas fa-fw fa-cog"></i> <span>管理員</span>
