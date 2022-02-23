@@ -15,6 +15,17 @@
 	gender.put(2,"女");
 	pageContext.setAttribute("gender", gender);	
 %>
+<%
+	Map<Integer, String> map = new HashMap<>();
+	map.put(1,"管理員權限管理");
+	map.put(10,"活動");
+	map.put(20,"二手");
+	map.put(30,"搬家");
+	map.put(40, "會員");
+	map.put(50, "FAQ");
+	map.put(60, "NEWS");
+	pageContext.setAttribute("map", map);
+%>
 <!doctype html>
 <html lang="zh-TW">
 <head>
@@ -63,6 +74,15 @@
 					      <th scope="row">password</th>
 					      <td>${ServerManagerVO.smgrPassword}</td>
 					    </tr>
+					    <tr>
+					      <th scope="row">權限</th>
+					      <td>
+							<c:forEach var="auth_" varStatus="s" items="${auth}">
+								${map[auth_.smgeAuthId]}
+								<c:if test="${s.last eq false}">、</c:if>
+							</c:forEach>					      
+					      </td>
+					    </tr>					    
 					    <tr>
 					      <th scope="row">名稱</th>
 					      <td>${ServerManagerVO.smgrName}</td>
