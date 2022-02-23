@@ -7,10 +7,7 @@
 
 <% 
 	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
-	System.out.println("productVO: " + productVO);
-	String prodId = (String)request.getParameter("prodId");
-	pageContext.setAttribute("prodId", prodId);
-	
+	System.out.println("productVO: " + productVO);	
 %>
 
 <!DOCTYPE html>
@@ -173,10 +170,9 @@
                         </button>
                         <br>
                       
-                        <FORM METHOD="post" ACTION="productcollection.do?prodId=${productVO.id}">
+                        <FORM METHOD="post" ACTION="productcollection.do">
                         <input type="hidden" name="action" value="insert">
                         <input type="hidden" name="id" value="${productVO.id}">
-<%--                         <input type="hidden" name="id" value="${productVO.id}">                         --%>
                         <button class="btn2Collect" type="submit">                       
                          <i class="bi bi-bookmarks-fill"></i>
                             加入收藏

@@ -34,15 +34,15 @@ public class ProductCollectionServlet extends HttpServlet{
 		String action = req.getParameter("action");
 		
         if ("insert".equals(action)) {   
-			System.out.println("insert");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
+			Integer productId = null;
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				String str = req.getParameter("id");
-				Integer productId = null;
 				productId = Integer.valueOf(str);
+				System.out.println("productId"+productId);
 				
 				HttpSession session = req.getSession();
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
@@ -51,7 +51,15 @@ public class ProductCollectionServlet extends HttpServlet{
 					return;
 				}
 				Integer memberId = memberVO.getId();
+				
+				ProductServiceImpl service = new ProductServiceImpl();
+				ProductVO productVO = (ProductVO) session.getAttribute("productVO");
 			
+				productId = productVO.getId();
+				System.out.println("--------------");
+				productVO = service.getOneProduct(productId);
+				session.setAttribute("productVO", productVO);
+				
 				ProductCollectionVO productCollectionVO = new ProductCollectionVO();
 				
 				productCollectionVO.setProductId(productId);
@@ -60,12 +68,8 @@ public class ProductCollectionServlet extends HttpServlet{
 				/***************************2.開始新增資料***************************************/
 				ProductCollectionServiceImpl proCollectionSvc = new ProductCollectionServiceImpl();
 				productCollectionVO = proCollectionSvc.insert(memberId, productId);
-				
-				ProductServiceImpl service = new ProductServiceImpl();
-				ProductVO oneProduct = service.getOneProduct(productId);
-				
-				req.setAttribute("productVO", oneProduct);
-					
+										
+//				req.setAttribute("productVO", oneProduct);					
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/front_end/product/singleItem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 

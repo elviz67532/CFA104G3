@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.member.model.MemberVO;
+import com.notification.model.ENotificationType;
+import com.notification.model.NotificationServiceImpl;
 import com.product_report.model.ProductReportServiceImpl;
 import com.product_report.model.ProductReportVO;
 
@@ -160,9 +162,13 @@ public class ProductReportServlet extends HttpServlet {
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
+			// send the ErrorPage view.			
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			/***************************新增通知*****************************************/
+			NotificationServiceImpl notSvc = new NotificationServiceImpl();
+			notSvc.addNotification(memberId, "您被檢舉囉!!!小心點。", ENotificationType.PRODUCT);
+			
+			
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				Integer productId = null;

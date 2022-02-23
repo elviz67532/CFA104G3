@@ -27,7 +27,7 @@ import com.product.model.ProductVO;
 import com.product_photo.model.ProductPhotoServiceImpl;
 
 
-public class ProductServlet extends HttpServlet {
+public class ProductServlet2 extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -78,10 +78,6 @@ public class ProductServlet extends HttpServlet {
 				/***************************2.開始查詢資料*****************************************/	
 				ProductServiceImpl productSvc = new ProductServiceImpl();
 				ProductVO prodVo = productSvc.getOneProduct(prodno);
-				
-				HttpSession session = req.getSession();
-				session.setAttribute("productVO", prodVo);
-				
 				if(prodVo == null) {
 					errMsgs.add("查無資料");
 				}

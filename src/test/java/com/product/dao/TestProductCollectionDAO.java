@@ -41,23 +41,23 @@ public class TestProductCollectionDAO {
 		assertNotEquals(row, 0);
 	}
 	
-	@Test
-	public void testDeleteById() {
-		DualKey<Integer, Integer> id = new DualKey<>(2, 3);
-		int row = dao.deleteById(id);
-		assertNotEquals(row, 0);
-	}
-	
-	@Test
-	public void testSelectById() {
-		DualKey<Integer, Integer> id = new DualKey<>(2, 3);
-		ProductCollectionVO productCollectionVO = dao.selectById(id);
-		assertNotNull(productCollectionVO);
-	}
-	
-	@Test
-	public void testSelectAll() {
-		List<ProductCollectionVO> vos = dao.selectAll();
-		assertTrue(vos.size() > 0);
-	}
+//	@Test
+//	public void testDeleteById() {
+//		DualKey<Integer, Integer> id = new DualKey<>(2, 3);
+//		int row = dao.deleteById(id);
+//		assertNotEquals(row, 0);
+//	}
+//	
+//	@Test
+//	public void testSelectById() {
+//		DualKey<Integer, Integer> id = new DualKey<>(2, 3);
+//		ProductCollectionVO productCollectionVO = dao.selectById(id);
+//		assertNotNull(productCollectionVO);
+//	}
+//	
+//	@Test
+//	public void testSelectAll() {
+//		List<ProductCollectionVO> vos = dao.selectAll();
+//		assertTrue(vos.size() > 0);
+//	}
 }
