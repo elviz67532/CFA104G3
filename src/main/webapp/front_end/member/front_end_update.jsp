@@ -5,8 +5,29 @@
 <%@ page import="com.member.model.*"%>
 
 <%
-MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
+MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+//<!--錯誤訊息 -->
+Map<String, String> errorMsgs = (Map<String, String>) request.getAttribute("errorMsgs");
+if (errorMsgs != null) {
+	if (errorMsgs.get("email") != null)
+		request.setAttribute("email", errorMsgs.get("email"));
+	if (errorMsgs.get("password") != null)
+		request.setAttribute("password", errorMsgs.get("password"));
+	if (errorMsgs.get("nickname") != null)
+		request.setAttribute("nickname", errorMsgs.get("nickname"));
+	if (errorMsgs.get("name") != null)
+		request.setAttribute("name", errorMsgs.get("name"));
+	if (errorMsgs.get("phone") != null)
+		request.setAttribute("phone", errorMsgs.get("phone"));
+	if (errorMsgs.get("city") != null)
+		request.setAttribute("city", errorMsgs.get("city"));
+	if (errorMsgs.get("cityArea") != null)
+		request.setAttribute("cityArea", errorMsgs.get("cityArea"));
+	if (errorMsgs.get("address") != null)
+		request.setAttribute("address", errorMsgs.get("address"));
+}
 %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,157 +54,133 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 <link
 	href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css"
 	rel="stylesheet" />
-<style>
-* {
-	box-sizing: border-box;
-	font-family: monospace;
-	line-height: 150%;
-}
-
-table#table-2 {
-	font-size: 10 vmin;
-	margin: 0 auto;
-	white-space: nowrap;
-}
-
-h2 {
-	margin-top: 40px;
-}
-
-table {
-	width: 400px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	color: black;
-}
-
-td {
-	padding: 7px;
-	font-weight: bold;
-	/* 	text-align: center; */
-}
-</style>
 </head>
 
-<body>
-	<!-- Navigation-->
-	<!-- nav -->
+<body style="background-image: url('<%=request.getContextPath()%>/asset/img/bnet-bg.jpg')">
+	
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
-
-	<!-- Page Header-->
-	<header class="masthead"
-		style="background-image: url('<%=request.getContextPath()%>/asset/img/move01.jpg')">
-		<div class="container position-relative px-4 px-lg-5">
-			<div class="row gx-4 gx-lg-5 justify-content-center">
-				<div class="col-md-10 col-lg-8 col-xl-7">
-					<div class="site-heading">
-						<h1>New Life</h1>
-						<span class="subheading">迎 接 全 新 的 人 生</span>
-					</div>
-				</div>
+<style>
+.classH4{
+color: white;
+font-size: 32px;
+font-family: "Core Sans N W01 35 Light";
+font-weight: normal;
+}
+.inputholder{
+	opacity: 0.6;
+	transition: transform .3s;
+	height: 34px;
+	border: 1px groove black;
+	background-color: lightgray;
+width:100%;
+padding: 0 10px;
+margin-top: 3px;
+margin-bottom: 10px;
+font-size: 15px;
+line-height: 20px;
+border: 1px solid rgba(255, 255, 255, 0.3)
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus{
+	background-color: white;
+	border: 1px  groove lightgray;
+	opacity: 0.8; 
+	-webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  -webkit-transition: background-position 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  transition: background-position 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s;   
+}
+.submitBtn{
+	width: 100%; 
+	border: none;
+	height: 34px;
+	background-image: linear-gradient(to right, #003E3E, #005757,#003E3E);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+	color: white;
+}
+.submitBtn:hover{
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	 transition: background-position 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s; 
+}
+</style>
+	
+		<div style=" padding: 40px; margin: 100px auto ; width:40%; background-color: rgba(,255,204,0.2);">
+			<div style="float: left;">
+				<h4 class="classH4" >會員資料修改</h4>
 			</div>
-		</div>
-	</header>
-
-	<main>
-
-
-				<div style="text-align: center;">
-						<h1>會員資料修改</h1>
-				</div>
-			
-		<%-- 錯誤表列 --%>
-		<c:if test="${not empty errorMsgs}">
-			<font style="color: red">請修正以下錯誤:</font>
-			<ul>
-				<c:forEach var="message" items="${errorMsgs}">
-					<li style="color: red">${message}</li>
-				</c:forEach>
-			</ul>
-		</c:if>
-     <div style="text-align: center;" >
 		<FORM METHOD="post" enctype="multipart/form-data"ACTION="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"name="form1">
-			<table id="table-2">
+		        	<br>
+					<br>
+				<div style="color:white;">
 				<tr>
 					<td>會員編號:<font color=red><b>*</b></font></td>
 					<td><%=memberVO.getId()%></td>
 				</tr>
+				<br>
+				<br>
+					<c:if test="${not empty email}">
+					 您的email: <span style="color: red"> "${email}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入郵件" type="email" name="email" size="10"value="<%=(memberVO == null) ? "" : memberVO.getEmail()%>" />
+					<br>
 
+					<c:if test="${not empty password}">
+						您的密碼: <span style="color: red"> "${password}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入密碼" type="password" name="password" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getPassword()%>" />
+					<br>
 
-				<tr>
-					<td>EMAIL:</td>
-					<td>
-					<input placeholder="請輸入EMAIL" name="email" maxlength="45"autocomplete="off"value="<%=(memberVO == null) ? "aaa" : memberVO.getEmail()%>" />
-					</td>
-				</tr>
-
-				<tr>
-					<td>密碼:</td>
-					<td>
-					<input type="TEXT" name="password" maxlength="10"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getPassword()%>" />
-					</td>
-				</tr>
-
-				<tr>
-					<td>暱稱:</td>
-					<td>
-					<input type="TEXT" name="nickname" maxlength="10"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getNickname()%>" />
-					</td>
-				</tr>
-				<tr>
-					<td>姓名:</td>
-					<td>
-					<input type="TEXT" name="name" maxlength="10"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getName()%>" />
-					</td>
-				</tr>
-				<tr>
-					<td>電話:</td>
-					<td>
-					<input placeholder="請輸入電話" name="phone" maxlength="10"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getPhone()%>" />
-					</td>
-				</tr>
-				<tr>
-					<td>居住城市:</td>
-					<td>
-					<input placeholder="請輸入居住城市" name="city" size="30"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getCity()%>" />
-					</td>
-				</tr>
-				<tr>
-					<td>居住鄉鎮:</td>
-					<td>
-					<input placeholder="請輸入居住鄉鎮" name="cityArea" size="30"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getCityArea()%>" />
-					</td>
-				</tr>
-				<tr>
-					<td>地址:</td>
-					<td>
-					<input placeholder="請輸入地址" name="address" size="30"autocomplete="off"value="<%=(memberVO == null) ? "" : memberVO.getAddress()%>" />
-					</td>
-				</tr>
-				<tr>
-					<td>圖片:</td>
-					<td>
-					<input type="file" name="avatar" size="45"value="<%=(memberVO == null) ? "" : memberVO.getAvatar()%>" />
-					</td>
-				</tr>
-		</table>
-			<br> 
+					<c:if test="${not empty nickname}">
+						您的暱稱: <span style="color: red"> "${nickname}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入暱稱" type="text" name="nickname" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getNickname()%>" />
+					<br>
+					<c:if test="${not empty name}">
+						<span style="color: red"> "${name}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入名字" type="text" name="name" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getName()%>" />
+					<br>
+					<c:if test="${not empty phone}">
+						<span style="color: red"> "${phone}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入電話" type="tel" name="phone" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getPhone()%>" />
+					<br>
+					<c:if test="${not empty city}">
+						<span style="color: red"> "${city}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入居住城市" type="text" name="city" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getCity()%>" />
+					<br>
+					<c:if test="${not empty cityArea}">
+						<span style="color: red"> "${cityArea}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入居住鄉鎮" type="text" name="cityArea" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getCityArea()%>" />
+					<br>
+					<c:if test="${not empty address}">
+						<span style="color: red"> "${address}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入地址" type="text" name="address" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getAddress()%>" />
+					<br>
+						<input class="inputholder" placeholder="請上傳圖片" type="file" name="avatar" maxlength="10"value="<%=(memberVO == null) ? "" : memberVO.getAvatar()%>" />
+				    <br>
+		
+					<br> 
+				</div>	
 			<input type="hidden" name="action"value="front_end_member_update"> 
 			<input type="hidden"name="account" value="<%=memberVO.getAccount()%>">
 			<input type="hidden" name="id" value="<%=memberVO.getId()%>"> 
 			<input type="hidden" name="account" value="${memberVO.account}"> 
-			<input type="submit" value="送出" >
+			<input class="submitBtn" type="submit" value="更新會員資料" >
 		</FORM>
 	</div>
-	</main>
-	<!-- Footer-->
-	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+
     <script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-	<!-- Core theme JS-->
+	
 	<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
 	
-
 </body>
-
 </html>
