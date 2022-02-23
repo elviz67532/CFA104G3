@@ -1,14 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@	page import="com.product_photo.model.*"%>
+<%@	page import="com.product.model.*"%>
 <%@ page import="com.news.model.*" %>
-
-
-<% 
-NewsServiceImpl newsServiceImpl=new NewsServiceImpl(); 
-List<NewsVO> list = newsServiceImpl.selectAllNews();
-pageContext.setAttribute("list", list);
+<%
+	ProductServiceImpl productService = new ProductServiceImpl();
+	List<ProductVO> list = productService.getAll();
+	pageContext.setAttribute("list", list);
 %>
+<%
+	NewsServiceImpl newsSvc = new NewsServiceImpl();
+	List<NewsVO> newslist = newsSvc.selectAllByType(1);
+	pageContext.setAttribute("newslist", newslist);
+
 
 <!DOCTYPE html>
 <html lang="en">

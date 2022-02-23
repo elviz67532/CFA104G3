@@ -12,7 +12,7 @@
 %>
 <%
 	NewsServiceImpl newsSvc = new NewsServiceImpl();
-	List<NewsVO> newslist = newsSvc.selectAllNews();
+	List<NewsVO> newslist = newsSvc.selectAllByType(1);
 	pageContext.setAttribute("newslist", newslist);
 %>
 <jsp:useBean id="photoSvc" scope="page" class="com.product_photo.model.ProductPhotoServiceImpl" />

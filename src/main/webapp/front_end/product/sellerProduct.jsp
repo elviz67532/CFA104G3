@@ -141,18 +141,23 @@
 							<!-- 商品內容 -->
 							<div class="col-12">
 								<label for="lastName" class="form-label">商品內容</label> 
-								<input type="text" name="prodDesc" class="form-control" required>
+								<input type="text" name="prodDesc" 
+								value="<%= (productVO==null)? "" : productVO.getDescription()%>"
+								class="form-control" required>
 								<div class="invalid-feedback">Valid last name is required.</div>
 							</div>
 							<!-- 商品地址 -->
 							<div class="col-sm-6">
 								<label for="address" class="form-label">地址</label> 
-								<input type="text" name="prodLoc" class="form-control" id="address" required>
+								<input type="text" name="prodLoc" 
+								value="<%= (productVO==null)? "" : productVO.getLocation()%>"
+								class="form-control" id="address" required>
 							</div>
 							<!-- 商品價格 -->
 							<div class="col-sm-6">
-								<label for="address" class="form-label">金額</label> <input
-									type="text" name="prodPrice" 
+								<label for="address" class="form-label">金額</label> 
+								<input type="text" name="prodPrice" 
+									value="<%= (productVO==null)? "" : productVO.getPrice()%>"
 									class="form-control" id="prodPrice"
 									placeholder="NT$" required>
 							</div>

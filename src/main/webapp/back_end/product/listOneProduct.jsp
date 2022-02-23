@@ -119,7 +119,9 @@
 		<tr>
 			<td><%=productVO.getId()%></td>
 			<td><%=productVO.getSellerMemberId()%></td>
-			<td><%=productVO.getType()%></td>	
+			<td><%=map.get(productVO.getType())%>
+			
+			</td>	
 			<td><%=productVO.getDescription()%></td>
 			<td><%=productVO.getPrice()%></td>
 			<td><%=productVO.getName()%></td>
@@ -129,12 +131,12 @@
 			<td><%=productVO.getLaunchedDate()%></td>
 			<td><%=productVO.getLocation()%></td>
 			<td>
-				<c:set var="product" scope="session" value="${productVO.status}"/>
+<%-- 				<c:set var="product" scope="session" value="${productVO.status}"/> --%>
 			         <c:choose>
-				           <c:when test="${product == 0}">
-				           		販售
+				           <c:when test="${productVO.status == 0}">
+				           		販售111
 				           </c:when>
-				           <c:when test="${product == 1}">
+				           <c:when test="${productVO.status == 1}">
 				           		完售
 				           </c:when>
 			         </c:choose>
