@@ -415,4 +415,42 @@ public class ProductDAOImpl implements ProductDAO {
 		}
 	}
 
+	@Override
+	public void updateStatus(Integer prodId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt =  con.prepareStatement(UPDAT_STATUS);
+			pstmt.setInt(1, prodId);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
+	}
+
+	@Override
+	public void updateStatus(Integer prodId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt =  con.prepareStatement(UPDAT_STATUS);
+			pstmt.setInt(1, prodId);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
+	}
+
 }
