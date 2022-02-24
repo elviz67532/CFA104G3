@@ -2,6 +2,7 @@ package com.activity_report.controller;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,69 +16,44 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.activity_photo.model.ActivityPhotoService;
+import com.activity_photo.model.ActivityPhotoServiceImpl;
+import com.activity_photo.model.ActivityPhotoVO;
+import com.activity_report.model.ActivityReportService;
+import com.activity_report.model.ActivityReportServiceImpl;
+import com.activity_report.model.ActivityReportVO;
+
 
 public class DBGifReader4 extends HttpServlet {
-
 	private static final long serialVersionUID = 1L;
-	Connection con;
+//	Connection con;
 
-	public void doGet(HttpServletRequest req, HttpServletResponse res)
-			throws ServletException, IOException {
-		
-		res.setContentType("image/gif");
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		res.setContentType("image/*");
 		ServletOutputStream out = res.getOutputStream();
-		
+
 		try {
-			Statement stmt = con.createStatement();
 			String id = req.getParameter("ACTC_ID");
-			ResultSet rs = stmt.executeQuery(
-//				"SELECT IMAGE FROM PICTURES WHERE PID = " + req.getParameter("PID"));
-			    "SELECT ACTC_PHOTO FROM ACTIVITY_COMPLAINTS WHERE ACTC_ID ="+id);
-			if (rs.next()) {
-				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("ACTC_PHOTO"));
-				byte[] buf = new byte[4 * 1024]; // 4K buffer
-				int len;
-				while ((len = in.read(buf)) != -1) {
-					out.write(buf, 0, len);
-				}
+			int actId = Integer.parseInt(id);
+
+			ActivityReportService service = new ActivityReportServiceImpl();
+			ActivityReportVO oneActr = service.getOneActr(actId);
+			if (oneActr != null && oneActr.getPhoto() != null) {
+				out.write(oneActr.getPhoto());
+			} else {
+				InputStream in = getServletContext().getResourceAsStream("/asset/img/activityImage/nodata/20192.jpg");
+				byte[] b = new byte[in.available()];
+				in.read(b);
+				out.write(b);
 				in.close();
-			}  else {
-				res.sendError(HttpServletResponse.SC_NOT_FOUND);
-//				InputStream in = getServletContext().getResourceAsStream("");
-//				byte[] b = new byte[in.available()];
-//				in.read(b);
-//				out.write(b);
-//				in.close();
 			}
-			rs.close();
-			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-//			InputStream in = getServletContext().getResourceAsStream("/front-end/mem/images/null.jpg");
-//			byte[] b = new byte[in.available()];
-//			in.read(b);
-//			out.write(b);
-//			in.close();
+			InputStream in = getServletContext().getResourceAsStream("/asset/img/activityImage/nodata/20192.jpg");
+			byte[] b = new byte[in.available()];
+			in.read(b);
+			out.write(b);
+			in.close();
 		}
 	}
-
-	public void init() throws ServletException {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/CFA104G3?rewriteBatchedStatements=true&serverTimezone=Asia/Taipei", "root", "password");
-		} catch (ClassNotFoundException e) {
-			throw new UnavailableException("Couldn't load JdbcOdbcDriver");
-		} catch (SQLException e) {
-			throw new UnavailableException("Couldn't get db connection");
-		}
-	}
-
-	public void destroy() {
-		try {
-			if (con != null) con.close();
-		} catch (SQLException e) {
-			System.out.println(e);
-		}
-	}
-
 }

@@ -95,6 +95,7 @@ public class ProductCollectionServlet extends HttpServlet{
 				HttpSession session = req.getSession();
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 				if(memberVO == null) {
+					res.sendRedirect(req.getContextPath() + "/front_end/member/login.jsp");
 					return;//程式中斷
 				}
 				
