@@ -50,10 +50,6 @@ FaqVO faqVO = (FaqVO) request.getAttribute("faqVO");
 
 
 
-					<h4>
-						<a href="back_FaqMain.jsp">回首頁</a>
-					</h4>
-
 
 
 					<h3>新增FAQ:</h3>
@@ -64,13 +60,9 @@ FaqVO faqVO = (FaqVO) request.getAttribute("faqVO");
 						<li style="color: red">${exception}</li>
 					</c:if>
 
-					<FORM METHOD="post" ACTION="faq" name="form1">
+					<FORM METHOD="post" ACTION="faq.do">
 						<table>
-							<tr>
-								<td>FAQ編號:</td>
-								<td><input type="TEXT" name="id" size="45"
-									value="<%=(faqVO == null) ? "66" : faqVO.getId()%>" /></td>
-							</tr>
+
 							<tr>
 								<td>問題:</td>
 								<td><input type="TEXT" name="question" size="45"

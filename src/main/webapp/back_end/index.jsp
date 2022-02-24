@@ -1,14 +1,16 @@
-<%@ page import="com.server_manager.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%
-	ServerManagerServiceImpl smSvc = new ServerManagerServiceImpl();
-	List<ServerManagerVO> list = smSvc.getAll();
-	session.setAttribute("list", list);
-	System.out.println(session.getAttribute("list"));
+	Object account = session.getAttribute("account");
+	if(account == null){
+		session.setAttribute("location", request.getRequestURI());
+		response.sendRedirect(request.getContextPath()+"/back_end/server_manager/loginServer.jsp");
+		return;
+	}
 %>
+
 <!doctype html>
 <html lang="zh-TW">
 <head>
@@ -29,9 +31,23 @@
 				<!-- Topbar -->
 				<jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
 				<div class="container-fluid">
-
+					<div class="d-flex justify-content-center">
 					<!-- main -->
-					manager
+					<img src="<%=request.getContextPath()%>/asset/img/backendHome.jpeg"
+						style="max-height:'100%';max-width:'100%'"
+						class="img-fluid d-none d-md-block rounded mb-2 s">
+					</div>
+			
+					
+			
+			
+			
+			
+			
+			
+			
+			
+					
 					<!-- end of main -->
 					
 				</div>

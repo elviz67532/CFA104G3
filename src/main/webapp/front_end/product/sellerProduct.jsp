@@ -2,9 +2,19 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.product.model.*" %>
+<%@ page import="com.member.model.*"%>
 <!DOCTYPE html>
 <html lang="en">
-
+<%
+	MemberVO memberVo = (MemberVO) session.getAttribute("memberVO");
+	if (memberVo == null) {
+	response.sendRedirect(request.getContextPath() + "/front_end/member/login.jsp");
+	}
+%>
+<%
+	ProductVO productVO = (ProductVO) request.getAttribute("productVO");
+%>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -96,7 +106,7 @@
 	<!-- 麵包屑 (Breadcrumb) -->
 	<nav aria-label="breadcrumb">
 	  <ol class="breadcrumb">
-	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總攬</a></li>
+	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/homePage.jsp">總覽</a></li>
 	    <li class="breadcrumb-item"><a href="<%=request.getContextPath() %>/front_end/product/vendor.jsp">買賣家</a></li>
 	    <li class="breadcrumb-item active" aria-current="page">新增商品</li>
 	  </ol>
@@ -111,36 +121,43 @@
 			</div>
 				<!-- 目前手動輸入 -->
 				<!-- 取得會員ID -->
-				<jsp:useBean id="memVO" class="com.member.model.MemberVO"/>
+				<jsp:useBean id="memberVO" class="com.member.model.MemberVO"/>
 				<div class="col-12">
 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/ProductServlet" class="needs-validation" 
 						  name="form1" novalidate>
 						<div class="row g-3">
 							<div class="col-sm-6">
-								<label for="memId" class="form-label">會員編號:</label><br> 
-								<input type="text" value="" class="form-control" name="memId"/>
+								<label for="" class="form-label">會員編號:</label><br> 
+								<input type="text" value="${sessionScope.memberVO.id}" class="form-control" name="memId"/>
 							</div>
 							<!-- 商品名稱 -->
 							<div class="col-sm-6">
 								<label for="lastName" class="form-label">商品名稱</label> 
-								<input type="text" name="prodName" class="form-control" required/>
+								<input type="text" name="prodName" 
+								value="<%= (productVO==null)? "" : productVO.getName()%>"
+								class="form-control" required/>
 								<div class="invalid-feedback">Valid last name is required.</div>
 							</div>
 							<!-- 商品內容 -->
 							<div class="col-12">
 								<label for="lastName" class="form-label">商品內容</label> 
-								<input type="text" name="prodDesc" class="form-control" required>
+								<input type="text" name="prodDesc" 
+								value="<%= (productVO==null)? "" : productVO.getDescription()%>"
+								class="form-control" required>
 								<div class="invalid-feedback">Valid last name is required.</div>
 							</div>
 							<!-- 商品地址 -->
 							<div class="col-sm-6">
 								<label for="address" class="form-label">地址</label> 
-								<input type="text" name="prodLoc" class="form-control" id="address" required>
+								<input type="text" name="prodLoc" 
+								value="<%= (productVO==null)? "" : productVO.getLocation()%>"
+								class="form-control" id="address" required>
 							</div>
 							<!-- 商品價格 -->
 							<div class="col-sm-6">
-								<label for="address" class="form-label">金額</label> <input
-									type="text" name="prodPrice" 
+								<label for="address" class="form-label">金額</label> 
+								<input type="text" name="prodPrice" 
+									value="<%= (productVO==null)? "" : productVO.getPrice()%>"
 									class="form-control" id="prodPrice"
 									placeholder="NT$" required>
 							</div>

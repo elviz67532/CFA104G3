@@ -91,7 +91,7 @@ ProductReportVO productReportVO = (ProductReportVO) request.getAttribute("produc
                                                 <td>${productReportVO.photo}</td>
                                                 <td>${productReportVO.status}</td>
                                                 <td class="text-nowrap">
-                                                    <FORM METHOD="post" ACTION="report.do" style="margin-bottom: 0px;">
+                                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/report.do" style="margin-bottom: 0px;">
                                                         <button type="button" class="btn btn-outline-danger"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#exampleModal">刪除</button>

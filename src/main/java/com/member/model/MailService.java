@@ -11,6 +11,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class MailService {
+	final String myGmail = "encored98931@gmail.com";    //TODD還沒放帳號密碼
+	final String myGmail_password = "arirswxcbvdncjje"; 
+	final String myGmail2 = "mirian24@opinionsbte.com";
+	public void sendToSelf(String subject, String messageText) {
+		sendMail(myGmail2, subject, messageText);
+	}
 
 	// 設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容
 	public void sendMail(String to, String subject, String messageText) {
@@ -25,8 +31,7 @@ public class MailService {
 			   props.put("mail.smtp.port", "465");
 			// ●設定 gmail 的帳號 & 密碼 (將藉由你的Gmail來傳送Email)
 			// ●須將myGmail的【安全性較低的應用程式存取權】打開
-			final String myGmail = "encored98931@gmail.com";    //TODD還沒放帳號密碼
-			final String myGmail_password = "arirswxcbvdncjje"; 
+	
 			Session session = Session.getInstance(props, new Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(myGmail, myGmail_password);

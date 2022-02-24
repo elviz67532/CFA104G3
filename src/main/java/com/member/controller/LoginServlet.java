@@ -3,6 +3,7 @@ package com.member.controller;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.PasswordAuthentication;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.member.model.MailService;
+import com.member.model.MemberDAO;
+import com.member.model.MemberDAOJDBCImpl;
 import com.member.model.MemberServiceImpl;
 import com.member.model.MemberVO;
 import com.member.model.RandomPassword;
@@ -59,90 +62,70 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 *
+	 */
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+
 		if ("register".equals(action)) {// 註冊
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);//怡裡的用法
-//			List<String> errorMsgs = new LinkedList<String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
+			req.setAttribute("errorMsgs", errorMsgs);// 怡裡的用法
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				MemberServiceImpl memSvc = new MemberServiceImpl();
 				String email = req.getParameter("email");
 				String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
 				if (email == null || email.trim().length() == 0) {
-					errorMsgs.put("email","請輸入郵箱");
+					errorMsgs.put("email", "請輸入郵箱");
 				} else if (!email.trim().matches(emailReg)) {
-					errorMsgs.put("email","請輸入正確的郵箱格式");
+					errorMsgs.put("email", "請輸入正確的郵箱格式");
+				} else if (memSvc.findByEmail(email) != null) {
+					errorMsgs.put("email", "此信箱已使用");
 				}
 				String account = req.getParameter("account");
 				String accountReg = "^[A-Za-z0-9]{6,24}$";
 				if (account == null || account.trim().length() == 0) {
-					errorMsgs.put("account","請輸入帳號");
+					errorMsgs.put("account", "請輸入帳號");
 				} else if (!account.trim().matches(accountReg)) {
-					errorMsgs.put("account","請輸入正確的帳號格式");
+					errorMsgs.put("account", "請輸入正確的帳號格式");
+				} else if (memSvc.findByAccount(account) != null) {
+					errorMsgs.put("account", "此帳號已存在");
 				}
 				String password = req.getParameter("password");
-				String passwordReg = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$";
+				String passwordReg = "^[A-Za-z0-9]{6,24}$";
 				if (password == null || password.trim().length() == 0) {
-					errorMsgs.put("password","請輸入密碼");
-				} else if (!password.trim().matches(passwordReg)) {
-					errorMsgs.put("password","第一個須為大寫英文字母");
+					errorMsgs.put("password", "請輸入密碼");
 				}
 				String nickname = req.getParameter("nickname").trim();
 				if (nickname == null || nickname.trim().length() == 0) {
-					errorMsgs.put("nickname","暱稱請勿空白");
+					errorMsgs.put("nickname", "暱稱請勿空白");
 				}
 				String name = req.getParameter("name");
+				String nameReg = "^[(\u4e00-\u9fa5)]{2,10}$";
 				if (name == null || name.trim().length() == 0) {
-					errorMsgs.put("name","姓名: 請勿空白");
-
+					errorMsgs.put("name", "姓名: 請勿空白");
+				} else if (!name.trim().matches(nameReg)) {
+					errorMsgs.put("name", "姓名只能為中文,長度2到10");
 				}
 				String phone = req.getParameter("phone");
 				String phoneReg = "^09[0-9]{8}$";
 				if (phone == null || phone.trim().length() == 0) {
-					errorMsgs.put("phone","請輸入手機號碼");
+					errorMsgs.put("phone", "請輸入手機號碼");
 				} else if (!phone.trim().matches(phoneReg)) {
-					errorMsgs.put("phone","請輸入正確的手機號碼格式");	
-								}
+					errorMsgs.put("phone", "請輸入正確的手機號碼格式");
+				}
 				Integer gender = null;
 				try {
 					gender = new Integer(req.getParameter("gender").trim());
 				} catch (NumberFormatException e) {
 					gender = 0;
-					errorMsgs.put("gender","性別");
+					errorMsgs.put("gender", "性別");
 				}
-
-
-//				String city = req.getParameter("city").trim();
-//				if (city == null || city.trim().length() == 0) {
-//					errorMsgs.add("城市請勿空白");
-//				}
-//				String cityArea = req.getParameter("cityArea").trim();
-//				if (cityArea == null || cityArea.trim().length() == 0) {
-//					errorMsgs.add("鄉鎮請勿空白");
-//				}
-//				String address = req.getParameter("address").trim();
-//				if (address == null || address.trim().length() == 0) {
-//					errorMsgs.add("地址請勿空白");
-//				}
-
-			    byte[] avatar = CommonUtil.getPictureByteArray(getServletContext().getRealPath("/")+"/asset/img/avatar.jpg");
-//				InputStream in = req.getPart("avatar").getInputStream();
-
-//				byte[] avatar = null;
-//				if (in.available() != 0) {
-//					avatar = new byte[in.available()];
-//					in.read(avatar);
-//					in.close();
-//				} else {
-//
-//					errorMsgs.add("請上傳圖片");
-//				}
-
+				byte[] avatar = CommonUtil
+						.getPictureByteArray(getServletContext().getRealPath("/") + "/asset/img/avatar.jpg");
 				MemberVO memberVO = new MemberVO();
 				memberVO = new MemberVO();
 
@@ -153,27 +136,21 @@ public class LoginServlet extends HttpServlet {
 				memberVO.setName(name);
 				memberVO.setPhone(phone);
 				memberVO.setGender(gender);
-//				memberVO.setCity(city);
-//				memberVO.setCityArea(cityArea);
-//				memberVO.setAddress(address);
 				memberVO.setAvatar(avatar);
 
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("memberVO", memberVO);
+					req.setAttribute("tempMemberVO", memberVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/register.jsp");
 					failureView.forward(req, res);
 					return;
-
 				}
 
 				/*************************** 2.開始新增資料 ***************************************/
 				String code = new RandomPassword().getRandomPassword();
 				MemberServiceImpl memberSvc = new MemberServiceImpl();
-				memberVO = memberSvc.register(email, account, password, nickname, name, phone, gender, null, null,
-						null, code, avatar);
+				memberVO = memberSvc.register(email, account, password, nickname, name, phone, gender, code, avatar);
 
 				String str = generateForm(req, memberVO.getId(), code);
-				System.out.println(str);
 				new MailService().sendMail(email, "恭喜您成為委域的會員", "請點連結驗證信箱 " + str);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
@@ -184,27 +161,28 @@ public class LoginServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				e.printStackTrace();
-	
+
 				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/register.jsp");
 				failureView.forward(req, res);
 			}
 		}
-		
+
 		if ("login".equals(action)) {// 登入
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String account = req.getParameter("account");
 				String password = req.getParameter("password");
-				
+
 				req.setAttribute("inputAccount", account);
 				req.setAttribute("inputPassword", password);
-				
+
 				// 檢查是否為空
 				if (account == null || account.trim().length() == 0) {
 					errorMsgs.put("account", "請輸入帳號");
+
 				}
 				if (password == null || password.trim().length() == 0) {
 					errorMsgs.put("password", "請輸入密碼");
@@ -224,15 +202,35 @@ public class LoginServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
+
+				// 狀態測試
+				Integer status = memberVO.getStatus();
+				System.out.println("status =" + status );
+				switch (status) {
+					case 0:// 未驗證
+						System.out.println("會員未驗證");
+						res.sendRedirect(req.getContextPath() + "/front_end/member/notverify.jsp");
+						return;
+					case 1:// 已驗證
+						break;
+					case 2:// 停權
+						System.out.println("會員已停權");
+						res.sendRedirect(req.getContextPath() + "/front_end/member/banmember.jsp");
+						return;
+					default:
+						System.out.println("會員狀態異常, 狀態=" + status);
+						res.sendRedirect(req.getContextPath() + "/index.jsp");
+						return;
+				}
 				
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				HttpSession session = req.getSession();
 				session.setAttribute("memberVO", memberVO);
-				
+
 				// 來源頁面跳轉
-				String location = (String) session.getAttribute("beforeLoginURL");
-				if (location != null) { 
-					session.removeAttribute("beforeLoginURL"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+				String location = (String) session.getAttribute("frontEndBeforeLoginURL");
+				if (location != null) {
+					session.removeAttribute("frontEndBeforeLoginURL"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 					res.sendRedirect(location);
 					return;
 				}
@@ -251,88 +249,110 @@ public class LoginServlet extends HttpServlet {
 			res.sendRedirect(req.getContextPath() + "/index.jsp");
 		}
 		
-		if ("getOne_For_Member_Update".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
-
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
-				/*************************** 1.接收請求參數 ****************************************/
-				Integer id = new Integer(req.getParameter("id"));
-
-				/*************************** 2.開始查詢資料 ****************************************/
-				MemberServiceImpl memberSvc = new MemberServiceImpl();
-				MemberVO memberVO = memberSvc.selectById(id);
-
-				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("memberVO", memberVO);
-				String url = "/front_end/member/front_end_update.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
-
-				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front_end/member/front_end_listOneMember.jsp");
-				failureView.forward(req, res);
-			}
-		}
+//		if ("getOne_For_Member_Update".equals(action)) {
+//			List<String> errorMsgs = new LinkedList<String>();
+//
+//			req.setAttribute("errorMsgs", errorMsgs);
+//
+//			try {
+//				/*************************** 1.接收請求參數 ****************************************/
+//				Integer id = new Integer(req.getParameter("id"));
+//
+//				/*************************** 2.開始查詢資料 ****************************************/
+//				MemberServiceImpl memberSvc = new MemberServiceImpl();
+//				MemberVO memberVO = memberSvc.selectById(id);
+//
+//				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+//				req.setAttribute("tempMemberVO", memberVO);
+//				String url = "/front_end/member/front_end_update.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				successView.forward(req, res);
+//
+//				/*************************** 其他可能的錯誤處理 **********************************/
+//			} catch (Exception e) {
+//				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/front_end/member/front_end_listOneMember.jsp");
+//				failureView.forward(req, res);
+//			}
+//		}
 
 		if ("front_end_member_update".equals(action)) { // 前台會員更新資料
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
+			HttpSession session = req.getSession();
+			MemberVO tempMemberVO = (MemberVO) session.getAttribute("tempMember");
+			if (tempMemberVO == null) {
+
+			}
+
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);// 怡裡的用法
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				MemberServiceImpl memSvc = new MemberServiceImpl();
 				Integer id = new Integer(req.getParameter("id").trim());
 
 				String email = req.getParameter("email");
 				String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
 				if (email == null || email.trim().length() == 0) {
-					errorMsgs.add("請輸入郵箱");
+					errorMsgs.put("email", "請輸入郵箱");
 				} else if (!email.trim().matches(emailReg)) {
-					errorMsgs.add("請輸入正確的郵箱格式");
+					errorMsgs.put("email", "請輸入正確的郵箱格式");
+				} else {
+					MemberVO findByEmail = memSvc.findByEmail(email);
+					if (findByEmail != null) {
+						if (findByEmail.getId().intValue() != tempMemberVO.getId().intValue()) {
+							errorMsgs.put("email", "此信箱已使用");
+						}
+					}
+				}
+				String password = req.getParameter("password");
+				String passwordReg = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$";
+				if (password == null || password.trim().length() == 0) {
+					errorMsgs.put("password", "請輸入密碼");
+				} else if (!password.trim().matches(passwordReg)) {
+					errorMsgs.put("password", "密碼第一個須為大寫英文字母");
 				}
 
-				String password = req.getParameter("password");
-//				String passwordReg = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$";
-				if (password == null || password.trim().length() == 0) {
-					errorMsgs.add("請輸入密碼");
-//				} else if (!password.trim().matches(passwordReg)) {
-//					errorMsgs.add("密碼第一個須為大寫英文字母");
-				}
-//				}
 				String nickname = req.getParameter("nickname").trim();
 				if (nickname == null || nickname.trim().length() == 0) {
-					errorMsgs.add("暱稱請勿空白");
+					errorMsgs.put("nickname", "暱稱請勿空白");
 				}
 				String name = req.getParameter("name");
+				String nameReg = "^[(\u4e00-\u9fa5)]{2,10}$";
 				if (name == null || name.trim().length() == 0) {
-					errorMsgs.add("姓名: 請勿空白");
+					errorMsgs.put("name", "姓名: 請勿空白");
 
+				} else if (!name.trim().matches(nameReg)) {
+					errorMsgs.put("name", "姓名只能為中文,長度2到10");
 				}
 				String phone = req.getParameter("phone");
 				String phoneReg = "^09[0-9]{8}$";
 				if (phone == null || phone.trim().length() == 0) {
-					errorMsgs.add("請輸入手機號碼");
+					errorMsgs.put("phone", "請輸入手機號碼");
 				} else if (!phone.trim().matches(phoneReg)) {
-					errorMsgs.add("請輸入正確的手機號碼格式");
+					errorMsgs.put("phone", "請輸入正確的手機號碼格式");
 				}
 
 				String city = req.getParameter("city").trim();
+				String cityReg = "^[(\\u4e00-\\u9fa5)]{2,10}$";
 				if (city == null || city.trim().length() == 0) {
-					errorMsgs.add("城市請勿空白");
+					errorMsgs.put("city", "城市請勿空白");
+				} else if (!city.trim().matches(cityReg)) {
+					errorMsgs.put("city", "城市地區只能輸入中文");
 				}
+
 				String cityArea = req.getParameter("cityArea").trim();
+				String cityAreaReg = "^[(\\u4e00-\\u9fa5)]{2,10}$";
 				if (cityArea == null || cityArea.trim().length() == 0) {
-					errorMsgs.add("鄉鎮請勿空白");
+					errorMsgs.put("cityArea", "鄉鎮請勿空白");
+				} else if (!cityArea.trim().matches(cityAreaReg)) {
+					errorMsgs.put("cityArea", "鄉鎮地區只能輸入中文");
 				}
 				String address = req.getParameter("address").trim();
 				if (address == null || address.trim().length() == 0) {
-					errorMsgs.add("地址請勿空白");
+					errorMsgs.put("address", "地址請勿空白");
 				}
-
 				InputStream in = req.getPart("avatar").getInputStream();
 				byte[] avatar = null;
 				if (in.available() != 0) {
@@ -341,22 +361,19 @@ public class LoginServlet extends HttpServlet {
 					in.close();
 				}
 
-				MemberVO memberVO = new MemberVO();
-				memberVO = new MemberVO();
-
-				memberVO.setEmail(email);
-				memberVO.setPassword(password);
-				memberVO.setNickname(nickname);
-				memberVO.setName(name);
-				memberVO.setPhone(phone);
-				memberVO.setCity(city);
-				memberVO.setCityArea(cityArea);
-				memberVO.setAddress(address);
-				memberVO.setAvatar(avatar);
-				memberVO.setId(id);
+				tempMemberVO.setEmail(email);
+				tempMemberVO.setPassword(password);
+				tempMemberVO.setNickname(nickname);
+				tempMemberVO.setName(name);
+				tempMemberVO.setPhone(phone);
+				tempMemberVO.setCity(city);
+				tempMemberVO.setCityArea(cityArea);
+				tempMemberVO.setAddress(address);
+				tempMemberVO.setAvatar(avatar);
+				tempMemberVO.setId(id);
 
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("memberVO", memberVO);
+					req.setAttribute("tempMemberVO", tempMemberVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/front_end_update.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
@@ -364,11 +381,15 @@ public class LoginServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 *****************************************/
 				MemberServiceImpl memberServiceImpl = new MemberServiceImpl();
-				memberVO = memberServiceImpl.frontMemberUpdate(email, password, nickname, name, phone, city, cityArea,
+				memberServiceImpl.frontMemberUpdate(email, password, nickname, name, phone, city, cityArea,
 						address, avatar, id);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("memberVO", memberVO);
+				
+				MemberVO memberVo = memberServiceImpl.selectById(id);
+				
+				session.setAttribute("memberVO", memberVo);
+				
 				String url = "/front_end/member/front_end_listOneMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -376,7 +397,6 @@ public class LoginServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				e.printStackTrace();
-				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/front_end/member/front_end_listOneMember.jsp");
 				failureView.forward(req, res);
@@ -384,8 +404,6 @@ public class LoginServlet extends HttpServlet {
 		}
 		if ("forgetpassword".equals(action)) {
 
-//			List<String> errorMsgs = new LinkedList<String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -396,17 +414,15 @@ public class LoginServlet extends HttpServlet {
 				String random = new RandomPassword().getRandomPassword();
 				MemberVO memberVO = memberSvc.forgetpassword(email);
 				if (memberVO == null) {
-					errorMsgs.put("email","EMAIl不存在");
+					errorMsgs.put("email", "EMAIl不存在");
 				} else {
 					new MailService().sendMail(email, "密碼變更通知", " 以下為新密碼: " + random);
 					memberVO.setPassword(random);
 					memberSvc.updateMember(memberVO);
-					/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-					req.setAttribute("memberVO", memberVO); // 資料庫取出的empVO物件,存入req
 				}
 
-				String url = "/front_end/member/forgetpassword.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				String url = "/front_end/member/mailforgetmember.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
@@ -415,9 +431,7 @@ public class LoginServlet extends HttpServlet {
 			}
 
 		}
-
 		if ("validate".equals(action)) {
-
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -432,11 +446,10 @@ public class LoginServlet extends HttpServlet {
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				MemberServiceImpl memberSvc = new MemberServiceImpl();
-				memberSvc.veriftyCode(id, code);
-				String url = "/CFA104G3/index.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				res.sendRedirect(url);
+				boolean veriftyCode = memberSvc.veriftyCode(null, id, code);
 
+				String url = "/CFA104G3/index.jsp";
+				res.sendRedirect(url);
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -444,16 +457,14 @@ public class LoginServlet extends HttpServlet {
 
 		}
 
-System.out.println("程式的起點");
 		if ("getImage".equals(action)) {
 			res.setContentType("image/gif"); // 顯示圖片
 			ServletOutputStream out = res.getOutputStream();
-	
+
 			try {
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt
 						.executeQuery("SELECT MEM_AVATAR FROM MEMBER WHERE MEM_ID = " + req.getParameter("MEM_ID"));
-	System.out.println("程式的終點");
 				if (rs.next()) {
 					BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("MEM_AVATAR"));
 					byte[] buf = new byte[4 * 1024]; // 4K buffer
@@ -473,10 +484,10 @@ System.out.println("程式的起點");
 		}
 	}
 
-	private String generateForm(HttpServletRequest req, int id, String code) {//信箱連結
+	private String generateForm(HttpServletRequest req, int id, String code) {// 信箱連結
 		StringBuffer form = new StringBuffer();
 		form.append("<form action=\"" + req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort()
-				+ req.getContextPath() + "/front_end/member/mem_verify.jsp\" method=\"POST\">");
+				+ req.getContextPath() + "/front_end/member/MemberServlet.do\" method=\"POST\">");
 		form.append("	<input type=\"hidden\" name=\"action\" value=\"validate\">");
 		form.append("	<input type=\"hidden\" name=\"id\" value=\"" + id + "\">");
 		form.append("	<input type=\"hidden\" name=\"code\" value=\"" + code + "\">");

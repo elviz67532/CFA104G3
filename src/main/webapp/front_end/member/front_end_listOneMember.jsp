@@ -91,6 +91,7 @@ td {
 	</h1>
 
 	<main>
+	<div >
 		<table id="table-2">
 			<h2 align="center" valign="center">會員資料</h2>
 
@@ -133,25 +134,15 @@ td {
 
 
 			<td style="width: 100px;" >
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"
-					style="margin-bottom: 0px; " >
-					<input type="submit" value="修改會員資料"> <input type="hidden"
-						name="id" value="${memberVO.id}"> <input type="hidden"
-						name="action" value="getOne_For_Member_Update">
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front_end/member/front_end_update.jsp" style="margin-bottom: 0px;" >
+					<input type="submit" value="修改會員資料">
+					<input type="hidden"name="id" value="${memberVO.id}">
+					<input type="hidden"name="action" value="getOne_For_Member_Update">
                 </FORM>
-
-<%--  <c:if test="${not empty memberVO.id}"> --%> 
-<!-- 					<FORM style="margin: 0;" id="Logout" METHOD="post" -->
-<!-- 						class="logout-form" -->
-<%-- 						action="<%=request.getContextPath()%>/front_end/member/MemberServlet.do"> --%>
-<!-- 						<input type="hidden" name="action" value="logout"> <input -->
-<!-- 							type="submit" value="登出" class="btn"> -->
-<!-- 					</FORM> -->
-<%-- 				</c:if> --%>
 			</td>
 	
-		</table>
+			</table>
+		</div>
 	</main>
 	<!-- Footer-->
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>

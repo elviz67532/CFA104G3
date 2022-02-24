@@ -52,7 +52,7 @@
 								  <div class="input-group-prepend">
 								    <span class="input-group-text" id="basic-addon1">密碼</span>
 								  </div>
-								  <input type="text" name="smgrPassword" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+								  <input type="password" name="smgrPassword" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
 								</div>
 								
 								<div class="input-group mb-3">

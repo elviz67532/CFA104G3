@@ -29,7 +29,7 @@
 					
 					<div style="text-align:center;">
 						<div style="width: 720px; display: inline-block; text-align: left;">
-							<h3>查詢資料</h3>
+							<h3>商品管理</h3>
 							
 							<%-- 錯誤表列 --%>
 							<c:if test="${not empty errMsgs}">
@@ -42,7 +42,7 @@
 							</c:if>
 							
 							<ul>
-								<li><a href='listAll.jsp'><h5>List all Products</h5></a> 
+								<li><a href='<%=request.getContextPath()%>/back_end/product/listAll.jsp'><h5>List all Products</h5></a> 
 								
 								<li>
 									<div class="input-group mb-3">

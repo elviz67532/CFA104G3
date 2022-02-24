@@ -9,9 +9,9 @@
 	Map<String, String> errorMsgs = (Map<String, String>) request.getAttribute("errorMsgs");
 	if (errorMsgs != null) {
 		if (errorMsgs.get("account") != null)
-			request.setAttribute("account", errorMsgs.get("account"));
+			request.setAttribute("frontAccount", errorMsgs.get("account"));
 		if (errorMsgs.get("password") != null)
-			request.setAttribute("password", errorMsgs.get("password"));
+			request.setAttribute("frontPassword", errorMsgs.get("password"));
 	}
 %>
 
@@ -318,10 +318,7 @@ p {
 <%-- 	</c:if> --%>
 	<div class="grid">
 
-		<form
-			action="${pageContext.request.contextPath}/front_end/member/MemberServlet.do"
-			method="POST" class="form login">
-
+		<form action="${pageContext.request.contextPath}/front_end/member/MemberServlet.do"method="POST" class="form login">
 			<div class="form__field">
 				<label for="login__username">
 					<svg class="icon"><use xlink:href="#icon-user"></use></svg>
@@ -329,50 +326,45 @@ p {
 				</label> 
 				<input type="hidden" name="action" value="login">
 				<input 
-<%-- 					value="${requestScope.inputAccount}" --%>
-					value="wilfredo68"
+					value="${requestScope.inputAccount}"
 					id="account" type="text" autocomplete="off" name="account"
 					class="form__input" placeholder="Username">
 			</div>
-			<c:if test="${not empty account}">
-				<span style="color: red">"${account}"</span>
+			<c:if test="${not empty frontAccount}">
+				<span style="color: red">"${frontAccount}"</span>
 			</c:if>
 
 			<div class="form__field">
 				<label for="login__password">
+
 					<svg class="icon"><use xlink:href="#icon-lock"></use></svg>
 					<span class="hidden">Password</span>
 				</label> 
 				<input type="hidden" name="action" value="login"> 
 				<input 
-<%-- 					value="${requestScope.inputPassword}" --%>
-					value="QlareSQw"
+					value="${requestScope.inputPassword}"
 					id="login__password" type="password" name="password"
 					class="form__input" placeholder="Password">
 			</div>
-			<c:if test="${not empty password}">
-				<span style="color: red"> "${password}" </span>
+			<c:if test="${not empty frontPassword}">
+				<span style="color: red"> "${frontPassword}" </span>
 			</c:if>
-
 			<div class="form__field">
 				<input type="submit" type="hidden" name="action" value="登入">
 			</div>
 		</form>
-
-		<p class="text--center">
-			<a href="register.jsp">會員註冊</a>
-			<svg class="icon">
-        <use xlink:href="#icon-arrow-right"></use>
-      </svg>
-		</p>
-
-		<p class="text--center">
-			<a href="forgetpassword.jsp">忘記密碼</a>
-			<svg class="icon">
-        <use xlink:href="#icon-arrow-right"></use>
-      </svg>
-		</p>
-
+			<p class="text--center">
+				<a href="register.jsp">會員註冊</a>
+					<svg class="icon">
+        				<use xlink:href="#icon-arrow-right"></use>
+      				</svg>
+	   		</p>
+				<p class="text--center">
+					<a href="forgetpassword.jsp">忘記密碼</a>
+						<svg class="icon">
+        					<use xlink:href="#icon-arrow-right"></use>
+      				    </svg>
+			</p>
 	</div>
 
 	<svg xmlns="http://www.w3.org/2000/svg" class="icons">

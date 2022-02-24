@@ -19,7 +19,7 @@ public class ActivityAttendDAOJDBCImpl implements ActivityAttendDAO {
 			+ "values (?, ?, ?, ?, ?)";
 	private static final String DELETE = "delete from ACTIVITY_ATTEND where ACTA_MEM_ID = ? and ACTA_ACT_ID = ? ";
 	private static final String UPDATE = "update ACTIVITY_ATTEND set ACTA_RELPY_CONTENT = ?, ACTA_CONTENT_NOTE = ?, ACTA_PAY_STATUS = ? WHERE ACTA_MEM_ID = ? and ACTA_ACT_ID = ?";
-
+	private static final String GET_MEMBER_STMT = "select * from ACTIVITY_ATTEND where ACTA_MEM_ID = ?";
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -148,6 +148,36 @@ public class ActivityAttendDAOJDBCImpl implements ActivityAttendDAO {
 
 			pstmt.setInt(1, id.getK1());
 			pstmt.setInt(2, id.getK2());
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				vo = new ActivityAttendVO();
+				vo.setMemberId(rs.getInt("ACTA_MEM_ID"));
+				vo.setActivityId(rs.getInt("ACTA_ACT_ID"));
+				vo.setComment(rs.getString("ACTA_RELPY_CONTENT"));
+				vo.setNote(rs.getString("ACTA_CONTENT_NOTE"));
+				vo.setStatus(rs.getInt("ACTA_PAY_STATUS"));
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+
+		return vo;
+	}
+	public ActivityAttendVO selectByMemberId(Integer memberId) {
+		ActivityAttendVO vo = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(GET_MEMBER_STMT);
+
+			pstmt.setInt(1,memberId);
 
 			rs = pstmt.executeQuery();
 

@@ -3,37 +3,51 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.activity_attend.model.*"%>
-
+<!DOCTYPE html>
+<html lang="en">
 <%
-	ActivityAttendVO actaVO = (ActivityAttendVO) request.getAttribute("actaVO");
-	%>
-
-<html lang="zh-TW">
+ActivityAttendVO actaVO = (ActivityAttendVO) request.getAttribute("actaVO");
+%>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link href="<%=request.getContextPath()%>/css/back_end/sb-admin-2.min.css" rel="stylesheet">
-	<link href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<title>委域</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>委域</title>
+    <link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet"
+        type="text/css" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+        rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
 </head>
-<body id="page-top">
-	<div id="wrapper">
-		<!-- Sidebar -->
-		<jsp:include page="/back_end/common/sidebar.jsp"></jsp:include>
-		<div id="content-wrapper" class="d-flex flex-column">
-			<div id="content">
-				<!-- Topbar -->
-				<jsp:include page="/back_end/common/topbar.jsp"></jsp:include>
-				<div class="container-fluid">
 
-					<!-- main -->
+<body>
+    <!-- Navigation-->
+    <!-- nav -->
+	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
-					<!-- end of main -->
-
-
-	<h3>活動報名資料新增:</h3>
+    <!-- Page Header-->
+    <header class="masthead" style="background-image: url('<%=request.getContextPath()%>/asset/img/move01.jpg')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>New Life</h1>
+                        <span class="subheading">迎 接 全 新 的 人 生</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+   
+   	<!-- 主體畫面設計  -->
+   	<h3>活動報名資料新增:</h3>
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -78,13 +92,13 @@
 <!-- 			</tr> -->
 
 			<tr>
-		<td>付款狀態:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="status">
-				<option value="-1">請選擇付款狀態</option>
-				<option value="0" >未付款</option>
-   				<option value="1">已付款</option>
+<!-- 		<td>付款狀態:<font color=red><b>*</b></font></td> -->
+<!-- 		<td><select size="1" name="status"> -->
+<!-- 				<option value="-1">請選擇付款狀態</option> -->
+<!-- 				<option value="0" >未付款</option> -->
+<!--    				<option value="1">已付款</option> -->
 					
-		</select></td>
+<!-- 		</select></td> -->
 		</tr>
 			
 			
@@ -94,28 +108,14 @@
 		<input type="hidden" name="action" value="insert">
 		 <input	type="submit" value="送出新增">
 	</FORM>
- 
-   			</div>
-			</div>
-			<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
-		</div>
-	</div>
-
-	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top">
-		<i class="fas fa-angle-up"></i>
-	</a>
-	
-	<!-- Logout Modal-->
-	<jsp:include page="/back_end/common/logoutModal.jsp"></jsp:include>
-	
-	<!-- custom script -->
-	
-	<!-- Bootstrap core JavaScript-->
-	<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
-	<script src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
-	<script src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
-	<script src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
+   
+   
+    <!-- Footer-->
+   	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
 </body>
 
 </html>

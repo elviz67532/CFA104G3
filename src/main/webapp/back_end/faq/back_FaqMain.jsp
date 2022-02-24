@@ -64,7 +64,7 @@
 									value="所有FAQ資料"></a>
 							<li>
 								<FORM METHOD="post" ACTION="faq.do">
-									<b>輸入FAQ編號 (如1):</b> <input type="text" name="id"> <input
+									<b>FAQ編號檢索:</b> <input type="text" name="id"> <input
 										type="hidden" name="action" value="getOne_For_Display">
 									<input type="submit" value="Search">
 								</FORM>

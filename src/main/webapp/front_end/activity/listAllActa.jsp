@@ -101,22 +101,19 @@
  			<td>
  			  <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
  			     <input type="submit" value="活動評分"> 
- 			     <input type="hidden" name="memberId"  value="${actaVO.memberId}">
- 			     <input type="hidden" name="activityId"  value="${actaVO.activityId}">
+ 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
  			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> 
 			</td> 
  			<td> 
  			  <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/actr.do" style="margin-bottom: 0px;"> 
 			     <input type="submit" value="活動檢舉">
- 			     <input type="hidden" name="memberId"  value="${actaVO.memberId}"> 
-  			     <input type="hidden" name="activityId"  value="${actaVO.activityId}"> 
+  			     <input type="hidden" name="activityId"  value="${actVO.activityId}"> 
  			     <input type="hidden" name="action" value="getOne_For_Insert"></FORM> 
 			</td>
 			<td> 
  			  <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;">
 				       <input type="submit" value="取消活動">
-		  	      	   <input type="hidden" name="memberId" value="${actaVO.memberId}">
-		  	      	    <input type="hidden" name="activityId"  value="${actaVO.activityId}"> 
+		  	      	    <input type="hidden" name="activityId"  value="${actVO.activityId}"> 
 				       <input type="hidden" name="action" value="cancel"> 
 		        </FORM>
 			</td>

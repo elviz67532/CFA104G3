@@ -90,7 +90,7 @@ th, td {
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
 						<h1>
-							訂單管理前台主頁
+							訂單查詢
 							<h1>
 								<span class="subheading">二手商城</span>
 					</div>
@@ -125,10 +125,10 @@ th, td {
 		<li><a href="listAllproductOrder.jsp"><input type="submit"
 				value="所有二手商品訂單"></a>
 		<li>
-			<FORM METHOD="post" ACTION="product.do">
+			<FORM METHOD="post" ACTION="productorder.do">
 				<b>輸入訂單編號 (如1):</b> <input type="text" name="id"> <input
-					type="hidden" name="action" value="getOne_For_Display"> <input
-					type="submit" value="送出">
+					type="hidden" name="action" value="getOne_For_Update_Order_Front">
+				<input type="submit" value="送出">
 			</FORM>
 		</li>
 
@@ -136,38 +136,19 @@ th, td {
 			class="com.product_order.model.ProductOrderServiceImpl" />
 
 		<li>
-			<FORM METHOD="post" ACTION="product.do">
+			<FORM METHOD="post" ACTION="productorder.do">
 				<b>選擇賣家編號:</b> <select size="1" name="id">
 					<c:forEach var="productVO" items="${proSvc.all}">
 						<option value="${productVO.id}">${productVO.id}
 					</c:forEach>
-				</select> <input type="hidden" name="action" value="getOne_For_Display">
-				<input type="submit" value="送出">
+				</select> <input type="hidden" name="action"
+					value="getOne_For_Update_Order_Front"> <input type="submit"
+					value="送出">
 			</FORM>
 		</li>
 
-		<li>
-			<FORM METHOD="post" ACTION="product.do">
-				<b>選擇買家編號:</b> <select size="1" name="id">
-					<c:forEach var="productVO" items="${proSvc.all}">
-						<option value="${productVO.id}">${productVO.productId}
-					</c:forEach>
-				</select> <input type="hidden" name="action" value="getOne_For_Display">
-				<input type="submit" value="送出">
-			</FORM>
-		</li>
+
 	</ul>
-
-
-	<h3>訂單管理</h3>
-
-	<ul>
-		<li><a href="listAllproductOrder.jsp"><input type="submit"
-				value="新增二手商品訂單"></a>
-	</ul>
-
-
-
 
 	<!-- Footer-->
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>

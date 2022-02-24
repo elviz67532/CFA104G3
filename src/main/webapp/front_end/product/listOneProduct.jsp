@@ -4,9 +4,22 @@
 <%@	page import="com.product.model.ProductVO"%>
 <% 
 	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
+	pageContext.setAttribute("productVO", productVO);
 	System.out.println("productVO: " + productVO);
 %>
-
+<%
+	Map<Integer, String> map = new HashMap<>();
+	map.put(0,"其他");
+	map.put(1,"桌椅");
+	map.put(2,"寢具");
+	map.put(3,"服飾");
+	map.put(4, "電器");
+	pageContext.setAttribute("map", map);
+%>
+<%
+	Integer type = productVO.getType();
+	request.setAttribute("type", map.get(type));
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,14 +76,28 @@
 	  table, th, td {
 	    border: 1px solid #CCCCFF;
 	  }
-	  th, td {
+	  th {
 	    padding: 5px;
 	    text-align: center;
+	  	font-size : 15px;
+	  	 text-align: center;
 	  }
+	  td {
+	  	font-size : 13px;
+	  	padding : 0px;
+	  	text-align: center;
+	  }
+		img {
+		    max-width:128px;
+		    max-height:128px;
+		    width:auto;
+		    height:auto;
+		    padding:0px;
+		}	  
 	</style>
 
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100" style="">
     <!-- Navigation-->
     <!-- nav -->
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
@@ -108,6 +135,7 @@
 			<th>商品敘述</th>
 			<th>商品價格</th>
 			<th>商品名稱</th>
+			<th>圖片</th>
 			<th>上架時間</th>
 			<th>商品所在</th>
 			<th>商品狀態</th>
@@ -115,10 +143,32 @@
 		<tr>
 			<td><%=productVO.getId()%></td>
 			<td><%=productVO.getSellerMemberId()%></td>
-			<td><%=productVO.getType()%></td>	
+			<td><%=productVO.getType() %>
+<%-- 				<c:set var="type" value="<%=productVO.getType() %>"/> --%>
+<%-- 		         <c:choose> --%>
+<%-- 		           <c:when test="${type == 0}"> --%>
+<!-- 		           其他 -->
+<%-- 		           </c:when>            --%>
+<%-- 		           <c:when test="${type == 1}"> --%>
+<!-- 		           桌椅 -->
+<%-- 		           </c:when> --%>
+<%-- 		           <c:when test="${type == 2}"> --%>
+<!-- 		           寢具 -->
+<%-- 		           </c:when> --%>
+<%-- 		           <c:when test="${type == 3}"> --%>
+<!-- 		           服飾 -->
+<%-- 		           </c:when>		    --%>
+<%-- 		           <c:when test="${type == 4}"> --%>
+<!-- 		           電器 -->
+<%-- 		           </c:when>				                    --%>
+<%-- 				</c:choose>			 --%>
+			</td>	
 			<td><%=productVO.getDescription()%></td>
 			<td><%=productVO.getPrice()%></td>
 			<td><%=productVO.getName()%></td>
+			<td style="padding: 0;">
+				<img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top">			
+			</td>
 			<td><%=productVO.getLaunchedDate()%></td>
 			<td><%=productVO.getLocation()%></td>
 			<td><%=productVO.getStatus()%></td> 

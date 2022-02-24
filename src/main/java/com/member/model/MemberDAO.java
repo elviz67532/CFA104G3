@@ -12,9 +12,17 @@ public interface MemberDAO extends CoreDao<MemberVO, Integer> {
 
 	MemberVO findByName(String name);
 
-	int veriftyCode(Integer id,String code);
+
 
 	int updateStatus(Integer id,Integer status);
+
+	int veriftyCode(Integer status, Integer id, String code);
+
+	int status(MemberVO vo);
+
+	MemberVO findByAccount(String account);
+
+	MemberVO findByEmail(String email);
 
 	
 }

@@ -32,7 +32,7 @@ pageContext.setAttribute("list", list);
     <link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
 </head>
 
-<body>
+<body id="page-top">
     <!-- Navigation-->
     <!-- nav -->
     <jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
@@ -51,164 +51,44 @@ pageContext.setAttribute("list", list);
         </div>
     </header>
     <!-- 主體畫面設計  -->
-    <section class="py-5 bg-light">
-        <div class="container px-5">
-            <div class="row gx-5 justify-content-center">
-                <div class="col-xl-12">
-                    <!-- 公佈欄 -->
-                    <h2 class="fw-bolder fs-5 mb-4">公佈欄</h2>
-                    <!-- 標頭 -->
-                    <div class="mb-5">
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-all-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all"
-                                    aria-selected="true">全部</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-act-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-act" type="button" role="tab" aria-controls="pills-act"
-                                    aria-selected="false">活動</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-move-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-move" type="button" role="tab" aria-controls="pills-move"
-                                    aria-selected="false">搬家</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-sec-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-sec" type="button" role="tab" aria-controls="pills-sec"
-                                    aria-selected="false">二手商品</button>
-                            </li>
-                        </ul>
-                        <!-- 表格 -->
-                        <div class="tab-content " id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-all" role="tabpanel"
-                                aria-labelledby="pills-all-tab">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="text-nowrap">類別</th>
-                                            <th scope="col" class="text-nowrap">標題</th>
-                                            <th scope="col" class="text-nowrap">時間</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
- 									<c:forEach var="newsVO" items="${list}"> 																			
-										<tr>																										
-											<td>
-												<c:choose>
-   															<c:when test="${newsVO.type==0}">活動</c:when>  														  														   														
-   															<c:when test="${newsVO.type==1}">二手</c:when>
-   															<c:when test="${newsVO.type==2}">搬家</c:when>
-   															<c:when test="${newsVO.type==3}">其他</c:when>													
-   															<c:otherwise>系統</c:otherwise>
-												</c:choose>
-											</td>							
-											<td>${newsVO.title}</td>			
-											<td>${newsVO.date}</td>		
-										</tr>											 									
-									</c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="tab-pane fade" id="pills-act" role="tabpanel" aria-labelledby="pills-move-tab">
-                                <table class="table">
-                                    <thead>
-                                        <tr>                                            
-                                            <th scope="col" class="text-nowrap">類別</th>
-                                            <th scope="col" class="text-nowrap">標題</th>
-                                            <th scope="col" class="text-nowrap">時間</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
- 									<c:forEach var="newsVO" items="${list}">
-										<tr>
-											<td>
-												<c:choose>
-   															<c:when test="${newsVO.type==0}">活動</c:when>  														  														   														
-   															<c:when test="${newsVO.type==1}">二手</c:when>
-   															<c:when test="${newsVO.type==2}">搬家</c:when>
-   															<c:when test="${newsVO.type==3}">其他</c:when>													
-   															<c:otherwise>系統</c:otherwise>
-												</c:choose>
-											</td>
-											<td>${newsVO.title}</td>			
-											<td>${newsVO.date}</td>		
-										</tr>
-									</c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="tab-pane fade" id="pills-move" role="tabpanel" aria-labelledby="pills-sec-tab">
-                                <table class="table">
-                                    <thead>
-                                        <tr>                                           
-                                            <th scope="col" class="text-nowrap">類別</th>
-                                            <th scope="col" class="text-nowrap">標題</th>
-                                            <th scope="col" class="text-nowrap">時間</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-  									<c:forEach var="newsVO" items="${list}">
-										<tr>
-											<td>
-												<c:choose>
-   															<c:when test="${newsVO.type==0}">活動</c:when>  														  														   														
-   															<c:when test="${newsVO.type==1}">二手</c:when>
-   															<c:when test="${newsVO.type==2}">搬家</c:when>
-   															<c:when test="${newsVO.type==3}">其他</c:when>													
-   															<c:otherwise>系統</c:otherwise>
-												</c:choose>
-											</td>
-											<td>${newsVO.title}</td>			
-											<td>${newsVO.date}</td>		
-										</tr>
-									</c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="tab-pane fade" id="pills-sec" role="tabpanel" aria-labelledby="pills-sec-tab">
-                                <table class="table">
-                                    <thead>
-                                        <tr>                                            
-                                            <th scope="col" class="text-nowrap">類別</th>
-                                            <th scope="col" class="text-nowrap">標題</th>
-                                            <th scope="col" class="text-nowrap">時間</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
- 									<c:forEach var="newsVO" items="${list}">
-										<tr>
-											<td>
-												<c:choose>
-   															<c:when test="${newsVO.type==0}">活動</c:when>  														  														   														
-   															<c:when test="${newsVO.type==1}">二手</c:when>
-   															<c:when test="${newsVO.type==2}">搬家</c:when>
-   															<c:when test="${newsVO.type==3}">其他</c:when>													
-   															<c:otherwise>系統</c:otherwise>
-												</c:choose>
-											</td>
-											<td>${newsVO.title}</td>			
-											<td>${newsVO.date}</td>		
-										</tr>
-									</c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
+    
+    <!-- Page Content-->
+    
+    <!-- About section one-->
+    	<c:forEach var="newsVO" items="${list}"> 
+            <section class="py-5 bg-light" id="scroll-target">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5 align-items-center">
+                        <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id}" alt="..." /></div>
+                        <div class="col-lg-6">
+                            <h2 class="fw-bolder text-truncate">${newsVO.title}</h2>
+                            <p>${newsVO.date}</p>
+<%--                             <p class="lead fw-normal text-muted mb-0 text-break">${newsVO.content}...</p> --%>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/news/NewsUserServlet.do">
+			     					<input type="submit" value="查看詳情" class="btn btn-outline-primary"	>
+			     					<input type="hidden" name="id"  value="${newsVO.id}">
+			     					<input type="hidden" name="action"	value="getOne_For_User">
+			     			</FORM>
+			     			</div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
+            </section>
+        </c:forEach>
+        
+        
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>    
     <!-- Footer-->
     <jsp:include page="/front_end/common/footer.jsp"></jsp:include>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+    <script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
 </body>
 
 </html>

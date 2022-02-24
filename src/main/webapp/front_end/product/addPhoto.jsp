@@ -96,18 +96,16 @@
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 	<div class="container">
 		<main>
-			<div class="py-5 text-center">
+			<div class="row py-5 text-center">
 				<h2>商品圖片</h2>
-			</div>
-			<div class="row align-items-center">
 				<FORM ACTION="<%=request.getContextPath()%>/product_photo/ProductPhotoServlet" METHOD="post" enctype="multipart/form-data">				
 					<!-- 圖片 -->
-				    <div class="col-md-5">
-					  <label for="country" class="form-label">圖片</label>		      
+				    <div class="card" style="width: 18rem; display: inline-flex;">
+<!-- 					  <label for="country" class="form-label">圖片</label>		       -->
 				      <input type="file" name="upImg" class="form-control">
-				      <img class="form-control" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+<!-- 				      <img class="form-control" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
 					  <!-- <input type="hidden" name="action" value="insert"> -->	
-					  <input class="w-100 btn btn-primary btn-lg" type="submit" value="上傳圖片">
+					  <input class="btn btn-outline-info" type="submit" value="上傳圖片">
 				    </div>
 			    </FORM>					
 			</div>

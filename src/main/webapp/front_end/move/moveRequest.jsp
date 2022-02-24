@@ -127,12 +127,10 @@
 		                    <div class="site-heading"  style="text-align:center;">
 							<c:choose>
 								<c:when test="${result == 1}">
-									</label>
-									  <h1>申請成功</h1>
+									<h1>申請成功</h1>
 								</c:when>
 								<c:otherwise>
-									</label>
-									  <h1>申請失敗，請重新申請</h1>
+									<h1>申請失敗，請重新申請</h1>
 								</c:otherwise>
 							</c:choose>
 							</div>		

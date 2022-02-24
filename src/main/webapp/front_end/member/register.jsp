@@ -5,8 +5,7 @@
 <%@ page import="com.member.model.*"%>
 
 <%
-MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
-
+MemberVO tempMemberVO = (MemberVO) request.getAttribute("tempMemberVO");
 //<!--錯誤訊息 -->
 Map<String, String> errorMsgs = (Map<String, String>) request.getAttribute("errorMsgs");
 if (errorMsgs != null) {
@@ -24,7 +23,6 @@ if (errorMsgs != null) {
 		request.setAttribute("phone", errorMsgs.get("phone"));
 	if (errorMsgs.get("gender") != null)
 		request.setAttribute("gender", errorMsgs.get("gender"));
-
 }
 %>
 
@@ -53,173 +51,114 @@ if (errorMsgs != null) {
 <link
 	href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css"
 	rel="stylesheet" />
-<style>
-* {
-	box-sizing: border-box;
-	font-family: monospace;
-	line-height: 150%;
-}
 
-table#table-2 {
-	font-size: 10 vmin;
-	margin: 0 auto;
-	white-space: nowrap;
-}
-
-h2 {
-	margin-top: 40px;
-}
-
-table {
-	width: 400px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	color: black;
-}
-
-td {
-	padding: 7px;
-	font-weight: bold;
-	/* 	text-align: center; */
-}
-</style>
 </head>
-
-<div style="text-align: center;">
-	<body>
-		<!-- Navigation-->
+<body style="background-image: url('<%=request.getContextPath()%>/asset/img/bnet-bg.jpg')">
+		
 		<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
-		<!-- nav -->
+	
 
-		<!-- Page Header-->
-		<header class="masthead"
-			style="background-image: url('<%=request.getContextPath()%>/asset/img/move01.jpg')">
-			<div class="container position-relative px-4 px-lg-5">
-				<div class="row gx-4 gx-lg-5 justify-content-center">
-					<div class="col-md-10 col-lg-8 col-xl-7">
-						<div class="site-heading">
-							<h1>New Life</h1>
-							<span class="subheading">迎 接 全 新 的 人 生</span>
-						</div>
+<style>
+.classH4{
+color: white;
+font-size: 32px;
+font-family: "Core Sans N W01 35 Light";
+font-weight: normal;
+}
+.inputholder{
+	opacity: 0.6;
+	transition: transform .3s;
+	height: 34px;
+	border: 1px groove black;
+	background-color: lightgray;
+width:100%;
+padding: 0 10px;
+margin-top: 3px;
+margin-bottom: 10px;
+font-size: 15px;
+line-height: 20px;
+border: 1px solid rgba(255, 255, 255, 0.3)
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus{
+	background-color: white;
+	border: 1px  groove lightgray;
+	opacity: 0.8; 
+	-webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  -webkit-transition: background-position 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  transition: background-position 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s;   
+}
+.submitBtn{
+	width: 100%; 
+	border: none;
+	height: 34px;
+	background-image: linear-gradient(to right, #003E3E, #005757,#003E3E);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+	color: white;
+}
+.submitBtn:hover{
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	 transition: background-position 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s; 
+}
+</style>
+		<div style=" padding: 40px; margin: 100px auto ; width:40%; background-color: rgba(,255,204,0.2);">
+		<div style="float: left;">
+			<h4 class="classH4" >會員資料註冊</h4>
+		</div>
+			<FORM METHOD="post"ACTION="${pageContext.request.contextPath}/front_end/member/MemberServlet.do"name="form1" enctype="multipart/form-data">
+				<br>
+				<br>
+				<div style="color:white;">
+					 <c:if test="${not empty email}">
+					 您的email: <span style="color: red"> "${email}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入郵件" type="email" name="email" size="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getEmail()%>" />
+					<br>
+					 <c:if test="${not empty account}">
+						您的帳號: <span style="color: red"> "${account}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入帳號" type="text" name="account" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getAccount()%>" />
+					<br>
+					 <c:if test="${not empty password}">
+						您的密碼: <span style="color: red"> "${password}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入密碼" type="password" name="password" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getPassword()%>" />
+					<br>
+	                   <c:if test="${not empty nickname}">
+						您的暱稱: <span style="color: red"> "${nickname}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入暱稱" type="text" name="nickname" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getNickname()%>" />
+					<br>
+					 <c:if test="${not empty name}">
+						您的姓名<span style="color: red"> "${name}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入名字" type="text" name="name" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getName()%>" />
+					<br>
+					 <c:if test="${not empty phone}">
+						您的電話<span style="color: red"> "${phone}" </span>
+					</c:if>
+						<input class="inputholder" placeholder="請輸入電話" type="tel" name="phone" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getPhone()%>" />
+					<br>
+					<div>
+						性別:
+						<input type="radio" name="gender"value="0" checked>不透漏</lable> 
+						<input type="radio" name="gender" value="1" checked>男</lable>
+						<input type="radio" name="gender" value="2" checked>女</lable>
+					
 					</div>
 				</div>
-			</div>
-		</header>
-		<div style="text-align: center;">
-			<body bgcolor='white'>
-				<table id="table-1">
-					<tr>
-
-
-						<td>
-							<h4>會員資料註冊</h4>
-						</td>
-					</tr>
-				</table>
+				<br> <input type="hidden" name="action" value="register"><input class="submitBtn" type="submit" value="申請註冊">
+			</FORM>
 		</div>
-
-		<%-- 錯誤表列 --%>
-		<%-- 		<c:if test="${not empty errorMsgs}"> --%>
-		<!-- 			<font style="color: red">請修正以下錯誤:</font> -->
-		<!-- 			<ul> -->
-		<%-- 				<c:forEach var="message" items="${errorMsgs}"> --%>
-		<%-- 					<li style="color: red">${message}</li> --%>
-		<%-- 				</c:forEach> --%>
-		<!-- 			</ul> -->
-		<%-- 		</c:if> --%>
-		<br>
-		<FORM METHOD="post"
-			ACTION="${pageContext.request.contextPath}/front_end/member/MemberServlet.do"
-			name="form1" enctype="multipart/form-data">
-			<table>
-				<tr>
-					<td>郵件:</td>
-					<td><input placeholder="請輸入郵件" name="email" size="10"
-						value="<%=(memberVO == null) ? "encored98931@gmail.com" : memberVO.getEmail()%>" /></td>
-				</tr>
-				<span style="color: red"> "${email}" </span>
-
-				<tr id=account>
-					<td>帳號:</td>
-					<td><input placeholder="請輸入帳號" name="account" maxlength="10"
-						value="<%=(memberVO == null) ? "Encored989" : memberVO.getAccount()%>" /></td>
-				</tr>
-				<span style="color: red"> "${account}" </span>
-
-				<tr id=password>
-					<td>密碼:</td>
-					<td><input placeholder="請輸入密碼" name="password" maxlength="10"
-						value="<%=(memberVO == null) ? "A123456" : memberVO.getPassword()%>" /></td>
-				</tr>
-				<span style="color: red"> "${password}" </span>
-
-				<tr id=nickname>
-					<td>暱稱:</td>
-					<td><input placeholder="請輸入暱稱" name="nickname" maxlength="10"
-						value="<%=(memberVO == null) ? "小名" : memberVO.getNickname()%>" /></td>
-				</tr>
-				<span style="color: red"> "${nickname}" </span>
-
-				<tr id=name>
-					<td>姓名:</td>
-					<td><input placeholder="請輸入名字" name="name" maxlength="10"
-						value="<%=(memberVO == null) ? "曾令名" : memberVO.getName()%>" /></td>
-				</tr>
-				<span style="color: red"> "${name}" </span>
-				<tr>
-					<td>電話:</td>
-					<td><input placeholder="請輸入電話" name="phone" maxlength="10"
-						value="<%=(memberVO == null) ? "0930911283" : memberVO.getPhone()%>" /></td>
-				</tr>
-				<span style="color: red"> "${phone}" </span>
-
-
-				<tr>
-					<td>性別:</td>
-					<td><lable> <input type="radio" name="gender"
-							value="1" checked>男</lable> <input type="radio" name="gender"
-						value="0" checked>女</lable></td>
-				</tr>
-				<span style="color: red"> "${gender}" </span>
-
-				<!-- 				<tr> -->
-				<!-- 					<td>城市:</td> -->
-				<!-- 					<td><input placeholder="請輸入居住城市" name="city" maxlength="10" -->
-				<%-- 						value="<%=(memberVO == null) ? "桃園市" : memberVO.getCity()%>" /></td> --%>
-				<!-- 				</tr> -->
-				<!-- 				<tr> -->
-				<!-- 					<td>鄉鎮:</td> -->
-				<!-- 					<td><input placeholder="請輸入居住鄉鎮" name="cityArea" -->
-				<!-- 						maxlength="10" -->
-				<%-- 						value="<%=(memberVO == null) ? "八德市" : memberVO.getCityArea()%>" /></td> --%>
-				<!-- 				</tr> -->
-				<!-- 				<tr> -->
-				<!-- 					<td>地址:</td> -->
-				<!-- 					<td><input placeholder="請輸入地址" name="address" maxlength="10" -->
-				<%-- 						value="<%=(membervo == null) ? "廣福路394" : membervo.getaddress()%>" /></td> --%>
-				<!-- 				</tr> -->
-
-				<!-- 				<tr> -->
-				<!-- 					<td>圖片:</td> -->
-				<!-- 					<td><input type="file" accept="image/*" name="avatar" -->
-				<!-- 						size="45" -->
-				<%-- 						value="<%=(memberVO == null) ? "" : memberVO.getAvatar()%>" /></td> --%>
-				<!-- 				</tr> -->
-			</table>
-			<br> <input type="hidden" name="action" value="register"><input
-				type="submit" value="送出新增">
-		</FORM>
-		</main>
-	</body>
-
-
-	<!-- Footer-->
-	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
-	<!-- Bootstrap core JS-->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-	<!-- Core theme JS-->
+
 	<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
-	</body>
+</body>
 </html>

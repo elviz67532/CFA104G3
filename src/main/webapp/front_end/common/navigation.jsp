@@ -12,8 +12,7 @@
 	MemberVO memberVo = (MemberVO)session.getAttribute("memberVO");
 	if (memberVo != null) {
 		Integer memberId = memberVo.getId();
-		int count = service.getUnviewNotificationCount(memberId);
-		
+		int count = service.getUnviewNotificationCount(memberId);	
 		List<NotificationVO> notificationVOs = service.getMemberLatestNotification(memberId, 5);
 		if (notificationVOs != null) {
 			Comparator notifyComparator = new Comparator<NotificationVO>() {
