@@ -59,67 +59,68 @@ FaqVO faqVO = (FaqVO) request.getAttribute("faqVO");
 						<font style="color: red">請修正以下錯誤:</font>
 						<li style="color: red">${exception}</li>
 					</c:if>
+					<div style="width: 100%;">
+						<div style="margin: 0 auto; width: 36%;">
+							<FORM METHOD="post" ACTION="faq.do">
+								<table class="table table-hover">
 
-					<FORM METHOD="post" ACTION="faq.do">
-						<table>
+									<tr>
+										<th class="text-nowrap">問題:</th>
+										<td><input type="TEXT" name="question" size="45"
+											value="<%=(faqVO == null) ? "忘記密碼怎麼辦?" : faqVO.getQuestion()%>" /></td>
+									</tr>
 
-							<tr>
-								<td>問題:</td>
-								<td><input type="TEXT" name="question" size="45"
-									value="<%=(faqVO == null) ? "忘記密碼怎麼辦?" : faqVO.getQuestion()%>" /></td>
-							</tr>
-
-							<tr>
-								<td>回答:</td>
-								<td><input type="TEXT" name="answer" size="45"
-									value="<%=(faqVO == null) ? "請付500美元找密碼!" : faqVO.getAnswer()%>" /></td>
-							</tr>
-
-
-							<jsp:useBean id="faqSvc" scope="page"
-								class="com.faq.model.FaqServiceImpl" />
+									<tr>
+										<th class="text-nowrap">回答:</th>
+										<td><input type="TEXT" name="answer" size="45"
+											value="<%=(faqVO == null) ? "請付500美元找密碼!" : faqVO.getAnswer()%>" /></td>
+									</tr>
 
 
-						</table>
-						<br> <input type="hidden" name="action" value="insert">
-						<input type="submit" value="送出新增">
-					</FORM>
-					<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
-				</div>
-			</div>
-			<!-- End of Page Wrapper -->
+									<jsp:useBean id="faqSvc" scope="page"
+										class="com.faq.model.FaqServiceImpl" />
 
-			<!-- Scroll to Top Button-->
-			<a class="scroll-to-top rounded" href="#page-top"> <i
-				class="fas fa-angle-up"></i>
-			</a>
 
-			<!-- Logout Modal-->
-			<jsp:include page="/back_end/common/logoutModal.jsp"></jsp:include>
+								</table>
+								<br> <input type="hidden" name="action" value="insert">
+								<input type="submit" value="送出新增">
+							</FORM>
+							<jsp:include page="/back_end/common/footer.jsp"></jsp:include>
+						</div>
+					</div>
+					<!-- End of Page Wrapper -->
 
-			<!-- Bootstrap core JavaScript-->
-			<script
-				src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
-			<script
-				src="<%=request.getContextPath()%>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+					<!-- Scroll to Top Button-->
+					<a class="scroll-to-top rounded" href="#page-top"> <i
+						class="fas fa-angle-up"></i>
+					</a>
 
-			<!-- Core plugin JavaScript-->
-			<script
-				src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+					<!-- Logout Modal-->
+					<jsp:include page="/back_end/common/logoutModal.jsp"></jsp:include>
 
-			<!-- Custom scripts for all pages-->
-			<script
-				src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
+					<!-- Bootstrap core JavaScript-->
+					<script
+						src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
+					<script
+						src="<%=request.getContextPath()%>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-			<!-- Page level plugins -->
-			<script
-				src="<%=request.getContextPath()%>/vendor/datatables/jquery.dataTables.min.js"></script>
-			<script
-				src="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+					<!-- Core plugin JavaScript-->
+					<script
+						src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-			<!-- Page level custom scripts -->
-			<script
-				src="<%=request.getContextPath()%>/js/demo/datatables-demo.js"></script>
+					<!-- Custom scripts for all pages-->
+					<script
+						src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
+
+					<!-- Page level plugins -->
+					<script
+						src="<%=request.getContextPath()%>/vendor/datatables/jquery.dataTables.min.js"></script>
+					<script
+						src="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+					<!-- Page level custom scripts -->
+					<script
+						src="<%=request.getContextPath()%>/js/demo/datatables-demo.js"></script>
 </body>
 
 </html>

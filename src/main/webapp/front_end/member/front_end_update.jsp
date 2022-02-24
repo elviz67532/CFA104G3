@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
-
 <%
 MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 MemberVO tempMemberVO = (MemberVO) request.getAttribute("tempMemberVO");
@@ -24,6 +23,8 @@ if (tempMemberVO == null && memberVO != null) {
 	tempMemberVO.setAvatar(memberVO.getAvatar());
 	tempMemberVO.setRegisterDate(memberVO.getRegisterDate());
 	tempMemberVO.setStatus(memberVO.getStatus());
+}
+
 //<!--錯誤訊息 -->
 Map<String, String> errorMsgs = (Map<String, String>) request.getAttribute("errorMsgs");
 if (errorMsgs != null) {
@@ -45,8 +46,6 @@ if (errorMsgs != null) {
 		request.setAttribute("address", errorMsgs.get("address"));
 }
 %>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,9 +68,7 @@ if (errorMsgs != null) {
 	href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
 	rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
-<link
-	href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css"
-	rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css" rel="stylesheet" />
 </head>
 
 <body style="background-image: url('<%=request.getContextPath()%>/asset/img/bnet-bg.jpg')">
@@ -170,17 +167,17 @@ input[type="tel"]:focus{
 					<c:if test="${not empty city}">
 						<span style="color: red"> "${city}" </span>
 					</c:if>
-						<input class="inputholder" placeholder="請輸入居住城市" type="text" name="city" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getCity()%>" />
+						<input class="inputholder" placeholder="請輸入居住城市" type="text" name="city" maxlength="10"value="${memberVO.city}" />
 					<br>
 					<c:if test="${not empty cityArea}">
 						<span style="color: red"> "${cityArea}" </span>
 					</c:if>
-						<input class="inputholder" placeholder="請輸入居住鄉鎮" type="text" name="cityArea" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getCityArea()%>" />
+						<input class="inputholder" placeholder="請輸入居住鄉鎮" type="text" name="cityArea" maxlength="10"value="${memberVO.cityArea}" />
 					<br>
 					<c:if test="${not empty address}">
 						<span style="color: red"> "${address}" </span>
 					</c:if>
-						<input class="inputholder" placeholder="請輸入地址" type="text" name="address" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getAddress()%>" />
+						<input class="inputholder" placeholder="請輸入地址" type="text" name="address" maxlength="10"value="${memberVO.address}" />
 					<br>
 						<input class="inputholder" placeholder="請上傳圖片" type="file" name="avatar" maxlength="10"value="<%=(tempMemberVO == null) ? "" : tempMemberVO.getAvatar()%>" />
 				    <br>

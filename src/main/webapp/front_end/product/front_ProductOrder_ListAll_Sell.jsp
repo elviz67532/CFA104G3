@@ -111,7 +111,7 @@ td {
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
 						<h1>
-							前台賣家訂單管理主頁
+							賣家訂單管理
 							<h1>
 								<span class="subheading">二手商城</span>
 					</div>
@@ -133,15 +133,16 @@ td {
 			</c:forEach>
 		</ul>
 	</c:if>
-	<li><a href="front_ProductOrder_Retrieve.jsp"><input
-			type="submit" value="商品訂單查詢"></a>
-	<li>
-		<table class="table table-striped table-hover">
+<!-- 	<li><a href="front_ProductOrder_Retrieve.jsp"><input -->
+<!-- 			type="submit" value="商品訂單查詢"></a> -->
+<!-- 	<li> -->
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th class="text-nowrap">訂單編號</th>
 					<th class="text-nowrap">商品編號</th>
 					<th class="text-nowrap">買家編號</th>
+					<th class="text-nowrap">賣家編號</th>
 					<th class="text-nowrap">收件人姓名</th>
 					<th class="text-nowrap">收件人電話</th>
 					<th class="text-nowrap">收件人地址</th>
@@ -161,8 +162,8 @@ td {
 					<tr>
 						<td>${productOrderVO.id}</td>
 						<td>${productOrderVO.productId}</td>
-
 						<td>${productOrderVO.customerMemberId}</td>
+						<td>${productOrderVO.sellerMemberId}</td>
 						<td>${productOrderVO.productName}</td>
 						<td>${productOrderVO.phone}</td>
 						<td>${productOrderVO.address}</td>
@@ -193,7 +194,7 @@ td {
 			</c:forEach>
 		</table> <%@ include file="page2.jsp"%> <!-- Footer-->
 
-		
+
 		</script> <jsp:include page="/front_end/common/footer.jsp"></jsp:include> <!-- Bootstrap core JS-->
 
 		<script

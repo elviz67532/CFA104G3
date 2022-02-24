@@ -1,4 +1,3 @@
-<%@page import="com.activity_report.model.ActivityReportVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
@@ -10,8 +9,6 @@
 
 <%@ page import="com.member.model.*"%>
 
-<%@ page import="com.activity_report.model.*"%>
-
 <!-- 改善時間用 -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%
@@ -21,8 +18,6 @@
 	ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");
 	
 	ActivityAttendVO actaVO = (ActivityAttendVO) request.getAttribute("actaVO");
-	
-	ActivityReportVO actrVO=(ActivityReportVO)request.getAttribute("actrVO");
 	
 	ActivityQuestionVO actqVO = (ActivityQuestionVO) request.getAttribute("actqVO");
 	
@@ -35,9 +30,6 @@
 		list = new ArrayList<>();
 	}
 		pageContext.setAttribute("list",list);
-		
-		
-	
 %>
 <%
 	request.setAttribute("findActivityType", new String[]{"活動","聚餐","講座","其他"});
@@ -209,91 +201,91 @@
 }
 
 /* ================彈出視窗============== */
-/* .main .overlay{ */
-/*     position: fixed; */
-/*     top: 0; */
-/*     left: 0; */
-/*     width: 100%; */
-/*     height: 100vh; */
-/*     background-color: hsla(0, 0%, 0%, .5); */
+.main .overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: hsla(0, 0%, 0%, .5);
 
-/*     display: none; */
-/* } */
-
-  
-/* /* 元素 article 置中及基本樣式 */ 
-/* .main .overlay > article{ */
-/*     background-color: white; */
-/*     width: 90%; */
-/*     height: 90%; */
-/*     max-width: 60%; */
-/*     max-height: 80%; */
-/*     border-radius: 10px; */
-/*     box-shadow: 0 0 10px white; */
-/*     padding: 10px; */
-/*     position: absolute; */
-/*     top: 50%; */
-/*     left: 50%; */
-/*     transform: translate(-50%, -50%); */
-/* } */
-
-/* /* ================彈出視窗2============== */ 
-/* .main2 .overlay2{ */
-/*     position: fixed; */
-/*     top: 0; */
-/*     left: 0; */
-/*     width: 100%; */
-/*     height: 100vh; */
-/*     background-color: hsla(0, 0%, 0%, .5); */
-
-/*     display: none; */
-/* } */
+    display: none;
+}
 
   
-/* /* 元素 article 置中及基本樣式 */ 
-/* .main2 .overlay2 > article{ */
-/*     background-color: white; */
-/*     width: 90%; */
-/*     height: 90%; */
-/*     max-width: 60%; */
-/*     max-height: 80%; */
-/*     border-radius: 10px; */
-/*     box-shadow: 0 0 10px white; */
-/*     padding: 10px; */
-/*     position: absolute; */
-/*     top: 50%; */
-/*     left: 50%; */
-/*     transform: translate(-50%, -50%); */
-/* } */
+/* 元素 article 置中及基本樣式 */
+.main .overlay > article{
+    background-color: white;
+    width: 90%;
+    height: 90%;
+    max-width: 60%;
+    max-height: 80%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px white;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
-/* /* ================彈出視窗3============== */ 
-/* .main3 .overlay3{ */
-/*     position: fixed; */
-/*     top: 0; */
-/*     left: 0; */
-/*     width: 100%; */
-/*     height: 100vh; */
-/*     background-color: hsla(0, 0%, 0%, .5); */
+/* ================彈出視窗2============== */
+.main2 .overlay2{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: hsla(0, 0%, 0%, .5);
 
-/*     display: none; */
-/* } */
+    display: none;
+}
 
   
-/* /* 元素 article 置中及基本樣式 */ 
-/* .main3 .overlay3 > article{ */
-/*     background-color: white; */
-/*     width: 90%; */
-/*     height: 90%; */
-/*     max-width: 60%; */
-/*     max-height: 80%; */
-/*     border-radius: 10px; */
-/*     box-shadow: 0 0 10px white; */
-/*     padding: 10px; */
-/*     position: absolute; */
-/*     top: 50%; */
-/*     left: 50%; */
-/*     transform: translate(-50%, -50%); */
-/* } */
+/* 元素 article 置中及基本樣式 */
+.main2 .overlay2 > article{
+    background-color: white;
+    width: 90%;
+    height: 90%;
+    max-width: 60%;
+    max-height: 80%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px white;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ================彈出視窗3============== */
+.main3 .overlay3{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: hsla(0, 0%, 0%, .5);
+
+    display: none;
+}
+
+  
+/* 元素 article 置中及基本樣式 */
+.main3 .overlay3 > article{
+    background-color: white;
+    width: 90%;
+    height: 90%;
+    max-width: 60%;
+    max-height: 80%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px white;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 /* ================彈出視窗4============== */
 .main4 .overlay4{
@@ -449,28 +441,6 @@ textarea:focus{
 <%--                     <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?activityId=${actVO.activityId}" > --%>
    	<section id="section1" class="section1">
                <div style="display: block; margin-left: 10px; padding: 4px;">
-               <div style="width: 100%;">
-                   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
-		               <input type="hidden" name="action" value="selectOneActForEdit"/> 
-		               <input type="hidden" name="activityId" value="${actVO.activityId}">
-	               	   <input type="submit" class="btn-hover color-3" value="編輯活動"/>
-			       </FORM>
-			       <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
-				       <input type="hidden" name="action" value="delete"/> 
-	      	           <input type="hidden" name="activityId" value="${actVO.activityId}">
-				       <input type="submit" class="btn-hover color-3" value="刪除活動"/>
-			       </FORM>
-			       <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
-				       <input type="hidden" name="action" value="cancel"/> 
-    	      	       <input type="hidden" name="activityId" value="${actVO.activityId}">
-				       <input type="submit" class="btn-hover color-3" value="取消活動"/>
-               	   </FORM>
-			       <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
-				       <input type="hidden" name="action" value="remove"/> 
-				       <input type="hidden" name="activityId" value="${actVO.activityId}">
-				       <input type="submit" class="btn-hover color-3" value="下架活動"/>
-			       </FORM>
-               </div>
 <%-- 		      <c:set var="typeNum" scope="request" value="${actVO.type}"/> --%>
 <%--              		<span class="actType">${findActivityType[typeNum]}</span> --%>
 		       <br>
@@ -535,29 +505,14 @@ textarea:focus{
 <!-- 	               <div style="border: 2px solid red;"> -->
 				<!-- ==================== 參與者功能 ==================== -->
 	               <div>
-	        	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
- 			     <input type="submit" value="報名活動"> 
- 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
-<%--  			     <input type="hidden" name="applyStartDate"  value="${actVO.applyStartDate}"> --%>
-<%--  			     <input type="hidden" name="maxMember"  value="${actVO.maxMember}"> --%>
-<%--  			     <input type="hidden" name="applyMemberExisting"  value="${actVO.applyMemberExisting}"> --%>
- 			     <input type="hidden" name="action"	value="getOne_For_Insert"></FORM> 
-	        			</td>
- 			  	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
- 			     <input type="submit" value="活動評分"> 
- 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
- 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> 
-				</td> 
-    			<td>	    	
- 			  	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/actr.do" style="margin-bottom: 0px;"> 
- 			     <input type="submit" value="活動檢舉"> 
- 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
- 			     <input type="hidden" name="action"	value="getOne_For_Insert"></FORM> 
-				</td> 
-    					<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
- 			     <input type="submit" value="活動取消"> 
- 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
- 			     <input type="hidden" name="action"	value="cancel"></FORM> 
+	        			<button type="button" class="btn_modal btn-hover color-1">報名活動</button>
+	        			<button type="button" class="btn_modal2 btn-hover color-1">為活動評分</button>
+    				    <button type="button" class="btn_modal3 btn-hover color-1">檢舉活動</button>
+    					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
+					       <input type="hidden" name="action" value="quit"/> 
+		      	           <input type="hidden" name="activityId" value="${actVO.activityId}">
+					       <input type="submit" class="btn-hover color-1" value="退出活動"/>
+			       		</FORM>
 	               </div>
 				<!--   ==================== 報名活動 ====================   -->
 <%-- 	         <%@ include file="secondActivity.jsp" %>       --%>
@@ -632,7 +587,8 @@ textarea:focus{
    			</c:forEach>
    		</div>
  <!--  ==================== 最下方活動問答  ==================== -->  		
- 		
+  		<%@ include file="memberaskquestion.jsp" %>  
+ 
 <!--    ============================ 以上為問題區塊 ============================ --> 
 <!--    ============================ 以下為會員回答區塊 ============================ -->
    		<div class="main5">

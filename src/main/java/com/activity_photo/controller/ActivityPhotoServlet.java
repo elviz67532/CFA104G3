@@ -25,7 +25,7 @@ public class ActivityPhotoServlet extends HttpServlet {
 			int actId = Integer.parseInt(id);
 
 			ActivityPhotoService service = new ActivityPhotoServiceImpl();
-			ActivityPhotoVO activityPhoto = service.findActPhoto(actId);
+			ActivityPhotoVO activityPhoto = service.findActPhotoByActId(actId);
 			if (activityPhoto != null && activityPhoto.getPhoto() != null) {
 				out.write(activityPhoto.getPhoto());
 			} else {

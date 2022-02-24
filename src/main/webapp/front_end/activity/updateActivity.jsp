@@ -109,6 +109,9 @@
     font-size: 16px;
     border-radius: 0;
 }
+.actFormInput, .actSelect, .actTimeFormInput{
+	color: black;
+}
 
 /*input hover*/
 input[type="text"]:focus{
@@ -207,28 +210,25 @@ textarea:focus{
 		<h2>進來編輯活動囉!</h2>
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
-				<font style="color: red">請修正以下錯誤:</font>
-				<ul> 
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color: red">${message}</li>
-					</c:forEach>
-				</ul>
+				<font class="formLabel"  style="color: red">請修正以下錯誤:</font>
+<!-- 				<ul>  -->
+<%-- 					<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 						<li style="color: red">${message}</li> --%>
+<%-- 					</c:forEach> --%>
+<!-- 				</ul> -->
 			</c:if>
 			
 			<form action="${pageContext.request.contextPath}/activity/act.do" enctype="multipart/form-data" method="post" name="form1">
 	<!-- 			<p class="memId">會員名稱?</p> -->
 <!-- 				隱藏的其他欄位 -->
-<%-- 				<input type="hidden" name="activityId" value="<%= (actVO==null)? "" : actVO.getActivityId() %>"/> --%>
-<%-- 				<input type="hidden" name="organizerMemberId" value="<%= (actVO==null) ? "9" : actVO.getOrganizerMemberId() %> "/> --%>
 				
 				<label class="formLabel" for="name">活動名稱: <span style="color: red">${errorMsgs.name}</span></label>
 				<input class="actFormInput" autofocus type="text" name="name"
-					value="<%= (actVO == null) ? "美式咖啡好喝活動" : actVO.getName() %>" /><br> 
+					value="<%= (actVO == null) ? "" : actVO.getName() %>" /><br> 
 				
 				<label class="formLabel"for="type">活動種類: <span style="color: red">${errorMsgs.type}</span></label> 
 				<select class="actSelect" name="type" id="sfs">
 					<option value="" style="display: none">請選擇類型</option>
-<%-- 					<%= (actVO == null || actVO.getType() != 1) ? "" : "selected" %> --%>
 <!-- 					selected -->
 					<option value="1" <%= (actVO == null || actVO.getType() != 1) ? "" : "selected" %>>活動</option>
 					<option value="2" <%= (actVO == null || actVO.getType() != 2) ? "" : "selected" %>>聚餐</option>
@@ -238,20 +238,18 @@ textarea:focus{
 				
 				<br>
 				<label class="formLabel" for="location">活動地點: <span style="color: red">${errorMsgs.location}</span></label>
-				<input class="actFormInput" type="text" name="location" value="<%= (actVO == null) ? "207 新北市萬里區坪頂32號" : actVO.getLocation() %>"/><br>
+				<input class="actFormInput" type="text" name="location" value="<%= (actVO == null) ? "" : actVO.getLocation() %>"/><br>
 			 	
 			 	<label class="formLabel" for="actName">活動照片: <span style="color: red">${errorMsgs.photo}</span></label>
 	           	<input class="actPhoto" name="actp" type="file" accept="image/*" value=""><br>
 	<!--       	多張 multiple     -->
 				<label class="formLabel" for="content">活動內容: <span style="color: red">${errorMsgs.content}</span></label>
-				<textarea class="actFormInput actContentFormInput" cols="55" name="content">"<%= (actVO == null) ? 
-						"新鮮無毒農草莓，讓你自己摘也自己吃在東林這座群山環抱、林木參天的世外桃源，全家大小都能一同探索生態的奇妙除了能夠親自體驗摘下草莓的樂趣外，你還能夠帶走價值200元的草莓禮盒當天也有草莓果醬DIY的活動。天然無添加的草莓手工果醬，親手熬煮最放心貼心的園長還會準備豐盛的農場午餐＆草莓奶酪，讓你真正體驗別於都市的慢活！" 
-																				: actVO.getContent() %>"</textarea>
+				<textarea class="actFormInput actContentFormInput" cols="55" name="content">"<%= (actVO == null) ? "" : actVO.getContent() %>"</textarea>
 		
 				<label class="formLabel" for="cost">活動費用: <span style="color: red">${errorMsgs.cost}</span></label>
 				<input class="actFormInput actNumberFormInput" type="number" step="1" min="0"
 					pattern="[0-9]" name="cost" 
-					value="<%= (actVO == null) ? "1500" : actVO.getCost() %>"/><br>
+					value="<%= (actVO == null) ? "" : actVO.getCost() %>"/><br>
 		
 				<label class="formLabel" for="applyStartDate">報名開始時間: <span style="color: red">${errorMsgs.applyStartDate}</span></label>
 				<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" 
@@ -274,20 +272,18 @@ textarea:focus{
 				<label class="formLabel" for="maxMember">活動人數上限: <span style="color: red">${errorMsgs.maxMember}</span></label>
 				<input class="actFormInput actNumberFormInput" type="number" step="" min="0"
 					max="1000" pattern="[0-9]" name="maxMember"
-					value="<%= (actVO == null) ? "200" : actVO.getMaxMember() %>"/><br> 
+					value="<%= (actVO == null) ? "" : actVO.getMaxMember() %>"/><br> 
 					
 				<label class="formLabel" for="minMember">活動人數下限: <span style="color: red">${errorMsgs.minMember}</span></label>
 				<input class="actFormInput actNumberFormInput" type="number" step="" min="0"
 					max="1000" pattern="[0-9]" name="minMember"
-					value="<%= (actVO == null) ? "40" : actVO.getMinMember() %>"/><br>
+					value="<%= (actVO == null) ? "" : actVO.getMinMember() %>"/><br>
 				
-				<!--可新增 <label class="formLabel" for="actComment">備註:</label> -->
-				<!-- <textarea class="actCommentFormInput" cols="55" name="actComment"></textarea> -->
 	<!-- 			id="sweetBtn2" -->
-			<div style="padding: 0 0 0 220px;">
+			<div style="">
 				<input type="hidden" name="action" value="update"/> 
 				<input type="hidden" name="activityId" value="<%=actVO.getActivityId()%>">
-				<input type="submit" class="btn-hover color-5" value="送出修改"/>
+				<input style="margin: 20px 190px;" type="submit" class="btn-hover color-5" value="送出修改"/>
 			</div>
 <%-- 				<input type="hidden" name="status" value="<%=(actVO==null) ? "0" : actVO.getStatus()%>"/> --%>
 <%-- 				${actVO.getStatus} --%>

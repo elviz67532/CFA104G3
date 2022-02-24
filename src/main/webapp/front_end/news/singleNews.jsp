@@ -53,18 +53,8 @@ pageContext.setAttribute("list", list);
     <!-- 主體畫面設計  -->
     <!-- Page Content-->
             <section class="py-5">
-                <div class="container px-5 my-5">
-                    <div class="row gx-5">
-                        <div class="col-lg-3">
-                            <div class="d-flex align-items-center mt-lg-5 mb-4">
-                                <img class="img-fluid rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
-                                <div class="ms-3">
-                                    <div class="fw-bold">Valerie Luna</div>
-                                    <div class="text-muted">News, Business</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-9">
+                <div class="" style="width: 100%;">
+                        <div class="" style=" width: 70%; margin: 0 auto;">
                             <!-- Post content-->
                             <article>
                                 <!-- Post header-->
@@ -75,13 +65,19 @@ pageContext.setAttribute("list", list);
                                     <div class="text-muted fst-italic mb-2">${newsVO.date}</div>                               
                                 </header>
                                 <!-- Preview image figure-->
-                                <figure class="mb-4"><img class="img-fluid rounded" src="<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id}" alt="..." /></figure>
+                                <figure><img class="img-fluid rounded" src="<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id}" alt="..." /></figure>
+                                
                                 <!-- Post content-->
-                                <section class="mb-5">
-                                    <pre class="fs-5 mb-4">${newsVO.content}</pre>                          
-                                </section>
-                            </article>
+		                             <div style="white-space:pre-wrap ; width: 100%;">${newsVO.content}</div>
 
+<!-- 		                             <br> -->
+<!-- 		                             test2: -->
+<%-- 		                             <pre>${newsVO.content}</pre> --%>
+<!--  									style="border: 2px blue solid;" -->
+                            </article>
+						</div>
+				</div>
+			</section>
     <!-- Footer-->
     <jsp:include page="/front_end/common/footer.jsp"></jsp:include>
     <!-- Bootstrap core JS-->

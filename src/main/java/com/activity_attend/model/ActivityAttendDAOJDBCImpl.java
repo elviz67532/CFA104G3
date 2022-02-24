@@ -19,7 +19,7 @@ public class ActivityAttendDAOJDBCImpl implements ActivityAttendDAO {
 			+ "values (?, ?, ?, ?, ?)";
 	private static final String DELETE = "delete from ACTIVITY_ATTEND where ACTA_MEM_ID = ? and ACTA_ACT_ID = ? ";
 	private static final String UPDATE = "update ACTIVITY_ATTEND set ACTA_RELPY_CONTENT = ?, ACTA_CONTENT_NOTE = ?, ACTA_PAY_STATUS = ? WHERE ACTA_MEM_ID = ? and ACTA_ACT_ID = ?";
-
+	private static final String GET_MEMBER_STMT = "select * from ACTIVITY_ATTEND where ACTA_MEM_ID = ?";
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -167,4 +167,5 @@ public class ActivityAttendDAOJDBCImpl implements ActivityAttendDAO {
 
 		return vo;
 	}
+
 }
