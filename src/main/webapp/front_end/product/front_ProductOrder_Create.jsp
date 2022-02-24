@@ -1,10 +1,17 @@
+<%@page import="com.product.model.ProductServiceImpl"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.product_order.model.*"%>
+<%@ page import="com.product.model.*"%>
 <%@ page import="java.util.*"%>
 
 <%
 ProductOrderVO vo = (ProductOrderVO) request.getAttribute("vo");
+if (vo != null) {
+	ProductServiceImpl productSvc = new ProductServiceImpl();
+	ProductVO productVO = productSvc.getOneProduct(vo.getProductId());
+	pageContext.setAttribute("productVO", productVO);
+}
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -250,67 +257,58 @@ textarea:focus {
 				<table class="table table-hover">
 
 
-					<tr>
-						<th class="text-nowrap">訂單編號:</th>
-						<td>${vo.id}</td>
-					</tr>
-
-					<tr>
-						<th class="text-nowrap">商品編號:</th>
-						<td>${vo.productId}</td>
-					</tr>
 
 
 					<tr>
-						<th class="text-nowrap">買家編號:</th>
-						<td>${vo.customerMemberId}</td>
+						<th class="text-nowrap">商品名稱:</th>
+						<td><input readonly type="TEXT" name="name" size="45"
+							value="${productVO.name}"></td>
 					</tr>
 
 
-					<tr>
-						<th class="text-nowrap">賣家編號:</th>
-						<td>${vo.sellerMemberId}</td>
-					</tr>
 
 
-					<tr>
-						<th class="text-nowrap">訂單成立時間:</th>
-						<td>${vo.date}</td>
-					</tr>
-					<tr>
-						<th class="text-nowrap">訂單狀態:</th>
-						<td>${vo.status}</td>
-					</tr>
+
+					<input type="hidden" name="productId" size="45"
+						value="${productVO.id}">
 
 
-					<tr>
-						<th class="text-nowrap">訂單總金額:</th>
-						<td>${vo.amountOfPrice}</td>
-					</tr>
+
+
+
+
+
+					<input type="hidden" name="productId" size="45"
+						value="${productOrderVO.sellerMemberId}">
+
 
 
 					<tr>
 						<th class="text-nowrap">收件人姓名:</th>
 						<td><input type="TEXT" name="productName" size="45"
-							value="<%=(vo == null) ? "Java" : vo.getProductName()%>" /></td>
+							value="${vo.productName}" /></td>
 					</tr>
 
 					<tr>
 						<th class="text-nowrap">收件人電話:</th>
-						<td><input type="TEXT" name="pone" size="45"
-							value="<%=(vo == null) ? "0988888888" : vo.getPhone()%>" /></td>
+						<td><input type="TEXT" name="phone" size="45"
+							value="${vo.phone}" /></td>
 					</tr>
 
 					<tr>
 						<th class="text-nowrap">收件人地址:</th>
 						<td><input type="TEXT" name="address" size="45"
-							value="<%=(vo == null) ? "秋名市秋名路86號" : vo.getAddress()%>" /></td>
+							value="${vo.address}" /></td>
 					</tr>
+
+
+
 					<tr>
-						<th class="text-nowrap">商品數量:</th>
-						<td><input readonly type="TEXT" name="amountOfProduct"
-							size="45" value="1" /></td>
+						<th class="text-nowrap">訂單總金額:</th>
+						<td>${productVO.price}</td>
 					</tr>
+
+
 
 					<jsp:useBean id="poSvc" scope="page"
 						class="com.product_order.model.ProductOrderServiceImpl" />
