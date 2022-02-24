@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.member.model.MemberVO;
-
+import com.product.model.ProductServiceImpl;
 import com.product_order.model.ProductOrderService;
 import com.product_order.model.ProductOrderServiceImpl;
 import com.product_order.model.ProductOrderVO;
@@ -855,6 +855,9 @@ public class ProductOrderServlet extends HttpServlet {
 				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
 				vo = poSvc.addProductOrder(productId, customerMemberId, sellerMemberId, productName, phone, address,
 						date, amountOfProduct, status, amountOfPrice);
+				
+				ProductServiceImpl pdSer = new ProductServiceImpl();
+				pdSer.updateStatus(productId);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/front_end/product/listAllproductOrder.jsp";
