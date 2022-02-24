@@ -259,11 +259,14 @@ textarea:focus {
 
 
 
+
 					<tr>
 						<th class="text-nowrap">商品名稱:</th>
-						<td><input readonly type="TEXT" name="name" size="45"
-							value="${productVO.name}"></td>
+						<td>${productVO.name}</td>
 					</tr>
+
+
+
 
 
 
