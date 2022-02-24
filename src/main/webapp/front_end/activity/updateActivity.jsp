@@ -109,6 +109,9 @@
     font-size: 16px;
     border-radius: 0;
 }
+.actFormInput, .actSelect, .actTimeFormInput{
+	color: black;
+}
 
 /*input hover*/
 input[type="text"]:focus{
@@ -277,10 +280,10 @@ textarea:focus{
 					value="<%= (actVO == null) ? "" : actVO.getMinMember() %>"/><br>
 				
 	<!-- 			id="sweetBtn2" -->
-			<div style="padding: 0 0 0 220px;">
+			<div style="">
 				<input type="hidden" name="action" value="update"/> 
 				<input type="hidden" name="activityId" value="<%=actVO.getActivityId()%>">
-				<input type="submit" class="btn-hover color-5" value="送出修改"/>
+				<input style="margin: 20px 190px;" type="submit" class="btn-hover color-5" value="送出修改"/>
 			</div>
 <%-- 				<input type="hidden" name="status" value="<%=(actVO==null) ? "0" : actVO.getStatus()%>"/> --%>
 <%-- 				${actVO.getStatus} --%>

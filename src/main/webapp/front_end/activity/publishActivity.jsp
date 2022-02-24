@@ -132,6 +132,9 @@ textarea:focus{
     background-color: #30dd8a;
 }
 
+.actFormInput, .actSelect, .actTimeFormInput{
+	color: black;
+}
 /* .btn{ */
 /* 	width: 100%; */
 /* 	color: #fff; */
@@ -276,7 +279,7 @@ textarea:focus{
 			<div style="text-align: center;">
 				<input type="hidden" name="action" value="insert"/> 
 	<!-- 			sweetalert 加在submit 有效果但不能insert -->
-				<input type="submit" class="btn-hover color-5" value="送出表單" />
+				<input style="margin: 20px 190px;" type="submit" class="btn-hover color-5" value="送出表單" />
 			</div>
 		</form>
 	</div>
