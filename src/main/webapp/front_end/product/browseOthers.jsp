@@ -96,8 +96,8 @@
 
 	<!-- 輪播 (Carousel) -->
     <!-- 搭配圖片滿版 -->
-   <c:forEach var="newsVO" items="${newslist}">
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+   	<c:forEach var="newsVO" items="${newslist}">
       <div class="carousel-inner">
         <div class="carousel-item active">
           <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id})"></div>
