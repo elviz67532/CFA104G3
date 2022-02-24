@@ -80,10 +80,10 @@ td {
 
 
 					<!-- main -->
-					<h1>後台商品訂單管理主頁</h1>
+					<h1>後台商品訂單管理</h1>
 
 
-					<table class="table table-striped table-hover">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th class="text-nowrap">訂單編號</th>

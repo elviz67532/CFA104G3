@@ -16,8 +16,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
 	@Override
 	public ProductOrderVO addProductOrder(Integer productId, Integer customerMemberId, Integer sellerMemberId,
-			String productName, String phone, String address, Timestamp date, Integer amountOfProduct, Integer status,
-			Integer amountOfPrice) {
+			String productName, String phone, String address, Integer amountOfProduct, Integer amountOfPrice) {
 
 		ProductOrderVO vo = new ProductOrderVO();
 
@@ -27,9 +26,9 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 		vo.setProductName(productName);
 		vo.setPhone(phone);
 		vo.setAddress(address);
-		vo.setDate(date);
+		vo.setDate(new Timestamp(System.currentTimeMillis()));
 		vo.setAmountOfProduct(amountOfProduct);
-		vo.setStatus(status);
+		vo.setStatus(0);
 		vo.setAmountOfPrice(amountOfPrice);
 
 		dao.insert(vo);
