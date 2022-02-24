@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 public class MailService {
 	final String myGmail = "encored98931@gmail.com";    //TODD還沒放帳號密碼
 	final String myGmail_password = "arirswxcbvdncjje"; 
-	final String myGmail2 = "mirian24@opinionsbte.com";
+	final String myGmail2 = "vuz31127@qopow.com";
 	public void sendToSelf(String subject, String messageText) {
 		sendMail(myGmail2, subject, messageText);
 	}
