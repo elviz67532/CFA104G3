@@ -279,10 +279,6 @@ public class LoginServlet extends HttpServlet {
 
 		if ("front_end_member_update".equals(action)) { // 前台會員更新資料
 			HttpSession session = req.getSession();
-			MemberVO tempMemberVO = (MemberVO) session.getAttribute("tempMember");
-			if (tempMemberVO == null) {
-
-			}
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);// 怡裡的用法
@@ -301,7 +297,7 @@ public class LoginServlet extends HttpServlet {
 				} else {
 					MemberVO findByEmail = memSvc.findByEmail(email);
 					if (findByEmail != null) {
-						if (findByEmail.getId().intValue() != tempMemberVO.getId().intValue()) {
+						if (findByEmail.getId().intValue() != id.intValue()) {
 							errorMsgs.put("email", "此信箱已使用");
 						}
 					}
@@ -361,6 +357,7 @@ public class LoginServlet extends HttpServlet {
 					in.close();
 				}
 
+				MemberVO tempMemberVO = new MemberVO();
 				tempMemberVO.setEmail(email);
 				tempMemberVO.setPassword(password);
 				tempMemberVO.setNickname(nickname);
@@ -381,15 +378,15 @@ public class LoginServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 *****************************************/
 				MemberServiceImpl memberServiceImpl = new MemberServiceImpl();
-				memberServiceImpl.frontMemberUpdate(email, password, nickname, name, phone, city, cityArea, address,
-						avatar, id);
+				memberServiceImpl.frontMemberUpdate(email, password, nickname, name, phone, city, cityArea,
+						address, avatar, id);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-
+				
 				MemberVO memberVo = memberServiceImpl.selectById(id);
-
+				
 				session.setAttribute("memberVO", memberVo);
-
+				
 				String url = "/front_end/member/front_end_listOneMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
