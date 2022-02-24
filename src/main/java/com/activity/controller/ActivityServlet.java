@@ -39,8 +39,6 @@ public class ActivityServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8"); // post
 		String action = req.getParameter("action");
 
-//		System.out.println("test");
-
 		/*************************** 狀態回復正常 **********************************/
 		if ("normal".equals(action)) {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
@@ -258,7 +256,7 @@ public class ActivityServlet extends HttpServlet {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
@@ -266,8 +264,7 @@ public class ActivityServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 				if (memberVO == null) {
-//			     FrontEndMemberFilter.doFilter(req, res, gg);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/activity/homePage.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/login.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -275,22 +272,20 @@ public class ActivityServlet extends HttpServlet {
 				/* ========================= 狀態 ========================= */
 				int status = 0;
 				/* ========================= 活動名稱 ========================= */
-// 正則最後處理
-//String actNameReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{2,20}$";
-//} else if (!name.trim().matches(actNameReg)) {
-//errorMsgs.put("name", "只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
+//				String actNameReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{2,20}$";
 				String name = req.getParameter("name");
 				if (name == null || name.trim().length() == 0) {
 					errorMsgs.put("name", "請勿空白");
+//				} else if (!name.trim().matches(actNameReg)) {
+//					errorMsgs.put("name", "只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
 				}
-				System.out.println(name);
-
 				/* ========================= 活動種類 ========================= */
 				int type = Integer.valueOf(req.getParameter("type"));
-				if (type == 0) {
-					errorMsgs.put("type", "請選擇種類");
+				try {
+					type = Integer.valueOf(req.getParameter("type").trim());
+				} catch (NumberFormatException e) {
+					errorMsgs.put("type", "請至少選擇一種類型");
 				}
-				System.out.println(type);
 //Map<Integer, String> t = new LinkedHashMap<Integer, String>();
 //t.put(1, "活動");
 //t.put(2, "聚餐");
@@ -298,26 +293,21 @@ public class ActivityServlet extends HttpServlet {
 //t.put(4, "其他");
 //t.get(type);
 				/* ========================= 活動地點 ========================= */
-// 正則最後處理
-//String actLocationReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{10,30}$";
-//} else if (!location.trim().matches(actLocationReg)) {
-//errorMsgs.put("location", "只能是中、英文字母、數字和_ , 且長度必需在10到30之間");
+//				String actLocationReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{10,30}$";
 				String location = req.getParameter("location");
 				if (location == null || location.trim().length() == 0) {
 					errorMsgs.put("location", "請勿空白");
+//				} else if (!location.trim().matches(actLocationReg)) {
+//					errorMsgs.put("location", "只能是中、英文字母、數字和_ , 且長度必需在10到30之間");
 				}
-				System.out.println(location);
-
 				/* ========================= 活動內容 ========================= */
-// 正則最後處理
-//String actContentReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{20,1000}$";
-//} else if (!content.trim().matches(actContentReg)) {
-//errorMsgs.put("content", "只能是中、英文字母、數字和_ , 且長度必需在20到1000之間");
+//				String actContentReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{20,1000}$";
 				String content = req.getParameter("content");
 				if (content == null || content.trim().length() == 0) {
 					errorMsgs.put("content", "請勿空白");
+//				} else if (!content.trim().matches(actContentReg)) {
+//					errorMsgs.put("content", "只能是中、英文字母、數字和_ , 且長度必需在20到1000之間");
 				}
-				System.out.println(content);
 
 				/* ========================= 活動費用 ========================= */
 				int cost = 0;
@@ -326,7 +316,6 @@ public class ActivityServlet extends HttpServlet {
 				} catch (NumberFormatException e) {
 					errorMsgs.put("cost", "請填數字");
 				}
-				System.out.println(cost);
 
 				/* ========================= 時間從這裡開始 ========================= */
 				// 報名開始時間
@@ -341,7 +330,6 @@ public class ActivityServlet extends HttpServlet {
 				/* ========================= 建立時間 ========================= */
 				java.sql.Timestamp launchedDate = null;
 				launchedDate = new Timestamp(System.currentTimeMillis());
-				System.out.println(launchedDate);
 
 				/* ========================= 報名開始時間 ========================= */
 				// 測試報名開始時間介於開始、結束時間之間，不得晚於報名截止時間。
@@ -372,7 +360,6 @@ public class ActivityServlet extends HttpServlet {
 					} else if (applyStartDate.equals(endDate)) {
 						errorMsgs.put("applyStartDate", "報名開始時間無法與活動結束時間相同");
 					}
-					System.out.println(applyStartDate);
 				} catch (IllegalArgumentException ie) {
 					errorMsgs.put("applyStartDate", "請輸入日期與時間");
 				} catch (Exception e1) {
@@ -403,7 +390,6 @@ public class ActivityServlet extends HttpServlet {
 					} else if (applyEndDate.equals(endDate)) {
 						errorMsgs.put("applyEndDate", "報名截止時間無法與活動結束時間相同");
 					}
-					System.out.println(applyEndDate);
 				} catch (IllegalArgumentException ie) {
 					errorMsgs.put("applyEndDate", "請輸入日期與時間");
 				} catch (Exception e1) {
@@ -430,7 +416,6 @@ public class ActivityServlet extends HttpServlet {
 					} else if (startDate.equals(endDate)) {
 						errorMsgs.put("startDate", "活動開始時間無法與活動結束時間相同");
 					}
-					System.out.println(startDate);
 				} catch (IllegalArgumentException e) {
 					errorMsgs.put("startDate", "請輸入日期與時間");
 				} catch (Exception e1) {
@@ -448,7 +433,6 @@ public class ActivityServlet extends HttpServlet {
 					startDate = java.sql.Timestamp.valueOf(datetimeLocalStartDate.replace("T", " "));
 					String datetimeLocalEndDate = req.getParameter("endDate");
 					endDate = java.sql.Timestamp.valueOf(datetimeLocalEndDate.replace("T", " "));
-					System.out.println(endDate);
 				} catch (IllegalArgumentException e) {
 					errorMsgs.put("endDate", "請輸入日期與時間");
 				} catch (Exception e1) {
@@ -456,17 +440,10 @@ public class ActivityServlet extends HttpServlet {
 				}
 
 				/* ========================= 報名人數倒數 ========================= */
-				int applyMemberExisting = 0;
 				// 活動人數上限
 				int maxMember = 0;
 				// 活動人數下限
 				int minMember = 0;
-				applyMemberExisting = Integer.valueOf(req.getParameter("maxMember"));
-				try {
-					applyMemberExisting = Integer.valueOf(req.getParameter("maxMember").trim());
-				} catch (NumberFormatException e) {
-					errorMsgs.put("applyMemberExisting", "報名人數倒數問題");
-				}
 
 				/* ========================= 活動人數上限 ========================= */
 
@@ -483,16 +460,12 @@ public class ActivityServlet extends HttpServlet {
 					errorMsgs.put("maxMember", "請填活動人數上限");
 				}
 
-				System.out.println(maxMember);
-
 				/* ========================= 活動人數下限 ========================= */
 				try {
 					minMember = Integer.valueOf(req.getParameter("minMember").trim());
 				} catch (NumberFormatException e) {
 					errorMsgs.put("minMember", "請填活動人數下限");
 				}
-
-				System.out.println(minMember);
 				// 照片
 				InputStream is = null;
 				byte[] photo = null;
@@ -521,7 +494,7 @@ public class ActivityServlet extends HttpServlet {
 				actVO.setApplyEndDate(applyEndDate);
 				actVO.setLocation(location);
 				actVO.setCost(cost);
-				actVO.setApplyMemberExisting(applyMemberExisting);
+				actVO.setApplyMemberExisting(maxMember);
 				actVO.setMaxMember(maxMember);
 				actVO.setMinMember(minMember);
 				actVO.setStartDate(startDate);
@@ -540,7 +513,7 @@ public class ActivityServlet extends HttpServlet {
 
 				ActivityServiceImpl actSvc = new ActivityServiceImpl();
 				actVO = actSvc.addAct(organizerMemberId, type, name, content, launchedDate, applyStartDate,
-						applyEndDate, location, cost, applyMemberExisting, maxMember, minMember, startDate, endDate,
+						applyEndDate, location, cost, maxMember, maxMember, minMember, startDate, endDate,
 						status);
 				// 取得PK主鍵
 				Integer activityId = actVO.getActivityId();
@@ -553,15 +526,18 @@ public class ActivityServlet extends HttpServlet {
 				vo = actpSvc.addActPhoto(activityId, photo);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				// 新增成功後轉交
+				System.out.println(activityId);
 				req.setAttribute("actVO", actVO);
 				RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/previewActPage.jsp"); // 新增成功後轉交newAct.jsp
 				successView.forward(req, res);
-
+				
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.put("其他可能的錯誤處理:", e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/activity/publishActivity.jsp");
 				failureView.forward(req, res);
+				return;
 			}
 		}
 
@@ -573,19 +549,20 @@ public class ActivityServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 ****************************************/
 				HttpSession session = req.getSession();
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
-				if (memberVO == null) {
-//			     FrontEndMemberFilter.doFilter(req, res, gg);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/activity/homePage.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
+				
 				int memberId = memberVO.getId();
+				
 				/*************************** 2.開始查詢資料 ****************************************/
 				ActivityServiceImpl actSvc = new ActivityServiceImpl();
 				List<ActivityVO> actVO = actSvc.findByMemId(memberId);
-
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("actVO", actVO); // 資料庫取出的empVO物件,存入req
+				memberVO = (MemberVO) session.getAttribute("memberVO");
+				if (memberVO == null) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/login.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
 				RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/memPublishActivityOwnPage.jsp");// 回到預覽頁面
 				successView.forward(req, res);
 
@@ -604,13 +581,24 @@ public class ActivityServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer activityId = Integer.valueOf(req.getParameter("activityId"));
+				
+//				Integer organizerMemberId = Integer.valueOf(req.getParameter("organizerMemberId"));
+
 				/*************************** 2.開始查詢資料 ****************************************/
 				ActivityServiceImpl actSvc = new ActivityServiceImpl();
 				ActivityVO actVO = actSvc.findByActivityId(activityId);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("actVO", actVO); // 資料庫取出的empVO物件,存入req
-//				跳轉頁面 遊客/會員
+//跳轉頁面 遊客/會員
+				HttpSession session = req.getSession();
+				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+				if (memberVO == null) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/activity/singleActPageForPasserby.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				int memberId = memberVO.getId();
 				RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/singleActPage.jsp");// 回到預覽頁面
 				successView.forward(req, res);
 
@@ -673,8 +661,8 @@ public class ActivityServlet extends HttpServlet {
 			}
 		}
 
-		// 後台管理
-		if ("deleteBack".equals(action)) { // 來自selectAllActivityPage.jsp的請求
+		// 後台管理 -來自selectAllActivityPage.jsp的請求
+		if ("deleteBack".equals(action)) { 
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -712,44 +700,39 @@ public class ActivityServlet extends HttpServlet {
 
 				int activityId = Integer.valueOf(req.getParameter("activityId").trim());
 				/* ========================= 活動名稱 ========================= */
-// 正則最後處理
-//String actNameReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{2,20}$";
-//} else if (!name.trim().matches(actNameReg)) {
-//errorMsgs.put("name", "只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
+//				String actNameReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{2,20}$";
 				String name = req.getParameter("name");
 				if (name == null || name.trim().length() == 0) {
 					errorMsgs.put("name", "請勿空白");
+//				} else if (!name.trim().matches(actNameReg)) {
+//					errorMsgs.put("name", "只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
 				}
-				System.out.println(name);
 
 				/* ========================= 活動種類 ========================= */
 				int type = Integer.valueOf(req.getParameter("type"));
-				if (type == 0) {
-					errorMsgs.put("type", "請選擇種類");
+				try {
+					type = Integer.valueOf(req.getParameter("type").trim());
+				} catch (NumberFormatException e) {
+					errorMsgs.put("type", "請至少選擇一種類型");
 				}
-				System.out.println(type);
 
 				/* ========================= 活動地點 ========================= */
-// 正則最後處理
-//String actLocationReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{10,30}$";
-//} else if (!location.trim().matches(actLocationReg)) {
-//errorMsgs.put("location", "只能是中、英文字母、數字和_ , 且長度必需在10到30之間");
+//				String actLocationReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{10,30}$";
 				String location = req.getParameter("location");
 				if (location == null || location.trim().length() == 0) {
 					errorMsgs.put("location", "請勿空白");
+//				} else if (!location.trim().matches(actLocationReg)) {
+//					errorMsgs.put("location", "只能是中、英文字母、數字和_ , 且長度必需在10到30之間");
 				}
-				System.out.println(location);
 
 				/* ========================= 活動內容 ========================= */
-// 正則最後處理
-//String actContentReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{20,1000}$";
-//} else if (!content.trim().matches(actContentReg)) {
-//errorMsgs.put("content", "只能是中、英文字母、數字和_ , 且長度必需在20到1000之間");
+//				String actContentReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{20,1000}$";
 				String content = req.getParameter("content");
 				if (content == null || content.trim().length() == 0) {
 					errorMsgs.put("content", "請勿空白");
+//				} else if (!content.trim().matches(actContentReg)) {
+//					errorMsgs.put("content", "只能是中、英文字母、數字和_ , 且長度必需在20到1000之間");
 				}
-				System.out.println(content);
 
 				/* ========================= cost ========================= */
 
@@ -773,7 +756,6 @@ public class ActivityServlet extends HttpServlet {
 				/* ========================= 建立時間 ========================= */
 				java.sql.Timestamp launchedDate = null;
 				launchedDate = new Timestamp(System.currentTimeMillis());
-				System.out.println(launchedDate);
 				/* ========================= 報名開始時間 ========================= */
 				// 測試報名開始時間介於開始、結束時間之間，不得晚於報名截止時間。
 				// 表單建立 > 報名開始 > 報名截止 > 活動開始 > 活動結束
@@ -804,7 +786,6 @@ public class ActivityServlet extends HttpServlet {
 					} else if (applyStartDate.equals(endDate)) {
 						errorMsgs.put("applyStartDate", "報名開始時間無法與活動結束時間相同");
 					}
-					System.out.println(applyStartDate);
 				} catch (IllegalArgumentException ie) {
 					errorMsgs.put("applyStartDate", "請輸入日期與時間");
 				} catch (Exception e) {
@@ -836,7 +817,6 @@ public class ActivityServlet extends HttpServlet {
 					} else if (applyEndDate.equals(endDate)) {
 						errorMsgs.put("applyEndDate", "報名截止時間無法與活動結束時間相同");
 					}
-					System.out.println(applyEndDate);
 				} catch (IllegalArgumentException ie) {
 					errorMsgs.put("applyEndDate", "請輸入日期與時間");
 				} catch (Exception e) {
@@ -864,7 +844,6 @@ public class ActivityServlet extends HttpServlet {
 					} else if (startDate.equals(endDate)) {
 						errorMsgs.put("startDate", "活動開始時間無法與活動結束時間相同");
 					}
-					System.out.println(startDate);
 				} catch (IllegalArgumentException e) {
 					errorMsgs.put("startDate", "請輸入日期與時間");
 				} catch (Exception e) {
@@ -881,7 +860,6 @@ public class ActivityServlet extends HttpServlet {
 					startDate = java.sql.Timestamp.valueOf(datetimeLocalStartDate.replace("T", " "));
 					String datetimeLocalEndDate = req.getParameter("endDate");
 					endDate = java.sql.Timestamp.valueOf(datetimeLocalEndDate.replace("T", " "));
-					System.out.println(endDate);
 				} catch (IllegalArgumentException e) {
 					errorMsgs.put("endDate", "請輸入日期與時間");
 				} catch (Exception e) {
@@ -889,18 +867,11 @@ public class ActivityServlet extends HttpServlet {
 				}
 
 				/* ========================= 報名人數倒數 ========================= */
-				int applyMemberExisting = 0;
 				// 活動人數上限
 				int maxMember = 0;
 				// 活動人數下限
 				int minMember = 0;
 
-				applyMemberExisting = Integer.valueOf(req.getParameter("maxMember"));
-				try {
-					applyMemberExisting = Integer.valueOf(req.getParameter("maxMember").trim());
-				} catch (NumberFormatException e) {
-					errorMsgs.put("applyMemberExisting", "報名人數倒數問題");
-				}
 				/* ========================= 活動人數上限 ========================= */
 
 				try {
@@ -916,16 +887,12 @@ public class ActivityServlet extends HttpServlet {
 					errorMsgs.put("maxMember", "請填活動人數上限");
 				}
 
-				System.out.println(maxMember);
-
 				/* ========================= 活動人數下限 ========================= */
 				try {
 					minMember = Integer.valueOf(req.getParameter("minMember").trim());
 				} catch (NumberFormatException e) {
 					errorMsgs.put("minMember", "請填活動人數下限");
 				}
-
-				System.out.println(minMember);
 
 				// 照片
 				InputStream is = null;
@@ -939,8 +906,6 @@ public class ActivityServlet extends HttpServlet {
 				}
 
 				ActivityVO actVO = new ActivityVO();
-//				actVO.setOrganizerMemberId(organizerMemberId);
-//				actVO.setStatus(status);
 				actVO.setActivityId(activityId);
 				actVO.setType(type);
 				actVO.setName(name);
@@ -950,7 +915,7 @@ public class ActivityServlet extends HttpServlet {
 				actVO.setApplyEndDate(applyEndDate);
 				actVO.setLocation(location);
 				actVO.setCost(cost);
-				actVO.setApplyMemberExisting(applyMemberExisting);
+				actVO.setApplyMemberExisting(maxMember);
 				actVO.setMaxMember(maxMember);
 				actVO.setMinMember(minMember);
 				actVO.setStartDate(startDate);
@@ -967,7 +932,7 @@ public class ActivityServlet extends HttpServlet {
 				/*************************** 2.開始修改資料 ***************************************/
 				ActivityServiceImpl actSvc = new ActivityServiceImpl();
 				actVO = actSvc.updateAct(activityId, type, name, content, launchedDate, applyStartDate, applyEndDate,
-						location, cost, applyMemberExisting, maxMember, minMember, startDate, endDate);
+						location, cost, maxMember, maxMember, minMember, startDate, endDate);
 				// 取得PK主鍵
 
 				ActivityPhotoVO vo = new ActivityPhotoVO();

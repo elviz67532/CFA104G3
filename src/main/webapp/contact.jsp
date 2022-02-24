@@ -52,11 +52,11 @@
 						<c:choose>
 							<c:when test="${result == 1}">
 								</label>
-								<h1>訊息傳送成功</h1>
+								<h1><span style="color:blue;">訊息傳送成功</span></h1>
 							</c:when>
 							<c:otherwise>
 								</label>
-								<h1>訊息傳送失敗</h1>
+								<h1><span style="color:red;">訊息傳送失敗</span></h1>
 							</c:otherwise>
 						</c:choose>
 					</div>

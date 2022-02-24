@@ -32,6 +32,9 @@ public class ActivityDAOJDBCImpl implements ActivityDAO {
 	private static final String UPDATE_STATUS = "UPDATE ACTIVITY SET ACT_STATUS = ?  WHERE ACT_ID = ?";
 	
 	private static final String GET_ALL_STMT_MEM = "SELECT * FROM ACTIVITY where ACT_ORGANIZER_MEM_ID = ?";
+	
+	/*=== 給會員查個人參與資料用 ===*/
+	private static final String GET_ALL_BY_ACT_ID ="SELECT * FROM activity where act_id = ?";
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -40,6 +43,51 @@ public class ActivityDAOJDBCImpl implements ActivityDAO {
 		}
 	}
 
+	@Override
+	public List<ActivityVO> selectAllByActId(Integer id) {
+		List<ActivityVO> list = new ArrayList<ActivityVO>();
+		ActivityVO vo = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(GET_ALL_BY_ACT_ID);
+
+			pstmt.setInt(1, id);
+
+			rs = pstmt.executeQuery();
+
+			while(rs.next()) {
+				vo = new ActivityVO();
+				vo.setActivityId(rs.getInt("ACT_ID"));
+				vo.setOrganizerMemberId(rs.getInt("ACT_ORGANIZER_MEM_ID"));
+				vo.setType(rs.getInt("ACT_TYPE"));
+				vo.setName(rs.getString("ACT_NAME"));
+				vo.setContent(rs.getString("ACT_CONTENT"));
+				vo.setLaunchedDate(rs.getTimestamp("ACT_LAUNCHTIME"));
+				vo.setApplyStartDate(rs.getTimestamp("ACT_APPLY_STARTTIME"));
+				vo.setApplyEndDate(rs.getTimestamp("ACT_APPLY_ENDTIME"));
+				vo.setLocation(rs.getString("ACT_LOCATION"));
+				vo.setCost(rs.getInt("ACT_COST"));
+				vo.setApplyMemberExisting(rs.getInt("ACT_APPLY_MEM_EXISTING"));
+				vo.setMaxMember(rs.getInt("ACT_MAX_MEM"));
+				vo.setMinMember(rs.getInt("ACT_MIN_MEM"));
+				vo.setStartDate(rs.getTimestamp("ACT_STARTTIME"));
+				vo.setEndDate(rs.getTimestamp("ACT_ENDTIME"));
+				vo.setStatus(rs.getInt("ACT_STATUS"));
+				list.add(vo);
+
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+
+		return list;
+	}
 	@Override
 	public List<ActivityVO>  selectByMemId(Integer organizerMemberId) {
 		List<ActivityVO> list = new ArrayList<ActivityVO>();

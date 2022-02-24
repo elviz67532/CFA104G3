@@ -58,7 +58,7 @@ public class ContactServlet extends HttpServlet {
 				if (phone == null || (phone.trim()).length() == 0) {
 					errorMsgs.put("0", "請輸入手機號碼");
 				} else if (!phone.trim().matches(phoneReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.put("0", "手機號碼: 只能是數字");
+					errorMsgs.put("0", "手機號碼格式錯誤");
 				}
 
 				if (massage == null || (massage.trim()).length() == 0) {
