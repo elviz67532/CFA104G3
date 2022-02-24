@@ -205,24 +205,24 @@ public class LoginServlet extends HttpServlet {
 
 				// 狀態測試
 				Integer status = memberVO.getStatus();
-				System.out.println("status =" + status );
+				System.out.println("status =" + status);
 				switch (status) {
-					case 0:// 未驗證
-						System.out.println("會員未驗證");
-						res.sendRedirect(req.getContextPath() + "/front_end/member/notverify.jsp");
-						return;
-					case 1:// 已驗證
-						break;
-					case 2:// 停權
-						System.out.println("會員已停權");
-						res.sendRedirect(req.getContextPath() + "/front_end/member/banmember.jsp");
-						return;
-					default:
-						System.out.println("會員狀態異常, 狀態=" + status);
-						res.sendRedirect(req.getContextPath() + "/index.jsp");
-						return;
+				case 0:// 未驗證
+					System.out.println("會員未驗證");
+					res.sendRedirect(req.getContextPath() + "/front_end/member/notverify.jsp");
+					return;
+				case 1:// 已驗證
+					break;
+				case 2:// 停權
+					System.out.println("會員已停權");
+					res.sendRedirect(req.getContextPath() + "/front_end/member/banmember.jsp");
+					return;
+				default:
+					System.out.println("會員狀態異常, 狀態=" + status);
+					res.sendRedirect(req.getContextPath() + "/index.jsp");
+					return;
 				}
-				
+
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				HttpSession session = req.getSession();
 				session.setAttribute("memberVO", memberVO);
@@ -248,7 +248,7 @@ public class LoginServlet extends HttpServlet {
 			session.invalidate();
 			res.sendRedirect(req.getContextPath() + "/index.jsp");
 		}
-		
+
 //		if ("getOne_For_Member_Update".equals(action)) {
 //			List<String> errorMsgs = new LinkedList<String>();
 //
@@ -381,15 +381,15 @@ public class LoginServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 *****************************************/
 				MemberServiceImpl memberServiceImpl = new MemberServiceImpl();
-				memberServiceImpl.frontMemberUpdate(email, password, nickname, name, phone, city, cityArea,
-						address, avatar, id);
+				memberServiceImpl.frontMemberUpdate(email, password, nickname, name, phone, city, cityArea, address,
+						avatar, id);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				
+
 				MemberVO memberVo = memberServiceImpl.selectById(id);
-				
+
 				session.setAttribute("memberVO", memberVo);
-				
+
 				String url = "/front_end/member/front_end_listOneMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -413,12 +413,20 @@ public class LoginServlet extends HttpServlet {
 				MemberServiceImpl memberSvc = new MemberServiceImpl();
 				String random = new RandomPassword().getRandomPassword();
 				MemberVO memberVO = memberSvc.forgetpassword(email);
+
 				if (memberVO == null) {
 					errorMsgs.put("email", "EMAIl不存在");
 				} else {
 					new MailService().sendMail(email, "密碼變更通知", " 以下為新密碼: " + random);
 					memberVO.setPassword(random);
 					memberSvc.updateMember(memberVO);
+				}
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("memberVO", memberVO);
+					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/forgetpassword.jsp");
+					failureView.forward(req, res);
+					return; // 程式中斷
 				}
 
 				String url = "/front_end/member/mailforgetmember.jsp";
