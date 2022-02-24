@@ -91,6 +91,13 @@
     font-weight: 500;
 	margin: 4px 8px; 
 }
+.replyDate{
+    font-size: 14px;
+    font-weight: 500;
+	margin: 4px 8px; 
+	text-align: center; 
+	color: gray;
+}
 .showImage{
 	box-shadow: none;
     border-radius: 0 0 16px 16px ;
@@ -207,93 +214,6 @@
  	color: gray;
     font-family: Courier, monospace;
 }
-
-/* ================彈出視窗============== */
-/* .main .overlay{ */
-/*     position: fixed; */
-/*     top: 0; */
-/*     left: 0; */
-/*     width: 100%; */
-/*     height: 100vh; */
-/*     background-color: hsla(0, 0%, 0%, .5); */
-
-/*     display: none; */
-/* } */
-
-  
-/* /* 元素 article 置中及基本樣式 */ 
-/* .main .overlay > article{ */
-/*     background-color: white; */
-/*     width: 90%; */
-/*     height: 90%; */
-/*     max-width: 60%; */
-/*     max-height: 80%; */
-/*     border-radius: 10px; */
-/*     box-shadow: 0 0 10px white; */
-/*     padding: 10px; */
-/*     position: absolute; */
-/*     top: 50%; */
-/*     left: 50%; */
-/*     transform: translate(-50%, -50%); */
-/* } */
-
-/* /* ================彈出視窗2============== */ 
-/* .main2 .overlay2{ */
-/*     position: fixed; */
-/*     top: 0; */
-/*     left: 0; */
-/*     width: 100%; */
-/*     height: 100vh; */
-/*     background-color: hsla(0, 0%, 0%, .5); */
-
-/*     display: none; */
-/* } */
-
-  
-/* /* 元素 article 置中及基本樣式 */ 
-/* .main2 .overlay2 > article{ */
-/*     background-color: white; */
-/*     width: 90%; */
-/*     height: 90%; */
-/*     max-width: 60%; */
-/*     max-height: 80%; */
-/*     border-radius: 10px; */
-/*     box-shadow: 0 0 10px white; */
-/*     padding: 10px; */
-/*     position: absolute; */
-/*     top: 50%; */
-/*     left: 50%; */
-/*     transform: translate(-50%, -50%); */
-/* } */
-
-/* /* ================彈出視窗3============== */ 
-/* .main3 .overlay3{ */
-/*     position: fixed; */
-/*     top: 0; */
-/*     left: 0; */
-/*     width: 100%; */
-/*     height: 100vh; */
-/*     background-color: hsla(0, 0%, 0%, .5); */
-
-/*     display: none; */
-/* } */
-
-  
-/* /* 元素 article 置中及基本樣式 */ 
-/* .main3 .overlay3 > article{ */
-/*     background-color: white; */
-/*     width: 90%; */
-/*     height: 90%; */
-/*     max-width: 60%; */
-/*     max-height: 80%; */
-/*     border-radius: 10px; */
-/*     box-shadow: 0 0 10px white; */
-/*     padding: 10px; */
-/*     position: absolute; */
-/*     top: 50%; */
-/*     left: 50%; */
-/*     transform: translate(-50%, -50%); */
-/* } */
 
 /* ================彈出視窗4============== */
 .main4 .overlay4{
@@ -444,33 +364,123 @@ textarea:focus{
    </div>
    
    	<!-- 主體畫面設計  -->
+   	<input type="hidden" id="hiddenStatus" value="${actVO.status}"/>
 <div style="border: 2px white groove; width: 70%; margin: 0 auto 60px auto;">
                 <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
 <%--                     <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?activityId=${actVO.activityId}" > --%>
    	<section id="section1" class="section1">
                <div style="display: block; margin-left: 10px; padding: 4px;">
                <div style="width: 100%;">
+               		<input id="hiddenMemId" type="hidden" value="${memberVO.getId()}"/>
+               		<input id="hiddenOrganizerMemberId" type="hidden" value="${actVO.organizerMemberId}"/>
                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
 		               <input type="hidden" name="action" value="selectOneActForEdit"/> 
 		               <input type="hidden" name="activityId" value="${actVO.activityId}">
-	               	   <input type="submit" class="btn-hover color-3" value="編輯活動"/>
+	               	   <input id="btnEdit" type="submit" class="btn-hover color-3" value="編輯活動"/>
 			       </FORM>
 			       <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
 				       <input type="hidden" name="action" value="delete"/> 
 	      	           <input type="hidden" name="activityId" value="${actVO.activityId}">
-				       <input type="submit" class="btn-hover color-3" value="刪除活動"/>
+				       <input id ="btnDelete" type="button" class="btn-hover color-3" value="刪除活動"/>
 			       </FORM>
 			       <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
 				       <input type="hidden" name="action" value="cancel"/> 
     	      	       <input type="hidden" name="activityId" value="${actVO.activityId}">
-				       <input type="submit" class="btn-hover color-3" value="取消活動"/>
+				       <input id="btnCancel" type="button" class="btn-hover color-3" value="取消活動"/>
                	   </FORM>
 			       <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
 				       <input type="hidden" name="action" value="remove"/> 
 				       <input type="hidden" name="activityId" value="${actVO.activityId}">
-				       <input type="submit" class="btn-hover color-3" value="下架活動"/>
+				       <input id ="btnRemove" type="button" class="btn-hover color-3" value="下架活動"/>
 			       </FORM>
                </div>
+<script>
+/* ================ 如果登入者不是主辦方 則按鈕隱藏 ================ */
+ 
+var hiddenMemId = document.getElementById('hiddenMemId'); // 登入者
+var hiddenOrganizerMemberId = document.getElementById('hiddenOrganizerMemberId'); // 主辦方
+// 主辦方的使用按鈕
+var btnEdit = document.getElementById('btnEdit'); // 編輯活動按鈕
+var btnDelete = document.getElementById('btnDelete'); // 刪除活動按鈕
+var btnCancel = document.getElementById('btnCancel'); // 取消活動按鈕
+var btnRemove = document.getElementById('btnRemove'); // 下架活動按鈕
+
+if (hiddenMemId.value != hiddenOrganizerMemberId.value) {
+	btnEdit.style.display = "none";
+	btnDelete.style.display = "none";
+	btnCancel.style.display = "none";
+	btnRemove.style.display = "none";
+}
+
+/*=========================== 刪除活動 ===========================*/
+var btnDelete = document.getElementById('btnDelete');
+btnDelete.addEventListener('click', function(e) {
+		e.preventDefault(); // 阻擋瀏覽器預設行為
+	    swal({
+	        title: "確定要刪除活動？",
+	        html: "按下確定後活動資料會永久刪除",
+	        type: "question", // type can be "success", "error", "warning", "info", "question"
+	        showCancelButton: true,
+	        showCloseButton: true,
+	       
+	    }).then(function(result) {
+	        if (result) {
+	            swal("完成!", "活動資料已經刪除", "success")
+	            	.then(function(result1){
+	            		btnDelete.parentElement.submit(); // 返回當前節點的父元素節點 ,也就是上一層的form
+	            	}).catch(swal.noop);
+	        }
+	    }, function(dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
+	        swal("取消", "活動資料未被刪除", "error");
+	    }).catch(swal.noop);
+	});
+/*=========================== 取消活動 ===========================*/
+var btnCancel = document.getElementById('btnCancel');
+btnCancel.addEventListener('click', function(e) {
+	e.preventDefault(); // 阻擋瀏覽器預設行為
+    swal({
+        title: "確定要取消活動？",
+        html: "按下確定後活動將會被取消",
+        type: "question", // type can be "success", "error", "warning", "info", "question"
+        showCancelButton: true,
+        showCloseButton: true,
+       
+    }).then(function(result) {
+        if (result) {
+            swal("完成!", "活動已經被取消", "success")
+            	.then(function(result2) {
+                	btnCancel.parentElement.submit(); // 返回當前節點的父元素節點 ,也就是上一層的form
+            	}).catch(swal.noop);
+        }
+    }, function(dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
+        swal("取消", "活動未被取消", "error");
+    }).catch(swal.noop);
+});
+
+/*=========================== 下架活動 ===========================*/
+var btnRemove = document.getElementById('btnRemove');
+btnRemove.addEventListener('click', function(e) {
+	e.preventDefault(); // 阻擋瀏覽器預設行為
+	swal({
+        title: "確定要下架活動？",
+        html: "按下確定後活動將不會顯示在瀏覽頁面",
+        type: "question", // type can be "success", "error", "warning", "info", "question"
+        showCancelButton: true,
+        showCloseButton: true,
+       
+    }).then(function(result) {
+        if (result) {
+            swal("完成!", "活動已經被下架", "success")
+            	.then(function(result3) {
+            		btnRemove.parentElement.submit(); // 返回當前節點的父元素節點 ,也就是上一層的form
+            	}).catch(swal.noop);
+        }
+    }, function(dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
+        swal("取消", "活動未被下架", "error");
+    }).catch(swal.noop);
+});
+
+</script>
 <%-- 		      <c:set var="typeNum" scope="request" value="${actVO.type}"/> --%>
 <%--              		<span class="actType">${findActivityType[typeNum]}</span> --%>
 		       <br>
@@ -495,7 +505,8 @@ textarea:focus{
              		<button class="btn-hover color-11" style=" float:right; padding: 20px;">報名人數倒數: ${actVO.applyMemberExisting}</button>
              		</div>
                <div>
-               	<h2 class="actName">活動名稱: ${actVO.name} id: ${actVO.activityId}</h2>
+               	<h2 class="actName">活動名稱: ${actVO.name} </h2>
+<%--                	id: ${actVO.activityId} --%>
                </div>
                <div class="innerDiv">
                		<div class="timeDiv">
@@ -505,7 +516,7 @@ textarea:focus{
                <div class="actInformation">
 					活動資訊
                </div>
-               <span style="font-size:20px; font-family: Courier, monospace;">${actVO.content} </span>
+               <div style=" font-size:20px; font-family: Courier, monospace;">${actVO.content} </div>
                <p style="margin-bottom: 20px;"></p>
                <p class="detailP">
                	<span style="color: yellowgreen;">
@@ -535,31 +546,39 @@ textarea:focus{
 <!-- 	               <div style="border: 2px solid red;"> -->
 				<!-- ==================== 參與者功能 ==================== -->
 	               <div>
-	        	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
- 			     <input type="submit" value="報名活動"> 
- 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
-<%--  			     <input type="hidden" name="applyStartDate"  value="${actVO.applyStartDate}"> --%>
-<%--  			     <input type="hidden" name="maxMember"  value="${actVO.maxMember}"> --%>
-<%--  			     <input type="hidden" name="applyMemberExisting"  value="${actVO.applyMemberExisting}"> --%>
- 			     <input type="hidden" name="action"	value="getOne_For_Insert"></FORM> 
-	        			</td>
- 			  	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
- 			     <input type="submit" value="活動評分"> 
- 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
- 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> 
-				</td> 
-    			<td>	    	
- 			  	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/actr.do" style="margin-bottom: 0px;"> 
- 			     <input type="submit" value="活動檢舉"> 
- 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
- 			     <input type="hidden" name="action"	value="getOne_For_Insert"></FORM> 
-				</td> 
-    					<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
- 			     <input type="submit" value="活動取消"> 
- 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
- 			     <input type="hidden" name="id"  value="${actVO.Id}">
- 			     <input type="hidden" name="action"	value="cancel"></FORM> 
+	        			<a href="<%=request.getContextPath()%>/front_end/activity/attendActivtiy.jsp" style="text-decoration:none;">
+	        				<button id="btnAttend" type="button" class="btn_modal btn-hover color-1">報名活動</button>
+	        			</a>
+	        			<a href="<%=request.getContextPath()%>/front_end/activity/scoreActivity.jsp" style="text-decoration:none;">
+	        				<button id="btnScore" type="button" class="btn_modal2 btn-hover color-1">為活動評分</button>
+    				    </a>
+    				    <a href="<%=request.getContextPath()%>/front_end/activity/reportActivity.jsp" style="text-decoration:none;">
+    				    	<button id="btnReport" type="button" class="btn_modal3 btn-hover color-1">檢舉活動</button>
+    					</a>
+    					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
+					       <input type="hidden" name="action" value="quit"/> 
+		      	           <input type="hidden" name="activityId" value="${actVO.activityId}">
+					       <input id="btnQuit" type="submit" class="btn-hover color-1" value="退出活動"/>
+			       		</FORM>
 	               </div>
+<script>
+//參與者的使用按鈕
+var btnScore = document.getElementById('btnScore'); // 評分活動按鈕
+var btnQuit = document.getElementById('btnQuit'); // 退出活動按鈕
+var btnAttend = document.getElementById('btnAttend');
+var btnReport = document.getElementById('btnReport');
+var hiddenStatus = document.getElementById('hiddenStatus'); 
+
+if (hiddenMemId.value != hiddenOrganizerMemberId.value) {
+	btnScore.style.display = "none";
+	btnQuit.style.display = "none";
+	if (hiddenStatus.value == 1) {
+		btnReport.style.display = "none";
+		btnAttend.style.display = "none";
+	}
+}
+
+</script>
 				<!--   ==================== 報名活動 ====================   -->
 <%-- 	         <%@ include file="secondActivity.jsp" %>       --%>
 		       </div>
@@ -581,12 +600,12 @@ textarea:focus{
 								${actqVO.problem}<br>
 								<p class="launchedDate" style="text-align: center;">問題建立時間: <fmt:formatDate value="${actqVO.problemDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
 			                </div>
-			                <div style="padding:16px;margin-left:50px;width: 90%; background-color: lightgray; color: black; border-radius: 16px;">
+			                <div style="padding:16px 16px 0 16px;margin-left:50px;width: 90%; background-color: lightgray; color: black; border-radius: 16px;">
 				                主辦方的回覆:
 									<br>
 									${actqVO.reply}
+									<p class="replyDate">主辦回應時間: <fmt:formatDate value="${actqVO.replyDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
 			                </div>
-									<p class="launchedDate" style="text-align: center;">主辦回應時間: <fmt:formatDate value="${actqVO.replyDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
 									
 			                <div style="text-align: center">
 								<input id="answerInput${actqVO.memberId}" style="border-radius: 50px;" type="button" class="btn_modal5 btn-hover color-6" value="回答問題"/>
@@ -661,16 +680,15 @@ textarea:focus{
 			<!-- 內容從這裡結束 -->
 			<div id="appendChildDiv">
 		       <input  type="hidden" name="action" value="answer"/> 
-			   <input id="answerQuestion" type="submit" class="" value="回答問題"/>
+			   <input style="float:left;margin-top:30px;" id="answerQuestion" type="submit" class="" value="回答問題"/>
 			</div>
 <!-- 		       </a> -->
 	        </FORM>
-	       	<button type="button" class="btn_modal_close5">取消回答</button>
+	       	<button style="float:right;margin-top:30px;" type="button" class="btn_modal_close5">取消回答</button>
          </article>
        </div>
    </div>
   <script>
-
 //============================= 回答區 =============================
 	 $(function(){
 	        // 開啟 Moda5 彈跳視窗

@@ -149,19 +149,13 @@ transition: .5s;
 }
 .item .actName{
 overflow: hidden;
-white-space: normal;
-/* border: 2px solid red; */
-	height:auto;
-padding: 10px 0;
-	margin: 8px 0;  
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    height: auto;
     color: #000;
-    line-height: 20px;
-	letter-spacing: -.16px; 
-/*     font-weight: 700; */
-/*     overflow: hidden; */
-/*     display: -webkit-box; */
-/*     -webkit-box-orient: vertical; */
-/*     -webkit-line-clamp: 2; */
 }
 /*=======================頁籤=======================*/
 
@@ -332,13 +326,13 @@ padding: 0;
 	            </div>
             	<div class="div1" style="display:inline-block;">
 	            	<button id="applyMemberExisting${actVO.activityId}" class="btn-hover color-11" style="float:right;">報名人數倒數: ${actVO.applyMemberExisting}</button>
-	            	<p class="time">開始時間: 
+	            	<p id="actTime${actVO.activityId}">開始時間: 
 	            	<fmt:formatDate value="${actVO.startDate}" pattern="yyyy-MM-dd hh:mm:ss"/>
 	            	</p>
              		
 	                <h2 id="actName${actVO.activityId}" class="actName">${actVO.name} </h2>
 <%-- 	                <p class="location ellipsis">${actVO.location}</p> --%>
-	                <p class="ellipsis">${actVO.content} </p>
+	                <p id="actContent${actVO.activityId}">${actVO.content} </p>
 	                <div style="margin: 0 50px;">
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
               			  	 <input type="hidden" name="activityId" value="${actVO.activityId}">
@@ -403,11 +397,22 @@ padding: 10px 0;
 /*     -webkit-box-orient: vertical; */
 /*     -webkit-line-clamp: 2; */
 }
+#actContent${actVO.activityId}{
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    height: auto;
+}
 </style>
 <script>
 	var item${actVO.activityId} = document.getElementById('item${actVO.activityId}');
 	var actName${actVO.activityId} = document.getElementById('actName${actVO.activityId}');
+	var actContent${actVO.activityId} = document.getElementById('actContent${actVO.activityId}');
 	var applyMemberExisting${actVO.activityId} = document.getElementById('applyMemberExisting${actVO.activityId}');
+	var actTime${actVO.activityId} = document.getElementById('actTime${actVO.activityId}');
 	if(${actVO.status} == 1 ){
 		item${actVO.activityId}.style.backgroundColor = "black";
 		item${actVO.activityId}.style.opacity = 0.5;
@@ -417,6 +422,9 @@ padding: 10px 0;
 	}
 	if(${actVO.status} == 2){
 		item${actVO.activityId}.style.backgroundColor = "gray";
+		actName${actVO.activityId}.style.color = "black";
+		actContent${actVO.activityId}.style.color = "black";
+		actTime${actVO.activityId}.style.color = "black";
 		item${actVO.activityId}.style.opacity = 0.5;
 		item${actVO.activityId}.style.borderRadius = '16px';
 		applyMemberExisting${actVO.activityId}.innerHTML = "你已經將該活動下架";
