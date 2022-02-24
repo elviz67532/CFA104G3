@@ -232,8 +232,6 @@ public class MoveOrderServlet extends HttpServlet{
 				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
 				Integer status = Integer.valueOf(req.getParameter("status").trim());
 				
-
-				
 				MoveOrderVO moveOrderVO1 = new MoveOrderVO();
 				moveOrderVO1.setId(id);
 				moveOrderVO1.setMemberId(memberId);
@@ -774,6 +772,9 @@ public class MoveOrderServlet extends HttpServlet{
 					return; //程式中斷
 					
 				}
+				/***************************新增通知*****************************************/
+				NotificationServiceImpl notSvc = new NotificationServiceImpl();
+				notSvc.addNotification(memberId, "訂單已經取消了喔", ENotificationType.MOVE);
 
 				/***************************2.開始修改資料*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
@@ -853,6 +854,10 @@ public class MoveOrderServlet extends HttpServlet{
 					return; //程式中斷
 					
 				}
+				
+				/***************************新增通知*****************************************/
+				NotificationServiceImpl notSvc = new NotificationServiceImpl();
+				notSvc.addNotification(memberId, "等待搬家人員前往您的地址進行搬家", ENotificationType.MOVE);
 
 				/***************************2.開始修改資料*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
@@ -932,6 +937,10 @@ public class MoveOrderServlet extends HttpServlet{
 					return; //程式中斷
 					
 				}
+				
+				/***************************新增通知*****************************************/
+				NotificationServiceImpl notSvc = new NotificationServiceImpl();
+				notSvc.addNotification(memberId, "您的貨品正在運送中了喔", ENotificationType.MOVE);
 
 				/***************************2.開始修改資料*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();
@@ -1011,6 +1020,11 @@ public class MoveOrderServlet extends HttpServlet{
 					return; //程式中斷
 					
 				}
+				
+				/***************************新增通知*****************************************/
+				
+				NotificationServiceImpl notSvc = new NotificationServiceImpl();
+				notSvc.addNotification(memberId, "您的訂單已經完成囉，如果還沒有寫過評論，請不要吝嗇給予我們指教喔", ENotificationType.MOVE);
 
 				/***************************2.開始修改資料*****************************************/
 				MoveOrderServiceImpl moSvc = new MoveOrderServiceImpl();

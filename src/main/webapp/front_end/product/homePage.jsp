@@ -1,9 +1,8 @@
+<%@ page import="com.news.model.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@	page import="com.product_photo.model.*"%>
-<%@	page import="com.product.model.*"%>
-<%@ page import="com.news.model.*" %>
 <%@	page import="com.product.model.*"%>
 <%
 	ProductServiceImpl productService = new ProductServiceImpl();
@@ -15,7 +14,7 @@
 	List<NewsVO> newslist = newsSvc.selectAllByType(1);
 	pageContext.setAttribute("newslist", newslist);
 %>
-
+<jsp:useBean id="photoSvc" scope="page" class="com.product_photo.model.ProductPhotoServiceImpl" />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,15 +56,16 @@
         </div>
     </header> 
    	<!-- 主體畫面設計  -->
-<!--    	<div class="row justify-content-center"> -->
-<!--       <div class="col-lg-6 SEARCHFOR"> -->
-<!--       </div> -->
-<!--     </div> -->
+   	<div class="row justify-content-center">
+      <div class="col-lg-6 SEARCHFOR">
+      </div>
+    </div>
 
 	<!-- 輪播 (Carousel) -->
     <!-- 搭配圖片滿版 -->
   <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
    <c:forEach var="newsVO" items="${newslist}">
+
       <div class="carousel-inner">
         <div class="carousel-item active">
           <div class="d-block w-100 myImg" style="background-image: url(<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id})"></div>
@@ -86,6 +86,7 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
+    </div>
     </div>	<br><br>
 	<div class="container">
 		<div class="row">
@@ -109,7 +110,8 @@
 						<c:forEach var="productVO" items="${list}">
 					        <div class="card text-center" style="width: 18rem;">
 					          <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top" 
-					          		alt="<%=request.getContextPath()%>/assets/img/home-bg.jpg"/>
+					          		alt="<%=request.getContextPath()%>/assets/img/home-bg.jpg"/
+					          		style="max-height:256px; width:auto;">
 					          <div class="card-body">
 					            <h5 class="card-title">${productVO.name}</h5>
 					<%--             <p class="card-text">${productVO.prodDesc}</p> --%>

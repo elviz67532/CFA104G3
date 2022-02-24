@@ -9,7 +9,7 @@
 	<!-- Sidebar - Brand -->
 	<a
 		class="sidebar-brand d-flex align-items-center justify-content-center"
-		href="<%=request.getContextPath()%>/back_end/server_manager/serverManagerHome.jsp">
+		href="<%=request.getContextPath()%>/back_end/index.jsp">
 		<div class="sidebar-brand-icon rotate-n-15">
 			<i class="fas fa-laugh-wink"></i>
 		</div>

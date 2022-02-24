@@ -86,13 +86,13 @@ public class ServerManagerServlet extends HttpServlet {
 				session.setAttribute("auth", list);
 				
 				// 來源頁面跳轉
-				String location = (String) session.getAttribute("beforeLoginURL");
+				String location = (String) session.getAttribute("backEndBeforeLoginURL");
 				if (location != null) { 
-					session.removeAttribute("beforeLoginURL"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+					session.removeAttribute("backEndBeforeLoginURL"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 					res.sendRedirect(location);
 					return;
 				}
-				res.sendRedirect(req.getContextPath() + "/back_end/server_manager/serverManagerHome.jsp"); // *工作3:
+				res.sendRedirect(req.getContextPath() + "/back_end/index.jsp"); // *工作3:
 			} catch (IOException e) {
 				e.printStackTrace();
 				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/server_manager/loginServer.jsp");
@@ -103,7 +103,7 @@ public class ServerManagerServlet extends HttpServlet {
 		if("logout".equals(action)) {
 			HttpSession session = req.getSession();
 			session.invalidate();
-			res.sendRedirect(req.getContextPath() + "/back_end/server_manager/serverManagerHome.jsp");
+			res.sendRedirect(req.getContextPath() + "/back_end/index.jsp");
 		}
 		
 		if("insert".equals(action)) {
