@@ -23,6 +23,8 @@ public class ActivityDAOJDBCImpl implements ActivityDAO {
 	private static final String GET_ONE_STMT = "select * from ACTIVITY where ACT_ID = ?";
 	private static final String GET_ALL_STMT = "select * from ACTIVITY";
 	private static final String DELETE = "delete from ACTIVITY where ACT_ID = ?";
+	private static final String ADDATTEND="update ACTIVITY set ACT_APPLY_MEM_EXISTING = ACT_APPLY_MEM_EXISTING + 1 where ACT_ID = ?";
+	private static final String MINUSATTEND="update ACTIVITY set ACT_APPLY_MEM_EXISTING = ACT_APPLY_MEM_EXISTING - 1 where ACT_ID = ?";
 	
 /*===============================================================================================*/
 	private static final String GET_ALL_STMT_DESC = "select * from ACTIVITY order by act_id desc";
@@ -428,4 +430,50 @@ public class ActivityDAOJDBCImpl implements ActivityDAO {
 
 		return list;
 	}
+	
+	@Override
+	public int addAttend(Integer activityId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int updateRow=-1;
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(ADDATTEND);
+			
+			pstmt.setInt(1, activityId);
+
+			updateRow = pstmt.executeUpdate();
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
+		return updateRow;
+	}
+	
+	@Override
+	public int minusAttend(Integer activityId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int updateRow=-1;
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(MINUSATTEND);
+			
+			pstmt.setInt(1, activityId);
+
+			updateRow = pstmt.executeUpdate();
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
+		return updateRow;
+	}
+		
+				
 }
+
+
