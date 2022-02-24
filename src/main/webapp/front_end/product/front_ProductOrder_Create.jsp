@@ -48,151 +48,163 @@ ProductOrderVO vo = (ProductOrderVO) request.getAttribute("vo");
 
 </head>
 <style>
-.innerDiv{
+.innerDiv {
 	width: 60%;
-    margin: 0 auto;
-    padding: 60px 20px 0;
+	margin: 0 auto;
+	padding: 60px 20px 0;
 }
-.innerDiv h2{
+
+.innerDiv h2 {
 	text-align: center;
 }
-.innerDiv h2:hover{
+
+.innerDiv h2:hover {
 	color: gray;
 	cursor: grabbing;
 }
-.memId{
+
+.memId {
 	margin: 0;
-    padding: 0;
+	padding: 0;
 }
+
 .formLabel {
-    font-size: 14px;
-    font-weight: 600;
-    color: #282828;
-/*     line-height: 1.71; */
-/*     padding-bottom: 10px; */
-    /* text-align: center; */
-    /* font: 1rem 'Fira Sans', sans-serif; */
+	font-size: 14px;
+	font-weight: 600;
+	color: #282828;
+	/*     line-height: 1.71; */
+	/*     padding-bottom: 10px; */
+	/* text-align: center; */
+	/* font: 1rem 'Fira Sans', sans-serif; */
 }
-.launchedDate{
-    color: #b5bac1;
-    font-size: 14px;
-    font-weight: 500;
-	margin: 4px 8px; 
+
+.launchedDate {
+	color: #b5bac1;
+	font-size: 14px;
+	font-weight: 500;
+	margin: 4px 8px;
 }
-.actFormInput{
+
+.actFormInput {
 	width: 100%;
-    flex: 1;
-    border: 0;
-    padding: 8px 24px;
-    background-color: #f1f1f1;
-    position: relative;
-    font-size: 16px;
-    border-radius: 0;
+	flex: 1;
+	border: 0;
+	padding: 8px 24px;
+	background-color: #f1f1f1;
+	position: relative;
+	font-size: 16px;
+	border-radius: 0;
 }
-.actSelect{
+
+.actSelect {
 	width: 100%;
-    flex: 1;
-    border: 0;
-    padding: 0 24px;
-    background-color: #f1f1f1;
-    position: relative;
-    font-size: 16px;
-    border-radius: 0;
+	flex: 1;
+	border: 0;
+	padding: 0 24px;
+	background-color: #f1f1f1;
+	position: relative;
+	font-size: 16px;
+	border-radius: 0;
 }
-.actSelect:hover{
+
+.actSelect:hover {
 	border: 2px solid black;
 	opacity: 0.8;
-    background-color: #30dd8a;
+	background-color: #30dd8a;
 }
-.actPhoto{
+
+.actPhoto {
 	width: 100%;
-    flex: 1;
-    border: 0;
-    padding: 0 24px;
-    background-color: #f1f1f1;
-    position: relative;
-    font-size: 16px;
-    border-radius: 0;
+	flex: 1;
+	border: 0;
+	padding: 0 24px;
+	background-color: #f1f1f1;
+	position: relative;
+	font-size: 16px;
+	border-radius: 0;
 }
-.actTimeFormInput{
+
+.actTimeFormInput {
 	width: 100%;
-    flex: 1;
-    border: 0;
-    padding: 0 24px;
-    background-color: #f1f1f1;
-    position: relative;
-    font-size: 16px;
-    border-radius: 0;
+	flex: 1;
+	border: 0;
+	padding: 0 24px;
+	background-color: #f1f1f1;
+	position: relative;
+	font-size: 16px;
+	border-radius: 0;
 }
 
 /*input hover*/
-input[type="text"]:focus{
+input[type="text"]:focus {
 	border: 2px solid black;
 	opacity: 0.8;
-    background-color: #30dd8a;
+	background-color: #30dd8a;
 }
 
-input[type="number"]:focus{
+input[type="number"]:focus {
 	border: 2px solid black;
 	opacity: 0.8;
-    background-color: #30dd8a;
-}
-input[type="date"]:focus{
-	border: 2px solid black;
-	opacity: 0.8;
-    background-color: #30dd8a;
-}
-input[type="datetime-local"]:focus{
-	border: 2px solid black;
-	opacity: 0.8;
-    background-color: #30dd8a;
-}
-textarea:focus{
-	border: 2px solid black;
-	opacity: 0.8;
-    background-color: #30dd8a;
+	background-color: #30dd8a;
 }
 
+input[type="date"]:focus {
+	border: 2px solid black;
+	opacity: 0.8;
+	background-color: #30dd8a;
+}
 
-.btn{
+input[type="datetime-local"]:focus {
+	border: 2px solid black;
+	opacity: 0.8;
+	background-color: #30dd8a;
+}
+
+textarea:focus {
+	border: 2px solid black;
+	opacity: 0.8;
+	background-color: #30dd8a;
+}
+
+.btn {
 	width: 100%;
-    padding: 16px 40px;
+	padding: 16px 40px;
 	margin: 8px 0 60px 0;
 }
-.btn-hover {
-    width: 200px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-    cursor: pointer;
-    margin: 20px;
-    height: 55px;
-    text-align:center;
-    border: none;
-    background-size: 300% 100%;
 
-    border-radius: 50px;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
+.btn-hover {
+	width: 200px;
+	font-size: 16px;
+	font-weight: 600;
+	color: #fff;
+	cursor: pointer;
+	margin: 20px;
+	height: 55px;
+	text-align: center;
+	border: none;
+	background-size: 300% 100%;
+	border-radius: 50px;
+	moz-transition: all .4s ease-in-out;
+	-o-transition: all .4s ease-in-out;
+	-webkit-transition: all .4s ease-in-out;
+	transition: all .4s ease-in-out;
 }
 
 .btn-hover:hover {
-    background-position: 100% 0;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
+	background-position: 100% 0;
+	moz-transition: all .4s ease-in-out;
+	-o-transition: all .4s ease-in-out;
+	-webkit-transition: all .4s ease-in-out;
+	transition: all .4s ease-in-out;
 }
 
 .btn-hover:focus {
-    outline: none;
+	outline: none;
 }
 
 .btn-hover.color-5 {
-    background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
-    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+	background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+	box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
 }
 </style>
 <body>
@@ -209,7 +221,7 @@ textarea:focus{
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
 						<h1>
-							新增商品訂單
+							商品訂單結帳
 							<h1>
 								<span class="subheading">二手商城</span>
 					</div>
@@ -239,44 +251,65 @@ textarea:focus{
 
 
 					<tr>
-						<td>商品編號:</td>
-						<td>${vo.productId}</td>
+						<th class="text-nowrap">訂單編號:</th>
+						<td>${vo.id}</td>
 					</tr>
 
 					<tr>
-						<td>賣家編號:</td>
+						<th class="text-nowrap">商品編號:</th>
+						<td>${vo.productId}</td>
+					</tr>
+
+
+					<tr>
+						<th class="text-nowrap">買家編號:</th>
+						<td>${vo.customerMemberId}</td>
+					</tr>
+
+
+					<tr>
+						<th class="text-nowrap">賣家編號:</th>
 						<td>${vo.sellerMemberId}</td>
 					</tr>
 
 
+					<tr>
+						<th class="text-nowrap">訂單成立時間:</th>
+						<td>${vo.date}</td>
+					</tr>
+					<tr>
+						<th class="text-nowrap">訂單狀態:</th>
+						<td>${vo.status}</td>
+					</tr>
+
 
 					<tr>
-						<td>訂單總金額:</td>
+						<th class="text-nowrap">訂單總金額:</th>
 						<td>${vo.amountOfPrice}</td>
 					</tr>
 
 
 					<tr>
-						<td>收件人姓名:</td>
+						<th class="text-nowrap">收件人姓名:</th>
 						<td><input type="TEXT" name="productName" size="45"
 							value="<%=(vo == null) ? "Java" : vo.getProductName()%>" /></td>
 					</tr>
 
 					<tr>
-						<td>收件人電話:</td>
+						<th class="text-nowrap">收件人電話:</th>
 						<td><input type="TEXT" name="pone" size="45"
 							value="<%=(vo == null) ? "0988888888" : vo.getPhone()%>" /></td>
 					</tr>
 
 					<tr>
-						<td>收件人地址:</td>
+						<th class="text-nowrap">收件人地址:</th>
 						<td><input type="TEXT" name="address" size="45"
 							value="<%=(vo == null) ? "秋名市秋名路86號" : vo.getAddress()%>" /></td>
 					</tr>
 					<tr>
-						<td>數量:</td>
-						<td><input type="TEXT" name="amountOfProduct" size="45"
-							value="1" /></td>
+						<th class="text-nowrap">商品數量:</th>
+						<td><input readonly type="TEXT" name="amountOfProduct"
+							size="45" value="1" /></td>
 					</tr>
 
 					<jsp:useBean id="poSvc" scope="page"
@@ -286,7 +319,7 @@ textarea:focus{
 				</table>
 				<div style="">
 					<input type="hidden" name="action" value="insert"><input
-						type="submit" value="送出新增">
+						type="submit" value="成立訂單">
 				</div>
 			</FORM>
 		</div>

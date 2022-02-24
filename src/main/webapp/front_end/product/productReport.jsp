@@ -23,7 +23,6 @@ pageContext.setAttribute("prodId", prodId);
     <meta name="author" content="" />
     <title>委域</title>
     <link rel="icon" type="image/x-icon" href="asset/favicon.ico" />
-    
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -126,10 +125,7 @@ pageContext.setAttribute("prodId", prodId);
    	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
    	
     <!-- Bootstrap core JS-->
-    <script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
-    <script src="<%=request.getContextPath()%>/vendor/bootstrap/js2/bootstrap.bundle.min.js"></script>
-    <script src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
 </body>

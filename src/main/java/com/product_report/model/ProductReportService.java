@@ -18,4 +18,5 @@ public interface ProductReportService {
 	
 	void deleteById(DualKey<Integer, Integer>id);
 	
+	ProductReportVO changestatus(Integer status, Integer memberId, Integer productId);
 }
