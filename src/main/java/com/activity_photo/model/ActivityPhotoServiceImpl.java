@@ -27,4 +27,8 @@ public class ActivityPhotoServiceImpl implements ActivityPhotoService {
 		return vo;
 	}
 
+	@Override
+	public ActivityPhotoVO findActPhoto(Integer photoId) {
+		return dao.selectById(photoId);
+	}
 }

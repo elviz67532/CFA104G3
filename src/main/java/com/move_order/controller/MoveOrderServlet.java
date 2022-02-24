@@ -232,8 +232,6 @@ public class MoveOrderServlet extends HttpServlet{
 				Timestamp orderDate = java.sql.Timestamp.valueOf(req.getParameter("orderDate"));
 				Integer status = Integer.valueOf(req.getParameter("status").trim());
 				
-
-				
 				MoveOrderVO moveOrderVO1 = new MoveOrderVO();
 				moveOrderVO1.setId(id);
 				moveOrderVO1.setMemberId(memberId);

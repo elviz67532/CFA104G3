@@ -1,25 +1,28 @@
+<%@page import="com.activity.model.ActivityServiceImpl"%>
+<%@page import="com.activity.model.ActivityService"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.activity_attend.model.*"%>
 <%@ page import="com.member.model.*"%>
+<%@ page import="com.activity.model.*"%>
 <!-- 改善時間用 -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 
 <%
-// ActivityAttendVO actaVO = (ActivityAttendVO) request.getAttribute("actaVO");
-MemberVO memberVO=(MemberVO)request.getAttribute("memberVO");
-int memberId =memberVO.getId();
-ActivityAttendVO actaVO=(ActivityAttendVO)request.getAttribute("activityId");
-int activityId = actaVO.getActivityId();		
-
+	MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
+	if (memberVO == null) {
+		response.sendRedirect(request.getContextPath() + "/front_end/member/login.jsp");
+		return;
+	}
+	int memberId = memberVO.getId();
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>委域報名活動使用attendActivity.jsp</title>
+<title>委域</title>
 <%-- <link href="${pageContext.request.contextPath}/css/activity/publishActivity.css" rel="stylesheet"> --%>
 
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
@@ -208,48 +211,82 @@ textarea:focus{
     </header>
    
    	<!-- 主體畫面設計  -->
-   	<div style="border: 2px white groove; width: 70%; margin: 0 auto 60px auto;">
-		<div class="innerDiv">
-		<h2>進來報名活動囉!</h2>
-			<%-- 錯誤表列 --%>
-			<c:if test="${not empty errorMsgs}">
-				<font style="color: red">請修正以下錯誤:</font>
-				<ul> 
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color: red">${message}</li>
-					</c:forEach>
-				</ul>
+   	<!-- main -->
+	<main id="outter" class=".flex-column">
+		<div class="bd-content ps-lg-4">
+		
+			<!-- 成功/失敗訊息 -->
+			<c:if test="${not empty result}">
+			 	<div class="container position-relative px-4 px-lg-5">
+		            <div class="row gx-4 gx-lg-5 justify-content-center">
+		                <div class="col-md-10 col-lg-8 col-xl-7">
+		                    <div class="site-heading"  style="text-align:center;">
+								<c:if test="${not empty result}">
+									 <h1>${result}</h1>
+								</c:if >
+							</div>		
+		                </div>
+		            </div>
+		        </div>
 			</c:if>
 			
-			<label class="formLabel" for="member">活動人數: <span style="color: red">${errorMsgs.member}</span></label>
-			<input class="actFormInput" autofocus type="text" name="member" /><br>
-				
-			<form action="${pageContext.request.contextPath}/activity/acta.do" method="post" name="form1">
-			<label class="formLabel" for="note">活動內容備註: <span style="color: red">${errorMsgs.note}</span></label>
-			<textarea class="actFormInput actContentFormInput" cols="55" name="note"><%= (actaVO == null) ? 
-					"空想食境Fantasy MEALity 為 Manga'Z 所打造出的獨特餐飲體驗，將餐飲結合虛擬實境，用120分鐘的時間帶消費者走入空想王國體驗超乎想像的美食饗宴。" 
-																			 :actaVO.getNote()%></textarea>
 			
-																			 
-			<div style="padding: 0 0 0 220px;">
-				<input type="submit" class="btn-hover color-5" value="送出報名"/>
-				<input type="hidden" name="activityId"  value="${actaVO.activityId}">
-				<input type="hidden" name="memberId"  value="${actaVO.memberId}">
-				<input type="hidden" name="comment"  value="${actaVO.comment}">
-				<input type="hidden" name="note"  value="${actaVO.note}">
- 			     <input type="hidden" name="status"  value="1">
- 			     <input type="hidden" name="action" value="insert">	
-			</div>
+			<!-- Form 模式 -->
+			<c:choose>
+				<c:when test="${empty result}">
+					<form class="row g-3" method="POST"
+						action="${pageContext.request.contextPath}/activity/acta.do"
+						name="attendActivity">
+						<input type="hidden" name="action" value="insert">
+						<input type="hidden" name="activityId"  value="${actvo.activityId}">
+				</c:when>
+				<c:otherwise>
+					<form class="row g-3"
+						action="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;">
+		 			    <input type="hidden" name="action"	value="getOne_For_Insert">
+		 			    <input type="hidden" name="activityId"  value="${actVO.activityId}">
+				</c:otherwise>
+			</c:choose>
+				<!-- 活動名稱 -->
+				<div class="col-12">
+					<label for="activityName" class="form-label">活動名稱:</label>
+					<input name="activityName" type="text" class="form-control" id="activityName"
+						value="${requestScope.actvo.name}" 
+						disabled/>
+				</div>
+				
+				<!-- 留言 -->
+				<div class="col-12">
+					<label for="comment" class="form-label">留言:</label>
+					<input name="comment" type="text" class="form-control" id="comment"
+						value="${requestScope.actaVO.comment}" 
+						<c:out value="${empty result ? '' : 'disabled'}"/>>
+				</div>
+						
+				<!-- 備註 -->
+				<div class="col-12">
+					<label for="note" class="form-label">備註:</label>
+					<input name="note" type="text" class="form-control" id="note"
+						value="${requestScope.actaVO.note}" 
+						<c:out value="${empty result ? '' : 'disabled'}"/>>
+				</div>
+
+				<!-- submit -->
+				<div class="col-12">
+					<button type="submit" class="btn btn-primary mb-3">
+						<c:out value="${empty result ? '報名' : '返回活動首頁'}"/>
+					</button>
+				</div>
 			</form>
 		</div>
-	</div>
+	</main>
+	
     <!-- Footer-->
    	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
-    
 </body>
 
 </html>

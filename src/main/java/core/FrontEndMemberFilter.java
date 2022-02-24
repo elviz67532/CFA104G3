@@ -33,7 +33,7 @@ public class FrontEndMemberFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("doFilter");
+		System.out.println("doFrontFilter");
 		// 非httpServletRequest
 		if (!(request instanceof HttpServletRequest) || !(response instanceof HttpServletResponse)) {
 			chain.doFilter(request, response);
@@ -44,7 +44,7 @@ public class FrontEndMemberFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 
 		HttpSession session = req.getSession();
-		session.setAttribute("beforeLoginURL", req.getRequestURI());
+		session.setAttribute("frontEndBeforeLoginURL", req.getRequestURI());
 		MemberVO memberVo = (MemberVO) session.getAttribute("memberVO");
 		if (memberVo == null) {
 			System.out.println("尚未登入");
