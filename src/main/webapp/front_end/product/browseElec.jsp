@@ -140,6 +140,7 @@
 					<div class="col">
 					    <div class="col-12 row justify-content-center">
 						<c:forEach var="productVO" items="${list}">
+							<c:if test="${productVO.status eq 0}">						
 					        <div class="card text-center" style="width: 18rem;">
 					          <img src="<%=request.getContextPath()%>/product_photo/DBGifReader2?prodId=${productVO.id}" class="card-img-top" 
 					          		alt="<%=request.getContextPath()%>/assets/img/home-bg.jpg"/
@@ -154,6 +155,7 @@
 					<%--             <a href="#" class="btn btn-primary">${productVO.prodName}</a> --%>
 					          </div>
 					        </div>	
+		                    </c:if>					        
 						</c:forEach>
 					    </div>					
 					</div>

@@ -17,4 +17,6 @@ public interface ProductDAO extends CoreDao<ProductVO, Integer>{
 	public List<ProductVO> getCollection(List<Integer> productIds);
 	
 	public List<ProductVO> getProductsByMem(Integer sellerMemberId); 
+	
+	public void updateStatus(Integer prodId);
 }
