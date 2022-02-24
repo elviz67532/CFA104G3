@@ -557,7 +557,8 @@ textarea:focus{
     					<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
  			     <input type="submit" value="活動取消"> 
  			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
- 			     <input type="hidden" name="action"	value=""></FORM> 
+ 			     <input type="hidden" name="id"  value="${actVO.Id}">
+ 			     <input type="hidden" name="action"	value="cancel"></FORM> 
 	               </div>
 				<!--   ==================== 報名活動 ====================   -->
 <%-- 	         <%@ include file="secondActivity.jsp" %>       --%>

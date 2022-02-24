@@ -218,6 +218,9 @@ public class ActivityAttendServlet extends HttpServlet {
 					/***************************2.開始查詢資料****************************************/
 					ActivityAttendServiceImpl actaSvc = new ActivityAttendServiceImpl();
 					ActivityAttendVO actaVO = actaSvc.getOneActa(memberId,activityId);
+					if(actaVO==null) {
+						System.out.println("活動未做對應");
+					}
 					/***************************3.查詢完成,準備轉交(Send the Success view)************/
 					req.setAttribute("actaVO", actaVO);// 資料庫取出的empVO物件,存入req
 					String url = "/front_end/activity/scoreActivity.jsp";
@@ -277,18 +280,28 @@ public class ActivityAttendServlet extends HttpServlet {
 				req.setAttribute("errorMsgs", errorMsgs);
 			
 				try {
+					HttpSession session = req.getSession();
+				    MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+				    if (memberVO == null) {
+//				        FrontEndMemberFilter.doFilter(req, res, gg);
+				     RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/login.jsp");
+				     failureView.forward(req, res);
+				     return;// 程式中斷
+				    }
 					/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 					
 //參與會員編號					
-					int memberId =Integer.valueOf(req.getParameter("memberId"));
+					int memberId =memberVO.getId();
 					
 //參與活動編號
 					int activityId = Integer.valueOf(req.getParameter("activityId"));
 					
 					
 					ActivityAttendServiceImpl actaSvc = new ActivityAttendServiceImpl();
-					
 					ActivityAttendVO actaVO = actaSvc.getOneActa(memberId, activityId);
+					if(actaVO==null) {
+						System.out.println("活動未做對應");
+					}
 					actaVO = actaSvc.updateActa(actaVO.getMemberId(), actaVO.getActivityId(), actaVO.getComment(), actaVO.getNote(), 0);
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
@@ -312,7 +325,7 @@ public class ActivityAttendServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add("修改資料失敗:"+e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front_end/activity/listAllActa.jsp");
+							.getRequestDispatcher("/front_end/activity/homePage.jsp");
 					failureView.forward(req, res);
 				}
 			}
