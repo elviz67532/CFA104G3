@@ -6,4 +6,5 @@ import com.product.model.*;
 
 public interface ProductReportDAO extends CoreDao<ProductReportVO, DualKey<Integer, Integer>>  {
 	ProductReportVO getOneById(int memberId);
+	int changeStatus(ProductReportVO vo);
 }

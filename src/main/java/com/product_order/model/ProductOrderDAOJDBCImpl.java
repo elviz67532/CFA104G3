@@ -57,7 +57,7 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 			pstmt.setString(6, vo.getAddress());
 			pstmt.setTimestamp(7, vo.getDate());
 			pstmt.setInt(8, vo.getAmountOfProduct());
-			pstmt.setInt(9, vo.getStatus());
+			pstmt.setInt(9, 0);
 			pstmt.setInt(10, vo.getAmountOfPrice());
 
 			insertedRow = pstmt.executeUpdate();

@@ -4,4 +4,6 @@ import core.dao.CoreDao;
 
 public interface ActivityPhotoDAO extends CoreDao<ActivityPhotoVO, Integer> {
 
+	ActivityPhotoVO findActPhotoByActId(int actId);
+
 }

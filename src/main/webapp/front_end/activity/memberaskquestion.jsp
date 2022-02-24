@@ -33,10 +33,10 @@
 		       <input type="hidden" name="id" value="${memberVO.id}">
 <!--                <input type="hidden" name="action" value="selectOneAct"/>  -->
 <%-- 		       <a style="text-decoration:none;" href="<%=request.getContextPath()%>/front_end/activity/singleActPage.jsp?action=selectOneAct"> --%>
-			       <input id="askQuestion" type="submit" class="" value="詢問問題"/>
+			       <input style="float:left;margin-top:30px;" id="askQuestion" type="submit" class="" value="詢問問題"/>
 <!-- 		       </a> -->
 	        </FORM>
-	       	<button type="button" class="btn_modal_close4">取消詢問</button>
+	       		<button style="float:right;margin-top:30px;" type="button" class="btn_modal_close4">取消詢問</button>
          </article>
        </div>
    </div>

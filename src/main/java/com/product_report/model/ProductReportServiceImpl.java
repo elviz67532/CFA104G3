@@ -49,8 +49,22 @@ public class ProductReportServiceImpl implements ProductReportService {
 	
 	@Override
 	public ProductReportVO getOneById(int memberId) {		
-		return dao. getOneById(memberId);
+		return dao.getOneById(memberId);
 	}
+	
+	@Override
+	public ProductReportVO changestatus(Integer	status, Integer memberId, Integer productId) {		
+		ProductReportVO vo = new ProductReportVO();		
+		
+		vo.setStatus(status);
+		vo.setMemberId(memberId);
+		vo.setProductId(productId);
+		
+		dao.changeStatus(vo);
+		
+		return vo;
+	}
+	
 	
 	}
 

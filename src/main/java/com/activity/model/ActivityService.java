@@ -38,6 +38,9 @@ public interface ActivityService {
 	
 	// 查詢全部活動最新優先排序
 	public List<ActivityVO> getAllActDesc();
+	
+	// 參與活動用, 查個人參與的活動
+	public List<ActivityVO> getAllByActId(Integer id);
 
 	public void addAttend(Integer activityId) ;
 	

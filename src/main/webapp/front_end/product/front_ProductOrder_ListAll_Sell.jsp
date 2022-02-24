@@ -142,6 +142,7 @@ td {
 					<th class="text-nowrap">訂單編號</th>
 					<th class="text-nowrap">商品編號</th>
 					<th class="text-nowrap">買家編號</th>
+					<th class="text-nowrap">賣家編號</th>
 					<th class="text-nowrap">收件人姓名</th>
 					<th class="text-nowrap">收件人電話</th>
 					<th class="text-nowrap">收件人地址</th>
@@ -161,8 +162,8 @@ td {
 					<tr>
 						<td>${productOrderVO.id}</td>
 						<td>${productOrderVO.productId}</td>
-
 						<td>${productOrderVO.customerMemberId}</td>
+						<td>${productOrderVO.sellerMemberId}</td>
 						<td>${productOrderVO.productName}</td>
 						<td>${productOrderVO.phone}</td>
 						<td>${productOrderVO.address}</td>
@@ -193,7 +194,7 @@ td {
 			</c:forEach>
 		</table> <%@ include file="page2.jsp"%> <!-- Footer-->
 
-		
+
 		</script> <jsp:include page="/front_end/common/footer.jsp"></jsp:include> <!-- Bootstrap core JS-->
 
 		<script

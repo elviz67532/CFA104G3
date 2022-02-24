@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.member.model.MemberVO;
+import com.news.model.NewsServiceImpl;
+import com.news.model.NewsVO;
 import com.notification.model.ENotificationType;
 import com.notification.model.NotificationServiceImpl;
 import com.product_report.model.ProductReportServiceImpl;
@@ -148,9 +150,7 @@ public class ProductReportServlet extends HttpServlet {
 			
 			HttpSession session = req.getSession();
 			MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
-			
-
-			
+						
 			System.out.println("memberVO" + memberVO);
 			if (memberVO == null) {
 				// TODO 
@@ -281,5 +281,89 @@ public class ProductReportServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		
+		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp 或  /dept/listEmps_ByDeptno.jsp 的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String requestURL = req.getParameter("/back_end/product/productReportManage.jsp"); // 送出修改的來源網頁路徑: 可能為【/emp/listAllEmp.jsp】 或  【/dept/listEmps_ByDeptno.jsp】 或 【 /dept/listAllDept.jsp】		
+			
+			try {
+				/***************************1.接收請求參數****************************************/
+				Integer productId = Integer.valueOf(req.getParameter("k2"));
+				Integer memberId = Integer.valueOf(req.getParameter("k1"));
+				/***************************2.開始查詢資料****************************************/
+				ProductReportServiceImpl reportSvc = new ProductReportServiceImpl();
+				DualKey<Integer, Integer> id = new DualKey<Integer, Integer>(productId, memberId);
+				ProductReportVO pojo = reportSvc.selectById(id);
+								
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("productReportVO", pojo); // 資料庫取出的empVO物件,存入req
+				String url = "/back_end/product/productReportManage.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交update_emp_input.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料取出時失敗:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher(requestURL);
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("change_STATUS".equals(action)) { // 來自update_emp_input.jsp的請求
+			System.out.println("status");
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String requestURL = req.getParameter("/back_end/product/productReportManage.jsp"); // 送出修改的來源網頁路徑: 可能為【/emp/listAllEmp.jsp】 或  【/dept/listEmps_ByDeptno.jsp】 或 【 /dept/listAllDept.jsp】
+		
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				Integer status = Integer.valueOf(req.getParameter("status"));
+				Integer productId = Integer.valueOf(req.getParameter("k2"));								
+				Integer memberId = Integer.valueOf(req.getParameter("k1"));
+				//System.out.println(status);	
+				ProductReportVO pojo = new ProductReportVO();				
+				pojo.setStatus(status);
+				pojo.setProductId(productId);
+				pojo.setMemberId(memberId);
+				
+				//System.out.println(pojo.getStatus());
+								
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("productReportVO", pojo); // 含有輸入格式錯誤的empVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("");
+					failureView.forward(req, res);
+					return;
+				}
+
+				/***************************2.開始修改資料*****************************************/
+				ProductReportServiceImpl reportSvc = new ProductReportServiceImpl();
+				pojo = reportSvc.changestatus(status, memberId, productId);
+				
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/		
+                String url = requestURL;
+				RequestDispatcher successView = req.getRequestDispatcher("/back_end/product/productReportManage.jsp");   // 修改成功後,轉交回送出修改的來源網頁
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("修改資料失敗:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back_end/product/productReportManage.jsp");
+				failureView.forward(req, res);
+			}
+		}
+				
 	}
 }
