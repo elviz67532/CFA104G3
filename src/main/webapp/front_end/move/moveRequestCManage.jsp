@@ -259,7 +259,7 @@
 	        	$("#payForm").submit(); // Submit the form
 	  		}
 	  		swal('付款完成模擬畫面', '付款完成', 'success').then((result) => {
-	  			location.reload();
+	  			ok();
 	  		});
 	    });
 		
@@ -279,8 +279,9 @@
                	showCloseButton: true,
            	}).then(function(result) {
            	    if (result) {
-               		swal("申請單已取消", "");
-           	 		okFun();
+           	    	swal("申請單已取消").then(function(){
+               			okFun();	
+               		});
                	}
            	}, function(dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
                swal("取消審核動作", "");

@@ -234,21 +234,21 @@
     	};
     	
     	$("#verifyOK").click(function() {
-			function ok() {
- 			 	let self = this;
- 			    let price = $('#evaulatePrice').val();
- 			    let status = $('#reqStatus').val();
- 		  		let requestId = $('#requestId').val();
- 		  		if (price <= 0) {
- 		  		 	swal("請輸入估價金額");
- 		  			return;
- 		  		}
- 		  		
+			let self = this;
+ 			let price = $('#evaulatePrice').val();
+ 			let status = $('#reqStatus').val();
+		  	let requestId = $('#requestId').val();
+	  		if (price <= 0 && $('#online').attr('checked')) {
+	  		 	swal("請輸入估價金額");
+	  			return;
+	  		}
+    		function ok() {
  	            $.ajax({
  		            url: "<%=request.getContextPath()%>/move/moveManage.do",
  		            type: "POST",
  		            data: JSON.stringify({'action':'verifyOK', 'id':requestId, 'price' : price}),
  		            success: function(data){
+ 		           		let jsonObj = JSON.parse(data);
  		            	if (jsonObj.errorCode==='login') {
  		        	        window.location.href = jsonObj.body;
  		        		} else {
@@ -261,17 +261,17 @@
 		});
     	
     	$("#verifyNAK").click(function(){
+    		let self = this;
+	  		let price = $('#evaulatePrice').val();
+	  		let status = $('#reqStatus').val();
+		  	let requestId = $('#requestId').val();
     		function ok() {
-    			let self = this;
-   	  		    let price = $('#evaulatePrice').val();
-   	  		    let status = $('#reqStatus').val();
-   		  		let requestId = $('#requestId').val();
-
    		  		$.ajax({
    		            url: "<%=request.getContextPath()%>/move/moveManage.do",
    		            type: "POST",
    		            data: JSON.stringify({'action':'verifyNAK', 'id':requestId, 'price' : price}),
    		            success: function(data){
+   		         		let jsonObj = JSON.parse(data);
    		          		if (jsonObj.errorCode==='login') {
 		        	        window.location.href = jsonObj.body;
 		        		} else {
@@ -284,21 +284,21 @@
 		});
     	
     	$("#siteEvaOk").click(function(){
+   			let self = this;
+  	  		let price = $('#evaulatePrice').val();
+  	  		let status = $('#reqStatus').val();
+  		  	let requestId = $('#requestId').val();
+		  	if (price <= 0) {
+	  		 	swal("請輸入估價金額");
+	  			return;
+	  		}
     		function ok() {
-    			let self = this;
-   	  		    let price = $('#evaulatePrice').val();
-   	  		    let status = $('#reqStatus').val();
-   		  		let requestId = $('#requestId').val();
-   		  		if (price <= 0) {
- 		  		 	swal("請輸入估價金額");
- 		  			return;
- 		  		}
-   		  		
    		  		$.ajax({
 		            url: "<%=request.getContextPath()%>/move/moveManage.do",
 		            type: "POST",
 		            data: JSON.stringify({'action':'siteEvaOk', 'id':requestId, 'price' : price}),
-		            success: function(data){
+		            success: function(data) {
+		            	let jsonObj = JSON.parse(data);
 		          		if (jsonObj.errorCode==='login') {
 		        	        window.location.href = jsonObj.body;
 		        		} else {
@@ -319,8 +319,9 @@
                	showCloseButton: true,
            	}).then(function(result) {
            	    if (result) {
-               		swal("完成審核");
-           	 		okFun();
+               		swal("完成審核").then(function(){
+               			okFun();	
+               		});
                	}
            	}, function(dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
                swal("取消審核動作");
