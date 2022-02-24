@@ -535,13 +535,13 @@ textarea:focus{
 <!-- 	               <div style="border: 2px solid red;"> -->
 				<!-- ==================== 參與者功能 ==================== -->
 	               <div>
-	        	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/front_end/activity/attendActivity.jsp" style="margin-bottom: 0px;"> 
+	        	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
  			     <input type="submit" value="報名活動"> 
  			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
- 			     <input type="hidden" name="applyStartDate"  value="${actVO.applyStartDate}">
- 			     <input type="hidden" name="maxMember"  value="${actVO.maxMember}">
- 			     <input type="hidden" name="applyMemberExisting"  value="${actVO.applyMemberExisting}">
- 			     <input type="hidden" name="action"	value="insert"></FORM> 
+<%--  			     <input type="hidden" name="applyStartDate"  value="${actVO.applyStartDate}"> --%>
+<%--  			     <input type="hidden" name="maxMember"  value="${actVO.maxMember}"> --%>
+<%--  			     <input type="hidden" name="applyMemberExisting"  value="${actVO.applyMemberExisting}"> --%>
+ 			     <input type="hidden" name="action"	value="getOne_For_Insert"></FORM> 
 	        			</td>
  			  	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
  			     <input type="submit" value="活動評分"> 

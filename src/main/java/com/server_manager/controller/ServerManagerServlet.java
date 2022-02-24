@@ -86,9 +86,9 @@ public class ServerManagerServlet extends HttpServlet {
 				session.setAttribute("auth", list);
 				
 				// 來源頁面跳轉
-				String location = (String) session.getAttribute("beforeLoginURL");
+				String location = (String) session.getAttribute("backEndBeforeLoginURL");
 				if (location != null) { 
-					session.removeAttribute("beforeLoginURL"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+					session.removeAttribute("backEndBeforeLoginURL"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 					res.sendRedirect(location);
 					return;
 				}

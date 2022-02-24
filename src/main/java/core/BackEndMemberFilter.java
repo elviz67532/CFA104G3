@@ -38,7 +38,7 @@ public class BackEndMemberFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("doFilter");
+		System.out.println("doBackFilter");
 		
 		// 非httpServletRequest
 		if (!(request instanceof HttpServletRequest) || !(response instanceof HttpServletResponse)) {
@@ -51,7 +51,7 @@ public class BackEndMemberFilter implements Filter {
 
 		// 判斷是否登入 【目前登入不在filter】
 		HttpSession session = req.getSession();
-		session.setAttribute("beforeLoginURL", req.getRequestURI());
+		session.setAttribute("backEndBeforeLoginURL", req.getRequestURI());
 		ServerManagerVO smVO = (ServerManagerVO) session.getAttribute("ServerManagerVO");
 		if (smVO == null) {
 			System.out.println("尚未登入");
