@@ -81,7 +81,8 @@ table th {
 					<td>${actVO.applyStartDate} ~ ${actVO.applyEndDate}</td> 
 					<td>${actVO.startDate} ~ ${actVO.endDate}</td>
 <%-- 					<td >${actVO.content}</td> --%>
-					<td>${actVO.status}</td>
+					<td>${(actVO.status=="0")? "正常":""}
+						${(actVO.status=="1")? "取消":""} ${(actVO.status=="2")? "下架":""}</td>
 			<td>
 			    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
 				       <input type="hidden" name="action" value="normalBack"/> 
