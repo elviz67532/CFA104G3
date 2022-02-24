@@ -39,6 +39,11 @@ if (moveOrderVO != null) {
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
+	
+<!-- sweetalert -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+
 <title>委域</title>
 </head>
 <style>
@@ -178,17 +183,13 @@ button{
 									<input type="hidden" name="comment" value="${moveOrderVO.comment}">
 									<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}"> 
 									<input type="hidden" name="status" value="${moveOrderVO.status}"> 
-									<input type="submit" value="送出">
+									<button type="button" id="btn0">送出</button>
 								</FORM>
 							</td>
 						</tr>
 						<tr>
 							<td>訂單成立時間:</td>
 							<td>${moveOrderVO.orderDate}</td>
-						</tr>
-						<tr>
-							<td>回饋:</td>
-							<td>${moveOrderVO.comment}</td>
 						</tr>
 						<tr>
 							<td>訂單狀態:</td>
@@ -212,7 +213,7 @@ button{
 									<input type="hidden" name="comment" value="${moveOrderVO.comment}">
 									<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}"> 
 									<input type="hidden" name="status" value="${moveOrderVO.status}">
-									<button type="submit">不簽訂契約結束訂單</button>
+									<button type="button" id="btn1">不簽訂契約結束訂單</button>
 								</FORM>
 
 								<FORM METHOD="post" ACTION="moveorder.do">
@@ -230,7 +231,7 @@ button{
 									<input type="hidden" name="comment" value="${moveOrderVO.comment}">
 									<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}"> 
 									<input type="hidden" name="status" value="${moveOrderVO.status}">
-									<button type="submit">等待運送貨物</button>
+									<button type="button" id="btn2">等待運送貨物</button>
 								</FORM>
 
 								<FORM METHOD="post" ACTION="moveorder.do">
@@ -248,7 +249,7 @@ button{
 									<input type="hidden" name="comment" value="${moveOrderVO.comment}">
 									<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}"> 
 									<input type="hidden" name="status" value="${moveOrderVO.status}">
-									<button type="submit">運送中</button>
+									<button type="button" id="btn3">運送中</button>
 								</FORM>
 
 								<FORM METHOD="post" ACTION="moveorder.do">
@@ -266,9 +267,13 @@ button{
 									<input type="hidden" name="comment" value="${moveOrderVO.comment}">
 									<input type="hidden" name="orderDate" value="${moveOrderVO.orderDate}"> 
 									<input type="hidden" name="status" value="${moveOrderVO.status}">
-									<button type="submit">完成訂單</button>
+									<button type="button" id="btn4">完成訂單</button>
 								</FORM>
 							</td>
+						</tr>
+						<tr>
+							<td>回饋:</td>
+							<td>${moveOrderVO.comment}</td>
 						</tr>
 					</table>
 					<input type="button" value="回首頁" onclick="location.href='readMoveOrder.jsp'">
@@ -300,6 +305,119 @@ button{
 		src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/js/back_end/sb-admin-2.min.js"></script>
+		
+	<script>
+	var btn0 = document.getElementById('btn0'); //新增按鈕
+	btn0.addEventListener('click', function(e) {
+			e.preventDefault(); // 阻擋瀏覽器預設行為
+		    swal({
+		        title: "確定要輸入最終金額？",
+		        html: "按下確定後送出",
+		        type: "question", // type can be "success", "error", "warning", "info", "question"
+		        showCancelButton: true,
+		        showCloseButton: true,
+		       
+		    }).then(function(result) {
+		        if (result) {
+		            swal("完成!", "金額已更改", "success")
+		            	.then(function(result1){
+		            		btn0.parentElement.submit(); // 返回當前節點的父元素節點 ,也就是上一層的form
+		            	}).catch(swal.noop);
+		        }
+		    }, function(dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
+		        swal("取消", "金額未被更改", "error");
+		    }).catch(swal.noop);
+		});
+	
+	var btn1 = document.getElementById('btn1'); //新增按鈕
+	btn1.addEventListener('click', function(e) {
+			e.preventDefault(); // 阻擋瀏覽器預設行為
+		    swal({
+		        title: "確定要更改狀態？",
+		        html: "按下確定後狀態會改為不簽訂契約結束訂單",
+		        type: "question", // type can be "success", "error", "warning", "info", "question"
+		        showCancelButton: true,
+		        showCloseButton: true,
+		       
+		    }).then(function(result) {
+		        if (result) {
+		            swal("完成!", "狀態已改變", "success")
+		            	.then(function(result1){
+		            		btn1.parentElement.submit(); // 返回當前節點的父元素節點 ,也就是上一層的form
+		            	}).catch(swal.noop);
+		        }
+		    }, function(dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
+		        swal("取消", "狀態未被更改", "error");
+		    }).catch(swal.noop);
+		});
+	
+	var btn2 = document.getElementById('btn2'); //新增按鈕
+	btn2.addEventListener('click', function(e) {
+			e.preventDefault(); // 阻擋瀏覽器預設行為
+		    swal({
+		        title: "確定要更改狀態？",
+		        html: "按下確定後狀態會改為等待運送貨物",
+		        type: "question", // type can be "success", "error", "warning", "info", "question"
+		        showCancelButton: true,
+		        showCloseButton: true,
+		       
+		    }).then(function(result) {
+		        if (result) {
+		            swal("完成!", "狀態已改變", "success")
+		            	.then(function(result1){
+		            		btn2.parentElement.submit(); // 返回當前節點的父元素節點 ,也就是上一層的form
+		            	}).catch(swal.noop);
+		        }
+		    }, function(dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
+		        swal("取消", "狀態未被更改", "error");
+		    }).catch(swal.noop);
+		});
+	
+	var btn3 = document.getElementById('btn3'); //新增按鈕
+	btn3.addEventListener('click', function(e) {
+			e.preventDefault(); // 阻擋瀏覽器預設行為
+		    swal({
+		        title: "確定要更改狀態？",
+		        html: "按下確定後狀態會改為運送中",
+		        type: "question", // type can be "success", "error", "warning", "info", "question"
+		        showCancelButton: true,
+		        showCloseButton: true,
+		       
+		    }).then(function(result) {
+		        if (result) {
+		            swal("完成!", "狀態已改變", "success")
+		            	.then(function(result1){
+		            		btn3.parentElement.submit(); // 返回當前節點的父元素節點 ,也就是上一層的form
+		            	}).catch(swal.noop);
+		        }
+		    }, function(dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
+		        swal("取消", "狀態未被更改", "error");
+		    }).catch(swal.noop);
+		});
+	
+	var btn4 = document.getElementById('btn4'); //新增按鈕
+	btn4.addEventListener('click', function(e) {
+			e.preventDefault(); // 阻擋瀏覽器預設行為
+		    swal({
+		        title: "確定要更改狀態？",
+		        html: "按下確定後狀態會改為完成訂單",
+		        type: "question", // type can be "success", "error", "warning", "info", "question"
+		        showCancelButton: true,
+		        showCloseButton: true,
+		       
+		    }).then(function(result) {
+		        if (result) {
+		            swal("完成!", "狀態已改變", "success")
+		            	.then(function(result1){
+		            		btn4.parentElement.submit(); // 返回當前節點的父元素節點 ,也就是上一層的form
+		            	}).catch(swal.noop);
+		        }
+		    }, function(dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
+		        swal("取消", "狀態未被更改", "error");
+		    }).catch(swal.noop);
+		});
+
+	</script>
 </body>
 
 </html>
