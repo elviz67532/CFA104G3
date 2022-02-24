@@ -114,4 +114,14 @@ public class ActivityServiceImpl implements ActivityService {
 	public ActivityVO changeRemove(Integer activityId) {
 		return changeStatus(activityId, 2);
 	}
+	
+	public void addAttend(Integer activityId) {
+		dao.addAttend(activityId);
+	}
+	
+	public void minusAttend(Integer activityId) {
+		dao.minusAttend(activityId);
+	}
+	
+	
 }

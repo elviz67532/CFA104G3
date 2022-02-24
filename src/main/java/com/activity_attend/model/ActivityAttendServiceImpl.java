@@ -61,6 +61,10 @@ public class ActivityAttendServiceImpl implements ActivityAttendService {
 		return dao.selectAll();
 	}
 	
-	
+	public int deleteOneActa(Integer memberId,Integer activityId) {
 		
+		DualKey<Integer, Integer> id=new DualKey<Integer, Integer>(memberId, activityId);
+		return dao.deleteById(id);
+	}
+	
 }

@@ -1,5 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.activity_question.model.*"%>
 
+<%	
+	ActivityQuestionVO actqVO = (ActivityQuestionVO) request.getAttribute("actqVO");
+%> 
 <!--    ============================ 以下為會員問題區塊 ============================ -->
    		<div class="main4">
      <!-- 彈出視窗 -->

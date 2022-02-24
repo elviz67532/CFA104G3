@@ -557,7 +557,6 @@ textarea:focus{
     					<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
  			     <input type="submit" value="活動取消"> 
  			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
- 			     <input type="hidden" name="id"  value="${actVO.Id}">
  			     <input type="hidden" name="action"	value="cancel"></FORM> 
 	               </div>
 				<!--   ==================== 報名活動 ====================   -->
@@ -633,8 +632,7 @@ textarea:focus{
    			</c:forEach>
    		</div>
  <!--  ==================== 最下方活動問答  ==================== -->  		
-  		<%@ include file="memberaskquestion.jsp" %>  
- 
+ 		
 <!--    ============================ 以上為問題區塊 ============================ --> 
 <!--    ============================ 以下為會員回答區塊 ============================ -->
    		<div class="main5">

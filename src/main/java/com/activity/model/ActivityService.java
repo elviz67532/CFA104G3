@@ -13,7 +13,7 @@ public interface ActivityService {
 
 	// 編輯活動
 	public ActivityVO updateAct(Integer activityId, Integer type, String name, String content, 
-			Timestamp launchedDate, Timestamp applyStartDateㄝ, Timestamp applyEndDate, 
+			Timestamp launchedDate, Timestamp applyStartDate, Timestamp applyEndDate, 
 			String location, Integer cost, Integer applyMemberExisting, Integer maxMember, 
 			Integer minMember, Timestamp startDate, Timestamp endDate );
 
@@ -39,4 +39,7 @@ public interface ActivityService {
 	// 查詢全部活動最新優先排序
 	public List<ActivityVO> getAllActDesc();
 
+	public void addAttend(Integer activityId) ;
+	
+	public void minusAttend (Integer activityId);
 }
