@@ -853,6 +853,9 @@ public class ProductOrderServlet extends HttpServlet {
 				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
 				vo = poSvc.addProductOrder(productId, customerMemberId, sellerMemberId, productName, phone, address, 1,
 						amountOfPrice);
+				
+				ProductServiceImpl pdSer = new ProductServiceImpl();
+				pdSer.updateStatus(productId);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/front_end/product/listAllproductOrder.jsp";

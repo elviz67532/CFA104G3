@@ -135,7 +135,10 @@ pageContext.setAttribute("prodId", prodId);
 				</div>
 			</div>
 		</div>
-	</header>
+	</header>  
+  
+  <!-- 主體畫面設計  -->
+  
 	<!-- 主體畫面設計  -->
 
 	<!-- Product section-->
@@ -168,6 +171,7 @@ pageContext.setAttribute("prodId", prodId);
 							style="font-size: 12px; color: black; border-radius: 16px;">買越多送越多
 							${productVO.name}!! </span>
 					</div>
+          
 					<!--<div class="small mb-1">商品地點: 這個好像不用特別寫</div> -->
 
 					<!--按鈕 "me-間隔" "<i>按鈕" "readonly 只看不可改" 下方-->
@@ -183,11 +187,10 @@ pageContext.setAttribute("prodId", prodId);
 							</button>
 						</FORM>
 
-
 						<FORM METHOD="post"
 							ACTION="productcollection.do?prodId=${productVO.id}">
-							<input type="hidden" name="action" value="insert"> <input
-								type="hidden" name="id" value="${productVO.id}">
+							<input type="hidden" name="action" value="insert"> 
+              <input type="hidden" name="id" value="${productVO.id}">
 							<%--                         <input type="hidden" name="id" value="${productVO.id}">                         --%>
 							<button class="btn2Collect" type="submit">
 								<i class="bi bi-bookmarks-fill"></i> 加入收藏
@@ -218,7 +221,7 @@ pageContext.setAttribute("prodId", prodId);
 		</div>
 	</section>
 
-	<!--second section -->
+  <!--second section -->
 	<section class="py-5 bg-light">
 		<!--      <div class="container px-4 px-lg-5 mt-5"> -->
 		<div style="margin: 0 230px;">
@@ -241,8 +244,6 @@ pageContext.setAttribute("prodId", prodId);
 			<!--         </div> -->
 		</div>
 	</section>
-
-
 
 	<!-- Related items section-->
 	<jsp:include page="/front_end/product/relatedItems.jsp"></jsp:include>
