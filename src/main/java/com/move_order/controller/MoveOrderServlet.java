@@ -271,8 +271,6 @@ public class MoveOrderServlet extends HttpServlet{
 		if ("get_By_Mem".equals(action)) { // 來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
@@ -293,7 +291,7 @@ public class MoveOrderServlet extends HttpServlet{
 					
 			/***************************2.開始查詢資料*****************************************/
 				if (moveOrderVO.isEmpty()) {
-					errorMsgs.add("查無資料");
+					errorMsgs.add("想要有訂單就去申請搬家吧");
 				}
 				// Send the use back to the form, if there were errors
 			 	if (!errorMsgs.isEmpty()) {
