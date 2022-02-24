@@ -100,6 +100,13 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
                 <div class="register-form">
                     <div class="contact-form">
                          <div style="text-align: center;"><h2>個人資料</h2></div>
+                          <p>頭像：</p>
+                            <div class="form-group">
+                                  <tr>
+									 <td><img style="width:300px; height:300px;" src="<%=request.getContextPath()%>/front_end/member/MemberServlet.do?action=getImage&MEM_ID=${memberVO.id}" ></td>
+								  </tr>
+                               <div class="help-block with-errors"></div>
+                            </div>
                             <p>郵件：</p>
                             <div class="form-group">
                                 <input type="text" class="form-control"  name="email" value="${memberVO.email}" readonly="readonly"/> 
@@ -143,13 +150,7 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
                                 <input type="text" class="form-control" name="address" value="${memberVO.address}" readonly="readonly" /> 
                                 <div class="help-block with-errors"></div>
                             </div>
-                             <p>頭像：</p>
-                            <div class="form-group">
-                                  <tr>
-									 <td><img src="<%=request.getContextPath()%>/front_end/member/MemberServlet.do?action=getImage&MEM_ID=${memberVO.id}" ></td>
-								  </tr>
-                               <div class="help-block with-errors"></div>
-                            </div>
+                            
                           <td style="width: 100px;" >
 							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front_end/member/front_end_update.jsp" style="margin-bottom: 0px;" >
 							    <input class="submitBtn" type="submit" value="修改會員資料" >

@@ -65,7 +65,7 @@ FaqVO faqVO = (FaqVO) request.getAttribute("faqVO");
 	</c:if>
 
 	<FORM METHOD="post" ACTION="faq.do">
-		<table>
+		<table class="table table-hover">
 			<tr>
 				<td>FAQ編號:<font color=red><b>*</b></font></td>
 				<td><%=faqVO.getId()%></td>
