@@ -209,77 +209,71 @@ textarea:focus{
 	<h2>現在來舉辦活動囉!</h2>
 		<%-- 錯誤表列 --%>
 		<c:if test="${not empty errorMsgs}">
-			<font style="color: red">請修正以下錯誤:</font>
-			<ul> 
-				<c:forEach var="message" items="${errorMsgs}">
-					<li style="color: red">${message}</li>
-				</c:forEach>
-			</ul>
+			<font class="formLabel" style="color: red;">請修正以下錯誤:</font>
+<!-- 			<ul>  -->
+<%-- 				<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 					<li style="color: red">${message}</li> --%>
+<%-- 				</c:forEach> --%>
+<!-- 			</ul> -->
 		</c:if>
 		
 		<form action="${pageContext.request.contextPath}/activity/act.do" enctype="multipart/form-data" method="post" name="form1">
 <!-- 			<p class="memId">會員名稱?</p> -->
 			<label class="formLabel" for="name">活動名稱: <span style="color: red">${errorMsgs.name}</span></label>
 			<input class="actFormInput" autofocus type="text" name="name"
-				value="<%= (actVO == null) ? "davidking餐聚" : actVO.getName() %>" /><br> 
+				value="<%= (actVO == null) ? "" : actVO.getName() %>" /><br> 
 			
 			<label class="formLabel"for="type">活動種類: <span style="color: red">${errorMsgs.type}</span></label> 
 			<select class="actSelect" name="type" id="">
 			 	<option value="" style="display: none">請選擇類型</option>
-				<option value="1">活動</option>
-				<option value="2">聚餐</option>
-				<option value="3">講座</option>
-				<option value="4">其他</option>
+				<option value="1" <%= (actVO == null || actVO.getType() != 1) ? "" : "selected" %>>活動</option>
+				<option value="2" <%= (actVO == null || actVO.getType() != 2) ? "" : "selected" %>>聚餐</option>
+				<option value="3" <%= (actVO == null || actVO.getType() != 3) ? "" : "selected" %>>講座</option>
+				<option value="4" <%= (actVO == null || actVO.getType() != 4) ? "" : "selected" %>>其他</option>
 			</select> 
 			<br>
 			<label class="formLabel" for="location">活動地點: <span style="color: red">${errorMsgs.location}</span></label>
-			<input class="actFormInput" type="text" name="location" value="<%= (actVO == null) ? "303 新竹縣湖口鄉民和街27號" : actVO.getLocation() %>"/><br>
+			<input class="actFormInput" type="text" name="location" value="<%= (actVO == null) ? "" : actVO.getLocation() %>"/><br>
 		 	
 		 	<label class="formLabel" for="photo">活動照片: <span style="color: red">${errorMsgs.photo}</span></label>
            	<input class="actPhoto" name="actp" type="file" accept="image/*" value=""><br>
 <!--       	多張照片 multiple     -->
 
 			<label class="formLabel" for="content">活動內容: <span style="color: red">${errorMsgs.content}</span></label>
-			<textarea class="actFormInput actContentFormInput" cols="55" name="content">"<%= (actVO == null) ? 
-					"空想食境Fantasy MEALity 為 Manga'Z 所打造出的獨特餐飲體驗，將餐飲結合虛擬實境，用120分鐘的時間帶消費者走入空想王國體驗超乎想像的美食饗宴。" 
-																			: actVO.getContent() %>"</textarea>
+			<textarea class="actFormInput actContentFormInput" cols="55" name="content"><%= (actVO == null) ? "" : actVO.getContent() %></textarea>
 	
 			<label class="formLabel" for="cost">活動費用: <span style="color: red">${errorMsgs.cost}</span></label>
 			<input class="actFormInput actNumberFormInput" type="number" step="1" min="0"
 				pattern="[0-9]" name="cost" 
-				value="<%= (actVO == null) ? "2000" : actVO.getCost() %>"/><br>
+				value="<%= (actVO == null) ? "" : actVO.getCost() %>"/><br>
 	
 			<label class="formLabel" for="applyStartDate">報名開始時間: <span style="color: red">${errorMsgs.applyStartDate}</span></label>
-			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" value="<%= (actVO == null) ? "2022-03-05T08:30" : actVO.getApplyStartDate()%>"/><br>
-<%-- 			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" value="<%= (actVO == null)? "2022-03-04T08:30": actVO.getApplyStartDate()%>"/><br> --%>
+			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" 
+			value=""/><br>
 	
 			<label class="formLabel" for="applyEndDate">報名截止時間: <span style="color: red">${errorMsgs.applyEndDate}</span></label>
-			<input class="actTimeFormInput" step="1" type="datetime-local" name="applyEndDate" value="<%= (actVO == null) ? "2022-03-09T16:30" : actVO.getApplyEndDate()%>"/><br>
-<%-- 			<input class="actTimeFormInput" step="1" type="datetime-local" name="applyEndDate" value="<%= (actVO == null)? "2022-03-05T10:40": actVO.getApplyEndDate()%>"/><br> --%>
+			<input class="actTimeFormInput" step="1" type="datetime-local" name="applyEndDate" 
+			value="<%= (actVO == null) ? "" : actVO.getApplyEndDate()%>"/><br>
 	
 			<label class="formLabel" for="startDate">活動開始時間: <span style="color: red">${errorMsgs.startDate}</span></label>
-			<input class="actTimeFormInput" step="1" type="datetime-local" name="startDate" value="<%= (actVO == null) ? "2022-03-10T12:30" : actVO.getStartDate()%>"/><br> 
-<%-- 			<input class="actTimeFormInput" step="1" type="datetime-local" name="startDate" value="<%= (actVO == null)? "2022-03-06T12:50": actVO.getStartDate()%>"/><br>  --%>
+			<input class="actTimeFormInput" step="1" type="datetime-local" name="startDate" 
+			value="<%= (actVO == null) ? "" : actVO.getStartDate()%>"/><br> 
 			
 			<label class="formLabel" for="endDate">活動結束時間: <span style="color: red">${errorMsgs.endDate}</span></label>
-			<input class="actTimeFormInput" step="1" type="datetime-local" name="endDate" value="<%= (actVO == null) ? "2022-03-12T21:30" : actVO.getEndDate()%>"/><br> 
-<%-- 			<input class="actTimeFormInput" step="1" type="datetime-local" name="endDate" value="<%= (actVO == null)? "2022-03-07T15:00": actVO.getEndDate()%>"/><br>  --%>
+			<input class="actTimeFormInput" step="1" type="datetime-local" name="endDate" 
+			value="<%= (actVO == null) ? "" : actVO.getEndDate()%>"/><br> 
 				
-<!-- 			<label class="formLabel" for="applyMemberExisting">報名人數倒數: <span style="color: red"></span></label> -->
-<%-- 			<span class="actNumberFormInput" style="font-size: 36px; color: red;" >${param.maxMember}</span><br>  --%>
-	
 			<label class="formLabel" for="maxMember">活動人數上限: <span style="color: red">${errorMsgs.maxMember}</span></label>
 			<input class="actFormInput actNumberFormInput" type="number" step="" min="0"
 				max="1000" pattern="[0-9]" name="maxMember"
-				value="<%= (actVO == null) ? "100" : actVO.getMaxMember() %>"/><br> 
+				value="<%= (actVO == null) ? "" : actVO.getMaxMember() %>"/><br> 
 				
 			<label class="formLabel" for="minMember">活動人數下限: <span style="color: red">${errorMsgs.minMember}</span></label>
 			<input class="actFormInput actNumberFormInput" type="number" step="" min="0"
 				max="1000" pattern="[0-9]" name="minMember"
-				value="<%= (actVO == null) ? "20" : actVO.getMinMember() %>"/><br>
+				value="<%= (actVO == null) ? "" : actVO.getMinMember() %>"/><br>
 <!-- 			sweetalert 加在insert 就會有沒效果 -->
 			<div style="text-align: center;">
-	
 				<input type="hidden" name="action" value="insert"/> 
 	<!-- 			sweetalert 加在submit 有效果但不能insert -->
 				<input type="submit" class="btn-hover color-5" value="送出表單" />

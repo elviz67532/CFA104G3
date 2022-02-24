@@ -2,14 +2,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.activity.model.*"%>
+<!-- 報名用 -->
+<%@ page import="com.activity_attend.model.*"%>
+<!-- 問答用 -->
+<%@ page import="com.activity_question.model.*"%>
+
+<%@ page import="com.member.model.*"%>
+
 <!-- 改善時間用 -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%
 	//ActivityServlet.java (Concroller) 存入req的actVO物件 (包括幫忙取出的actVO, 也包括輸入資料錯誤時的actVO物件)
+	MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+
 	ActivityVO actVO = (ActivityVO) request.getAttribute("actVO");
+	
 %>
 <%
-	request.setAttribute("findActivityTypeString", new String[]{"活動","聚餐","講座","其他"});
+	request.setAttribute("findActivityType", new String[]{"活動","聚餐","講座","其他"});
 %>
 <!DOCTYPE html>
 <html>
@@ -282,20 +292,30 @@
    
    	<!-- 主體畫面設計  -->
 <div style="border: 2px white groove; width: 70%; margin: 0 auto 60px auto;">
-				<img class="showImage" src="http://picsum.photos/300/200?random=?" alt="">
+                <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?ACTP_ACT_ID=${actVO.activityId}" >
 <%--                     <img class="showImage" src="<%=request.getContextPath()%>/activity/actp.do?activityId=${actVO.activityId}" > --%>
    	<section class="section1">
                <div style="display: block; margin-left: 10px; padding: 4px;">
                <div style="width: 100%;">
                </div>
 		       <br>
+		       <c:set var="actType" scope="session" value="${actVO.type}"/>
 		       <span class="actType">
-				    <%	int type = actVO.getType();
-						if (type == 1){ out.println("活動");
-						} else if(type == 2){ out.println("聚餐");
-						} else if(type == 3){ out.println("講座");
-						} else { out.println("其他");}
-					%>
+		       <c:choose>
+		       		<c:when test="${actType == 1}">
+		       		活動
+		       		</c:when>
+		       		<c:when test="${actType == 2}">
+		       		聚餐
+		       		</c:when>
+		       		<c:when test="${actType == 3}">
+		       		講座
+		       		</c:when>
+		       		<c:when test="${actType == 4}">
+		       		其他
+		       		</c:when>	
+		       </c:choose>
+		       
 		       </span>
              		<button class="btn-hover color-11" style=" float:right; padding: 20px;">報名人數倒數: ${actVO.maxMember}</button>
              		</div>
@@ -339,58 +359,25 @@
                <div style=" display: block; margin-left: 10px; padding: 4px; width: 100%;">
 <!-- 	               <div style="border: 2px solid red;"> -->
 	               <div>
-	        			<button type="button" class="btn_modal btn btn-hover color-1">報名活動</button>
+	        			<button id="attendActivity" type="button" class="btn_modal btn-hover color-1">報名活動</button>
 	               </div>
-				<!--   ==================== 報名活動 ====================   -->
-			        
-			      <!--   ==================== 為活動評分 ====================   -->  
-			        
-<!-- 			          ==================== 檢舉活動 ====================     -->
 		       </div>
+		       <input id="hiddenStatus" type="hidden" value="${actVO.status}"/>
                <p class="launchedDate" style="text-align: center;"><fmt:formatDate value="${actVO.launchedDate}" pattern="yyyy-MM-dd hh:mm:ss"/></p>
  	</section>
    		</div>
-   
+<script>
+var hiddenStatus = document.getElementById('hiddenStatus');
+var attendActivity = document.getElementById('attendActivity');
+if(hiddenStatus.value == 1){
+	attendActivity.style.display = "none";
+}
+</script>   
     <!-- Footer-->
    	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
-    <script>
-    /*======= 彈出視窗 =======*/   
-    $(function(){
-        // 開啟 Modal 彈跳視窗
-        $("button.btn_modal").on("click", function(){
-            $("div.overlay").fadeIn();
-        });
-        // 關閉 Modal
-        $("button.btn_modal_close").on("click", function(){
-            $("div.overlay").fadeOut();
-        });
-    });
-    
-    $(function(){
-        // 開啟 Modal 彈跳視窗
-        $("button.btn_modal2").on("click", function(){
-            $("div.overlay2").fadeIn();
-        });
-        // 關閉 Modal
-        $("button.btn_modal_close2").on("click", function(){
-            $("div.overlay2").fadeOut();
-        });
-    });
-    
-    $(function(){
-        // 開啟 Modal 彈跳視窗
-        $("button.btn_modal3").on("click", function(){
-            $("div.overlay3").fadeIn();
-        });
-        // 關閉 Modal
-        $("button.btn_modal_close3").on("click", function(){
-            $("div.overlay3").fadeOut();
-        });
-    });
-    </script>
 </body>
 </html>

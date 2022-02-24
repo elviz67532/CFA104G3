@@ -12,6 +12,11 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
+	public List<ActivityVO> getAllByActId(Integer id) {
+		return dao.selectAllByActId(id);
+	}
+
+	@Override
 	public ActivityVO addAct(Integer organizerMemberId, Integer type, String name, 
 			String content, Timestamp launchedDate ,Timestamp applyStartDate, 
 			Timestamp applyEndDate, String location, Integer cost, Integer applyMemberExisting, 
