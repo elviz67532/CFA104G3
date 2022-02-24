@@ -56,24 +56,24 @@ public class TestProductReportDAO {
 		assertNotEquals(row, 0);
 	}
 	
-//	@Test
-//	public void testUpdate() {
-//		ProductReportVO productReportVO = new ProductReportVO();
-//
-//		byte[] array12 = new byte[2];
-//		array12[0] = (byte) 0xdd;
-//		array12[1] = (byte) 0xee;
-//
-//
-//		productReportVO.setContent("王八蛋你再抱錯你試試看");
-//		productReportVO.setDate(new Timestamp(System.currentTimeMillis()));
-//		productReportVO.setPhoto(array12);
-//		productReportVO.setStatus(1);
-//		productReportVO.setProductId(1);
-//		productReportVO.setMemberId(4);
-//		int row = dao.update(productReportVO);
-//		assertNotEquals(row, 0);
-//	}
+	@Test
+	public void testUpdate() {
+		ProductReportVO productReportVO = new ProductReportVO();
+
+		byte[] array12 = new byte[2];
+		array12[0] = (byte) 0xdd;
+		array12[1] = (byte) 0xee;
+
+
+		productReportVO.setContent("王八蛋你再抱錯你試試看");
+		productReportVO.setDate(new Timestamp(System.currentTimeMillis()));
+		productReportVO.setPhoto(array12);
+		productReportVO.setStatus(1);
+		productReportVO.setProductId(1);
+		productReportVO.setMemberId(4);
+		int row = dao.update(productReportVO);
+		assertNotEquals(row, 0);
+	}
 //	
 	@Test
 	public void testSelectById() {
@@ -92,4 +92,17 @@ public class TestProductReportDAO {
 //		ProductReportVO VO = dao.getOneById(2);				
 //		assertNotNull(VO);
 //	}
+	
+	@Test
+	public void testchangestatus() {
+		ProductReportVO productReportVO = new ProductReportVO();
+
+		productReportVO.setStatus(2);
+		productReportVO.setProductId(1);
+		productReportVO.setMemberId(2);
+		int row = dao.changeStatus(productReportVO);
+		assertNotEquals(row, 0);
+	}
+	
+	
 }

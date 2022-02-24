@@ -268,9 +268,10 @@ public class NewsServlet extends HttpServlet {
 					image = new byte[in.available()];
 					in.read(image);
 					in.close();
-				} else {
-					errorMsgs.add("請上傳圖片");
-				}
+				} 
+//				else {
+//					errorMsgs.add("請上傳圖片");
+//				}
 				
 				Timestamp date = new Timestamp(System.currentTimeMillis());
 				Integer type = Integer.valueOf(req.getParameter("type"));
