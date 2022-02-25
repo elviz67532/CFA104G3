@@ -79,7 +79,7 @@ public class ContactServlet extends HttpServlet {
 
 				String to = "xtn30113@uooos.com";
 				String subject = email + "傳送訊息給您";
-				String messageText = "你好,我是" + name + ",我的手機號碼是" + phone + ",E-MAIL是" + email + "," + massage;
+				String messageText = "你好,我是" + name + ",我的手機號碼是" + phone + ",電子信箱是" + email + "," + massage;
 
 				MailService mailService = new MailService();
 				mailService.sendToSelf(subject, messageText);
