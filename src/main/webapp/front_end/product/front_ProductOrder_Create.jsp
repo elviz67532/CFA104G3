@@ -272,8 +272,6 @@ textarea:focus {
 
 
 
-					<input type="hidden" name="productId" size="45"
-						value="${productVO.id}">
 
 
 
@@ -282,7 +280,7 @@ textarea:focus {
 
 
 					<input type="hidden" name="productId" size="45"
-						value="${productOrderVO.sellerMemberId}">
+						value="${vo.sellerMemberId}">
 
 
 
@@ -305,6 +303,11 @@ textarea:focus {
 					</tr>
 
 
+					<tr>
+						<th class="text-nowrap">信用卡號:</th>
+						<td><input type="TEXT" name="productId" size="45"
+							value="${productVO.id}"></td>
+					</tr>
 
 					<tr>
 						<th class="text-nowrap">訂單總金額:</th>
