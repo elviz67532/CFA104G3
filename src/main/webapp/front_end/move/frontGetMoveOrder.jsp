@@ -106,8 +106,8 @@ $('#button1').click(function() {
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
-						<h1>New Life</h1>
-						<span class="subheading">迎 接 全 新 的 人 生</span>
+						<h1><b>委域</b></h1>
+						<span class="subheading"><b>訂 單 管 理</b></span>
 					</div>
 				</div>
 			</div>
@@ -116,16 +116,16 @@ $('#button1').click(function() {
 
 	<!-- 主體畫面設計  -->
 	<%-- 錯誤表列 --%>
+
+	<h2 style="text-align:center;"><b>搬家訂單管理</b></h2>
 	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
+		<font style="color: red">您還沒有訂單喔</font>
 		<ul>
 			<c:forEach var="message" items="${errorMsgs}">
 				<li style="color: red">${message}</li>
 			</c:forEach>
 		</ul>
 	</c:if>
-
-	<h2>搬家訂單管理</h2>
 	
 <div class="main">
 

@@ -33,40 +33,38 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 <link
 	href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css"
 	rel="stylesheet" />
+	
 <style>
-* {
-	box-sizing: border-box;
-	font-family: monospace;
-	line-height: 150%;
-}
-
-table#table-2 {
-	font-size: 10 vmin;
-	margin: 0 auto;
-	white-space: nowrap;
-}
-
-h2 {
-	margin-top: 40px;
-}
-
-table {
-	width: 400px;
+  table {
+	width: 1300px;
+	
+	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	color: black;
+	margin-left:450px;
+  }
+  table, th, td {
+    border: 1px solid black;
+  }
+  #div1 {
+   margin-left:1670px;
 }
-
-td {
-	padding: 7px;
-	font-weight: bold;
-	/* 	text-align: center; */
+#div11{
+ margin-left:600px;
+ }
+ .submitBtn{
+	width: 100%; 
+	border: none;
+	height: 34px;
+	background-image: linear-gradient(to right, #003E3E, #005757,#003E3E);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+	color: white;
 }
+  
 </style>
-</head>
-
-<body>
-	<!-- Navigation-->
+    </head>
+   <body>
+<!-- Navigation-->
 	<!-- nav -->
 	<jsp:include page="/front_end/common/navigation.jsp"></jsp:include>
 
@@ -84,73 +82,89 @@ td {
 			</div>
 		</div>
 	</header>
+        <div class="preloader">
+            <div class="loader">
+                <div class="sbl-half-circle-spin">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-title-area">
+            <div class="container">
+                
+            </div>
+        </div>
 
-
-	<h1 href="/CFA104G3/index.jsp" align="center" valign="center" >
-		<a href="/CFA104G3/index.jsp"> 首頁</a>
-	</h1>
-
-	<main>
-	<div >
-		<table id="table-2">
-			<h2 align="center" valign="center">會員資料</h2>
-
-			<tr>
-				<td>郵件</td>
-				<td>${memberVO.email}</td>
-			</tr>
-			<tr>
-				<td>密碼</td>
-				<td>${memberVO.password}</td>
-			</tr>
-			<tr>
-				<td>暱稱</td>
-				<td>${memberVO.nickname}</td>
-			</tr>
-			<tr>
-				<td>姓名</td>
-				<td>${memberVO.name}</td>
-			</tr>
-			<tr>
-				<td>電話</td>
-				<td>${memberVO.phone}</td>
-			<tr>
-				<td>居住城市</td>
-				<td>${memberVO.city}</td>
-			</tr>
-			</tr>
-			<tr>
-				<td>居住鄉鎮</td>
-				<td>${memberVO.cityArea}</td>
-			</tr>
-			<tr>
-				<td>地址</td>
-				<td>${memberVO.address}</td>
-			</tr>
-			<tr>
-				<td>頭像</td>
-				<td><img src="<%=request.getContextPath()%>/front_end/member/MemberServlet.do?action=getImage&MEM_ID=${memberVO.id}" ></td>
-			</tr>
-
-
-			<td style="width: 100px;" >
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front_end/member/front_end_update.jsp" style="margin-bottom: 0px;" >
-					<input type="submit" value="修改會員資料">
-					<input type="hidden"name="id" value="${memberVO.id}">
-					<input type="hidden"name="action" value="getOne_For_Member_Update">
-                </FORM>
-			</td>
-	
-			</table>
-		</div>
-	</main>
-	<!-- Footer-->
-	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
-	<!-- Bootstrap core JS-->
-	<script
+            <div class="container">
+                <div class="register-form">
+                    <div class="contact-form">
+                         <div style="text-align: center;"><h2>個人資料</h2></div>
+                          <p>頭像：</p>
+                            <div class="form-group">
+                                  <tr>
+									 <td><img style="width:300px; height:300px;" src="<%=request.getContextPath()%>/front_end/member/MemberServlet.do?action=getImage&MEM_ID=${memberVO.id}" ></td>
+								  </tr>
+                               <div class="help-block with-errors"></div>
+                            </div>
+                            <p>郵件：</p>
+                            <div class="form-group">
+                                <input type="text" class="form-control"  name="email" value="${memberVO.email}" readonly="readonly"/> 
+                                <div class="help-block with-errors"></div>
+                            </div>
+                          
+                            <p>密碼：</p>
+                            <div class="form-group">
+                                <input type="text" class="form-control"  name="password" value="${memberVO.password}" readonly="readonly"/> 
+                                <div class="help-block with-errors"></div>
+                            </div>
+                                                               
+                            <p>暱稱：</p>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="nickname"  value="${memberVO.nickname}" readonly="readonly"/> 
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            
+                            <p>姓名：</p>
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control" value="${memberVO.name}" readonly="readonly"/> 
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <p>電話：</p>
+                            <div class="form-group">
+                                <input type="text" name="phone" class="form-control" value="${memberVO.phone}" readonly="readonly"/> 
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <p>居住城市：</p>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="city" value="${memberVO.city}" readonly="readonly"/> 
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <p>居住鄉鎮：</p>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="cityArea" value="${memberVO.cityArea}" readonly="readonly"/> 
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <p>地址：</p>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="address" value="${memberVO.address}" readonly="readonly" /> 
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            
+                          <td style="width: 100px;" >
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front_end/member/front_end_update.jsp" style="margin-bottom: 0px;" >
+							    <input class="submitBtn" type="submit" value="修改會員資料" >
+								<input type="hidden"name="id" value="${memberVO.id}">
+								<input type="hidden"name="action" value="getOne_For_Member_Update">		
+                			</FORM>
+						</td>         
+                    </div>
+                </div>
+            </div>
+        </section>
+         <script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-	<!-- Core theme JS-->
+	
 	<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
-
-</body>
-</html>
+    </body>
+    </html>

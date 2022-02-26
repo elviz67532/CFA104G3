@@ -109,10 +109,8 @@ td {
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
-						<h1>
-							買家訂單管理主頁
-							<h1>
-								<span class="subheading">二手商城</span>
+						<h1>買家訂單管理</h1>
+						<span class="subheading">二手商城</span>
 					</div>
 				</div>
 			</div>
@@ -140,18 +138,14 @@ td {
 	<!-- 			<input type="submit" value="送出"> -->
 	<!-- 		</FORM> -->
 	<!-- 	</li> -->
-	<FORM METHOD="post"
-		ACTION="<%=request.getContextPath()%>/front_end/product/productorder.do">
-		<b>請輸入會員編號檢索訂單:</b> <input type="text" name="id"> <input
-			type="hidden" name="action" value="retrieveByBuyerId"> <input
-			type="submit" value="送出">
-	</FORM>
 
-	<table class="table table-striped table-hover">
+
+	<table class="table table-hover">
 		<thead>
 			<tr>
 				<th class="text-nowrap">訂單編號</th>
 				<th class="text-nowrap">商品編號</th>
+				<th class="text-nowrap">買家編號</th>
 				<th class="text-nowrap">賣家編號</th>
 				<th class="text-nowrap">收件人姓名</th>
 				<th class="text-nowrap">收件人電話</th>
@@ -172,7 +166,7 @@ td {
 				<tr>
 					<td>${productOrderVO.id}</td>
 					<td>${productOrderVO.productId}</td>
-
+					<td>${productOrderVO.customerMemberId}</td>
 					<td>${productOrderVO.sellerMemberId}</td>
 					<td>${productOrderVO.productName}</td>
 					<td>${productOrderVO.phone}</td>

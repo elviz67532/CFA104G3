@@ -9,8 +9,7 @@ import com.product.model.ProductVO;
 public interface ProductOrderService {
 
 	ProductOrderVO addProductOrder(Integer productId, Integer customerMemberId, Integer sellerMemberId,
-			String productName, String phone, String address, Timestamp date, Integer amountOfProduct, Integer status,
-			Integer amountOfPrice);
+			String productName, String phone, String address, Integer amountOfProduct, Integer amountOfPrice);
 
 	ProductOrderVO updateProductOrder(Integer id, Integer productId, Integer customerMemberId, Integer sellerMemberId,
 			String productName, String phone, String address, Timestamp date, Integer amountOfProduct, Integer status,

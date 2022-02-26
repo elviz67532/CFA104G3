@@ -76,4 +76,7 @@ public class ProductServiceImpl implements ProductService {
 		return dao.getProductsByMem(sellerMemberId);
 	}
 	
+	public void updateStatus(Integer prodId) {
+		dao.updateStatus(prodId);
+	}
 }

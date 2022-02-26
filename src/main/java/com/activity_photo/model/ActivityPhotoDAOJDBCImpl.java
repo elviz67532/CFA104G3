@@ -18,6 +18,8 @@ public class ActivityPhotoDAOJDBCImpl implements ActivityPhotoDAO {
 	private static final String DELETE = "delete from ACTIVITY_PHOTO where ACTP_ID = ?";
 	private static final String UPDATE = "update ACTIVITY_PHOTO set ACTP_ACT_ID = ?, ACTP_PHOTO = ? where ACTP_ID = ?";
 
+	private static final String GET_ONE_BY_ACTID = "select * from ACTIVITY_PHOTO where ACTP_ACT_ID = ?";
+	
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -154,5 +156,36 @@ public class ActivityPhotoDAOJDBCImpl implements ActivityPhotoDAO {
 		}
 
 		return list;
+	}
+
+	@Override
+	public ActivityPhotoVO findActPhotoByActId(int actId) {
+
+		ActivityPhotoVO vo = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(GET_ONE_BY_ACTID);
+
+			pstmt.setInt(1, actId);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				vo = new ActivityPhotoVO();
+				vo.setActivityId(rs.getInt(1));
+				vo.setActivityId(rs.getInt(2));
+				vo.setPhoto(rs.getBytes(3));
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+
+		return vo;
 	}
 }

@@ -58,7 +58,7 @@ public class ContactServlet extends HttpServlet {
 				if (phone == null || (phone.trim()).length() == 0) {
 					errorMsgs.put("0", "請輸入手機號碼");
 				} else if (!phone.trim().matches(phoneReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.put("0", "手機號碼: 只能是數字");
+					errorMsgs.put("0", "手機號碼格式錯誤");
 				}
 
 				if (massage == null || (massage.trim()).length() == 0) {
@@ -79,7 +79,7 @@ public class ContactServlet extends HttpServlet {
 
 				String to = "xtn30113@uooos.com";
 				String subject = email + "傳送訊息給您";
-				String messageText = "你好,我是" + name + "我的手機號碼是" + phone + "," + massage;
+				String messageText = "你好,我是" + name + ",我的手機號碼是" + phone + ",電子信箱是" + email + "," + massage;
 
 				MailService mailService = new MailService();
 				mailService.sendToSelf(subject, messageText);

@@ -75,6 +75,7 @@ ProductReportVO productReportVO = (ProductReportVO) request.getAttribute("produc
                                             <th scope="col">圖片</th>
                                             <th scope="col">時間</th>
                                             <th scope="col">狀態</th>
+                                            <th>動作</th>
                                             <th>刪除</th>
                                         </tr>
                                     </thead>
@@ -86,6 +87,7 @@ ProductReportVO productReportVO = (ProductReportVO) request.getAttribute("produc
                                             <th>圖片</th>
                                             <th>時間</th>
                                             <th>狀態</th>
+                                            <th>動作</th>
                                             <th>刪除</th>
                                         </tr>
                                     </tfoot>
@@ -98,14 +100,28 @@ ProductReportVO productReportVO = (ProductReportVO) request.getAttribute("produc
                                                 <td><img src="<%=request.getContextPath()%>/product/reportphoto.do?PRODRP_PROD_ID=${productReportVO.productId}&PRODRP_MEM_ID=${productReportVO.memberId}"
                                                     alt=""
                                                     class="img-fluid d-none d-md-block rounded mb-2 shadow "></td>
-                                                <td>${productReportVO.date}</td>
+                                                <td>${productReportVO.date}</td>                                               
                                                 <td>
-                                                <c:choose>
-   													<c:when test="${productReportVO.status==0}">未審核</c:when>  														  														   														
-   													<c:when test="${productReportVO.status==1}">已審核</c:when>
-													<c:otherwise>已下架</c:otherwise>
-												</c:choose>
-                                                </td>
+                                                	<c:choose>
+                                                  		<c:when test="${productReportVO.status == 0}">未審核</c:when>
+                                                  		<c:when test="${productReportVO.status == 1}">審核中</c:when>
+												  		<c:otherwise>審核完畢</c:otherwise>
+                                                	</c:choose>
+                                                </td>                                                 
+                                                <td>
+                                                <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/product/report.do" style="margin-bottom: 0px;">
+                                               		<select size="1" name="status" >
+														<option value="0">未審核
+														<option value="1">審核中
+														<option value="2">審核完畢										
+													</select>													
+                                                    <input type="hidden" name="k2" value="${productReportVO.productId}">
+                                                   	<input type="hidden" name="k1" value="${productReportVO.memberId}">
+                                                   	<input type="hidden" name="action" value="change_STATUS">
+													<input type="submit" value="確認修改" class="btn btn-outline-warning">
+												</FORM>												
+												</td>
+												
                                                 <td class="text-nowrap">
 
                                                     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/report.do" style="margin-bottom: 0px;">
@@ -157,8 +173,7 @@ ProductReportVO productReportVO = (ProductReportVO) request.getAttribute("produc
             </div>
             <jsp:include page="/back_end/common/footer.jsp"></jsp:include>
         </div>
-    </div>
-
+    </div>	
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>

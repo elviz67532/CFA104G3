@@ -167,6 +167,7 @@ public class ActivityAttendDAOJDBCImpl implements ActivityAttendDAO {
 
 		return vo;
 	}
+
 	@Override
 	public List<ActivityAttendVO> selectByMemberId(Integer memberId) {
 		List<ActivityAttendVO> list = new ArrayList<ActivityAttendVO>();

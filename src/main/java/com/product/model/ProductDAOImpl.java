@@ -25,6 +25,7 @@ public class ProductDAOImpl implements ProductDAO {
 	public static final String GET_PRODUCT_BY_TYPE = "SELECT * FROM PRODUCT WHERE PROD_TYPE=?"; // 多個
 	public static final String GET_NAME_ID_BY_ID = "SELECT PROD_ID, PROD_PRICE, PROD_NAME FROM PRODUCT where PROD_ID = ? OR PROD_ID = ?...";
 	public static final String GET_PRODUCT_BY_MEM = "SELECT * FROM PRODUCT WHERE `PROD_MEM_ID`=?";
+	public static final String UPDATE_STATUS = "UPDATE PRODUCT SET PROD_STATUS=1 WHERE PROD_ID=?";
 	
 	static {
 		try {
@@ -396,6 +397,60 @@ public class ProductDAOImpl implements ProductDAO {
 			SQLUtil.closeResource(con, pstmt, rs);
 		}
 		return list;
+	}
+	
+	public void updateStatus(Integer id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(UPDATE_STATUS);
+			pstmt.setInt(1, id);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();			
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
+	}
+
+	@Override
+	public void updateStatus(Integer prodId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt =  con.prepareStatement(UPDAT_STATUS);
+			pstmt.setInt(1, prodId);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
+	}
+
+	@Override
+	public void updateStatus(Integer prodId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt =  con.prepareStatement(UPDAT_STATUS);
+			pstmt.setInt(1, prodId);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			SQLUtil.closeResource(con, pstmt, null);
+		}
 	}
 
 }

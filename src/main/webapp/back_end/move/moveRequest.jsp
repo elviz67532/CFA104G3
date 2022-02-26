@@ -114,7 +114,7 @@
 
 							    <div class="col-3">
 							   		<label for="evaulatePrice" class="form-label">估價金額:</label><br/>
-							      	<input type="text" id="evaulatePrice" class="form-control" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
+							      	<input type="text" id="evaulatePrice" class="form-control">
 							  	</div>
 								<div class="col-2">
 								  	<button type="button" class="btn btn-success btn-block align-middle" id="verifyOK" value="">審核成功</button><br/>
@@ -234,17 +234,21 @@
     	};
     	
     	$("#verifyOK").click(function() {
-			function ok() {
- 			 	let self = this;
- 			    let price = $('#evaulatePrice').val();
- 			    let status = $('#reqStatus').val();
- 		  		let requestId = $('#requestId').val();
- 		  		
+			let self = this;
+ 			let price = $('#evaulatePrice').val();
+ 			let status = $('#reqStatus').val();
+		  	let requestId = $('#requestId').val();
+	  		if (price <= 0 && $('#online').attr('checked')) {
+	  		 	swal("請輸入估價金額");
+	  			return;
+	  		}
+    		function ok() {
  	            $.ajax({
  		            url: "<%=request.getContextPath()%>/move/moveManage.do",
  		            type: "POST",
  		            data: JSON.stringify({'action':'verifyOK', 'id':requestId, 'price' : price}),
  		            success: function(data){
+ 		           		let jsonObj = JSON.parse(data);
  		            	if (jsonObj.errorCode==='login') {
  		        	        window.location.href = jsonObj.body;
  		        		} else {
@@ -257,17 +261,17 @@
 		});
     	
     	$("#verifyNAK").click(function(){
+    		let self = this;
+	  		let price = $('#evaulatePrice').val();
+	  		let status = $('#reqStatus').val();
+		  	let requestId = $('#requestId').val();
     		function ok() {
-    			let self = this;
-   	  		    let price = $('#evaulatePrice').val();
-   	  		    let status = $('#reqStatus').val();
-   		  		let requestId = $('#requestId').val();
-
    		  		$.ajax({
    		            url: "<%=request.getContextPath()%>/move/moveManage.do",
    		            type: "POST",
    		            data: JSON.stringify({'action':'verifyNAK', 'id':requestId, 'price' : price}),
    		            success: function(data){
+   		         		let jsonObj = JSON.parse(data);
    		          		if (jsonObj.errorCode==='login') {
 		        	        window.location.href = jsonObj.body;
 		        		} else {
@@ -280,17 +284,21 @@
 		});
     	
     	$("#siteEvaOk").click(function(){
+   			let self = this;
+  	  		let price = $('#evaulatePrice').val();
+  	  		let status = $('#reqStatus').val();
+  		  	let requestId = $('#requestId').val();
+		  	if (price <= 0) {
+	  		 	swal("請輸入估價金額");
+	  			return;
+	  		}
     		function ok() {
-    			let self = this;
-   	  		    let price = $('#evaulatePrice').val();
-   	  		    let status = $('#reqStatus').val();
-   		  		let requestId = $('#requestId').val();
-   		  		
    		  		$.ajax({
 		            url: "<%=request.getContextPath()%>/move/moveManage.do",
 		            type: "POST",
 		            data: JSON.stringify({'action':'siteEvaOk', 'id':requestId, 'price' : price}),
-		            success: function(data){
+		            success: function(data) {
+		            	let jsonObj = JSON.parse(data);
 		          		if (jsonObj.errorCode==='login') {
 		        	        window.location.href = jsonObj.body;
 		        		} else {
@@ -299,7 +307,7 @@
 		            }
 	            })
     		}
-   			lastCheck("確認審核失敗", ok);
+   			lastCheck("確認寫入現場估價金額", ok);
    		});
     	
     	function lastCheck(title, okFun) {
@@ -311,13 +319,23 @@
                	showCloseButton: true,
            	}).then(function(result) {
            	    if (result) {
-               		swal("完成審核", "success");
-           	 		okFun();
+               		swal("完成審核").then(function(){
+               			okFun();	
+               		});
                	}
            	}, function(dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
-               swal("取消審核動作", "error");
+               swal("取消審核動作");
            	}).catch(swal.noop);
     	}
+    	$("#evaulatePrice").keyup(function(){
+   		  	let price = $('#evaulatePrice').val();
+   		 	price=price.replace(/^(0+)|[^\d]+/g,'');
+   		 	if (price == '') {
+   		 		price = 0;
+   		 	}
+   		 	console.log(price)
+   		 	$('#evaulatePrice').val(price);
+   		}); 
 	</script>
 </body>
 </html>

@@ -30,7 +30,7 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 
 	private static final String GET_SELLER_ALL_STMT = "select * from PRODUCT_ORDER where PRODO_MSELL_ID = ?";
 	private static final String GET_BUYER_ALL_STMT = "select * from PRODUCT_ORDER where PRODO_MBUY_ID = ?";
-	
+
 	static {
 		try {
 			Class.forName(SQLUtil.DRIVER);
@@ -278,7 +278,7 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(GET_SELLER_ALL_STMT);
 
-			pstmt .setInt(1, memberId);
+			pstmt.setInt(1, memberId);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -304,7 +304,6 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 
 		return list;
 	}
-	
 
 	@Override
 	public List<ProductOrderVO> retrieveByBuyerId(int memberId) {
@@ -318,7 +317,7 @@ public class ProductOrderDAOJDBCImpl implements ProductOrderDAO {
 			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
 			pstmt = con.prepareStatement(GET_BUYER_ALL_STMT);
 
-			pstmt .setInt(1, memberId);
+			pstmt.setInt(1, memberId);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

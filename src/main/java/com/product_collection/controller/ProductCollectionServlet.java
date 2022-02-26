@@ -48,6 +48,7 @@ public class ProductCollectionServlet extends HttpServlet{
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 				
 				if (memberVO == null) {				
+					res.sendRedirect(req.getContextPath() + "/front_end/member/login.jsp");
 					return;
 				}
 				Integer memberId = memberVO.getId();
@@ -95,6 +96,7 @@ public class ProductCollectionServlet extends HttpServlet{
 				HttpSession session = req.getSession();
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 				if(memberVO == null) {
+					res.sendRedirect(req.getContextPath() + "/front_end/member/login.jsp");
 					return;//程式中斷
 				}
 				
@@ -131,7 +133,7 @@ public class ProductCollectionServlet extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front_end/product/點進去收藏畫面的按鈕所在的畫面.jsp");
+						.getRequestDispatcher("/front_end/product/vendor.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -178,7 +180,7 @@ public class ProductCollectionServlet extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front_end/product/點進去收藏畫面的按鈕所在的畫面.jsp");
+						.getRequestDispatcher("/front_end/product/vendor.jsp");
 				failureView.forward(req, res);
 			}
 		}

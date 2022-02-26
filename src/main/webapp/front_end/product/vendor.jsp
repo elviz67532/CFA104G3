@@ -114,7 +114,7 @@ pageContext.setAttribute("list", list);
 			</div>
 			<!-- 右邊9欄  card 卡片 & text-center -->
 			<div class="col-12 col-md-9">
-				<div class="row">
+				<div class="row" >
 					<div class="col">
 
 					    <div class="col-12 row justify-content-center">
@@ -123,7 +123,7 @@ pageContext.setAttribute("list", list);
 					          		alt=""/>
 					          <div class="card-body">
 					            <h5 class="card-title"></h5>
-								<a href="<%=request.getContextPath()%>/product/productcollection.do?action=get_By_Mem" class="btn btn-primary">收藏商品</a>
+								<a href="<%=request.getContextPath()%>/front_end/product/productcollection.do?action=get_By_Mem" class="btn btn-primary">收藏商品</a>
 					          </div>
 					        </div>	
 					    </div>					
@@ -146,7 +146,7 @@ pageContext.setAttribute("list", list);
 				</div>
 				<div class="row">
 					<div class="col">
-						<div class="col-12 row">
+						<div class="col-12 row justify-content-center">
 							<div class="card text-center" style="width: 18rem;">
 								<img src="<%=request.getContextPath()%>/asset/img/product01.jpg"
 									class="card-img-top" alt="" />
@@ -160,7 +160,7 @@ pageContext.setAttribute("list", list);
 						</div>
 					</div>
 					<div class="col">
-						<div class="col-12 row">
+						<div class="col-12 row justify-content-center">
 							<div class="card text-center" style="width: 18rem;">
 								<img src="<%=request.getContextPath()%>/asset/img/product01.jpg"
 									class="card-img-top" alt="" />
@@ -174,7 +174,7 @@ pageContext.setAttribute("list", list);
 						</div>
 					</div>
 					<div class="col">
-						<div class="col-12 row">
+						<div class="col-12 row justify-content-center">
 							<div class="card text-center" style="width: 18rem;">
 								<img src="<%=request.getContextPath()%>/asset/img/product01.jpg"
 									class="card-img-top" alt="" />
