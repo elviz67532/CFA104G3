@@ -168,4 +168,37 @@ public class ActivityAttendDAOJDBCImpl implements ActivityAttendDAO {
 		return vo;
 	}
 
+	@Override
+	public List<ActivityAttendVO> selectByMemberId(Integer memberId) {
+		List<ActivityAttendVO> list = new ArrayList<ActivityAttendVO>();
+		ActivityAttendVO vo = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = DriverManager.getConnection(SQLUtil.URL, SQLUtil.USER, SQLUtil.PASSWORD);
+			pstmt = con.prepareStatement(GET_MEMBER_STMT);
+
+			pstmt.setInt(1,memberId);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				vo = new ActivityAttendVO();
+				vo.setMemberId(rs.getInt("ACTA_MEM_ID"));
+				vo.setActivityId(rs.getInt("ACTA_ACT_ID"));
+				vo.setComment(rs.getString("ACTA_RELPY_CONTENT"));
+				vo.setNote(rs.getString("ACTA_CONTENT_NOTE"));
+				vo.setStatus(rs.getInt("ACTA_PAY_STATUS"));
+				list.add(vo);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			SQLUtil.closeResource(con, pstmt, rs);
+		}
+
+		return list;
+	}
 }

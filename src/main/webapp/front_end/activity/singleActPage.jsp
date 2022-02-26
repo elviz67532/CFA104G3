@@ -532,6 +532,7 @@ btnRemove.addEventListener('click', function(e) {
                </p>
                <div style=" display: block; margin-left: 10px; padding: 4px; width: 100%;">
 <!-- 	               <div style="border: 2px solid red;"> -->
+
 <!-- ======================================= 參與者功能 ======================================= -->
 
 	  <div style="width: 100%;" >
@@ -563,7 +564,7 @@ btnRemove.addEventListener('click', function(e) {
 	 			     <input type="hidden" name="action"	value="cancel">
  			     </FORM> 
 	 </div>
-	 
+
 <script>
 //參與者的使用按鈕
 var btnScore = document.getElementById('btnScore'); // 評分活動按鈕
