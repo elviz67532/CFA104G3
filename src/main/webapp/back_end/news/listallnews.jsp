@@ -205,74 +205,48 @@ NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <c:forEach var="newsVO" items="${list}">
+                                            <c:forEach var="newsVO2" items="${list}">
                                                 <tr>
-                                                    <td>${newsVO.id}</td>
+                                                    <td>${newsVO2.id}</td>
                                                     <td>
                                                         <c:choose>
-                                                            <c:when test="${newsVO.type==0}">活動</c:when>
-                                                            <c:when test="${newsVO.type==1}">二手</c:when>
-                                                            <c:when test="${newsVO.type==2}">搬家</c:when>
-                                                            <c:when test="${newsVO.type==3}">其他</c:when>
+                                                            <c:when test="${newsVO2.type==0}">活動</c:when>
+                                                            <c:when test="${newsVO2.type==1}">二手</c:when>
+                                                            <c:when test="${newsVO2.type==2}">搬家</c:when>
+                                                            <c:when test="${newsVO2.type==3}">其他</c:when>
                                                             <c:otherwise>系統</c:otherwise>
                                                         </c:choose>
                                                     </td>
-                                                    <td>${newsVO.title}</td>
-                                                    <td>${newsVO.content}</td>
-                                                    <td><img src="<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO.id}"
+                                                    <td>${newsVO2.title}</td>
+                                                    <td>${newsVO2.content}</td>
+                                                    <td><img src="<%=request.getContextPath()%>/news/newsimage.do?NEWS_ID=${newsVO2.id}"
                                                             alt=""
                                                             class="img-fluid d-none d-md-block rounded mb-2 shadow ">
                                                     </td>
-                                                    <td>${newsVO.date}</td>
+                                                    <td>${newsVO2.date}</td>
                                                     <td>
                                                         <FORM METHOD="post"
                                                             ACTION="<%=request.getContextPath()%>/back_end/news/NewsServlet"
                                                             style="margin-bottom: 0px;">
                                                             <input type="submit" value="修改"
                                                                 class="btn btn-outline-warning">
-                                                            <input type="hidden" name="id" value="${newsVO.id}">
+                                                            <input type="hidden" name="id" value="${newsVO2.id}">
                                                             <input type="hidden" name="action"
                                                                 value="getOne_For_Update">
                                                         </FORM>
                                                     </td>
                                                     <td class="text-nowrap">
-
                                                         <FORM METHOD="post"
                                                             ACTION="<%=request.getContextPath()%>/back_end/news/NewsServlet"
                                                             style="margin-bottom: 0px;">
-                                                            <button type="button" class="btn btn-outline-danger"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#exampleModal">刪除</button>
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title"
-                                                                                id="exampleModalLabel">警告正在刪除</h5>
-                                                                            <button type="button" class="btn-close"
-                                                                                data-bs-dismiss="modal"
-                                                                                aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            您確定要刪除這一筆資料?
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                class="btn btn-outline-primary"
-                                                                                data-bs-dismiss="modal">取消</button>
-                                                                            <input type="submit" value="確認刪除"
+                                                            
+                                                                            <input type="submit" value="刪除"
                                                                                 class="btn btn-outline-danger">
                                                                             <input type="hidden" name="id"
-                                                                                value="${newsVO.id}">
+                                                                                value="${newsVO2.id}">
                                                                             <input type="hidden" name="action"
                                                                                 value="delete">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </FORM>
+                                                        </FORM>        
                                                     </td>
                                                 </tr>
                                             </c:forEach>
