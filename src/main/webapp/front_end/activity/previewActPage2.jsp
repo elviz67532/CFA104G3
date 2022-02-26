@@ -209,7 +209,7 @@
                <div class="actInformation">
 					活動資訊
                </div>
-               <span style="font-size:20px; font-family: Courier, monospace;">${actVO.content} </span>
+               <div style="font-size:20px;white-space:pre-wrap; font-family: Courier, monospace;">${actVO.content} </div>
                <p style="margin-bottom: 20px;"></p>
                <p class="detailP">
                	<span style="color: yellowgreen;">

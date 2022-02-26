@@ -69,8 +69,6 @@
       margin: 8px 0;  
 }
 
-
-
 .tab_container{
 /* 	border: 2px solid blue; */
 	margin:  auto auto auto 30px; 
@@ -338,7 +336,7 @@ padding: 0;
              		
 	                <h2 id="actName${actVO.activityId}" class="actName">${actVO.name} </h2>
 <%-- 	                <p class="location ellipsis">${actVO.location}</p> --%>
-	                <p class="ellipsis">${actVO.content} </p>
+	                <p id="pContent" class="ellipsis">${actVO.content} </p>
 	                <div style="margin: 0 50px;">
               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
               			  	 <input type="hidden" name="activityId" value="${actVO.activityId}">
@@ -399,15 +397,13 @@ padding: 10px 0;
 	letter-spacing: -.16px; 
 /*     font-weight: 700; */
 /*     overflow: hidden; */
-/*     display: -webkit-box; */
-/*     -webkit-box-orient: vertical; */
-/*     -webkit-line-clamp: 2; */
 }
 </style>
 <script>
 	var item${actVO.activityId} = document.getElementById('item${actVO.activityId}');
 	var actName${actVO.activityId} = document.getElementById('actName${actVO.activityId}');
 	var applyMemberExisting${actVO.activityId} = document.getElementById('applyMemberExisting${actVO.activityId}');
+	var pContent = document.getElementById('pContent');
 	if(${actVO.status} == 1 ){
 		item${actVO.activityId}.style.backgroundColor = "black";
 		item${actVO.activityId}.style.opacity = 0.5;
@@ -418,6 +414,7 @@ padding: 10px 0;
 	if(${actVO.status} == 2){
 		item${actVO.activityId}.style.backgroundColor = "gray";
 		item${actVO.activityId}.style.opacity = 0.5;
+		pContent.style.color = "black";
 		item${actVO.activityId}.style.borderRadius = '16px';
 		applyMemberExisting${actVO.activityId}.innerHTML = "你已經將該活動下架";
 // 		item4${actVO.activityId}.remove();

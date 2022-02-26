@@ -305,12 +305,13 @@ public class ActivityServlet extends HttpServlet {
 				/* ========================= 活動內容 ========================= */
 //				String actContentReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{20,1000}$";
 				String content = req.getParameter("content");
+//				content = content.replace("/(?:\\r\\n|\\r|\\n)/g","<br>");
 				if (content == null || content.trim().length() == 0) {
 					errorMsgs.put("content", "請勿空白");
 //				} else if (!content.trim().matches(actContentReg)) {
 //					errorMsgs.put("content", "只能是中、英文字母、數字和_ , 且長度必需在20到1000之間");
 				}
-
+				System.out.println(content);
 				/* ========================= 活動費用 ========================= */
 				int cost = 0;
 				try {
