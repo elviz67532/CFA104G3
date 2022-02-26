@@ -10,6 +10,7 @@ public interface ActivityDAO extends CoreDao<ActivityVO, Integer> {
 	int updateStatus(ActivityVO vo);
 	List<ActivityVO> selectByMemId(Integer organizerMemberId);
 
+	List<ActivityVO> selectAllByActId(Integer activityId);
 	int addAttend(Integer activityId);
 	int minusAttend(Integer activityId);
 
