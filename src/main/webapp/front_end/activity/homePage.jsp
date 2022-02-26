@@ -36,7 +36,7 @@
 <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-
+<script src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
 <!-- <link rel="icon" type="image/x-icon" href="asset/favicon.ico" /> -->
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
@@ -330,6 +330,29 @@ padding: 0;
     box-shadow: 0 2px 4px rgb(255 147 194 / 30%);
     font-family: Courier, monospace;
 }
+.transition1{
+	border: white;
+	width: 500px;
+	height: 161px;
+	position: fixed;
+	color: black;
+	top: 84%;
+	left: -1%;
+/*  	visibility: hidden;  */
+}
+.imgADRightBottom{
+	border-radius: 16px;
+}
+.iamADbtn{
+	border-radius: 16px;
+	position: fixed;
+	border:none;
+	background-color: black;
+	color:white;
+	height: 99px;
+	top: 84%;
+	left: -1%; 
+}
 </style>
   
 </head>
@@ -354,6 +377,29 @@ padding: 0;
     </header>
   
    <!-- 上與中之間 -->
+   <button class="iamADbtn">0</button>
+   <div id="transition1"class="transition1">
+	<img id="imgADRightBottom" class="imgADRightBottom" src="<%=request.getContextPath()%>/asset/img/activityImage/AD.png">
+   </div>
+<script>
+//淡化
+// $(document).ready(function(){
+// 	  $(".transition1").click(function(){
+// 	    $(".transition1").fadeOut("slow");    
+// 	  });
+// 	});
+//向左滑入
+$(document).ready(function(){
+	  $(".transition1").click(function(){
+	    $(".transition1").animate({width:'toggle'},600);    
+	  });
+	});
+$(document).ready(function(){
+	  $(".iamADbtn").click(function(){
+	    $(".transition1").animate({width:'toggle'},1000);    
+	  });
+	});
+</script>
    <div>
    		<input id="hiddenMemId" type="hidden" value="${memberVO}"/>
 	   	<a id="aContact" href="<%=request.getContextPath()%>/front_end/activity/publishActivity.jsp">
