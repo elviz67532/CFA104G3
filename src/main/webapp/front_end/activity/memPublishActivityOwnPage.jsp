@@ -7,6 +7,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.activity.model.*"%>
+
+<%@page import="com.activity_attend.model.*"%>
+
 <%@ page import="com.member.model.*"%>
 <%@ page import="com.activity_attend.model.*"%>
 <!-- 改善時間用 -->
@@ -19,7 +22,7 @@
 	ActivityServiceImpl actSvc = new ActivityServiceImpl();
 	List<ActivityVO> list = actSvc.findByMemId(memberVO.getId());
 	pageContext.setAttribute("list",list);
-	
+
 // 	ActivityAttendVO actaVO = new ActivityAttendVO();
 // 	List<ActivityVO> typeList1 = actSvc.findByMemId(4);
 // 	pageContext.setAttribute("typeList1",typeList1);
@@ -310,7 +313,8 @@ padding: 0;
 			<div class="tab_list_block">
                 <ul class="tab_list">
                     <li><a data-target="tab1" class="tab -on btn-hover color-5">我所舉辦的活動</a></li>
-                    <li><a data-target="tab2" class="tab btn-hover color-5" >我所參與的活動</a></li>
+                    <li><a class="btn-hover color-5" href="<%=request.getContextPath()%>/front_end/activity/selectAllAttendActivityPage.jsp">我所參與的活動</a></li>
+<%--                <li><a data-target="tab2" class="tab btn-hover color-5" href="<%=request.getContextPath()%>/front_end/activity/homePage.jsp">我所參與的活動</a></li> --%>
                 </ul>
            </div>
 <div class="tab_contents">
@@ -522,6 +526,7 @@ padding: 10px 0;
 		</c:forEach>
 	    </div>
 	</div>
+
          
 	</div>
 	</div> <!-- tab_container -->

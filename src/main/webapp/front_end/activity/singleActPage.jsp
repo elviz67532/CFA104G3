@@ -532,35 +532,39 @@ btnRemove.addEventListener('click', function(e) {
                </p>
                <div style=" display: block; margin-left: 10px; padding: 4px; width: 100%;">
 <!-- 	               <div style="border: 2px solid red;"> -->
-				<!-- ==================== 參與者功能 ==================== -->
-	             <section id="section1" class="section1">
-	               <div style="display: block; margin-left: 10px; padding: 4px;">
-               <div style="width: 100%;">
-	        	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="display: inline;"> 
- 			     <input type="submit" class="btn-hover color-3" value="報名活動"> 
- 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
+
+<!-- ======================================= 參與者功能 ======================================= -->
+
+	  <div style="width: 100%;" >
+				 <!-- ==================== 報名活動 ==================== -->
+	        	 <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="display: inline;"> 
+	 			     <input id="btnAttend" class="btn_modal btn-hover color-1" type="submit" value="報名活動"> 
+	 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
 <%--  			     <input type="hidden" name="applyStartDate"  value="${actVO.applyStartDate}"> --%>
 <%--  			     <input type="hidden" name="maxMember"  value="${actVO.maxMember}"> --%>
 <%--  			     <input type="hidden" name="applyMemberExisting"  value="${actVO.applyMemberExisting}"> --%>
- 			     <input type="hidden" name="action" 	value="getOne_For_Insert"></FORM> 
-	        			</td>
- 			  	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="display: inline;"> 
- 			     <input type="submit" class="btn-hover color-3" value="活動評分"> 
- 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
- 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> 
-				</td> 
-    			<td>	    	
-        <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/actr.do" style="display: inline;"> 
- 			     <input type="submit" class="btn-hover color-3" value="活動檢舉"> 
- 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
- 			     <input type="hidden" name="action"	value="getOne_For_Insert"></FORM> 
-				</td> 
-    			<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="display: inline;"> 
- 			     <input type="submit" class="btn-hover color-3" value="活動取消"> 
- 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
+ 			     	 <input type="hidden" name="action"	value="getOne_For_Insert">
+ 			     </FORM> 
+ 			     <!-- ==================== 活動評分 ==================== -->
+ 			  	 <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="display: inline;"> 
+	 			     <input id="btnScore" class="btn_modal2 btn-hover color-1" type="submit" value="活動評分"> 
+	 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
+	 			     <input type="hidden" name="action"	value="getOne_For_Update">
+ 			     </FORM> 
+ 			     <!-- ==================== 活動檢舉 ==================== -->
+ 			  	 <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/actr.do" style="display: inline;"> 
+	 			     <input id="btnReport" class="btn_modal3 btn-hover color-1" type="submit" value="活動檢舉"> 
+	 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
+	 			     <input type="hidden" name="action"	value="getOne_For_Insert">
+ 			     </FORM> 
+ 			     <!-- ==================== 活動取消 ==================== -->
+    			 <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="display: inline;"> 
+	 			     <input  id="btnQuit" class="btn-hover color-1" type="submit" value="活動取消"> 
+	 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
+	 			     <input type="hidden" name="action"	value="cancel">
+ 			     </FORM> 
+	 </div>
 
- 			     <input type="hidden" name="action"	value="cancel"></FORM> 
-	               </div>
 <script>
 //參與者的使用按鈕
 var btnScore = document.getElementById('btnScore'); // 評分活動按鈕
