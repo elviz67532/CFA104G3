@@ -533,28 +533,30 @@ btnRemove.addEventListener('click', function(e) {
                <div style=" display: block; margin-left: 10px; padding: 4px; width: 100%;">
 <!-- 	               <div style="border: 2px solid red;"> -->
 				<!-- ==================== 參與者功能 ==================== -->
-	               <div>
-	        	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
- 			     <input id="btnAttend" class="btn_modal btn-hover color-1" type="submit" value="報名活動"> 
+	             <section id="section1" class="section1">
+	               <div style="display: block; margin-left: 10px; padding: 4px;">
+               <div style="width: 100%;">
+	        	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="display: inline;"> 
+ 			     <input type="submit" class="btn-hover color-3" value="報名活動"> 
  			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
 <%--  			     <input type="hidden" name="applyStartDate"  value="${actVO.applyStartDate}"> --%>
 <%--  			     <input type="hidden" name="maxMember"  value="${actVO.maxMember}"> --%>
 <%--  			     <input type="hidden" name="applyMemberExisting"  value="${actVO.applyMemberExisting}"> --%>
- 			     <input type="hidden" name="action"	value="getOne_For_Insert"></FORM> 
+ 			     <input type="hidden" name="action" 	value="getOne_For_Insert"></FORM> 
 	        			</td>
- 			  	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
- 			     <input id="btnScore" class="btn_modal2 btn-hover color-1" type="submit" value="活動評分"> 
+ 			  	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="display: inline;"> 
+ 			     <input type="submit" class="btn-hover color-3" value="活動評分"> 
  			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
  			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> 
 				</td> 
     			<td>	    	
- 			  	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/actr.do" style="margin-bottom: 0px;"> 
- 			     <input id="btnReport" class="btn_modal3 btn-hover color-1" type="submit" value="活動檢舉"> 
+        <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/actr.do" style="display: inline;"> 
+ 			     <input type="submit" class="btn-hover color-3" value="活動檢舉"> 
  			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
  			     <input type="hidden" name="action"	value="getOne_For_Insert"></FORM> 
 				</td> 
-    					<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
- 			     <input  id="btnQuit" class="btn-hover color-1" type="submit" value="活動取消"> 
+    			<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="display: inline;"> 
+ 			     <input type="submit" class="btn-hover color-3" value="活動取消"> 
  			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
 
  			     <input type="hidden" name="action"	value="cancel"></FORM> 

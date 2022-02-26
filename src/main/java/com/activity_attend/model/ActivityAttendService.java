@@ -14,4 +14,5 @@ public interface ActivityAttendService {
 
 	ActivityAttendVO addActa(Integer memberId, Integer activityId, String comment, String note, Integer status);
 
+	List<ActivityAttendVO> selectByMemberId(Integer memberId);
 }

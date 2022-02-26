@@ -4,7 +4,7 @@
         <div class="specialcontainer px-5 my-5">
             <div class="row">
             	<div class="col-md-4 col-sm-6 ">
-                    <a href="<%=request.getContextPath()%>/front_end/">
+                    <a href="<%=request.getContextPath()%>/front_end/activity/memPublishActivityOwnPage.jsp?action=selectActivityByMemId">
                         <div class="specialcard">
                             <img src="<%=request.getContextPath()%>/asset/img/default.jpeg" style="background-color:red" alt="活動瀏覽">
                             <div class="specialcard-text">
