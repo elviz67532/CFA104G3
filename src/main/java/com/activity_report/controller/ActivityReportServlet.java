@@ -102,7 +102,7 @@ public class ActivityReportServlet extends HttpServlet {
 					actrVO = actrSvc.addActr(activityId,memberId,content,status,photo);
 					
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
-					String url = "/back_end/activity/listAllActr.jsp";
+					String url = "/front_end/activity/homePage.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllActa.jsp
 					successView.forward(req, res);				
 					
@@ -110,7 +110,7 @@ public class ActivityReportServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add(e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back_end/activity/listAllActr.jsp");
+							.getRequestDispatcher("/front_end/activity/reportActivity.jsp");
 					failureView.forward(req, res);
 				}
 		 }
