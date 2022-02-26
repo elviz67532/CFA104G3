@@ -282,9 +282,9 @@ public class ActivityServlet extends HttpServlet {
 //					errorMsgs.put("name", "只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
 				}
 				/* ========================= 活動種類 ========================= */
-				int type = Integer.valueOf(req.getParameter("type"));
+				int type = 0;
 				try {
-					type = Integer.valueOf(req.getParameter("type").trim());
+				type = Integer.valueOf(req.getParameter("type").trim());
 				} catch (NumberFormatException e) {
 					errorMsgs.put("type", "請至少選擇一種類型");
 				}
@@ -601,7 +601,7 @@ public class ActivityServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
-				int memberId = memberVO.getId();
+//				int memberId = memberVO.getId();
 				RequestDispatcher successView = req.getRequestDispatcher("/front_end/activity/singleActPage.jsp");// 回到預覽頁面
 				successView.forward(req, res);
 
