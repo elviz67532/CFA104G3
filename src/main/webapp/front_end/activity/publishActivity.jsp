@@ -224,7 +224,7 @@ textarea:focus{
 <!-- 			<p class="memId">會員名稱?</p> -->
 			<label class="formLabel" for="name">活動名稱: <span style="color: red">${errorMsgs.name}</span></label>
 			<input class="actFormInput" autofocus type="text" name="name"
-				value="<%= (actVO == null) ? "" : actVO.getName() %>" /><br> 
+				value="<%= (actVO == null) ? "線上水彩訓練冬令營" : actVO.getName() %>" /><br> 
 			
 			<label class="formLabel"for="type">活動種類: <span style="color: red">${errorMsgs.type}</span></label> 
 			<select class="actSelect" name="type" id="">
@@ -236,19 +236,20 @@ textarea:focus{
 			</select> 
 			<br>
 			<label class="formLabel" for="location">活動地點: <span style="color: red">${errorMsgs.location}</span></label>
-			<input class="actFormInput" type="text" name="location" value="<%= (actVO == null) ? "" : actVO.getLocation() %>"/><br>
+			<input class="actFormInput" type="text" name="location" value="<%= (actVO == null) ? "406 臺中市北屯區豐樂五街13號" : actVO.getLocation() %>"/><br>
 		 	
 		 	<label class="formLabel" for="photo">活動照片: <span style="color: red">${errorMsgs.photo}</span></label>
-           	<input class="actPhoto" name="actp" type="file" accept="image/*" value=""><br>
+           	<input class="actPhoto" name="actp" type="file" accept="image/*" 
+           	value=""><br>
 <!--       	多張照片 multiple     -->
 
 			<label class="formLabel" for="content">活動內容: <span style="color: red">${errorMsgs.content}</span></label>
-			<textarea class="actFormInput actContentFormInput" cols="55" name="content"><%= (actVO == null) ? "" : actVO.getContent() %></textarea>
+			<textarea class="actFormInput actContentFormInput" cols="55" name="content"><%= (actVO == null) ? "素描、水彩訓練營，跳脫一般傳統制式教學，藉由設定的藝術主題導入技法的應用，用創意與想像來觸動生活經驗中美的感受，深化美的經驗，讓學員們能夠運用自身具備的感受力，完成自己獨特的作品。由於色彩透明，一層顏色覆蓋另一層可以產生特殊的效果，" : actVO.getContent() %></textarea>
 	
 			<label class="formLabel" for="cost">活動費用: <span style="color: red">${errorMsgs.cost}</span></label>
 			<input class="actFormInput actNumberFormInput" type="number" step="1" min="0"
 				pattern="[0-9]" name="cost" 
-				value="<%= (actVO == null) ? "" : actVO.getCost() %>"/><br>
+				value="<%= (actVO == null) ? "1600" : actVO.getCost() %>"/><br>
 	
 			<label class="formLabel" for="applyStartDate">報名開始時間: <span style="color: red">${errorMsgs.applyStartDate}</span></label>
 			<input class="actTimeFormInput" type="datetime-local" step="1" name="applyStartDate" 
@@ -269,12 +270,12 @@ textarea:focus{
 			<label class="formLabel" for="maxMember">活動人數上限: <span style="color: red">${errorMsgs.maxMember}</span></label>
 			<input class="actFormInput actNumberFormInput" type="number" step="" min="0"
 				max="1000" pattern="[0-9]" name="maxMember"
-				value="<%= (actVO == null) ? "" : actVO.getMaxMember() %>"/><br> 
+				value="<%= (actVO == null) ? "120" : actVO.getMaxMember() %>"/><br> 
 				
 			<label class="formLabel" for="minMember">活動人數下限: <span style="color: red">${errorMsgs.minMember}</span></label>
 			<input class="actFormInput actNumberFormInput" type="number" step="" min="0"
 				max="1000" pattern="[0-9]" name="minMember"
-				value="<%= (actVO == null) ? "" : actVO.getMinMember() %>"/><br>
+				value="<%= (actVO == null) ? "10" : actVO.getMinMember() %>"/><br>
 <!-- 			sweetalert 加在insert 就會有沒效果 -->
 			<div style="text-align: center;">
 				<input type="hidden" name="action" value="insert"/> 

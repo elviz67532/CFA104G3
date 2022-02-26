@@ -163,10 +163,9 @@
 <%-- 		           <span class="idSpan">活動編號: ${actqVO.activityId} </span><br> --%>
                </div>
 		           <br>
-               <span class="question">
-               我的回應是:
+			   <span class="question">我的回應是:</span>
                <br>
-               ${actqVO.reply} </span>
+               <div  style="white-space:pre-wrap;" class="question">${actqVO.reply}</div>
                <br>
                
                <input type="submit" class="btn-hover color-1" id="sweetBtnPreview" value="結束預覽"/>
