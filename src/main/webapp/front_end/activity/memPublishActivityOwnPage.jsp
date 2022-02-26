@@ -6,6 +6,8 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.activity.model.*"%>
 
+<%@page import="com.activity_attend.model.*"%>
+
 <%@ page import="com.member.model.*"%>
 <!-- 改善時間用 -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
@@ -17,7 +19,7 @@
 	ActivityServiceImpl actSvc = new ActivityServiceImpl();
 	List<ActivityVO> list = actSvc.findByMemId(memberVO.getId());
 	pageContext.setAttribute("list",list);
-	
+
 // 	List<ActivityVO> typeList1 = actSvc.getActType(1);
 // 	pageContext.setAttribute("typeList1",typeList1);
 	
@@ -316,7 +318,8 @@ padding: 0;
 			<div class="tab_list_block">
                 <ul class="tab_list">
                     <li><a data-target="tab1" class="tab -on btn-hover color-5">我所舉辦的活動</a></li>
-                    <li><a data-target="tab2" class="tab btn-hover color-5" >我所參與的活動</a></li>
+                    <li><a class="btn-hover color-5" href="<%=request.getContextPath()%>/front_end/activity/selectAllAttendActivityPage.jsp">我所參與的活動</a></li>
+<%--                <li><a data-target="tab2" class="tab btn-hover color-5" href="<%=request.getContextPath()%>/front_end/activity/homePage.jsp">我所參與的活動</a></li> --%>
                 </ul>
            </div>
 <div class="tab_contents">
@@ -424,28 +427,28 @@ padding: 10px 0;
     </div>
 </div>
                     
-     <div class="tab tab2">
-         <div class="wrap" >
-	<c:forEach var="actVO" items="${typeList1}" >
-	        <div id="item2${actVO.activityId}" class="item">
-<%-- 	            <div class="act_tab">${actVO.type}</div> --%>
-	            <img class="" src="http://picsum.photos/300/200?random=?" alt="">
-            	<div class="div1">
-	            	<p class="time">${actVO.startDate}</p>
-	                <h2 class="actName">${actVO.name}</h2>
-	                <p class="location ellipsis"><img style="width:18px; height:18px;margin-right:5px;" src="<%=request.getContextPath()%>/asset/img/activityImage/placeholder.png">${actVO.location}</p>
-	                <div style="margin: 0 50px;">
-              			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do">
-			                <input type="hidden" name="activityId" value="${actVO.activityId}">
-			                <input type="hidden" name="action" value="selectOneAct"/> 
-			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/>
-		                </FORM>
-	                </div>
-            	</div>
-            </div>
-		</c:forEach>
-	    </div>
-	</div>
+<!--      <div class="tab tab2"> -->
+<!--          <div class="wrap" > -->
+<%-- 	<c:forEach var="actVO" items="${typeList1}" > --%>
+<%-- 	        <div id="item2${actVO.activityId}" class="item"> --%>
+<%-- <%-- 	            <div class="act_tab">${actVO.type}</div> --%> 
+<!-- 	            <img class="" src="http://picsum.photos/300/200?random=?" alt=""> -->
+<!--             	<div class="div1"> -->
+<%-- 	            	<p class="time">${actVO.startDate}</p> --%>
+<%-- 	                <h2 class="actName">${actVO.name}</h2> --%>
+<%-- 	                <p class="location ellipsis"><img style="width:18px; height:18px;margin-right:5px;" src="<%=request.getContextPath()%>/asset/img/activityImage/placeholder.png">${actVO.location}</p> --%>
+<!-- 	                <div style="margin: 0 50px;"> -->
+<%--               			  	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do"> --%>
+<%-- 			                <input type="hidden" name="activityId" value="${actVO.activityId}"> --%>
+<!-- 			                <input type="hidden" name="action" value="selectOneAct"/>  -->
+<!-- 			                <input type="submit" class="btn btn-hover color-9" value="查看該筆活動"/> -->
+<!-- 		                </FORM> -->
+<!-- 	                </div> -->
+<!--             	</div> -->
+<!--             </div> -->
+<%-- 		</c:forEach> --%>
+<!-- 	    </div> -->
+<!-- 	</div> -->
          
 	</div>
 	</div> <!-- tab_container -->
