@@ -48,6 +48,7 @@ public class ProductCollectionServlet extends HttpServlet{
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 				
 				if (memberVO == null) {				
+					res.sendRedirect(req.getContextPath() + "/front_end/member/login.jsp");
 					return;
 				}
 				Integer memberId = memberVO.getId();

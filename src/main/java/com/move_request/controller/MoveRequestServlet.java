@@ -125,7 +125,9 @@ public class MoveRequestServlet extends HttpServlet {
 					
 					if (tMoveDate != null && tEvaDate != null) {
 						long diffTime = tMoveDate.getTime() - tEvaDate.getTime(); 
-						if(diffTime < 7 * 24 * 60 * 60 * 1000) {
+						if(diffTime <= 0) {
+							errorMsgs.put("evaDate", "估價日期需在搬家日期之前");
+						} else if(diffTime < 7 * 24 * 60 * 60 * 1000) {
 							errorMsgs.put("evaDate", "搬家日期與估價日期時間過近");
 						}
 					}

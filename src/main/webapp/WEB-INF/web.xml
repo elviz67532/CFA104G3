@@ -268,7 +268,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ProductCollectionServlet</servlet-name>
-		<url-pattern>/product/productcollection.do</url-pattern>
+		<url-pattern>/front_end/product/productcollection.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>ProductPhotoServlet</servlet-name>

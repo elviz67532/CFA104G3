@@ -188,7 +188,7 @@ pageContext.setAttribute("prodId", prodId);
 						</FORM>
 
 						<FORM METHOD="post"
-							ACTION="productcollection.do?prodId=${productVO.id}">
+							ACTION="${pageContext.request.contextPath}/front_end/product/productcollection.do?prodId=${productVO.id}">
 							<input type="hidden" name="action" value="insert"> 
               <input type="hidden" name="id" value="${productVO.id}">
 							<%--                         <input type="hidden" name="id" value="${productVO.id}">                         --%>
@@ -246,7 +246,7 @@ pageContext.setAttribute("prodId", prodId);
 	</section>
 
 	<!-- Related items section-->
-	<jsp:include page="/front_end/product/relatedItems.jsp"></jsp:include>
+<%-- 	<jsp:include page="/front_end/product/relatedItems.jsp"></jsp:include> --%>
 	<!-- Footer-->
 	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
 	<!-- Bootstrap core JS-->
