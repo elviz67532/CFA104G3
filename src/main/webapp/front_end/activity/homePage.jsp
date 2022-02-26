@@ -351,7 +351,7 @@ padding: 0;
 	color:white;
 	height: 99px;
 	top: 84%;
-	left: -1%;
+	left: -1%; 
 }
 </style>
   
