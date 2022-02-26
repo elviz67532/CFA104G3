@@ -111,7 +111,7 @@ td {
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
 						<h1>
-							前台賣家訂單管理主頁
+							賣家訂單管理
 							<h1>
 								<span class="subheading">二手商城</span>
 					</div>
@@ -133,10 +133,10 @@ td {
 			</c:forEach>
 		</ul>
 	</c:if>
-	<li><a href="front_ProductOrder_Retrieve.jsp"><input
-			type="submit" value="商品訂單查詢"></a>
-	<li>
-		<table class="table table-striped table-hover">
+<!-- 	<li><a href="front_ProductOrder_Retrieve.jsp"><input -->
+<!-- 			type="submit" value="商品訂單查詢"></a> -->
+<!-- 	<li> -->
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th class="text-nowrap">訂單編號</th>

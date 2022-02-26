@@ -2,6 +2,8 @@ package core.dao;
 
 import java.util.List;
 
+import com.activity_attend.model.ActivityAttendVO;
+
 public interface CoreDao<P, I> {
 
 	int insert(P pojo);

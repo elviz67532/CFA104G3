@@ -534,20 +534,30 @@ btnRemove.addEventListener('click', function(e) {
 <!-- 	               <div style="border: 2px solid red;"> -->
 				<!-- ==================== 參與者功能 ==================== -->
 	               <div>
-	        			<a href="<%=request.getContextPath()%>/front_end/activity/attendActivtiy.jsp" style="text-decoration:none;">
-	        				<button id="btnAttend" type="button" class="btn_modal btn-hover color-1">報名活動</button>
-	        			</a>
-	        			<a href="<%=request.getContextPath()%>/front_end/activity/scoreActivity.jsp" style="text-decoration:none;">
-	        				<button id="btnScore" type="button" class="btn_modal2 btn-hover color-1">為活動評分</button>
-    				    </a>
-    				    <a href="<%=request.getContextPath()%>/front_end/activity/reportActivity.jsp" style="text-decoration:none;">
-    				    	<button id="btnReport" type="button" class="btn_modal3 btn-hover color-1">檢舉活動</button>
-    					</a>
-    					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/activity/act.do" style="display: inline;">
-					       <input type="hidden" name="action" value="quit"/> 
-		      	           <input type="hidden" name="activityId" value="${actVO.activityId}">
-					       <input id="btnQuit" type="submit" class="btn-hover color-1" value="退出活動"/>
-			       		</FORM>
+	        	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
+ 			     <input id="btnAttend" class="btn_modal btn-hover color-1" type="submit" value="報名活動"> 
+ 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
+<%--  			     <input type="hidden" name="applyStartDate"  value="${actVO.applyStartDate}"> --%>
+<%--  			     <input type="hidden" name="maxMember"  value="${actVO.maxMember}"> --%>
+<%--  			     <input type="hidden" name="applyMemberExisting"  value="${actVO.applyMemberExisting}"> --%>
+ 			     <input type="hidden" name="action"	value="getOne_For_Insert"></FORM> 
+	        			</td>
+ 			  	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
+ 			     <input id="btnScore" class="btn_modal2 btn-hover color-1" type="submit" value="活動評分"> 
+ 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
+ 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> 
+				</td> 
+    			<td>	    	
+ 			  	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/actr.do" style="margin-bottom: 0px;"> 
+ 			     <input id="btnReport" class="btn_modal3 btn-hover color-1" type="submit" value="活動檢舉"> 
+ 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
+ 			     <input type="hidden" name="action"	value="getOne_For_Insert"></FORM> 
+				</td> 
+    					<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/activity/acta.do" style="margin-bottom: 0px;"> 
+ 			     <input  id="btnQuit" class="btn-hover color-1" type="submit" value="活動取消"> 
+ 			     <input type="hidden" name="activityId"  value="${actVO.activityId}">
+
+ 			     <input type="hidden" name="action"	value="cancel"></FORM> 
 	               </div>
 <script>
 //參與者的使用按鈕
@@ -692,8 +702,6 @@ if (hiddenMemId.value != hiddenOrganizerMemberId.value) {
 	    });
  
   </script>
-<!--    ============================ 以上為問題區塊 ============================ -->   
- 
 <!--    ============================ 以上為問題區塊 ============================ --> 
 <!--    ============================ 以下為會員回答區塊 ============================ -->
    		<div class="main5">

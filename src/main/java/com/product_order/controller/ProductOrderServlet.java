@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import com.member.model.MemberVO;
 import com.product.model.ProductServiceImpl;
+import com.product.model.ProductVO;
 import com.product_order.model.ProductOrderService;
 import com.product_order.model.ProductOrderServiceImpl;
 import com.product_order.model.ProductOrderVO;
@@ -792,8 +793,6 @@ public class ProductOrderServlet extends HttpServlet {
 		if ("insert".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
@@ -804,42 +803,41 @@ public class ProductOrderServlet extends HttpServlet {
 
 				System.out.println("memberVO" + memberVO);
 				if (memberVO == null) {
-					// TODO
 
 					System.out.println("insert enter");
 					return;
 				}
-				Integer amountOfPrice = null;
-				try {
-					amountOfPrice = Integer.valueOf(req.getParameter("amountOfPrice").trim());
-				} catch (NumberFormatException e) {
-					amountOfPrice = 0;
-					errorMsgs.add("請輸入金額");
-				}
 
-				Integer id = Integer.valueOf(req.getParameter("id"));
+				memberVO.getId();
+
+				ProductServiceImpl productSvc = new ProductServiceImpl();
+
 				Integer productId = Integer.valueOf(req.getParameter("productId"));
-				Integer customerMemberId = Integer.valueOf(req.getParameter("customerMemberId"));
-				Integer sellerMemberId = Integer.valueOf(req.getParameter("sellerMemberId"));
+				ProductVO productVO = productSvc.getOneProduct(productId);
+
+				productVO.getPrice();
+				productVO.getSellerMemberId();
+				productVO.getName();
+
+				Integer customerMemberId = memberVO.getId();
+				Integer sellerMemberId = productVO.getSellerMemberId();
 				String productName = req.getParameter("productName");
 				String phone = req.getParameter("phone");
 				String address = req.getParameter("address");
-				Integer amountOfProduct = Integer.valueOf(req.getParameter("amountOfProduct"));
-				Timestamp date = java.sql.Timestamp.valueOf(req.getParameter("date"));
-				Integer status = Integer.valueOf(req.getParameter("status").trim());
+
+				Integer amountOfPrice = productVO.getPrice();
 
 				ProductOrderVO vo = new ProductOrderVO();
 
-				vo.setId(id);
 				vo.setProductId(productId);
 				vo.setCustomerMemberId(customerMemberId);
 				vo.setSellerMemberId(sellerMemberId);
 				vo.setProductName(productName);
 				vo.setPhone(phone);
 				vo.setAddress(address);
-				vo.setDate(date);
-				vo.setAmountOfProduct(amountOfProduct);
-				vo.setStatus(status);
+
+				vo.setAmountOfProduct(1);
+
 				vo.setAmountOfPrice(amountOfPrice);
 
 				// Send the use back to the form, if there were errors
@@ -853,8 +851,8 @@ public class ProductOrderServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 				ProductOrderServiceImpl poSvc = new ProductOrderServiceImpl();
-				vo = poSvc.addProductOrder(productId, customerMemberId, sellerMemberId, productName, phone, address,
-						date, amountOfProduct, status, amountOfPrice);
+				vo = poSvc.addProductOrder(productId, customerMemberId, sellerMemberId, productName, phone, address, 1,
+						amountOfPrice);
 				
 				ProductServiceImpl pdSer = new ProductServiceImpl();
 				pdSer.updateStatus(productId);
@@ -863,6 +861,75 @@ public class ProductOrderServlet extends HttpServlet {
 				String url = "/front_end/product/listAllproductOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllFaq.jsp
 				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front_end/product/front_ProductOrder_Create.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("form".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+
+				HttpSession session = req.getSession();
+				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+
+				System.out.println("memberVO" + memberVO);
+				if (memberVO == null) {
+
+					System.out.println("insert enter");
+					return;
+				}
+
+				memberVO.getId();
+
+				ProductServiceImpl productSvc = new ProductServiceImpl();
+
+				Integer productId = Integer.valueOf(req.getParameter("productId"));
+				ProductVO productVO = productSvc.getOneProduct(productId);
+
+				productVO.getPrice();
+				productVO.getSellerMemberId();
+				productVO.getName();
+
+				Integer customerMemberId = memberVO.getId();
+				Integer sellerMemberId = productVO.getSellerMemberId();
+				String productName = req.getParameter("productName");
+				String phone = req.getParameter("phone");
+				String address = req.getParameter("address");
+
+				Integer amountOfPrice = productVO.getPrice();
+
+				ProductOrderVO vo = new ProductOrderVO();
+
+				vo.setProductId(productId);
+				vo.setCustomerMemberId(customerMemberId);
+				vo.setSellerMemberId(sellerMemberId);
+				vo.setProductName(productName);
+				vo.setPhone(phone);
+				vo.setAddress(address);
+
+				vo.setAmountOfProduct(1);
+
+				vo.setAmountOfPrice(amountOfPrice);
+
+				/*************************** 2.開始新增資料 ***************************************/
+
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+
+				req.setAttribute("vo", vo);
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front_end/product/front_ProductOrder_Create.jsp");
+				failureView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {

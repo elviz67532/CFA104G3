@@ -58,7 +58,7 @@
             	<div class="col-md-4 col-sm-6 ">
                     <a href="aboutUs.jsp">
                         <div class="specialcard">
-                            <img src="<%=request.getContextPath()%>/asset/img/moverequestmanage.jpg" style="background-color:red" alt="關於我們">
+                            <img src="<%=request.getContextPath()%>/asset/img/moveorderpic.jpg" style="background-color:red" alt="關於我們">
                             <div class="specialcard-text">
                                 <h3>關於我們</h3>
                             </div>

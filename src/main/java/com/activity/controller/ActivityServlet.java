@@ -22,6 +22,8 @@ import javax.servlet.http.Part;
 
 import com.activity.model.ActivityServiceImpl;
 import com.activity.model.ActivityVO;
+import com.activity_attend.model.ActivityAttendServiceImpl;
+import com.activity_attend.model.ActivityAttendVO;
 import com.activity_photo.model.ActivityPhotoServiceImpl;
 import com.activity_photo.model.ActivityPhotoVO;
 import com.member.model.MemberVO;

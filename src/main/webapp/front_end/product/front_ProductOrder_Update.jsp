@@ -102,7 +102,7 @@ td {
 			<FORM METHOD="post" ACTION="productorder.do">
 			
 			
-				<table class="table table-striped">
+				<table class="table table-hover">
 					<tr>
 
 						<td>收件人姓名:</td>

@@ -53,75 +53,7 @@ NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
 
                         <!-- main -->
 
-                        <!-- Button trigger modal  新增按鈕和互動元件-->
-                        <ul>
-                        <li>
-                        <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/back_end/news/NewsServlet"
-                            name="form1" enctype="multipart/form-data">
-                            <button type="button" class="btn btn-outline-info" data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop">
-                                快速新增
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-scrollable">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel">快速新增</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <%-- 錯誤表列 --%>
-                                                <c:if test="${not empty errorMsgs}">
-                                                    <font style="color: red">請修正以下錯誤:</font>
-                                                    <ul>
-                                                        <c:forEach var="message" items="${errorMsgs}">
-                                                            <li style="color: red">${message}</li>
-                                                        </c:forEach>
-                                                    </ul>
-                                                </c:if>
-                                                <table>
-                                                    <tr>
-                                                        <td class="text-nowrap">類別:</td>
-                                                        <td><input class="form-control form-control-sm" type="TEXT" name="type" size="15"
-                                                                value="<%=(newsVO == null) ? "" : newsVO.getType()%>" /></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>標題:</td>
-                                                        <td><input  type="TEXT" name="title" size="45"
-                                                                value="<%=(newsVO == null) ? "" : newsVO.getTitle()%>" /></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>內容:</td>
-                            							<td><textarea class="form-control" name="content" size="45"
-														value="<%=(newsVO == null) ? "" : newsVO.getContent()%>" rows="3"/></textarea></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>圖片:</td>
-                                                        <td><input type="file" name="image" size="45"
-                                                                value="<%=(newsVO == null) ? "" : newsVO.getImage()%>" /></td>
-                                                    </tr>
-                                                    <jsp:useBean id="newsSvc" scope="page"
-                                                        class="com.news.model.NewsServiceImpl" />
-                                                </table>
-                                                <br>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <input type="hidden" name="action" value="insert">
-                                            <input type="submit" class="btn btn-primary" value="送出新增">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </FORM>
-                        </li>
-                        </ul>
+                        
                         <!-- DataTales Example 表格(注意vo import)-->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">

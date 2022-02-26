@@ -9,13 +9,10 @@ ProductOrderVO productOrderVO = (ProductOrderVO) request.getAttribute("productOr
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>委域</title>
@@ -32,32 +29,166 @@ ProductOrderVO productOrderVO = (ProductOrderVO) request.getAttribute("productOr
 	rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link
-	href="${pageContext.request.contextPath}/vendor/bootstrap/css/styles.css"
-	rel="stylesheet" type="text/css" />
-
-<link href="<%=request.getContextPath()%>/css/activity/backNewFile.css"
-	rel="stylesheet">
-<link
-	href="<%=request.getContextPath()%>/vendor/datatables/dataTables.bootstrap4.min.css"
-	rel="stylesheet">
-<link
-	href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
-
-</head>
+	href="<%=request.getContextPath()%>/vendor/bootstrap/css/styles.css"
+	rel="stylesheet" />
 <style>
-form {
-	display: inline;
-	border-radius: 16px;
+.innerDiv {
+	width: 60%;
+	margin: 0 auto;
+	padding: 60px 20px 0;
 }
 
-form:hover {
+.innerDiv h2 {
+	text-align: center;
+}
+
+.innerDiv h2:hover {
+	color: gray;
+	cursor: grabbing;
+}
+
+.memId {
+	margin: 0;
+	padding: 0;
+}
+
+.formLabel {
+	font-size: 14px;
+	font-weight: 600;
+	color: #282828;
+	/*     line-height: 1.71; */
+	/*     padding-bottom: 10px; */
+	/* text-align: center; */
+	/* font: 1rem 'Fira Sans', sans-serif; */
+}
+
+.launchedDate {
+	color: #b5bac1;
+	font-size: 14px;
+	font-weight: 500;
+	margin: 4px 8px;
+}
+
+.actFormInput {
+	width: 100%;
+	flex: 1;
+	border: 0;
+	padding: 8px 24px;
+	background-color: #f1f1f1;
+	position: relative;
+	font-size: 16px;
+	border-radius: 0;
+}
+
+.actSelect {
+	width: 100%;
+	flex: 1;
+	border: 0;
+	padding: 0 24px;
+	background-color: #f1f1f1;
+	position: relative;
+	font-size: 16px;
+	border-radius: 0;
+}
+
+.actSelect:hover {
+	border: 2px solid black;
+	opacity: 0.8;
+	background-color: #30dd8a;
+}
+
+.actPhoto {
+	width: 100%;
+	flex: 1;
+	border: 0;
+	padding: 0 24px;
+	background-color: #f1f1f1;
+	position: relative;
+	font-size: 16px;
+	border-radius: 0;
+}
+
+.actTimeFormInput {
+	width: 100%;
+	flex: 1;
+	border: 0;
+	padding: 0 24px;
+	background-color: #f1f1f1;
+	position: relative;
+	font-size: 16px;
+	border-radius: 0;
+}
+
+/*input hover*/
+input[type="text"]:focus {
+	border: 2px solid black;
+	opacity: 0.8;
+	background-color: #30dd8a;
+}
+
+input[type="number"]:focus {
+	border: 2px solid black;
+	opacity: 0.8;
+	background-color: #30dd8a;
+}
+
+input[type="date"]:focus {
+	border: 2px solid black;
+	opacity: 0.8;
+	background-color: #30dd8a;
+}
+
+input[type="datetime-local"]:focus {
+	border: 2px solid black;
+	opacity: 0.8;
+	background-color: #30dd8a;
+}
+
+textarea:focus {
+	border: 2px solid black;
+	opacity: 0.8;
+	background-color: #30dd8a;
+}
+
+.btn {
+	width: 100%;
+	padding: 16px 40px;
+	margin: 8px 0 60px 0;
+}
+
+.btn-hover {
+	width: 200px;
+	font-size: 16px;
+	font-weight: 600;
+	color: #fff;
 	cursor: pointer;
-	border-radius: 16px;
-	margin-bottom: 0px;
+	margin: 20px;
+	height: 55px;
+	text-align: center;
+	border: none;
+	background-size: 300% 100%;
+	border-radius: 50px;
+	moz-transition: all .4s ease-in-out;
+	-o-transition: all .4s ease-in-out;
+	-webkit-transition: all .4s ease-in-out;
+	transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+	background-position: 100% 0;
+	moz-transition: all .4s ease-in-out;
+	-o-transition: all .4s ease-in-out;
+	-webkit-transition: all .4s ease-in-out;
+	transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+	outline: none;
+}
+
+.btn-hover.color-5 {
+	background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+	box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
 }
 
 table th {
@@ -70,6 +201,8 @@ td {
 	text-align: center;
 }
 </style>
+
+</head>
 <body>
 
 	<!-- Navigation-->
@@ -106,43 +239,47 @@ td {
 			</c:forEach>
 		</ul>
 	</c:if>
-	<table class="table table-striped table-hover">
-		<tr>
-			<td>
+	<div style="width: 100%;">
+		<div style="margin: 0 auto; width: 36%;">
+			<table class="table table-hover">
+				<tr>
+					<td>
 
-				<h4>
-					<a href="front_ProductOrder_Retrieve.jsp"><img
-						src="images/back1.gif" width="100" height="32" border="0"></a>
-				</h4>
-			</td>
-		</tr>
-	</table>
+						<h4>
+							<a href="listAllproductOrder.jsp"><img src="images/back1.gif"
+								width="100" height="32" border="0"></a>
+						</h4>
+					</td>
+				</tr>
+			</table>
 
-	<table>
-		<tr>
-
-			<th>收件人姓名</th>
-			<th>收件人電話</th>
-			<th>收件人地址</th>
-
-		</tr>
-		<tr>
-
-			<td>${productOrderVO.productName}</td>
-			<td>${productOrderVO.phone}</td>
-			<td>${productOrderVO.address}</td>
+			<table>
+				<tr>
 
 
-		</tr>
-	</table>
-	</script>
-	<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
-	<!-- Bootstrap core JS-->
+					<th class="text-nowrap">收件人姓名</th>
+					<th class="text-nowrap">收件人電話</th>
+					<th class="text-nowrap">收件人地址</th>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-	<!-- Core theme JS-->
-	<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
+
+				</tr>
+				<tr>
+
+					<td>${productOrderVO.productName}</td>
+					<td>${productOrderVO.phone}</td>
+					<td>${productOrderVO.address}</td>
+
+
+				</tr>
+			</table>
+			</script>
+			<jsp:include page="/front_end/common/footer.jsp"></jsp:include>
+			<!-- Bootstrap core JS-->
+
+			<script
+				src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+			<!-- Core theme JS-->
+			<script src="<%=request.getContextPath()%>/js/front_end/scripts.js"></script>
 </body>
 
 </html>
