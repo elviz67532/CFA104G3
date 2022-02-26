@@ -167,7 +167,9 @@ public class ActivityAttendDAOJDBCImpl implements ActivityAttendDAO {
 
 		return vo;
 	}
-	public ActivityAttendVO selectByMemberId(Integer memberId) {
+	@Override
+	public List<ActivityAttendVO> selectByMemberId(Integer memberId) {
+		List<ActivityAttendVO> list = new ArrayList<ActivityAttendVO>();
 		ActivityAttendVO vo = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -181,13 +183,14 @@ public class ActivityAttendDAOJDBCImpl implements ActivityAttendDAO {
 
 			rs = pstmt.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 				vo = new ActivityAttendVO();
 				vo.setMemberId(rs.getInt("ACTA_MEM_ID"));
 				vo.setActivityId(rs.getInt("ACTA_ACT_ID"));
 				vo.setComment(rs.getString("ACTA_RELPY_CONTENT"));
 				vo.setNote(rs.getString("ACTA_CONTENT_NOTE"));
 				vo.setStatus(rs.getInt("ACTA_PAY_STATUS"));
+				list.add(vo);
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -195,6 +198,6 @@ public class ActivityAttendDAOJDBCImpl implements ActivityAttendDAO {
 			SQLUtil.closeResource(con, pstmt, rs);
 		}
 
-		return vo;
+		return list;
 	}
 }

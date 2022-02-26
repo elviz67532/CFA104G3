@@ -60,6 +60,12 @@ public class ActivityAttendServiceImpl implements ActivityAttendService {
 			
 		return dao.selectAll();
 	}
+
+	@Override
+	public List<ActivityAttendVO> selectByMemberId(Integer memberId) {
+		// TODO Auto-generated method stub
+		return dao.selectByMemberId(memberId);
+	}
 	
 	
 		
